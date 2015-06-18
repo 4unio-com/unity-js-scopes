@@ -30,10 +30,11 @@ class ScopeBase : public unity::scopes::ScopeBase
   ~ScopeBase() override;
 
   // v8 bindings
-  void onsearch(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onstart(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onstop(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onrun(v8::FunctionCallbackInfo<v8::Value> const& args);
+
+  void onsearch(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   // unity::scopes::ScopeBase implementation
   void start(std::string const& scope_id) override;

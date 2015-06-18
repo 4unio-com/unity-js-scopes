@@ -25,8 +25,25 @@ include(CheckIncludeFileCXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE CACHE INTERNAL "")
 
+message(STATUS "Retrieving deps")
+
+execute_process(
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/deps/get.sh
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  RESULT_VARIABLE _DEPS_RESULT
+  )
+
+if(NOT _DEPS_RESULT EQUAL 0)
+  message(FATAL_ERROR "Retriving deps failed")
+endif()
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/cmake)
+
+find_package(Node REQUIRED)
+
 include_directories(
-  ${CMAKE_SOURCE_DIR}
+  ${NODE_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/src
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   )
 

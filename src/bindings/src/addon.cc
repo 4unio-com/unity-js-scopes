@@ -28,7 +28,7 @@
 #include "search-query.h"
 #include "search-reply.h"
 
-Handle<Object> new_scope(FunctionCallbackInfo<Value> const& args) {
+v8::Handle<v8::Object> new_scope(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 2) {
     throw std::exception("Invalid number of arguments");
   }
@@ -40,13 +40,13 @@ Handle<Object> new_scope(FunctionCallbackInfo<Value> const& args) {
   std::string config_fgile = *(v8::String::Utf8Value(args[1]->ToString()));
 
   JsScope* scope = new JsScope(scope_id, config_file);
-  auto x = v8cpp::export_object<JsScope>(Isolate::GetCurrent(), scope);
+  auto x = v8cpp::export_object<JsScope>(v8::Isolate::GetCurrent(), scope);
   return x;
 }
 
-void InitAll(Handle<Object> exports)
+void InitAll(v8::Handle<v8::Object> exports)
 {
-    Isolate* isolate = Isolate::GetCurrent();
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
     v8cpp::Class<JsScope> js_scope(isolate);
     js_scope
