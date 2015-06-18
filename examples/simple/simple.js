@@ -18,19 +18,29 @@
 
 var scopes = require('unity_js_scopes_bindings')
 
-scopes.me.onsearch(function(query, metadata) {
-    return new scopes.Query(
-        query,
+scopes.me.onsearch(function(canned_query, metadata) {
+    return scopes.new_search_query(
+        canned_query,
         metadata,
         // run
-        function() {
+        function(search_reply) {
+            var qs =
+                canned_query.query_string();
+            var category =
+                search_reply.register_category("tracks", "", "");
+
+            var categorised_result =
+                scopes.new_categorised_result(category);
+            categorised_result.set_uri("http://www.ubuntu.com");
+            categorised_result.set_title("Ubuntu");
+
+            search_reply.push(categorised_result);
         },
         // cancelled
         function() {
         });
 });
 
-/*
-scopes.me.onpreview(function(result, metadata) {
+scopes.me.onpreview(function(result, action_metadata) {
 });
-*/
+
