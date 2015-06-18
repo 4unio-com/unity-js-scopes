@@ -23,10 +23,12 @@
 
 #include <v8-cpp.h>
 
+#include "category.h"
+
 class CategorisedResult : public unity::scopes::CategorisedResult
 {
  public:
-  CategorisedResult();
+  CategorisedResult(Category * category);
   ~CategorisedResult() override;
 
   // v8 binding
@@ -34,6 +36,10 @@ class CategorisedResult : public unity::scopes::CategorisedResult
   void set_title(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
+
+  // TODO ownership & lifetime !
+  // better to own the scptr
+  Category * category_;
 };
 
 #endif // _UNITY_JS_CATEGORISED_RESULT_H_

@@ -18,30 +18,84 @@
 
 #include <v8-cpp.h>
 
+#include <stdexcept>
+
 #include <node.h>
 
 #include "scope-base.h"
 #include "scope.h"
 #include "canned-query.h"
 #include "category.h"
-#include "categorized-result.h"
+#include "categorised-result.h"
 #include "search-query.h"
 #include "search-reply.h"
+#include "search-metadata.h"
 
 v8::Handle<v8::Object> new_scope(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 2) {
-    throw std::exception("Invalid number of arguments");
+    throw std::runtime_error("Invalid number of arguments");
   }
   if (!args[0]->IsString() || !args[1]->IsString()) {
-    throw std::exception("Invalid arguments types");
+    throw std::runtime_error("Invalid arguments types");
   }
 
   std::string scope_id = *(v8::String::Utf8Value(args[0]->ToString()));
-  std::string config_fgile = *(v8::String::Utf8Value(args[1]->ToString()));
+  std::string config_file = *(v8::String::Utf8Value(args[1]->ToString()));
 
   JsScope* scope = new JsScope(scope_id, config_file);
-  auto x = v8cpp::export_object<JsScope>(v8::Isolate::GetCurrent(), scope);
-  return x;
+  return v8cpp::export_object<JsScope>(v8::Isolate::GetCurrent(), scope);
+}
+
+v8::Handle<v8::Object> new_search_query(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 4) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  CannedQuery *c =
+    v8cpp::import_object<CannedQuery>(v8::Isolate::GetCurrent(), args[0]->ToObject());
+
+  SearchMetaData *s =
+    v8cpp::import_object<SearchMetaData>(v8::Isolate::GetCurrent(), args[1]->ToObject());
+
+  if (!c || !s) {
+    throw std::runtime_error("Invalid arguments types");
+  }
+
+  if (!args[2]->IsFunction() || !args[3]->IsFunction()) {
+    throw std::runtime_error("Invalid arguments types");
+  }
+
+  v8::Local<v8::Function> run_callback =
+    v8::Handle<v8::Function>::Cast(args[2]);
+  v8::Local<v8::Function> cancelled_callback =
+    v8::Handle<v8::Function>::Cast(args[3]);
+
+  SearchQuery *sq =
+    new SearchQuery(
+        c->get_canned_query(),
+        static_cast<const unity::scopes::SearchMetadata&>(*s),
+        run_callback,
+        cancelled_callback);
+  return v8cpp::export_object<SearchQuery>(v8::Isolate::GetCurrent(), sq);
+}
+
+v8::Handle<v8::Object> new_categorised_result(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 1) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  Category *c =
+    v8cpp::import_object<Category>(v8::Isolate::GetCurrent(),
+                                   args[0]->ToObject());
+
+  if (!c) {
+    throw std::runtime_error("Invalid arguments types");
+  }
+
+  CategorisedResult *cr = new CategorisedResult(c);
+
+  return v8cpp::export_object<CategorisedResult>(v8::Isolate::GetCurrent(), cr);
 }
 
 void InitAll(v8::Handle<v8::Object> exports)
@@ -50,7 +104,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<JsScope> js_scope(isolate);
     js_scope
-      .add_method("scope_base", &SearchHandler::scope_base);
+      .add_method("run", &JsScope::run);
 
     v8cpp::Class<ScopeBase> scope_base(isolate);
     scope_base
@@ -67,13 +121,11 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<CategorisedResult> categorised_result(isolate);
     categorised_result
-      .set_constructor()
       .add_method("set_uri", &CategorisedResult::set_uri)
       .add_method("set_title", &CategorisedResult::set_title);
 
     v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
-      .set_constructor()
       .add_method("query_string", &CannedQuery::query_string)
       .add_method("to_uri", &CannedQuery::to_uri);
 
@@ -84,15 +136,12 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
-      .set_constructor<v8::Local<v8::Object>,
-                       v8::Local<v8::Object>,
-                       v8::Local<v8::Function>,
-                       v8::Local<v8::Function> >()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
     v8cpp::Module module(isolate);
     module.add_function("new_scope", &new_scope);
+    module.add_function("new_search_query", &new_search_query);
 
     exports->SetPrototype(module.create_prototype());
 }

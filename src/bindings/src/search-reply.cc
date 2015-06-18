@@ -18,6 +18,11 @@
 
 #include "search-reply.h"
 
+#include <stdexcept>
+
+#include <unity/scopes/SearchReply.h>
+
+#include "categorised-result.h"
 #include "category.h"
 
 SearchReply::SearchReply(unity::scopes::SearchReplyProxy const& reply)
@@ -31,14 +36,14 @@ v8::Local<v8::Value> SearchReply::register_category(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 3) {
     // TODO fix
-    throw std::exception("Invalid number of arguments");
+    throw std::runtime_error("Invalid number of arguments");
   }
 
   if (!args[0]->IsString()
       || !args[1]->IsString()
       || !args[2]->IsString()) {
     // TODO fix
-    throw std::exception("Invalid type of arguments");
+    throw std::runtime_error("Invalid type of arguments");
   }
 
   std::string id;
@@ -49,7 +54,7 @@ v8::Local<v8::Value> SearchReply::register_category(
   title = *(v8::String::Utf8Value(args[1]->ToString()));
   icon = *(v8::String::Utf8Value(args[2]->ToString()));
 
-  Category *category = new Category(*reply_.register_category(is, title, icon));
+  Category *category = new Category(reply_->register_category(id, title, icon));
 
   v8::Isolate *isolate = args.GetIsolate();
 
@@ -60,16 +65,16 @@ void SearchReply::push(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 1) {
     // TODO fix
-    throw std::exception("Invalid number of arguments");
+    throw std::runtime_error("Invalid number of arguments");
   }
 
   CategorisedResult *r =
     v8cpp::import_object<CategorisedResult>(
-        Isolate::GetCurrent(),
+        v8::Isolate::GetCurrent(),
         args[0]->ToObject());
   if (!r) {
-    throw std::exception("Invalid argument type");
+    throw std::runtime_error("Invalid argument type");
   }
 
-  reply_.push(r);
+  reply_->push(static_cast<const unity::scopes::CategorisedResult &>(*r));
 }

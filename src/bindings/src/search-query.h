@@ -26,10 +26,10 @@
 class SearchQuery : public unity::scopes::SearchQueryBase
 {
  public:
-  SearchQuery(const v8::Local<v8::Object>& query,
-        const v8::Local<v8::Object>& metadata,
-        const v8::Local<v8::Function> &run_callback,
-        const v8::Local<v8::Function> &cancelled_callback);
+  SearchQuery(unity::scopes::CannedQuery const& query,
+              unity::scopes::SearchMetadata const& metadata,
+              const v8::Local<v8::Function> &run_callback,
+              const v8::Local<v8::Function> &cancelled_callback);
   ~SearchQuery() override;
 
   // v8 binding

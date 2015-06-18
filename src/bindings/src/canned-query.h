@@ -35,6 +35,8 @@ class CannedQuery
   v8::Local<v8::Value> to_uri(
       v8::FunctionCallbackInfo<v8::Value> const& args);
 
+  unity::scopes::CannedQuery const & get_canned_query();
+  
  private:
 
   unity::scopes::CannedQuery const &query_;

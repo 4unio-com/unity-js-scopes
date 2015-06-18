@@ -18,7 +18,8 @@
 
 #include "search-metadata.h"
 
-SearchMetaData::SearchMetaData() {
+SearchMetaData::SearchMetaData(unity::scopes::SearchMetadata const& other)
+  : unity::scopes::SearchMetadata(other) {
 }
 
 SearchMetaData::~SearchMetaData() {

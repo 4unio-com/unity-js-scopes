@@ -18,7 +18,9 @@
 
 #include "categorised-result.h"
 
-CategorisedResult::CategorisedResult() {
+CategorisedResult::CategorisedResult(Category * category)
+  : unity::scopes::CategorisedResult(category->get_category()),
+    category_(category) {
 }
 
 CategorisedResult::~CategorisedResult() {
@@ -36,7 +38,7 @@ void CategorisedResult::set_uri(
     return;
   }
 
-  set_uri(*(v8::String::Utf8Value(args[0]->ToString())));
+  unity::scopes::CategorisedResult::set_uri(*(v8::String::Utf8Value(args[0]->ToString())));
 }
 
 void CategorisedResult::set_title(
@@ -51,5 +53,5 @@ void CategorisedResult::set_title(
     return;
   }
 
-  set_title(*(v8::String::Utf8Value(args[0]->ToString())));
+  unity::scopes::CategorisedResult::set_title(*(v8::String::Utf8Value(args[0]->ToString())));
 }

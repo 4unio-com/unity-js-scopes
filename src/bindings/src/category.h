@@ -23,18 +23,21 @@
 
 #include <v8-cpp.h>
 
-class Category : public unity::scopes::Category
+class Category
 {
  public:
-  Category();
-  ~Category() override;
+  Category(unity::scopes::Category::SCPtr category);
+  ~Category();
 
   // v8 binding
   v8::Local<v8::Value> id(v8::FunctionCallbackInfo<v8::Value> const& args);
   v8::Local<v8::Value> title(v8::FunctionCallbackInfo<v8::Value> const& args);
   v8::Local<v8::Value> icon(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+  unity::scopes::Category::SCPtr get_category();
+
  private:
+  unity::scopes::Category::SCPtr category_;
 };
 
 #endif // _UNITY_JS_CATEGORY_H_

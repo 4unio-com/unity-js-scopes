@@ -23,13 +23,11 @@
 #include "search-reply.h"
 
 SearchQuery::SearchQuery(
-      const v8::Local<v8::Object>& query,
-      const v8::Local<v8::Object>& metadata,
+      unity::scopes::CannedQuery const& query,
+      unity::scopes::SearchMetadata const& metadata,
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
-  : unity::scopes::SearchQueryBase(
-        *v8cpp::import_object<CannedQuery>(v8::Isolate::GetCurrent(), query),
-        *v8cpp::import_object<SearchMetaData>(v8::Isolate::GetCurrent(), metadata)),
+  : unity::scopes::SearchQueryBase(query, metadata),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
     cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
 }
@@ -59,8 +57,8 @@ void SearchQuery::onrun(
     run_callback_.Reset();
   }
 
-  run_callback_ =
-    v8::Persistent<v8::Function>::New(args.GetIsolate(), v8::Local<v8::Function>::Cast(args[0]->ToObject));
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  run_callback_.Reset(args.GetIsolate(), cb);
 }
 
 void SearchQuery::oncancelled(
@@ -79,9 +77,8 @@ void SearchQuery::oncancelled(
     cancelled_callback_.Reset();
   }
 
-  cancelled_callback_ =
-    v8::Persistent<v8::Function>::New(args.GetIsolate(),
-                                      v8::Local<v8::Function>::Cast(args[0]->ToObject()));
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  cancelled_callback_.Reset(args.GetIsolate(), cb);
 }
 
 v8::Local<v8::Value> SearchQuery::query(

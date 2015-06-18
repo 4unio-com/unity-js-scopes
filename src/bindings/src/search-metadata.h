@@ -26,7 +26,7 @@
 class SearchMetaData : public unity::scopes::SearchMetadata
 {
  public:
-  SearchMetaData();
+  SearchMetaData(const unity::scopes::SearchMetadata & other);
   ~SearchMetaData() override;
 
  private:

@@ -27,10 +27,14 @@ CannedQuery::~CannedQuery() {
 
 v8::Local<v8::Value> CannedQuery::query_string(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(Isolate::GetCurrent(), query_.query_string().c_str());
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), query_.query_string().c_str());
 }
 
 v8::Local<v8::Value> CannedQuery::to_uri(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(Isolate::GetCurrent(), query_.to_uri().c_str());
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), query_.to_uri().c_str());
+}
+
+unity::scopes::CannedQuery const & CannedQuery::get_canned_query() {
+  return query_;
 }

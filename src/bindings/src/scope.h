@@ -34,11 +34,11 @@ class JsScope
  public:
   JsScope(const std::string& scope_id,
           const std::string& config_file);
-  ~JsScope() override;
+  ~JsScope();
 
-  v8::Handle<v8::Object> scope_base();
+  //  v8::Handle<v8::Object> scope_base();
 
-  void run(FunctionCallbackInfo<Value> const& args);
+  void run(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
 

@@ -19,6 +19,7 @@
 #include "scope-base.h"
 
 #include "canned-query.h"
+#include "search-query.h"
 #include "search-metadata.h"
 
 ScopeBase::ScopeBase() {
@@ -43,7 +44,7 @@ void ScopeBase::start(std::string const& scope_id) {
     return;
   }
 
-  v8::Isolate * isolate = Isolate::GetCurrent();
+  v8::Isolate * isolate = v8::Isolate::GetCurrent();
 
   v8::Local<v8::Function> start_callback =
     v8cpp::to_local<v8::Function>(isolate, start_callback_);
@@ -56,7 +57,7 @@ void ScopeBase::stop() {
     return;
   }
 
-  v8::Isolate * isolate = Isolate::GetCurrent();
+  v8::Isolate * isolate = v8::Isolate::GetCurrent();
 
   v8::Local<v8::Function> stop_callback =
     v8cpp::to_local<v8::Function>(isolate, stop_callback_);
@@ -69,7 +70,7 @@ void ScopeBase::run() {
     return;
   }
 
-  v8::Isolate * isolate = Isolate::GetCurrent();
+  v8::Isolate * isolate = v8::Isolate::GetCurrent();
 
   v8::Local<v8::Function> run_callback =
     v8cpp::to_local<v8::Function>(isolate, run_callback_);
@@ -88,7 +89,7 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   CannedQuery *q = new CannedQuery(query);
   SearchMetaData *m = new SearchMetaData(metadata);
 
-  v8::Isolate *isolate = Isolate::GetCurrent();
+  v8::Isolate *isolate = v8::Isolate::GetCurrent();
 
   v8::Local<v8::Function> search_callback =
     v8cpp::to_local<v8::Function>(isolate, search_callback_);
@@ -99,9 +100,11 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
                    v8cpp::export_object<CannedQuery>(isolate, q),
                    v8cpp::export_object<SearchMetaData>(isolate, m));
 
+  // TODO watch out release
   SearchQuery * sq =
     v8cpp::import_object<SearchQuery>(isolate, result);
-  return sq;
+
+  return unity::scopes::SearchQueryBase::UPtr(sq);
 }
 
 unity::scopes::ActivationQueryBase::UPtr ScopeBase::activate(
@@ -140,8 +143,8 @@ void ScopeBase::onstart(
     start_callback_.Reset();
   }
 
-  start_callback_ =
-    v8::Persistent<v8::Function>::New(v8::Local<v8::Function>::Cast(args[0]));
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  start_callback_.Reset(args.GetIsolate(), cb);
 }
 
 void ScopeBase::onstop(
@@ -160,8 +163,8 @@ void ScopeBase::onstop(
     stop_callback_.Reset();
   }
 
-  stop_callback_ =
-    v8::Persistent<v8::Function>::New(v8::Local<v8::Function>::Cast(args[0]));
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  stop_callback_.Reset(args.GetIsolate(), cb);
 }
 
 void ScopeBase::onrun(
@@ -176,12 +179,12 @@ void ScopeBase::onrun(
     return;
   }
 
-  if (start_callback_.IsEmpty()) {
-    start_callback_.Reset();
+  if (run_callback_.IsEmpty()) {
+    run_callback_.Reset();
   }
 
-  start_callback_ =
-    v8::Persistent<v8::Function>::New(v8::Local<v8::Function>::Cast(args[0]));
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  run_callback_.Reset(args.GetIsolate(), cb);
 }
 
 void ScopeBase::onsearch(
@@ -200,7 +203,7 @@ void ScopeBase::onsearch(
     search_callback_.Reset();
   }
 
-  search_callback_ =
-    v8::Persistent<v8::Function>::New(v8::Local<v8::Function>::Cast(args[0]));
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  search_callback_.Reset(args.GetIsolate(), cb);
 }
 

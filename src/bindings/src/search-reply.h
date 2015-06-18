@@ -19,7 +19,7 @@
 #ifndef _UNITY_JS_SEARCH_REPLY_H_
 #define _UNITY_JS_SEARCH_REPLY_H_
 
-#include <unity/scopes/SearchReply.h>
+#include <unity/scopes/SearchReplyProxyFwd.h>
 
 #include <v8-cpp.h>
 
@@ -27,7 +27,7 @@ class SearchReply
 {
  public:
   SearchReply(unity::scopes::SearchReplyProxy const& reply);
-  ~SearchReply() override;
+  ~SearchReply();
 
   v8::Local<v8::Value> register_category(v8::FunctionCallbackInfo<v8::Value> const& args);
   void push(v8::FunctionCallbackInfo<v8::Value> const& args);

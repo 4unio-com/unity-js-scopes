@@ -18,7 +18,8 @@
 
 #include "category.h"
 
-Category::Category() {
+Category::Category(unity::scopes::Category::SCPtr category)
+  : category_(category) {
 }
 
 Category::~Category() {
@@ -27,17 +28,21 @@ Category::~Category() {
 v8::Local<v8::Value> Category::id(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   v8::Isolate *isolate = args.GetIsolate();
-  return v8cpp::to_v8(isolate, unity::scopes::Category::id().c_str());
+  return v8cpp::to_v8(isolate, category_->id().c_str());
 }
 
 v8::Local<v8::Value> Category::title(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   v8::Isolate *isolate = args.GetIsolate();
-  return v8cpp::to_v8(isolate, unity::scopes::Category::title().c_str());
+  return v8cpp::to_v8(isolate, category_->title().c_str());
 }
 
 v8::Local<v8::Value> Category::icon(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   v8::Isolate *isolate = args.GetIsolate();
-  return v8cpp::to_v8(isolate, unity::scopes::Category::icon().c_str());
+  return v8cpp::to_v8(isolate, category_->icon().c_str());
+}
+
+unity::scopes::Category::SCPtr Category::get_category() {
+  return category_;
 }
