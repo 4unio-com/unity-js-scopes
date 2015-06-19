@@ -18,6 +18,7 @@
 
 var exports = module.exports = {}
 
+var lib = require('./unity_js_scopes_bindings');
 var core = require('./lib/scope-core.js');
 
 // Init the first time it is accessed
@@ -79,7 +80,8 @@ function setup_scope(scope_id, config_file) {
 exports = {
     init: function(scope_id, config_file) {
         setup_scope(scope_id, config_file);
-    }
+    },
+    lib: lib
     get me() {
         if (! self) {
             return null

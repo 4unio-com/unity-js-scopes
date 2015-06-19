@@ -79,6 +79,39 @@ v8::Handle<v8::Object> new_search_query(v8::FunctionCallbackInfo<v8::Value> cons
   return v8cpp::export_object<SearchQuery>(v8::Isolate::GetCurrent(), sq);
 }
 
+#if 0
+
+v8::Handle<v8::Object> new_preview_query(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 3) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  Result *r = v8cpp::import_object<Result>(v8::Isolate::GetCurrent(), args[0]->ToObject());
+
+  ActionMetaData *a =
+    v8cpp::import_object<ActionMetaData>(v8::Isolate::GetCurrent(), args[1]->ToObject());
+
+  if (!r || !a) {
+    throw std::runtime_error("Invalid arguments types");
+  }
+
+  if (!args[2]->IsFunction()) {
+    throw std::runtime_error("Invalid arguments types");
+  }
+
+  v8::Local<v8::Function> run_callback =
+    v8::Handle<v8::Function>::Cast(args[2]);
+
+  PreviewQuery *pq =
+    new PreviewQuery(
+        r->get_result(),
+        static_cast<const unity::scopes::ActionMetadata&>(*a),
+        run_callback);
+  return v8cpp::export_object<PreviewQuery>(v8::Isolate::GetCurrent(), pq);
+}
+
+#endif
+
 v8::Handle<v8::Object> new_categorised_result(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 1) {

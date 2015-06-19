@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var scopes = require('unity_js_scopes_bindings')
+var scopes = require('unity-js-scopes')
 
 scopes.me.onsearch(function(canned_query, metadata) {
-    return scopes.new_search_query(
+    return scopes.lib.new_search_query(
         canned_query,
         metadata,
         // run
@@ -30,7 +30,7 @@ scopes.me.onsearch(function(canned_query, metadata) {
                 search_reply.register_category("tracks", "", "");
 
             var categorised_result =
-                scopes.new_categorised_result(category);
+                scopes.lib.new_categorised_result(category);
             categorised_result.set_uri("http://www.ubuntu.com");
             categorised_result.set_title("Ubuntu");
 
@@ -43,4 +43,3 @@ scopes.me.onsearch(function(canned_query, metadata) {
 
 scopes.me.onpreview(function(result, action_metadata) {
 });
-

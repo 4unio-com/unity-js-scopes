@@ -16,14 +16,13 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-project(scopes-binding CXX)
+project(unity-js-scopes-launcher CXX)
 
 file(
     GLOB
     SRC_FILES
-    ./src/*.h
-    ./src/*.cc
-    ./lib/*.js
+    ./*.h
+    ./*.cc
 )
 
 add_definitions(
@@ -37,68 +36,52 @@ add_definitions(
 
 link_directories(
   ${NODE_DEPS_LIB_DIRS}
+  ${Boost_LIB_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../deps/io.js/out/Release
 )
 
-add_library(
-    unity_js_scopes_bindings SHARED
+set(EXECUTABLE_NAME unity-js-scopes-launcher)
+
+add_executable(
+    ${EXECUTABLE_NAME}
     ${SRC_FILES}
-)
+    )
 
 find_package(PkgConfig)
-
-find_package(
-  Boost
-  REQUIRED
-  )
-
-pkg_check_modules(
-  SCOPE
-  libunity-scopes>=0.6.0
-  net-cpp>=1.1.0
-  REQUIRED
-)
+find_package(Boost
+  COMPONENTS system filesystem
+  REQUIRED)
 
 include_directories(
-  "${CMAKE_SOURCE_DIR}/include"
   ${Boost_INCLUDE_DIRS}
+  "${CMAKE_SOURCE_DIR}/include"
   ${SCOPE_INCLUDE_DIRS}
   )
 
 target_link_libraries(
-    unity_js_scopes_bindings
+  ${EXECUTABLE_NAME}
 
-#    cares
-#    http_parser
-#    iojs
-#    openssl
-#    uv
-#    zlib
-    
-#    v8_base
-#    v8_libbase
-#    v8_libplatform
-#    v8_nosnapshot
+  cares
+  http_parser
+  iojs
+  openssl
+  uv
+  zlib
+  
+  v8_base
+  v8_libbase
+  v8_libplatform
+  v8_nosnapshot
 
-    icui18n
-    icuuc
-    icudata
+  ${Boost_LIBRARIES}
 
-    pthread
-    dl
-)
+  icui18n
+  icuuc
+  icudata
+  
+  pthread
+  dl
+  )
 
-set_target_properties(
-    unity_js_scopes_bindings
-    PROPERTIES
-    PREFIX ""
-    SUFFIX ".node"
-)
-
-install(DIRECTORY .
-  DESTINATION /node_modules
-  FILES_MATCHING PATTERN "*.[js|node]"
-  PATTERN "src" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE)
-
-install(FILES ${ADDON_FILES}
-        RUNTIME DESTINATION /node_modules)
+install(TARGETS ${EXECUTABLE_NAME}
+        RUNTIME DESTINATION /usr/bin)

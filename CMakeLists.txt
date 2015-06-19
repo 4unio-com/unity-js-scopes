@@ -37,7 +37,10 @@ if(NOT _DEPS_RESULT EQUAL 0)
   message(FATAL_ERROR "Retriving deps failed")
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/cmake)
+set(CMAKE_MODULE_PATH
+  ${CMAKE_MODULE_PATH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/cmake
+  )
 
 find_package(Node REQUIRED)
 

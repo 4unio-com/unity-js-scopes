@@ -5,10 +5,16 @@ cd $DIR
 
 # io.js
 
-rm -fR io.js
-git clone --depth 1 https://github.com/nodejs/io.js.git
+if [ -d "io.js" ]; then
+    cd io.js; git pull; cd ..
+else
+    git clone --depth 1 https://github.com/nodejs/io.js.git
+fi
 
 # v8cpp
 
-rm -fR v8-cpp
-bzr branch lp:v8-cpp
+if [ -d "v8-cpp" ]; then
+    cd v8-cpp; bzr pull; cd ..
+else
+    bzr branch lp:v8-cpp
+fi

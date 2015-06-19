@@ -123,7 +123,34 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
 
 unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
       unity::scopes::Result const &result,
-      unity::scopes::ActionMetadata const &metadata) {
+      unity::scopes::ActionMetadata const &action_metadata) {
+  if (preview_callback_.IsEmpty()) {
+    return nullptr;
+  }
+
+#if 0
+  // wrap & fire
+  Result *r = new Result(result);
+  ActionMetaData *m = new ActionMetaData(action_metadata);
+
+  v8::Isolate *isolate = v8::Isolate::GetCurrent();
+
+  v8::Local<v8::Function> preview_callback =
+    v8cpp::to_local<v8::Function>(isolate, preview_callback_);
+
+  v8::Handle<v8::Value> result = 
+    v8cpp::call_v8(isolate,
+                   preview_callback,
+                   v8cpp::export_object<Result>(isolate, r),
+                   v8cpp::export_object<ActionMetaData>(isolate, m));
+
+  // TODO watch out release
+  PreviewQuery * sq =
+    v8cpp::import_object<PreviewQuery>(isolate, result);
+
+  return unity::scopes::PreviewQuery::UPtr(sq);
+#endif
+
   return nullptr;
 }
 
@@ -205,5 +232,25 @@ void ScopeBase::onsearch(
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   search_callback_.Reset(args.GetIsolate(), cb);
+}
+
+void ScopeBase::onpreview(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 1) {
+    // TODO fix
+    return;
+  }
+
+  if (!args[0]->IsFunction()) {
+    // TODO fix
+    return;
+  }
+
+  if (preview_callback_.IsEmpty()) {
+    preview_callback_.Reset();
+  }
+
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  preview_callback_.Reset(args.GetIsolate(), cb);
 }
 

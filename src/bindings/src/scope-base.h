@@ -35,6 +35,7 @@ class ScopeBase : public unity::scopes::ScopeBase
   void onrun(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   void onsearch(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void onpreview(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   // unity::scopes::ScopeBase implementation
   void start(std::string const& scope_id) override;
@@ -44,6 +45,10 @@ class ScopeBase : public unity::scopes::ScopeBase
   unity::scopes::SearchQueryBase::UPtr search(
       unity::scopes::CannedQuery const &query,
       unity::scopes::SearchMetadata const &metadata) override;
+
+  unity::scopes::PreviewQueryBase::UPtr preview(
+      unity::scopes::Result const &result,
+      unity::scopes::ActionMetadata const &metadata) override;
 
   unity::scopes::ActivationQueryBase::UPtr activate(
       unity::scopes::Result const &result,
@@ -55,10 +60,6 @@ class ScopeBase : public unity::scopes::ScopeBase
       std::string const &widget_id,
       std::string const &action_id) override;
 
-  unity::scopes::PreviewQueryBase::UPtr preview(
-      unity::scopes::Result const &result,
-      unity::scopes::ActionMetadata const &metadata) override;
-
  private:
 
   v8::Persistent<v8::Function> start_callback_;
@@ -66,6 +67,7 @@ class ScopeBase : public unity::scopes::ScopeBase
   v8::Persistent<v8::Function> run_callback_;
 
   v8::Persistent<v8::Function> search_callback_;
+  v8::Persistent<v8::Function> preview_callback_;
 };
 
 #endif // _UNITY_JS_SCOPES_BASE_H_
