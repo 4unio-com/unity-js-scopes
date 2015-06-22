@@ -31,7 +31,7 @@ function Scope(scope_binding) {
 Scope.property = {
     ready: function() {
         return this._scope_binding.run(this._base);
-    }
+    },
     run: function(callback) {
         this._base.run(callback);
     },
@@ -56,16 +56,16 @@ Scope.property = {
     get scope_directory() {
         return this._base.scope_directory;
     },
-    get cache_directory: function() {
+    get cache_directory() {
         return this._base.scope_directory;
     },
-    get tmp_directory: function() {
+    get tmp_directory() {
         return this._base.scope_directory;
     },
-    get registry: function() {
+    get registry() {
         return null
     },
-    get settings: function() {
+    get settings() {
         return null
     },
 };
@@ -82,11 +82,15 @@ exports = {
         setup_scope(scope_id, config_file);
     },
     lib: lib
-    get me() {
-        if (! self) {
-            return null
-        }
-        return self;
-    }
 }
 
+Object.defineProperty(exports,
+                      "me",
+                      {
+                          get: function() {
+                              if (! self) {
+                                  return null
+                              }
+                              return self;
+                          }
+                      });
