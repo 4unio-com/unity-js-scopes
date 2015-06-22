@@ -39,8 +39,12 @@ link_directories(
   ${NODE_DEPS_LIB_DIRS}
 )
 
+set(SCOPE_NODEJS_ADDON_BIN_NAME
+  unity_js_scopes_bindings
+  )
+
 add_library(
-    unity_js_scopes_bindings SHARED
+    ${SCOPE_NODEJS_ADDON_BIN_NAME} SHARED
     ${SRC_FILES}
 )
 
@@ -65,40 +69,32 @@ include_directories(
   )
 
 target_link_libraries(
-    unity_js_scopes_bindings
+  ${SCOPE_NODEJS_ADDON_BIN_NAME}
 
-#    cares
-#    http_parser
-#    iojs
-#    openssl
-#    uv
-#    zlib
-    
-#    v8_base
-#    v8_libbase
-#    v8_libplatform
-#    v8_nosnapshot
+  icui18n
+  icuuc
+  icudata
 
-    icui18n
-    icuuc
-    icudata
-
-    pthread
-    dl
+  pthread
+  dl
 )
 
 set_target_properties(
-    unity_js_scopes_bindings
-    PROPERTIES
-    PREFIX ""
-    SUFFIX ".node"
-)
+  ${SCOPE_NODEJS_ADDON_BIN_NAME}
+  PROPERTIES
+  PREFIX ""
+  SUFFIX ".node"
+  )
+
+set(ADDON_BINARY_FILES
+  ${SCOPE_NODEJS_ADDON_BIN_NAME}.node
+  )
 
 install(DIRECTORY .
-  DESTINATION /node_modules
-  FILES_MATCHING PATTERN "*.[js|node]"
+  DESTINATION /node_modules/unity-js-scopes
+  FILES_MATCHING PATTERN "*.js"
   PATTERN "src" EXCLUDE
   PATTERN "CMakeFiles" EXCLUDE)
 
-install(FILES ${ADDON_FILES}
-        RUNTIME DESTINATION /node_modules)
+install(FILES ${ADDON_BINARY_FILES}
+        DESTINATION /node_modules/unity-js-scopes)
