@@ -18,10 +18,10 @@
 
 var exports = module.exports = {};
 
-var scope_binding = require('unity_js_scopes_bindings')
+var scope_binding = require('unity-js-scopes')
 
 exports = {
     new_scope: function(scope_id, config_file) {
         return new scope_binding.new_scope(scope_id, config_file);
-    };
+    }
 };

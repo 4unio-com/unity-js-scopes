@@ -179,4 +179,4 @@ void InitAll(v8::Handle<v8::Object> exports)
     exports->SetPrototype(module.create_prototype());
 }
 
-NODE_MODULE(addon, InitAll)
+NODE_MODULE(unity_js_scopes_bindings, InitAll)

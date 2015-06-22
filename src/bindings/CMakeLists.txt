@@ -37,6 +37,7 @@ add_definitions(
 
 link_directories(
   ${NODE_DEPS_LIB_DIRS}
+  ${SCOPE_LIB_DIRS}
 )
 
 set(SCOPE_NODEJS_ADDON_BIN_NAME
@@ -70,6 +71,8 @@ include_directories(
 
 target_link_libraries(
   ${SCOPE_NODEJS_ADDON_BIN_NAME}
+
+  ${SCOPE_LIBRARIES}
 
   icui18n
   icuuc
