@@ -42,6 +42,8 @@ class Result
   v8::Local<v8::Value> dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args);
   void set_dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+  const unity::scopes::Result& get_result() const;
+
  private:
   unity::scopes::Result result_;
 };

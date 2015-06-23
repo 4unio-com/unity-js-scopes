@@ -23,17 +23,18 @@ JsScope::JsScope(
       const std::string& config_file)
       : runtime_(
           unity::scopes::Runtime::create(
-            config_file)) {
+            config_file)),
+        scope_base_(new ScopeBase()),
+        scope_id_(scope_id) {
 }
 JsScope::~JsScope() {
 }
 
-/*
 v8::Handle<v8::Object> JsScope::scope_base() {
   // TODO: !!!! wrong object ownership management
-  return v8cpp::export_object<ScopeBase>(Isolate::GetCurrent(), scope_base_.get());
+  return v8cpp::export_object<ScopeBase>(v8::Isolate::GetCurrent(), scope_base_.get());
 }
-*/
+
 void JsScope::run(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  //runtime_.run_scope(scope_base_.get());
+  runtime_->run_scope(scope_base_.get(), scope_id_);
 }

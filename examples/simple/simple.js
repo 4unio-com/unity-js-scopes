@@ -27,7 +27,7 @@ scopes.me.onsearch(function(canned_query, metadata) {
             var qs =
                 canned_query.query_string();
             var category =
-                search_reply.register_category("tracks", "", "");
+                search_reply.register_category("simple", "hello world from js", "");
 
             var categorised_result =
                 scopes.lib.new_categorised_result(category);

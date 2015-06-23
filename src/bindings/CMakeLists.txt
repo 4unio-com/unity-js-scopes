@@ -24,7 +24,7 @@ file(
     ./src/*.h
     ./src/*.cc
     ./lib/*.js
-)
+    )
 
 add_definitions(
     -std=c++11
@@ -33,12 +33,12 @@ add_definitions(
     -Wall
     -Wextra
     -fPIC
-)
+    )
 
 link_directories(
   ${NODE_DEPS_LIB_DIRS}
   ${SCOPE_LIB_DIRS}
-)
+  )
 
 set(SCOPE_NODEJS_ADDON_BIN_NAME
   unity_js_scopes_bindings
@@ -47,7 +47,7 @@ set(SCOPE_NODEJS_ADDON_BIN_NAME
 add_library(
     ${SCOPE_NODEJS_ADDON_BIN_NAME} SHARED
     ${SRC_FILES}
-)
+    )
 
 find_package(PkgConfig)
 
@@ -61,7 +61,7 @@ pkg_check_modules(
   libunity-scopes>=0.6.0
   net-cpp>=1.1.0
   REQUIRED
-)
+  )
 
 include_directories(
   "${CMAKE_SOURCE_DIR}/include"
@@ -80,7 +80,7 @@ target_link_libraries(
 
   pthread
   dl
-)
+  )
 
 set_target_properties(
   ${SCOPE_NODEJS_ADDON_BIN_NAME}
@@ -97,7 +97,9 @@ install(DIRECTORY .
   DESTINATION /node_modules/unity-js-scopes
   FILES_MATCHING PATTERN "*.js"
   PATTERN "src" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE)
+  PATTERN "CMakeFiles" EXCLUDE
+  )
 
 install(FILES ${ADDON_BINARY_FILES}
-        DESTINATION /node_modules/unity-js-scopes)
+  DESTINATION /node_modules/unity-js-scopes
+  )

@@ -16,10 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var scope_binding = require('../unity_js_scopes_bindings')
+#ifndef _UNITY_JS_CATEGORY_RENDERER_H_
+#define _UNITY_JS_CATEGORY_RENDERER_H_
 
-module.exports = {
-    new_scope: function(scope_id, config_file) {
-        return new scope_binding.new_scope(scope_id, config_file);
-    }
+#include <unity/scopes/CategoryRenderer.h>
+
+#include <v8-cpp.h>
+
+class CategoryRenderer
+{
+ public:
+  CategoryRenderer(std::string const &json_text);
+  ~CategoryRenderer();
+
+  const unity::scopes::CategoryRenderer&
+    get_renderer() const;
+
+  // v8 implementation
+  v8::Local<v8::Value> data(v8::FunctionCallbackInfo<v8::Value> const& args);
+
+ private:
+
+  unity::scopes::CategoryRenderer renderer_;
 };
+
+#endif // _UNITY_JS_SEARCH_METADATA_H_

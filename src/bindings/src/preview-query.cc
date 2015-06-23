@@ -21,14 +21,19 @@
 PreviewQuery::PreviewQuery(
       unity::scopes::Result const& result,
       unity::scopes::ActionMetadata const& metadata,
-      const v8::Local<v8::Function> &run_callback)
+      const v8::Local<v8::Function> &run_callback,
+      const v8::Local<v8::Function> &cancelled_callback)
   : unity::scopes::PreviewQueryBase(result, metadata),
-    run_callback_(v8::Isolate::GetCurrent(), run_callback) {
+    run_callback_(v8::Isolate::GetCurrent(), run_callback),
+    cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
 }
 
 PreviewQuery::~PreviewQuery() {
   if (!run_callback_.IsEmpty()) {
     run_callback_.Reset();
+  }
+  if (!cancelled_callback_.IsEmpty()) {
+    cancelled_callback_.Reset();
   }
 }
 
@@ -55,3 +60,5 @@ void PreviewQuery::onrun(
 void PreviewQuery::run(unity::scopes::PreviewReplyProxy const& reply) {
 }
 
+void PreviewQuery::cancelled() {
+}

@@ -28,19 +28,22 @@ class PreviewQuery : public unity::scopes::PreviewQueryBase
  public:
   PreviewQuery(unity::scopes::Result const& result,
                unity::scopes::ActionMetadata const& metadata,
-               const v8::Local<v8::Function> &run_callback);
+               const v8::Local<v8::Function> &run_callback,
+               const v8::Local<v8::Function> &cancelled_callback);
   ~PreviewQuery() override;
 
   // PreviewQueryBase implementation
   void run(unity::scopes::PreviewReplyProxy const& reply);
+  void cancelled();
 
   // v8 binding
   void onrun(v8::FunctionCallbackInfo<v8::Value> const& args);
   //  v8::Local<v8::Value> get_result(v8::FunctionCallbackInfo<v8::Value> const& args);
   //  v8::Local<v8::Value> get_action_metadata(v8::FunctionCallbackInfo<v8::Value> const& args);
-
+  
  private:
   v8::Persistent<v8::Function> run_callback_;
+  v8::Persistent<v8::Function> cancelled_callback_;
 };
 
 #endif // _UNITY_JS_PREVIEW_QUERY_H_

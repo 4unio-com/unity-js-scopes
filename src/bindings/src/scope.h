@@ -36,13 +36,15 @@ class JsScope
           const std::string& config_file);
   ~JsScope();
 
-  //  v8::Handle<v8::Object> scope_base();
+  v8::Handle<v8::Object> scope_base();
 
   void run(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
 
   unity::scopes::Runtime::UPtr runtime_;
+  std::unique_ptr<ScopeBase> scope_base_;
+  std::string scope_id_;
 };
 
 #endif // _UNITY_JS_SCOPES_BASE_H_

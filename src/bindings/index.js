@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var exports = module.exports = {}
-
 var lib = require('./unity_js_scopes_bindings');
 var core = require('./lib/scope-core.js');
 
@@ -27,7 +25,7 @@ var self;
 function Scope(scope_binding) {
     this._scope_binding = scope_binding;
     this._base = scope_binding.scope_base();
-}
+ }
 Scope.property = {
     ready: function() {
         return this._scope_binding.run(this._base);
@@ -77,20 +75,23 @@ function setup_scope(scope_id, config_file) {
     self = new Scope(core.new_scope(scope_id, config_file));
 }
 
-exports = {
+module.exports = {
     init: function(scope_id, config_file) {
         setup_scope(scope_id, config_file);
     },
     lib: lib
 }
 
-Object.defineProperty(exports,
+Object.defineProperty(module.exports,
                       "me",
                       {
-                          get: function() {
+                          value: function() {
+                              console.log('self ' + self)
                               if (! self) {
                                   return null
                               }
                               return self;
-                          }
+                          },
+                          writable: false,
+                          enumerable: true
                       });

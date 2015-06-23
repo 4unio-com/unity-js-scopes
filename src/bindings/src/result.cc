@@ -73,3 +73,7 @@ void Result::set_dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args) {
   }
   result_.set_dnd_uri(*(v8::String::Utf8Value(args[0]->ToString())));
 }
+
+const unity::scopes::Result& Result::get_result() const {
+  return result_;
+}

@@ -16,24 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_ACTION_METADATA_H_
-#define _UNITY_JS_ACTION_METADATA_H_
+#ifndef _UNITY_JS_COLUMN_LAYOUT_H_
+#define _UNITY_JS_COLUMN_LAYOUT_H_
 
-#include <unity/scopes/ActionMetadata.h>
+#include <unity/scopes/ColumnLayout.h>
 
 #include <v8-cpp.h>
 
-class ActionMetaData
+class ColumnLayout
 {
  public:
-  ActionMetaData(unity::scopes::ActionMetadata const &metadata);
-  ~ActionMetaData();
+  ColumnLayout(int num_of_columns);
+  ~ColumnLayout();
 
-  const unity::scopes::ActionMetadata& get_action_metadata() const;
+  // v8 implementation
+  void add_column(v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> size(v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> number_of_columns(v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> column(v8::FunctionCallbackInfo<v8::Value> const& args);
+
+  const unity::scopes::ColumnLayout&
+    get_column_layout() const;
 
  private:
 
-  unity::scopes::ActionMetadata const &metadata_;
+  unity::scopes::ColumnLayout column_layout_;
 };
 
-#endif // _UNITY_JS_ACTION_METADATA_H_
+#endif // _UNITY_JS_COLUMN_LAYOUT_H_

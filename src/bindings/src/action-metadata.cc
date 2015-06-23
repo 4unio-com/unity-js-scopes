@@ -21,5 +21,11 @@
 ActionMetaData::ActionMetaData(unity::scopes::ActionMetadata const &metadata)
   : metadata_(metadata) {
 }
+
 ActionMetaData::~ActionMetaData() {
+}
+
+const unity::scopes::ActionMetadata&
+ActionMetaData::get_action_metadata() const {
+  return metadata_;
 }

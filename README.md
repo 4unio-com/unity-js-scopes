@@ -6,6 +6,6 @@ IoJs addon for Ubuntu unity-scopes-api bindings
 Compiling
 ---------
 
-cmake .
+NODE_ROOT_DIR=`pwd`/deps/io.js cmake .
 make deps
 make

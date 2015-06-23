@@ -21,6 +21,9 @@
 #include "canned-query.h"
 #include "search-query.h"
 #include "search-metadata.h"
+#include "result.h"
+#include "action-metadata.h"
+#include "preview-query.h"
 
 ScopeBase::ScopeBase() {
 }
@@ -128,7 +131,6 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
     return nullptr;
   }
 
-#if 0
   // wrap & fire
   Result *r = new Result(result);
   ActionMetaData *m = new ActionMetaData(action_metadata);
@@ -138,7 +140,7 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
   v8::Local<v8::Function> preview_callback =
     v8cpp::to_local<v8::Function>(isolate, preview_callback_);
 
-  v8::Handle<v8::Value> result = 
+  v8::Handle<v8::Value> wrapped_preview = 
     v8cpp::call_v8(isolate,
                    preview_callback,
                    v8cpp::export_object<Result>(isolate, r),
@@ -146,12 +148,9 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
 
   // TODO watch out release
   PreviewQuery * sq =
-    v8cpp::import_object<PreviewQuery>(isolate, result);
+    v8cpp::import_object<PreviewQuery>(isolate, wrapped_preview);
 
-  return unity::scopes::PreviewQuery::UPtr(sq);
-#endif
-
-  return nullptr;
+  return unity::scopes::PreviewQueryBase::UPtr(sq);
 }
 
 void ScopeBase::onstart(

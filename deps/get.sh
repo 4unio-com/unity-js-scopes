@@ -16,5 +16,5 @@ fi
 if [ -d "v8-cpp" ]; then
     cd v8-cpp; bzr pull; cd ..
 else
-    bzr branch lp:v8-cpp
+    bzr branch -r4 lp:v8-cpp
 fi
