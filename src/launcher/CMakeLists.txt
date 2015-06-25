@@ -59,12 +59,12 @@ include_directories(
 target_link_libraries(
   ${EXECUTABLE_NAME}
 
+  -Wl,--whole-archive iojs -Wl,--no-whole-archive
   uv
   cares
   openssl
   zlib
   http_parser
-  -Wl,--whole-archive iojs -Wl,--no-whole-archive
 
   v8_base
   v8_libbase
