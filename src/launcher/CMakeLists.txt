@@ -35,9 +35,7 @@ add_definitions(
 )
 
 link_directories(
-  ${NODE_DEPS_LIB_DIRS}
   ${Boost_LIB_DIRS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/../../deps/io.js/out/Release
 )
 
 set(EXECUTABLE_NAME unity-js-scopes-launcher)
@@ -61,13 +59,13 @@ include_directories(
 target_link_libraries(
   ${EXECUTABLE_NAME}
 
-  cares
-  http_parser
-  iojs
-  openssl
   uv
+  cares
+  openssl
   zlib
-  
+  http_parser
+  -Wl,--whole-archive iojs -Wl,--no-whole-archive
+
   v8_base
   v8_libbase
   v8_libplatform

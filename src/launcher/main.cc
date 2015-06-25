@@ -23,13 +23,8 @@
 
 #include <boost/filesystem.hpp>
 
-namespace {
-  const char kScopeInitPathArgumentHeader[] = "--scope=";
-}
-
 void usage() {
   std::cout << "unity-js-scopes-launcher "
-            << kScopeInitPathArgumentHeader
             << "<path-to-ini-file>"
             << std::endl;
 }
@@ -40,18 +35,11 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  std::string ini_filename;
-  for (int i = 0; i < argc; ++i) {
-    std::string argument(argv[i]);
-    if (argument.substr(0, sizeof(kScopeInitPathArgumentHeader)-1)
-            == kScopeInitPathArgumentHeader) {
-      ini_filename = argument.substr(sizeof(kScopeInitPathArgumentHeader)-1);
-    }
-  }
+  std::string ini_filename(argv[1]);
 
   if (ini_filename.empty()
       || !boost::filesystem::exists(ini_filename)) {
-    std::cout << "Invalid or non existant scope ini file name";
+    std::cout << "Invalid or non existant scope ini file name: " << ini_filename << std::endl;
     usage();
     return EXIT_FAILURE;
   }
