@@ -18,6 +18,8 @@
 
 var scopes = require('unity-js-scopes')
 
+scopes.initialize('simple.ini', '')
+
 scopes.me.onsearch(function(canned_query, metadata) {
     return scopes.lib.new_search_query(
         canned_query,

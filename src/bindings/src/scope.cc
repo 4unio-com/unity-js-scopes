@@ -26,6 +26,7 @@ JsScope::JsScope(
             config_file)),
         scope_base_(new ScopeBase()),
         scope_id_(scope_id) {
+  std::cout << "runtime: " << runtime_.get();
 }
 JsScope::~JsScope() {
 }

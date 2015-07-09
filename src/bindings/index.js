@@ -25,22 +25,25 @@ var self;
 function Scope(scope_binding) {
     this._scope_binding = scope_binding;
     this._base = scope_binding.scope_base();
- }
-Scope.property = {
+}
+Scope.prototype = {
     ready: function() {
-        return this._scope_binding.run(this._base);
+        return this._scope_binding.run();
     },
     run: function(callback) {
-        this._base.run(callback);
+        this._base.onrun(callback);
     },
     start: function(callback) {
-        this._base.start(callback);
+        this._base.onstart(callback);
     },
     stop: function(callback) {
-        this._base.stop(callback);
+        this._base.onstop(callback);
     },
     search: function(callback) {
-        this._base.search(callback);
+        this._base.onsearch(callback);
+    },
+    preview: function(callback) {
+        this._base.onpreview(callback);
     },
     activate: function(callback) {
         // TODO
@@ -48,17 +51,14 @@ Scope.property = {
     performAction: function(callback) {
         // TODO
     },
-    preview: function(callback) {
-        this._base.preview(callback);
-    },
     get scope_directory() {
-        return this._base.scope_directory;
+        return this._base.get_scope_directory();
     },
     get cache_directory() {
-        return this._base.scope_directory;
+        return this._base.get_cache_directory();
     },
     get tmp_directory() {
-        return this._base.scope_directory;
+        return this._base.get_tmp_directory();
     },
     get registry() {
         return null
@@ -68,30 +68,27 @@ Scope.property = {
     },
 };
 
-function setup_scope(scope_id, config_file) {
-    if (self) {
-        return;
-    }
-    self = new Scope(core.new_scope(scope_id, config_file));
-}
-
 module.exports = {
-    init: function(scope_id, config_file) {
-        setup_scope(scope_id, config_file);
+    initialize: function(scope_id, config_file) {
+        if (self) {
+            return;
+        }
+        self = new Scope(
+            core.new_scope(
+                scope_id,
+                config_file))
     },
     lib: lib
 }
 
-Object.defineProperty(module.exports,
-                      "me",
-                      {
-                          value: function() {
-                              console.log('self ' + self)
-                              if (! self) {
-                                  return null
-                              }
-                              return self;
-                          },
-                          writable: false,
-                          enumerable: true
-                      });
+Object.defineProperty(
+    module.exports,
+    "me",
+    {
+        get: function() {
+            if (! self) {
+                return null
+            }
+            return self;
+        },
+    });

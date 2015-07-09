@@ -29,6 +29,8 @@ class SearchMetaData : public unity::scopes::SearchMetadata
   SearchMetaData(const unity::scopes::SearchMetadata & other);
   ~SearchMetaData() override;
 
+  v8::Local<v8::Value> get_result(v8::FunctionCallbackInfo<v8::Value> const& args);
+
  private:
 };
 

@@ -36,6 +36,10 @@ class SearchQuery : public unity::scopes::SearchQueryBase
   void onrun(v8::FunctionCallbackInfo<v8::Value> const& args);
   void oncancelled(v8::FunctionCallbackInfo<v8::Value> const& args);
   v8::Local<v8::Value> query(v8::FunctionCallbackInfo<v8::Value> const& args);
+
+  v8::Local<v8::Value> valid(v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> settings(v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> search_metadata(v8::FunctionCallbackInfo<v8::Value> const& args);
  
   // unity::scopes::SearchQueryBase implementation
   void run(unity::scopes::SearchReplyProxy const& reply) override;

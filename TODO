@@ -1,0 +1,2 @@
+- Add proper mixins/base classes for things like QueryBase for all derived classes for common v8 bindings
+- 

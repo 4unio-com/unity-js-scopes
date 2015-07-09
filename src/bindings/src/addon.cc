@@ -20,6 +20,9 @@
 
 #include <stdexcept>
 
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem.hpp>
+
 #include <node.h>
 
 #include "scope-base.h"
@@ -28,15 +31,18 @@
 #include "category.h"
 #include "categorised-result.h"
 #include "category-renderer.h"
+#include "column-layout.h"
 #include "search-query.h"
 #include "search-reply.h"
 #include "search-metadata.h"
 #include "result.h"
 #include "action-metadata.h"
 #include "preview-query.h"
+#include "preview-reply.h"
 #include "preview-widget.h"
 
-v8::Handle<v8::Object> new_scope(v8::FunctionCallbackInfo<v8::Value> const& args) {
+v8::Handle<v8::Object> new_scope(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 2) {
     throw std::runtime_error("Invalid number of arguments");
   }
@@ -44,23 +50,49 @@ v8::Handle<v8::Object> new_scope(v8::FunctionCallbackInfo<v8::Value> const& args
     throw std::runtime_error("Invalid arguments types");
   }
 
-  std::string scope_id = *(v8::String::Utf8Value(args[0]->ToString()));
-  std::string config_file = *(v8::String::Utf8Value(args[1]->ToString()));
+  std::string scope_id =
+    *(v8::String::Utf8Value(args[0]->ToString()));
 
-  JsScope* scope = new JsScope(scope_id, config_file);
-  return v8cpp::export_object<JsScope>(v8::Isolate::GetCurrent(), scope);
+  if (!boost::ends_with(scope_id, ".ini")) {
+    throw std::runtime_error("Invalid scope id (ini file)");
+  }
+
+  if (!boost::filesystem::path(scope_id).is_absolute()) {
+    auto p =
+      boost::filesystem::current_path() /= boost::filesystem::path(scope_id);
+
+    if (!boost::filesystem::exists(p)) {
+      throw std::runtime_error("Invalid scope id (file not found)");
+    }
+
+    scope_id = p.native();
+  }
+
+  std::string config_file =
+    *(v8::String::Utf8Value(args[1]->ToString()));
+
+  JsScope* scope =
+    new JsScope(scope_id, config_file);
+
+  return v8cpp::export_object<JsScope>(
+      v8::Isolate::GetCurrent(), scope);
 }
 
-v8::Handle<v8::Object> new_search_query(v8::FunctionCallbackInfo<v8::Value> const& args) {
+v8::Handle<v8::Object> new_search_query(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 4) {
     throw std::runtime_error("Invalid number of arguments");
   }
 
   CannedQuery *c =
-    v8cpp::import_object<CannedQuery>(v8::Isolate::GetCurrent(), args[0]->ToObject());
+    v8cpp::import_object<CannedQuery>(
+        v8::Isolate::GetCurrent(),
+        args[0]->ToObject());
 
   SearchMetaData *s =
-    v8cpp::import_object<SearchMetaData>(v8::Isolate::GetCurrent(), args[1]->ToObject());
+    v8cpp::import_object<SearchMetaData>(
+        v8::Isolate::GetCurrent(),
+        args[1]->ToObject());
 
   if (!c || !s) {
     throw std::runtime_error("Invalid arguments types");
@@ -81,6 +113,7 @@ v8::Handle<v8::Object> new_search_query(v8::FunctionCallbackInfo<v8::Value> cons
         static_cast<const unity::scopes::SearchMetadata&>(*s),
         run_callback,
         cancelled_callback);
+
   return v8cpp::export_object<SearchQuery>(v8::Isolate::GetCurrent(), sq);
 }
 
@@ -96,6 +129,7 @@ v8::Handle<v8::Object> new_category_renderer(
   std::string json_text = *(v8::String::Utf8Value(args[0]->ToString()));
 
   CategoryRenderer* category_renderer = new CategoryRenderer(json_text);
+
   return v8cpp::export_object<CategoryRenderer>(
       v8::Isolate::GetCurrent(), category_renderer);
 }
@@ -198,6 +232,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<JsScope> js_scope(isolate);
     js_scope
+      .add_method("scope_base", &JsScope::scope_base)
       .add_method("run", &JsScope::run);
 
     v8cpp::Class<ScopeBase> scope_base(isolate);
@@ -205,7 +240,13 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onstart", &ScopeBase::onstart)
       .add_method("onstop", &ScopeBase::onstop)
       .add_method("onrun", &ScopeBase::onrun)
-      .add_method("onsearch", &ScopeBase::onsearch);
+      .add_method("onsearch", &ScopeBase::onsearch)
+      .add_method("onpreview", &ScopeBase::onpreview)
+      .add_method("get_scope_directory", &ScopeBase::get_scope_directory)
+      .add_method("get_cache_directory", &ScopeBase::get_cache_directory)
+      .add_method("get_tmp_directory", &ScopeBase::get_tmp_directory);
+
+    v8cpp::Class<ActionMetaData> action_metadata(isolate);
 
     v8cpp::Class<Category> category(isolate);
     category
@@ -223,30 +264,16 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("query_string", &CannedQuery::query_string)
       .add_method("to_uri", &CannedQuery::to_uri);
 
-    v8cpp::Class<SearchReply> search_reply(isolate);
-    search_reply
-      .add_method("register_category", &SearchReply::register_category)
-      .add_method("push", &SearchReply::push);
+    v8cpp::Class<CategoryRenderer> category_renderer(isolate);
+    category_renderer
+      .add_method("data", &CategoryRenderer::data);
 
-    v8cpp::Class<Result> result(isolate);
-    result
-      .add_method("art", &Result::art)
-      .add_method("set_art", &Result::set_art)
-      .add_method("title", &Result::title)
-      .add_method("set_title", &Result::set_title)
-      .add_method("dnd_uri", &Result::dnd_uri)
-      .add_method("set_dnd_uri", &Result::set_dnd_uri)
-      .add_method("uri", &Result::uri)
-      .add_method("set_uri", &Result::set_uri);
-
-    v8cpp::Class<SearchQuery> search_query(isolate);
-    search_query
-      .add_method("onrun", &SearchQuery::onrun)
-      .add_method("oncancelled", &SearchQuery::oncancelled);
-
-    v8cpp::Class<ActionMetaData> action_metadata(isolate);
-
-    v8cpp::Class<SearchMetaData> search_metadata(isolate);
+    v8cpp::Class<ColumnLayout> column_layout(isolate);
+    column_layout
+      .add_method("add_column", &ColumnLayout::add_column)
+      .add_method("size", &ColumnLayout::size)
+      .add_method("number_of_columns", &ColumnLayout::number_of_columns)
+      .add_method("column", &ColumnLayout::column);
 
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
@@ -259,6 +286,39 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("attribute_values", &PreviewWidget::attribute_values)
       .add_method("widgets", &PreviewWidget::widgets)
       .add_method("data", &PreviewWidget::data);
+
+    v8cpp::Class<PreviewQuery> preview_query(isolate);
+    preview_query
+      .add_method("run", &PreviewQuery::run)
+      .add_method("cancelled", &PreviewQuery::cancelled);
+
+    v8cpp::Class<PreviewReply> preview_reply(isolate);
+    preview_reply
+      .add_method("register_layout", &PreviewReply::register_layout)
+      .add_method("push", &PreviewReply::push);
+
+    v8cpp::Class<Result> result(isolate);
+    result
+      .add_method("art", &Result::art)
+      .add_method("set_art", &Result::set_art)
+      .add_method("title", &Result::title)
+      .add_method("set_title", &Result::set_title)
+      .add_method("dnd_uri", &Result::dnd_uri)
+      .add_method("set_dnd_uri", &Result::set_dnd_uri)
+      .add_method("uri", &Result::uri)
+      .add_method("set_uri", &Result::set_uri);
+
+    v8cpp::Class<SearchReply> search_reply(isolate);
+    search_reply
+      .add_method("register_category", &SearchReply::register_category)
+      .add_method("push", &SearchReply::push);
+
+    v8cpp::Class<SearchQuery> search_query(isolate);
+    search_query
+      .add_method("onrun", &SearchQuery::onrun)
+      .add_method("oncancelled", &SearchQuery::oncancelled);
+
+    v8cpp::Class<SearchMetaData> search_metadata(isolate);
 
     v8cpp::Module module(isolate);
     module.add_function("new_scope", &new_scope);

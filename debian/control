@@ -1,0 +1,35 @@
+Source: unity-js-scopes
+Section: x11
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Build-Depends: cmake (>= 2.8.9),
+               debhelper (>= 9),
+               g++,
+               libboost-filesystem-dev,
+               libunity-scopes-dev,
+Standards-Version: 3.9.5
+Homepage: https://launchpad.net/unity-js-scopes
+# if you don't have have commit access to this branch but would like to upload
+# directly to Ubuntu, don't worry: your changes will be merged back into the
+# upstream branch
+Vcs-Bzr: lp:unity-js-scopes
+Vcs-Browser: https://code.launchpad.net/unity-js-scopes
+
+Package: unity-js-scopes-bindings
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         libunity-scopes3,
+Description: Javascript bindings to unity scopes library
+ Provides a mean for developers to developer Ubuntu Scopes in Javascript
+ by providing bindings to the unity scopes API.
+
+Package: unity-js-scopes-launcher
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         unity-js-scopes-bindings (= ${binary:Version}),
+Description: Scope launcher for unity javascript scopes
+ Provides a custom mean for developers to launch their Javascript Ubuntu Scopes.
