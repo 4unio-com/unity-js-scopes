@@ -58,7 +58,7 @@ v8::Local<v8::Value> SearchReply::register_category(
 
   v8::Isolate *isolate = args.GetIsolate();
 
-  return v8cpp::export_object<Category>(isolate, category);
+  return v8cpp::to_v8(isolate, category);
 }
 
 void SearchReply::push(
@@ -69,7 +69,7 @@ void SearchReply::push(
   }
 
   CategorisedResult *r =
-    v8cpp::import_object<CategorisedResult>(
+    v8cpp::from_v8<CategorisedResult*>(
         v8::Isolate::GetCurrent(),
         args[0]->ToObject());
   if (!r) {

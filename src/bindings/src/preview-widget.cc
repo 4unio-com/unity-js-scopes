@@ -87,7 +87,7 @@ void PreviewWidget::add_widget(
   }
 
   PreviewWidget *pw =
-    v8cpp::import_object<PreviewWidget>(args.GetIsolate(), args[0]);
+    v8cpp::from_v8<PreviewWidget*>(args.GetIsolate(), args[0]);
   if (!pw) {
     return;
   }

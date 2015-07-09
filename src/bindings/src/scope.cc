@@ -33,7 +33,7 @@ JsScope::~JsScope() {
 
 v8::Handle<v8::Object> JsScope::scope_base() {
   // TODO: !!!! wrong object ownership management
-  return v8cpp::export_object<ScopeBase>(v8::Isolate::GetCurrent(), scope_base_.get());
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), scope_base_.get());
 }
 
 void JsScope::run(v8::FunctionCallbackInfo<v8::Value> const& args) {
