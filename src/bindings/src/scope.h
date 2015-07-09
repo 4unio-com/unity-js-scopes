@@ -37,7 +37,6 @@ class JsScope
   ~JsScope();
 
   v8::Handle<v8::Object> scope_base();
-
   void run(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:

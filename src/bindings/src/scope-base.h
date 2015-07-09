@@ -37,6 +37,13 @@ class ScopeBase : public unity::scopes::ScopeBase
   void onsearch(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onpreview(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+  v8::Local<v8::Value> get_scope_directory(
+      v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> get_cache_directory(
+      v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Local<v8::Value> get_tmp_directory(
+      v8::FunctionCallbackInfo<v8::Value> const& args);
+
   // unity::scopes::ScopeBase implementation
   void start(std::string const& scope_id) override;
   void stop() override;

@@ -253,3 +253,17 @@ void ScopeBase::onpreview(
   preview_callback_.Reset(args.GetIsolate(), cb);
 }
 
+v8::Local<v8::Value> ScopeBase::get_scope_directory(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(args.GetIsolate(), scope_directory().c_str());
+}
+
+v8::Local<v8::Value> ScopeBase::get_cache_directory(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(args.GetIsolate(), cache_directory().c_str());
+}
+
+v8::Local<v8::Value> ScopeBase::get_tmp_directory(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(args.GetIsolate(), tmp_directory().c_str());
+}

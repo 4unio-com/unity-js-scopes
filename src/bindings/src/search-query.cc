@@ -123,3 +123,20 @@ void SearchQuery::cancelled() {
 
   v8cpp::call_v8(isolate, cancelled_callback);
 }
+
+v8::Local<v8::Value> SearchQuery::valid(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(
+      args.GetIsolate(),
+      unity::scopes::SearchQueryBase::valid());
+}
+
+v8::Local<v8::Value> SearchQuery::settings(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(args.GetIsolate(), nullptr);
+}
+
+v8::Local<v8::Value> SearchQuery::search_metadata(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(args.GetIsolate(), nullptr);
+}
