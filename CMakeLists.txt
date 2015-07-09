@@ -37,17 +37,14 @@ if(NOT _DEPS_RESULT EQUAL 0)
   message(FATAL_ERROR "Retriving deps failed")
 endif()
 
-set(CMAKE_MODULE_PATH
-  ${CMAKE_MODULE_PATH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/cmake
-  )
-
-find_package(Node REQUIRED)
-
 include_directories(
-  ${NODE_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/deps/v8/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/src
   ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/src
   ${CMAKE_CURRENT_SOURCE_DIR}/src
+  )
+link_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/out/Release
   )
 
 add_custom_target(

@@ -36,7 +36,6 @@ add_definitions(
     )
 
 link_directories(
-  ${NODE_DEPS_LIB_DIRS}
   ${SCOPE_LIB_DIRS}
   )
 
@@ -64,7 +63,6 @@ pkg_check_modules(
   )
 
 include_directories(
-  "${CMAKE_SOURCE_DIR}/include"
   ${Boost_INCLUDE_DIRS}
   ${SCOPE_INCLUDE_DIRS}
   )
@@ -90,7 +88,7 @@ set_target_properties(
   )
 
 set(ADDON_BINARY_FILES
-  ${SCOPE_NODEJS_ADDON_BIN_NAME}.node
+  ${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_NODEJS_ADDON_BIN_NAME}.node
   )
 
 install(DIRECTORY .
