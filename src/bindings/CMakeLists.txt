@@ -33,6 +33,7 @@ add_definitions(
     -Wall
     -Wextra
     -fPIC
+    -Wno-unused-parameter
     )
 
 link_directories(
