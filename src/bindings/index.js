@@ -22,34 +22,48 @@ var core = require('./lib/scope-core.js');
 // Init the first time it is accessed
 var self;
 
-function Scope(scope_binding) {
-    this._scope_binding = scope_binding;
-    this._base = scope_binding.scope_base();
-}
+function Scope() {}
+
 Scope.prototype = {
-    ready: function() {
-        return this._scope_binding.run();
+    initialize: function(options, runtime_config) {
+        this._setup_backend();
+
+        if (! options || typeof(options) !== 'object') {
+            throw "No or invalid options specified";
+        }
+        
+        if (! runtime_config || typeof(runtime_config) !== 'object') {
+            throw "No or invalid runtime configuration specified";
+        }
+
+        if (runtime_config.run && typeof(runtime_config.run) === 'function') {
+            this._base.onrun(runtime_config.run);
+        }
+
+        if (runtime_config.start && typeof(runtime_config.start) === 'function') {
+            this._base.onstart(runtime_config.start);
+        }
+
+        if (runtime_config.stop && typeof(runtime_config.stop) === 'function') {
+            this._base.onstop(runtime_config.stop);
+        }
+
+        if (runtime_config.preview && typeof(runtime_config.preview) === 'function') {
+            this._base.onpreview(runtime_config.preview);
+        }
+
+        if (runtime_config.activate && typeof(runtime_config.activate) === 'function') {
+            // this._base.onactivate(runtime_config.activate);
+        }
+
+        return this._scope_binding.run(
+            options && options.scope_id ? options.scope_id : "");
     },
-    run: function(callback) {
-        this._base.onrun(callback);
-    },
-    start: function(callback) {
-        this._base.onstart(callback);
-    },
-    stop: function(callback) {
-        this._base.onstop(callback);
-    },
-    search: function(callback) {
-        this._base.onsearch(callback);
-    },
-    preview: function(callback) {
-        this._base.onpreview(callback);
-    },
-    activate: function(callback) {
-        // TODO
-    },
-    performAction: function(callback) {
-        // TODO
+    _setup_backend: function(options) {
+        if (! this._scope_binding) {
+            this._scope_binding = core.new_scope(options ? options.runtime_config : "");
+            this._base = this._scope_binding.scope_base();
+        }
     },
     get scope_directory() {
         return this._base.get_scope_directory();
@@ -66,28 +80,25 @@ Scope.prototype = {
     get settings() {
         return null
     },
+    get settings() {
+        return null
+    },
+    get scope_config() {
+        return this._scope_binding.scope_config();
+    },
 };
 
 module.exports = {
-    initialize: function(scope_id, config_file) {
-        if (self) {
-            return;
-        }
-        self = new Scope(
-            core.new_scope(
-                scope_id,
-                config_file))
-    },
     lib: lib
 }
 
 Object.defineProperty(
     module.exports,
-    "me",
+    "self",
     {
         get: function() {
             if (! self) {
-                return null
+                self = new Scope();
             }
             return self;
         },

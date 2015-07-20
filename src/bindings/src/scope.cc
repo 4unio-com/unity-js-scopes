@@ -18,24 +18,57 @@
 
 #include "scope.h"
 
-JsScope::JsScope(
-      const std::string& scope_id,
+#include <cstdlib>
+
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+
+#include "../../common/config.h"
+
+
+JavascriptScopeRuntime::JavascriptScopeRuntime(
       const std::string& config_file)
-      : runtime_(
-          unity::scopes::Runtime::create(
-            config_file)),
-        scope_base_(new ScopeBase()),
-        scope_id_(scope_id) {
-  std::cout << "runtime: " << runtime_.get();
-}
-JsScope::~JsScope() {
+      : runtime_(unity::scopes::Runtime::create(config_file)),
+        scope_base_(new ScopeBase()) {
 }
 
-v8::Handle<v8::Object> JsScope::scope_base() {
+JavascriptScopeRuntime::~JavascriptScopeRuntime() {
+}
+
+ScopeBase* JavascriptScopeRuntime::scope_base() {
   // TODO: !!!! wrong object ownership management
-  return v8cpp::export_object<ScopeBase>(v8::Isolate::GetCurrent(), scope_base_.get());
+  return scope_base_.get();
 }
 
-void JsScope::run(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  runtime_->run_scope(scope_base_.get(), scope_id_);
+void JavascriptScopeRuntime::run(const std::string& scope_config) {
+  if (!scope_config_.empty()) {
+    throw std::runtime_error("Scope already running");
+  }
+
+  std::string current_scope_config = scope_config;
+
+  if (current_scope_config.empty()) {
+    char * env_scope_config =
+      std::getenv(kJavascriptUnityScopeIdEnvVarName);
+
+    if (env_scope_config) {
+      current_scope_config = env_scope_config;
+    }
+  }
+
+  if ( ! boost::ends_with(current_scope_config, ".ini")) {
+    throw std::runtime_error("Invalid scope id (ini file)");
+  }
+
+  if (!boost::filesystem::path(current_scope_config).is_absolute()) {
+    current_scope_config = boost::filesystem::canonical(current_scope_config).native();
+  }
+
+  scope_config_ = current_scope_config;
+
+  runtime_->run_scope(scope_base_.get(), current_scope_config);
+}
+
+std::string JavascriptScopeRuntime::scope_config() const {
+  return scope_config_;
 }

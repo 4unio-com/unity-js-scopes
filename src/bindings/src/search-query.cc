@@ -88,9 +88,7 @@ v8::Local<v8::Value> SearchQuery::query(
 
   v8::Isolate *isolate = v8::Isolate::GetCurrent();
 
-  auto wrapped_q = v8cpp::export_object<CannedQuery>(isolate, q);
-
-  return wrapped_q;
+  return v8cpp::to_v8(isolate, q);
 }
 
 void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
@@ -103,7 +101,7 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
 
   v8::Isolate *isolate = v8::Isolate::GetCurrent();
 
-  auto wrapped_sr = v8cpp::export_object<SearchReply>(isolate, sr);
+  auto wrapped_sr = v8cpp::to_v8(isolate, sr);
 
   v8::Local<v8::Function> run_callback =
     v8cpp::to_local<v8::Function>(isolate, run_callback_);

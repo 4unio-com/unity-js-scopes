@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_SCOPES_H_
-#define _UNITY_JS_SCOPES_H_
+#ifndef _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_
+#define _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_
 
 #include <memory>
 #include <string>
@@ -29,23 +29,21 @@
 
 #include "scope-base.h"
 
-class JsScope
+class JavascriptScopeRuntime
 {
  public:
-  JsScope(const std::string& scope_id,
-          const std::string& config_file);
-  ~JsScope();
+  JavascriptScopeRuntime(const std::string& config_file);
+  ~JavascriptScopeRuntime();
 
-  v8::Handle<v8::Object> scope_base();
-  void run(v8::FunctionCallbackInfo<v8::Value> const& args);
+  ScopeBase* scope_base();
+  void run(const std::string& scope_config);
+  std::string scope_config() const;
 
  private:
 
   unity::scopes::Runtime::UPtr runtime_;
   std::unique_ptr<ScopeBase> scope_base_;
-  std::string scope_id_;
+  std::string scope_config_;
 };
 
-#endif // _UNITY_JS_SCOPES_BASE_H_
-
-
+#endif // _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_

@@ -41,41 +41,9 @@
 #include "preview-reply.h"
 #include "preview-widget.h"
 
-v8::Handle<v8::Object> new_scope(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 2) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-  if (!args[0]->IsString() || !args[1]->IsString()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  std::string scope_id =
-    *(v8::String::Utf8Value(args[0]->ToString()));
-
-  if (!boost::ends_with(scope_id, ".ini")) {
-    throw std::runtime_error("Invalid scope id (ini file)");
-  }
-
-  if (!boost::filesystem::path(scope_id).is_absolute()) {
-    auto p =
-      boost::filesystem::current_path() /= boost::filesystem::path(scope_id);
-
-    if (!boost::filesystem::exists(p)) {
-      throw std::runtime_error("Invalid scope id (file not found)");
-    }
-
-    scope_id = p.native();
-  }
-
-  std::string config_file =
-    *(v8::String::Utf8Value(args[1]->ToString()));
-
-  JsScope* scope =
-    new JsScope(scope_id, config_file);
-
-  return v8cpp::export_object<JsScope>(
-      v8::Isolate::GetCurrent(), scope);
+// TODO static
+JavascriptScopeRuntime* new_scope(const std::string& runtime_config) {
+  return new JavascriptScopeRuntime(runtime_config);
 }
 
 v8::Handle<v8::Object> new_search_query(
@@ -85,12 +53,12 @@ v8::Handle<v8::Object> new_search_query(
   }
 
   CannedQuery *c =
-    v8cpp::import_object<CannedQuery>(
+    v8cpp::from_v8<CannedQuery*>(
         v8::Isolate::GetCurrent(),
         args[0]->ToObject());
 
   SearchMetaData *s =
-    v8cpp::import_object<SearchMetaData>(
+    v8cpp::from_v8<SearchMetaData*>(
         v8::Isolate::GetCurrent(),
         args[1]->ToObject());
 
@@ -114,7 +82,7 @@ v8::Handle<v8::Object> new_search_query(
         run_callback,
         cancelled_callback);
 
-  return v8cpp::export_object<SearchQuery>(v8::Isolate::GetCurrent(), sq);
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), sq);
 }
 
 v8::Handle<v8::Object> new_category_renderer(
@@ -130,8 +98,7 @@ v8::Handle<v8::Object> new_category_renderer(
 
   CategoryRenderer* category_renderer = new CategoryRenderer(json_text);
 
-  return v8cpp::export_object<CategoryRenderer>(
-      v8::Isolate::GetCurrent(), category_renderer);
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), category_renderer);
 }
 
 v8::Handle<v8::Object> new_preview_query(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -139,10 +106,11 @@ v8::Handle<v8::Object> new_preview_query(v8::FunctionCallbackInfo<v8::Value> con
     throw std::runtime_error("Invalid number of arguments");
   }
 
-  Result *r = v8cpp::import_object<Result>(v8::Isolate::GetCurrent(), args[0]->ToObject());
+  Result *r =
+    v8cpp::from_v8<Result*>(v8::Isolate::GetCurrent(), args[0]->ToObject());
 
   ActionMetaData *a =
-    v8cpp::import_object<ActionMetaData>(v8::Isolate::GetCurrent(), args[1]->ToObject());
+    v8cpp::from_v8<ActionMetaData*>(v8::Isolate::GetCurrent(), args[1]->ToObject());
 
   if (!r || !a) {
     throw std::runtime_error("Invalid arguments types");
@@ -168,7 +136,7 @@ v8::Handle<v8::Object> new_preview_query(v8::FunctionCallbackInfo<v8::Value> con
         a->get_action_metadata(),
         run_callback,
         cancelled_callback);
-  return v8cpp::export_object<PreviewQuery>(v8::Isolate::GetCurrent(), pq);
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), pq);
 }
 
 v8::Handle<v8::Object> new_preview_widget(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -189,8 +157,7 @@ v8::Handle<v8::Object> new_preview_widget(v8::FunctionCallbackInfo<v8::Value> co
     PreviewWidget* preview_widget =
       new PreviewWidget(id, widget_type);
 
-    return v8cpp::export_object<PreviewWidget>(
-        v8::Isolate::GetCurrent(), preview_widget);
+    return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
   }
 
   if (!args[0]->IsString()) {
@@ -203,8 +170,7 @@ v8::Handle<v8::Object> new_preview_widget(v8::FunctionCallbackInfo<v8::Value> co
   PreviewWidget* preview_widget =
     new PreviewWidget(definition);
   
-  return v8cpp::export_object<PreviewWidget>(
-        v8::Isolate::GetCurrent(), preview_widget);
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
 }
 
 v8::Handle<v8::Object> new_categorised_result(
@@ -214,8 +180,8 @@ v8::Handle<v8::Object> new_categorised_result(
   }
 
   Category *c =
-    v8cpp::import_object<Category>(v8::Isolate::GetCurrent(),
-                                   args[0]->ToObject());
+    v8cpp::from_v8<Category*>(v8::Isolate::GetCurrent(),
+                             args[0]->ToObject());
 
   if (!c) {
     throw std::runtime_error("Invalid arguments types");
@@ -223,17 +189,18 @@ v8::Handle<v8::Object> new_categorised_result(
 
   CategorisedResult *cr = new CategorisedResult(c);
 
-  return v8cpp::export_object<CategorisedResult>(v8::Isolate::GetCurrent(), cr);
+  return v8cpp::to_v8(v8::Isolate::GetCurrent(), cr);
 }
 
 void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
-    v8cpp::Class<JsScope> js_scope(isolate);
+    v8cpp::Class<JavascriptScopeRuntime> js_scope(isolate);
     js_scope
-      .add_method("scope_base", &JsScope::scope_base)
-      .add_method("run", &JsScope::run);
+      .add_method("scope_base", &JavascriptScopeRuntime::scope_base)
+      .add_method("scope_config", &JavascriptScopeRuntime::scope_config)
+      .add_method("run", &JavascriptScopeRuntime::run);
 
     v8cpp::Class<ScopeBase> scope_base(isolate);
     scope_base

@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var scope_binding = require('../unity_js_scopes_bindings')
+#ifndef _UNITY_JS_SCOPES_CONFIG_H_
+#define _UNITY_JS_SCOPES_CONFIG_H_
 
 
-module.exports = {
-    new_scope: function(runtime_config) {
-        return new scope_binding.new_scope(runtime_config);
-    }
-};
+const char kJavascriptUnityScopeIdEnvVarName[] = "JS_UNITY_SCOPE_ID_ENV_VAR_NAME";
+
+
+#endif // _UNITY_JS_SCOPES_CONFIG_H_

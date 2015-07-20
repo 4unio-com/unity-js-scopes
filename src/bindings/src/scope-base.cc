@@ -52,7 +52,9 @@ void ScopeBase::start(std::string const& scope_id) {
   v8::Local<v8::Function> start_callback =
     v8cpp::to_local<v8::Function>(isolate, start_callback_);
 
-  v8cpp::call_v8(isolate, start_callback, v8cpp::to_v8(isolate, scope_id.c_str()));
+  v8cpp::call_v8(isolate,
+                 start_callback,
+                 v8cpp::to_v8(isolate, scope_id.c_str()));
 }
 
 void ScopeBase::stop() {
@@ -100,12 +102,12 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   v8::Handle<v8::Value> result = 
     v8cpp::call_v8(isolate,
                    search_callback,
-                   v8cpp::export_object<CannedQuery>(isolate, q),
-                   v8cpp::export_object<SearchMetaData>(isolate, m));
+                   v8cpp::to_v8(isolate, q),
+                   v8cpp::to_v8(isolate, m));
 
   // TODO watch out release
-  SearchQuery * sq =
-    v8cpp::import_object<SearchQuery>(isolate, result);
+  SearchQuery * sq = 
+    v8cpp::from_v8<SearchQuery*>(isolate, result);
 
   return unity::scopes::SearchQueryBase::UPtr(sq);
 }
@@ -143,12 +145,12 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
   v8::Handle<v8::Value> wrapped_preview = 
     v8cpp::call_v8(isolate,
                    preview_callback,
-                   v8cpp::export_object<Result>(isolate, r),
-                   v8cpp::export_object<ActionMetaData>(isolate, m));
+                   v8cpp::to_v8(isolate, r),
+                   v8cpp::to_v8(isolate, m));
 
   // TODO watch out release
   PreviewQuery * sq =
-    v8cpp::import_object<PreviewQuery>(isolate, wrapped_preview);
+    v8cpp::from_v8<PreviewQuery*>(isolate, wrapped_preview);
 
   return unity::scopes::PreviewQueryBase::UPtr(sq);
 }

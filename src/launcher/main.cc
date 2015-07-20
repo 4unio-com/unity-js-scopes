@@ -16,19 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+
 #include "node.h"
 
+#include "../common/config.h"
+
 #include <iostream>
+#include <cstdlib>
 #include <cstring>
 
 #include <boost/filesystem.hpp>
 
 namespace {
-  const char kScopeInitPathArgumentHeader[] = "--scope=";
+
+const char kScopeInitPathArgumentHeader[] = "--scope=";
+
 }
 
 void usage() {
-  std::cout << "unity-js-scopes-launcher "
+  std::cout << executable_name()
+            << " "
             << kScopeInitPathArgumentHeader
             << "<path-to-ini-file>"
             << std::endl;
@@ -64,6 +72,10 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
+  setenv(kJavascriptUnityScopeIdEnvVarName,
+         p.string().c_str(),
+         true);
+
   std::string base_name = p.filename().string();
 
   boost::filesystem::path script_path = p.parent_path();
@@ -75,14 +87,24 @@ int main(int argc, char *argv[]) {
   }
 
   std::vector<std::string::value_type>
-    new_args_content(script_path.string().size() + 1);
+    new_args_content(
+      executable_name().size() + 1
+      + script_path.string().size() + 1);
+
   memcpy(&new_args_content[0],
+         executable_name().c_str(),
+         executable_name().size()+1);
+
+  memcpy(&new_args_content[0]
+         + executable_name().size()
+          + 1,
          script_path.string().c_str(),
-         new_args_content.size());
+         script_path.string().size()+1);
 
   std::vector<std::string::value_type*>
     new_args;
   new_args.push_back(&new_args_content[0]);
+  new_args.push_back(&new_args_content[0] + executable_name().size() + 1);
 
   return node::Start(
       new_args.size(),
