@@ -26,7 +26,10 @@ scopes.self.initialize(
             console.log('Running...')
         },
         start: function(scope_id) {
-            console.log('Starting scope id: ' + scope_id)
+            console.log('Starting scope id: '
+                        + scope_id
+                        + ', '
+                        + scopes.self.scope_config)
         },
         search: function(canned_query, metadata) {
             return scopes.lib.new_search_query(

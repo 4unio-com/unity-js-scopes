@@ -36,13 +36,14 @@ class JavascriptScopeRuntime
   ~JavascriptScopeRuntime();
 
   ScopeBase* scope_base();
-  void run(const std::string& scope_id);
+  void run(const std::string& scope_config);
+  std::string scope_config() const;
 
  private:
 
   unity::scopes::Runtime::UPtr runtime_;
   std::unique_ptr<ScopeBase> scope_base_;
-  std::string scope_id_;
+  std::string scope_config_;
 };
 
 #endif // _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_

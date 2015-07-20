@@ -80,6 +80,12 @@ Scope.prototype = {
     get settings() {
         return null
     },
+    get settings() {
+        return null
+    },
+    get scope_config() {
+        return this._scope_binding.scope_config();
+    },
 };
 
 module.exports = {
