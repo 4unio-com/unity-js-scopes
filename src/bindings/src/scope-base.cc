@@ -52,7 +52,9 @@ void ScopeBase::start(std::string const& scope_id) {
   v8::Local<v8::Function> start_callback =
     v8cpp::to_local<v8::Function>(isolate, start_callback_);
 
-  v8cpp::call_v8(isolate, start_callback, v8cpp::to_v8(isolate, scope_id.c_str()));
+  v8cpp::call_v8(isolate,
+                 start_callback,
+                 v8cpp::to_v8(isolate, scope_id.c_str()));
 }
 
 void ScopeBase::stop() {

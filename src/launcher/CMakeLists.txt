@@ -38,10 +38,15 @@ link_directories(
   ${Boost_LIB_DIRS}
 )
 
-set(EXECUTABLE_NAME unity-js-scopes-launcher)
+set(LAUNCHER_EXECUTABLE_NAME unity-js-scopes-launcher)
+
+configure_file(
+    config.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+    @ONLY)
 
 add_executable(
-    ${EXECUTABLE_NAME}
+    ${LAUNCHER_EXECUTABLE_NAME}
     ${SRC_FILES}
     )
 
@@ -57,7 +62,7 @@ include_directories(
   )
 
 target_link_libraries(
-  ${EXECUTABLE_NAME}
+  ${LAUNCHER_EXECUTABLE_NAME}
 
   -Wl,--whole-archive iojs -Wl,--no-whole-archive
   uv
@@ -81,5 +86,5 @@ target_link_libraries(
   dl
   )
 
-install(TARGETS ${EXECUTABLE_NAME}
+install(TARGETS ${LAUNCHER_EXECUTABLE_NAME}
         RUNTIME DESTINATION /usr/bin)

@@ -18,30 +18,39 @@
 
 var scopes = require('unity-js-scopes')
 
-scopes.initialize('simple.ini', '')
-
-scopes.me.onsearch(function(canned_query, metadata) {
-    return scopes.lib.new_search_query(
-        canned_query,
-        metadata,
-        // run
-        function(search_reply) {
-            var qs =
-                canned_query.query_string();
-            var category =
-                search_reply.register_category("simple", "hello world from js", "");
-
-            var categorised_result =
-                scopes.lib.new_categorised_result(category);
-            categorised_result.set_uri("http://www.ubuntu.com");
-            categorised_result.set_title("Ubuntu");
-
-            search_reply.push(categorised_result);
+scopes.self.initialize(
+    {}
+    ,
+    {
+        run: function() {
+            console.log('Running...')
         },
-        // cancelled
-        function() {
-        });
-});
+        start: function(scope_id) {
+            console.log('Starting scope id: ' + scope_id)
+        },
+        search: function(canned_query, metadata) {
+            return scopes.lib.new_search_query(
+                canned_query,
+                metadata,
+                // run
+                function(search_reply) {
+                    var qs =
+                        canned_query.query_string();
+                    var category =
+                        search_reply.register_category("simple", "hello world from js", "");
+                    
+                    var categorised_result =
+                        scopes.lib.new_categorised_result(category);
+                    categorised_result.set_uri("http://www.ubuntu.com");
+                    categorised_result.set_title("Ubuntu");
+                    
+                    search_reply.push(categorised_result);
+                },
+                // cancelled
+                function() {
+                });
+        },
+        preview: function(result, action_metadata) {}
+    }
+);
 
-scopes.me.onpreview(function(result, action_metadata) {
-});

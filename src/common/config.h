@@ -16,33 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_
-#define _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_
+#ifndef _UNITY_JS_SCOPES_CONFIG_H_
+#define _UNITY_JS_SCOPES_CONFIG_H_
 
-#include <memory>
-#include <string>
 
-#include <unity/scopes/ScopeBase.h>
-#include <unity/scopes/Runtime.h>
+const char kJavascriptUnityScopeIdEnvVarName[] = "JS_UNITY_SCOPE_ID_ENV_VAR_NAME";
 
-#include <v8-cpp.h>
 
-#include "scope-base.h"
-
-class JavascriptScopeRuntime
-{
- public:
-  JavascriptScopeRuntime(const std::string& config_file);
-  ~JavascriptScopeRuntime();
-
-  ScopeBase* scope_base();
-  void run(const std::string& scope_id);
-
- private:
-
-  unity::scopes::Runtime::UPtr runtime_;
-  std::unique_ptr<ScopeBase> scope_base_;
-  std::string scope_id_;
-};
-
-#endif // _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_
+#endif // _UNITY_JS_SCOPES_CONFIG_H_
