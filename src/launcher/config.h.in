@@ -19,6 +19,8 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+#include <string>
+
 inline std::string executable_name() {
   return "@LAUNCHER_EXECUTABLE_NAME@";
 }

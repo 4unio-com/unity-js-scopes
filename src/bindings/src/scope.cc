@@ -28,8 +28,27 @@
 
 JavascriptScopeRuntime::JavascriptScopeRuntime(
       const std::string& config_file)
-      : runtime_(unity::scopes::Runtime::create(config_file)),
-        scope_base_(new ScopeBase()) {
+      : scope_base_(new ScopeBase()) {
+    std::string current_runtime_config = config_file;
+
+    if (current_runtime_config.empty()) {
+      char * env_runtime_config =
+        std::getenv(kJavascriptUnityRuntimeEnvVarName);
+
+      if (env_runtime_config) {
+        current_runtime_config = env_runtime_config;
+
+        if ( ! boost::ends_with(current_runtime_config, ".ini")) {
+          throw std::runtime_error("Invalid runtime config (ini file)");
+        }
+
+        if (!boost::filesystem::path(current_runtime_config).is_absolute()) {
+          current_runtime_config = boost::filesystem::canonical(current_runtime_config).native();
+        }
+      }
+    }
+
+    runtime_ = unity::scopes::Runtime::create(current_runtime_config);
 }
 
 JavascriptScopeRuntime::~JavascriptScopeRuntime() {

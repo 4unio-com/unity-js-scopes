@@ -21,6 +21,7 @@
 
 
 const char kJavascriptUnityScopeIdEnvVarName[] = "JS_UNITY_SCOPE_ID_ENV_VAR_NAME";
+const char kJavascriptUnityRuntimeEnvVarName[] = "JS_UNITY_RUNTIME_ENV_VAR_NAME";
 
 
 #endif // _UNITY_JS_SCOPES_CONFIG_H_

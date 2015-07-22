@@ -28,38 +28,26 @@
 
 #include <boost/filesystem.hpp>
 
-namespace {
-
-const char kScopeInitPathArgumentHeader[] = "--scope=";
-
-}
-
 void usage() {
   std::cout << executable_name()
             << " "
-            << kScopeInitPathArgumentHeader
-            << "<path-to-ini-file>"
+            << "<path-to-scope-ini>"
+            << "[<path-to-runtime-ini>]"
             << std::endl;
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 2) {
+  if (argc < 2 || argc > 3) {
     usage();
     return EXIT_FAILURE;
   }
 
-  std::string ini_filename;
-  for (int i = 0; i < argc; ++i) {
-    std::string argument(argv[i]);
-    if (argument.substr(0, sizeof(kScopeInitPathArgumentHeader)-1)
-            == kScopeInitPathArgumentHeader) {
-      ini_filename = argument.substr(sizeof(kScopeInitPathArgumentHeader)-1);
-    }
-  }
+  std::string ini_filename = argv[1];
 
   if (ini_filename.empty()
       || !boost::filesystem::exists(ini_filename)) {
-    std::cout << "Invalid or non existant scope ini file name";
+    std::cout << "Invalid or non existant scope ini file name: "
+              << ini_filename << std::endl;
     usage();
     return EXIT_FAILURE;
   }
@@ -67,8 +55,8 @@ int main(int argc, char *argv[]) {
   boost::filesystem::path p(ini_filename);
 
   if (p.extension().string() != ".ini") {
-    std::cout << "Invalid scope ini file name extension "
-              << ini_filename;
+    std::cout << "Invalid scope ini file name extension: "
+              << ini_filename << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -76,13 +64,38 @@ int main(int argc, char *argv[]) {
          p.string().c_str(),
          true);
 
+  if (argc == 3) {
+      std::string runtime_filename = argv[2];
+
+      if (runtime_filename.empty()
+          || !boost::filesystem::exists(runtime_filename)) {
+        std::cout << "Invalid or non existant runtime ini file name: "
+                  << runtime_filename << std::endl;
+        usage();
+        return EXIT_FAILURE;
+      }
+
+      boost::filesystem::path p(runtime_filename);
+
+      if (p.extension().string() != ".ini") {
+        std::cout << "Invalid runtime ini file name extension: "
+                  << runtime_filename << std::endl;
+        return EXIT_FAILURE;
+      }
+
+      setenv(kJavascriptUnityRuntimeEnvVarName,
+             p.string().c_str(),
+             true);
+  }
+
   std::string base_name = p.filename().string();
 
   boost::filesystem::path script_path = p.parent_path();
   script_path += std::string("/") + p.stem().string() + ".js";
 
   if (!boost::filesystem::exists(script_path)) {
-    std::cout << "Could not find scope javascript file";
+    std::cout << "Could not find scope javascript file: "
+              << script_path.string() << std::endl;
     return EXIT_FAILURE;
   }
 
