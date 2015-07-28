@@ -110,7 +110,7 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
   uv_queue_work(uv_default_loop(), &work, run_scope, after);
 
   // Process all pending tasks on the event queue
-  uv_run(uv_default_loop(), UV_RUN_NOWAIT);
+  uv_run(uv_default_loop(), UV_RUN_ONCE);
 
   //runtime_->run_scope(scope_base_.get(), current_scope_config);
 }

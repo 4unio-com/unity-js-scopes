@@ -27,9 +27,6 @@
 
 #include <uv.h>
 
-uv_async_t async;
-double percentage = 92;
-
 ScopeBase::ScopeBase()
   : isolate_(v8::Isolate::GetCurrent()) {
 }
@@ -48,6 +45,14 @@ ScopeBase::~ScopeBase() {
   }
 }
 
+uv_async_t async;
+double callback_value = 92.1;
+void print_progress(uv_async_t* handle, int status)
+{
+    double callback_value = *((double*)handle->data);
+    std::cout << "callback_value = " << callback_value << std::endl;
+}
+
 void ScopeBase::start(std::string const& scope_id) {
   if (start_callback_.IsEmpty()) {
     return;
@@ -59,6 +64,14 @@ void ScopeBase::start(std::string const& scope_id) {
 //  v8cpp::call_v8(isolate_,
 //                 start_callback,
 //                 v8cpp::to_v8(isolate_, scope_id.c_str()));
+
+  uv_async_init(uv_default_loop(), &async, print_progress);
+
+  //async.data = (void*)&callback_value;
+
+  uv_async_send(&async);
+  uv_run(uv_default_loop(), UV_RUN_NOWAIT);
+  uv_close((uv_handle_t*)&async, NULL);
 }
 
 void ScopeBase::stop() {
@@ -72,27 +85,13 @@ void ScopeBase::stop() {
   v8cpp::call_v8(isolate_, stop_callback);
 }
 
-void print_progress(uv_async_t* handle, int status)
-{
-    double percentage = *((double*)handle->data);
-    fprintf(stderr, "Downloaded %.2f%%\n", percentage);
-}
-
 void ScopeBase::run() {
-//  if (run_callback_.IsEmpty()) {
-//    return;
-//  }
+  if (run_callback_.IsEmpty()) {
+    return;
+  }
 
-//  v8::Local<v8::Function> run_callback =
-//    v8cpp::to_local<v8::Function>(isolate_, run_callback_);
-
-  uv_async_init(uv_default_loop(), &async, print_progress);
-
-  //async.data = (void*)&percentage;
-
-  uv_async_send(&async);
-  uv_run(uv_default_loop(), UV_RUN_NOWAIT);
-  uv_close((uv_handle_t*)&async, NULL);
+  v8::Local<v8::Function> run_callback =
+    v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
   //v8cpp::call_v8(isolate, run_callback);
 }
