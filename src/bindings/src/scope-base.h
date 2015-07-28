@@ -68,6 +68,7 @@ class ScopeBase : public unity::scopes::ScopeBase
       std::string const &action_id) override;
 
  private:
+  v8::Isolate* isolate_;
 
   v8::Persistent<v8::Function> start_callback_;
   v8::Persistent<v8::Function> stop_callback_;

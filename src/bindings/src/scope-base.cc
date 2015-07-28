@@ -25,7 +25,13 @@
 #include "action-metadata.h"
 #include "preview-query.h"
 
-ScopeBase::ScopeBase() {
+#include <uv.h>
+
+uv_async_t async;
+double percentage = 92;
+
+ScopeBase::ScopeBase()
+  : isolate_(v8::Isolate::GetCurrent()) {
 }
 ScopeBase::~ScopeBase() {
   if ( ! start_callback_.IsEmpty()) {
@@ -47,14 +53,12 @@ void ScopeBase::start(std::string const& scope_id) {
     return;
   }
 
-  v8::Isolate * isolate = v8::Isolate::GetCurrent();
-
   v8::Local<v8::Function> start_callback =
-    v8cpp::to_local<v8::Function>(isolate, start_callback_);
+    v8cpp::to_local<v8::Function>(isolate_, start_callback_);
 
-  v8cpp::call_v8(isolate,
-                 start_callback,
-                 v8cpp::to_v8(isolate, scope_id.c_str()));
+//  v8cpp::call_v8(isolate_,
+//                 start_callback,
+//                 v8cpp::to_v8(isolate_, scope_id.c_str()));
 }
 
 void ScopeBase::stop() {
@@ -62,25 +66,35 @@ void ScopeBase::stop() {
     return;
   }
 
-  v8::Isolate * isolate = v8::Isolate::GetCurrent();
-
   v8::Local<v8::Function> stop_callback =
-    v8cpp::to_local<v8::Function>(isolate, stop_callback_);
+    v8cpp::to_local<v8::Function>(isolate_, stop_callback_);
 
-  v8cpp::call_v8(isolate, stop_callback);
+  v8cpp::call_v8(isolate_, stop_callback);
+}
+
+void print_progress(uv_async_t* handle, int status)
+{
+    double percentage = *((double*)handle->data);
+    fprintf(stderr, "Downloaded %.2f%%\n", percentage);
 }
 
 void ScopeBase::run() {
-  if (run_callback_.IsEmpty()) {
-    return;
-  }
+//  if (run_callback_.IsEmpty()) {
+//    return;
+//  }
 
-  v8::Isolate * isolate = v8::Isolate::GetCurrent();
+//  v8::Local<v8::Function> run_callback =
+//    v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-  v8::Local<v8::Function> run_callback =
-    v8cpp::to_local<v8::Function>(isolate, run_callback_);
+  uv_async_init(uv_default_loop(), &async, print_progress);
 
-  v8cpp::call_v8(isolate, run_callback);
+  //async.data = (void*)&percentage;
+
+  uv_async_send(&async);
+  uv_run(uv_default_loop(), UV_RUN_NOWAIT);
+  uv_close((uv_handle_t*)&async, NULL);
+
+  //v8cpp::call_v8(isolate, run_callback);
 }
 
 unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
@@ -94,20 +108,18 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   CannedQuery *q = new CannedQuery(query);
   SearchMetaData *m = new SearchMetaData(metadata);
 
-  v8::Isolate *isolate = v8::Isolate::GetCurrent();
-
   v8::Local<v8::Function> search_callback =
-    v8cpp::to_local<v8::Function>(isolate, search_callback_);
+    v8cpp::to_local<v8::Function>(isolate_, search_callback_);
 
   v8::Handle<v8::Value> result = 
-    v8cpp::call_v8(isolate,
+    v8cpp::call_v8(isolate_,
                    search_callback,
-                   v8cpp::to_v8(isolate, q),
-                   v8cpp::to_v8(isolate, m));
+                   v8cpp::to_v8(isolate_, q),
+                   v8cpp::to_v8(isolate_, m));
 
   // TODO watch out release
   SearchQuery * sq = 
-    v8cpp::from_v8<SearchQuery*>(isolate, result);
+    v8cpp::from_v8<SearchQuery*>(isolate_, result);
 
   return unity::scopes::SearchQueryBase::UPtr(sq);
 }
@@ -137,20 +149,18 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
   Result *r = new Result(result);
   ActionMetaData *m = new ActionMetaData(action_metadata);
 
-  v8::Isolate *isolate = v8::Isolate::GetCurrent();
-
   v8::Local<v8::Function> preview_callback =
-    v8cpp::to_local<v8::Function>(isolate, preview_callback_);
+    v8cpp::to_local<v8::Function>(isolate_, preview_callback_);
 
   v8::Handle<v8::Value> wrapped_preview = 
-    v8cpp::call_v8(isolate,
+    v8cpp::call_v8(isolate_,
                    preview_callback,
-                   v8cpp::to_v8(isolate, r),
-                   v8cpp::to_v8(isolate, m));
+                   v8cpp::to_v8(isolate_, r),
+                   v8cpp::to_v8(isolate_, m));
 
   // TODO watch out release
   PreviewQuery * sq =
-    v8cpp::from_v8<PreviewQuery*>(isolate, wrapped_preview);
+    v8cpp::from_v8<PreviewQuery*>(isolate_, wrapped_preview);
 
   return unity::scopes::PreviewQueryBase::UPtr(sq);
 }

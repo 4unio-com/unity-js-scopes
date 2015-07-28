@@ -25,6 +25,8 @@
 
 #include "../../common/config.h"
 
+#include <uv.h>
+#include <functional>
 
 JavascriptScopeRuntime::JavascriptScopeRuntime(
       const std::string& config_file)
@@ -59,6 +61,18 @@ ScopeBase* JavascriptScopeRuntime::scope_base() {
   return scope_base_.get();
 }
 
+void run_scope(uv_work_t* req)
+{
+    std::function<void()>* func = (std::function<void()>*)req->data;
+    (*func)();
+}
+
+void after(uv_work_t* req, int status)
+{
+}
+
+uv_work_t work;
+
 void JavascriptScopeRuntime::run(const std::string& scope_config) {
   if (!scope_config_.empty()) {
     throw std::runtime_error("Scope already running");
@@ -85,7 +99,20 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
 
   scope_config_ = current_scope_config;
 
-  runtime_->run_scope(scope_base_.get(), current_scope_config);
+  std::function<void()> f = [this, current_scope_config]
+  {
+      runtime_->run_scope(scope_base_.get(), current_scope_config);
+  };
+
+  work.data = (void*)&f;
+
+  // Run work in seperate v8 thread
+  uv_queue_work(uv_default_loop(), &work, run_scope, after);
+
+  // Process all pending tasks on the event queue
+  uv_run(uv_default_loop(), UV_RUN_NOWAIT);
+
+  //runtime_->run_scope(scope_base_.get(), current_scope_config);
 }
 
 std::string JavascriptScopeRuntime::scope_config() const {
