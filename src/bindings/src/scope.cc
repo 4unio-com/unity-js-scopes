@@ -61,17 +61,15 @@ ScopeBase* JavascriptScopeRuntime::scope_base() {
   return scope_base_.get();
 }
 
+uv_work_t work;
 void run_scope(uv_work_t* req)
 {
     std::function<void()>* func = (std::function<void()>*)req->data;
     (*func)();
 }
-
 void after(uv_work_t* req, int status)
 {
 }
-
-uv_work_t work;
 
 void JavascriptScopeRuntime::run(const std::string& scope_config) {
   if (!scope_config_.empty()) {
