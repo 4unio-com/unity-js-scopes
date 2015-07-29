@@ -55,12 +55,12 @@ v8::Handle<v8::Object> new_search_query(
   CannedQuery *c =
     v8cpp::from_v8<CannedQuery*>(
         v8::Isolate::GetCurrent(),
-        args[0]);
+        args[0]->ToObject());
 
   SearchMetaData *s =
     v8cpp::from_v8<SearchMetaData*>(
         v8::Isolate::GetCurrent(),
-        args[1]);
+        args[1]->ToObject());
 
   if (!c || !s) {
     throw std::runtime_error("Invalid arguments types");

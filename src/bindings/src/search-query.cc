@@ -105,8 +105,6 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
   v8::Local<v8::Function> run_callback =
     v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-  assert(v8::Isolate::GetCurrent() == isolate_);
-
   v8cpp::call_v8(isolate_, run_callback, v8cpp::to_v8(isolate_, wrapped_sr));
 }
 
