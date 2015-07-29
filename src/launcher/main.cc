@@ -32,6 +32,7 @@ void usage() {
   std::cout << executable_name()
             << " "
             << "<path-to-scope-ini>"
+            << " "
             << "[<path-to-runtime-ini>]"
             << std::endl;
 }

@@ -29,7 +29,8 @@ SearchQuery::SearchQuery(
       const v8::Local<v8::Function> &cancelled_callback)
   : unity::scopes::SearchQueryBase(query, metadata),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
-    cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
+    cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback),
+    isolate_(v8::Isolate::GetCurrent()) {
 }
 
 SearchQuery::~SearchQuery() {
@@ -86,9 +87,7 @@ v8::Local<v8::Value> SearchQuery::query(
   CannedQuery *q =
     new CannedQuery(unity::scopes::SearchQueryBase::query());
 
-  v8::Isolate *isolate = v8::Isolate::GetCurrent();
-
-  return v8cpp::to_v8(isolate, q);
+  return v8cpp::to_v8(isolate_, q);
 }
 
 void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
@@ -99,14 +98,19 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
   // wrap & fire
   SearchReply *sr = new SearchReply(reply);
 
-  v8::Isolate *isolate = v8::Isolate::GetCurrent();
-
-  auto wrapped_sr = v8cpp::to_v8(isolate, sr);
+  //auto wrapped_sr = v8cpp::to_v8(isolate_, sr);
 
   v8::Local<v8::Function> run_callback =
-    v8cpp::to_local<v8::Function>(isolate, run_callback_);
+    v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-  v8cpp::call_v8(isolate, run_callback, wrapped_sr);
+  v8::Locker l(isolate_);
+  v8::Isolate::Scope isolate_scope(isolate_);
+  v8::HandleScope handle_scope(isolate_);
+  v8::Context::Scope context_scope(v8::Context::New(isolate_));
+
+  assert(v8::Isolate::GetCurrent() == isolate_);
+
+  v8cpp::call_v8(isolate_, run_callback, v8cpp::to_v8(isolate_, sr));
 }
 
 void SearchQuery::cancelled() {
@@ -114,12 +118,10 @@ void SearchQuery::cancelled() {
     return;
   }
 
-  v8::Isolate *isolate = v8::Isolate::GetCurrent();
-
   v8::Local<v8::Function> cancelled_callback =
-    v8cpp::to_local<v8::Function>(isolate, cancelled_callback_);
+    v8cpp::to_local<v8::Function>(isolate_, cancelled_callback_);
 
-  v8cpp::call_v8(isolate, cancelled_callback);
+  v8cpp::call_v8(isolate_, cancelled_callback);
 }
 
 v8::Local<v8::Value> SearchQuery::valid(

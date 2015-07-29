@@ -48,7 +48,7 @@ JavascriptScopeRuntime::JavascriptScopeRuntime(
       }
     }
 
-    runtime_ = unity::scopes::Runtime::create(current_runtime_config);
+    runtime_ = unity::scopes::Runtime::create_scope_runtime("simple", current_runtime_config);
 }
 
 JavascriptScopeRuntime::~JavascriptScopeRuntime() {

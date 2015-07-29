@@ -48,6 +48,10 @@ Scope.prototype = {
             this._base.onstop(runtime_config.stop);
         }
 
+        if (runtime_config.search && typeof(runtime_config.search) === 'function') {
+            this._base.onsearch(runtime_config.search);
+        }
+
         if (runtime_config.preview && typeof(runtime_config.preview) === 'function') {
             this._base.onpreview(runtime_config.preview);
         }

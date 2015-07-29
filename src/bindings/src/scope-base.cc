@@ -92,7 +92,12 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   v8::Local<v8::Function> search_callback =
     v8cpp::to_local<v8::Function>(isolate_, search_callback_);
 
-  v8::Handle<v8::Value> result = 
+  v8::Locker l(isolate_);
+  v8::Isolate::Scope isolate_scope(isolate_);
+  v8::HandleScope handle_scope(isolate_);
+  v8::Context::Scope context_scope(v8::Context::New(isolate_));
+
+  v8::Handle<v8::Value> result =
     v8cpp::call_v8(isolate_,
                    search_callback,
                    v8cpp::to_v8(isolate_, q),

@@ -46,6 +46,7 @@ class SearchQuery : public unity::scopes::SearchQueryBase
   void cancelled() override;
 
  private:
+  v8::Isolate* isolate_;
 
   v8::Persistent<v8::Function> run_callback_;
   v8::Persistent<v8::Function> cancelled_callback_;

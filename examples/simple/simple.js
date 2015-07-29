@@ -37,8 +37,8 @@ scopes.self.initialize(
                 metadata,
                 // run
                 function(search_reply) {
-                    var qs =
-                        canned_query.query_string();
+//                    var qs =
+//                        canned_query.query_string();
                     var category =
                         search_reply.register_category("simple", "hello world from js", "");
                     

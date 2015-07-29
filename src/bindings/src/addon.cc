@@ -71,6 +71,7 @@ v8::Handle<v8::Object> new_search_query(
   }
 
   v8::Local<v8::Function> run_callback =
+
     v8::Handle<v8::Function>::Cast(args[2]);
   v8::Local<v8::Function> cancelled_callback =
     v8::Handle<v8::Function>::Cast(args[3]);
@@ -288,10 +289,27 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
 
     v8cpp::Module module(isolate);
+    module.add_class("js_scope", js_scope);
+    module.add_class("scope_base", scope_base);
+    module.add_class("action_metadata", action_metadata);
+    module.add_class("category", category);
+    module.add_class("categorised_result", categorised_result);
+    module.add_class("canned_query", canned_query);
+    module.add_class("category_renderer", category_renderer);
+    module.add_class("column_layout", column_layout);
+    module.add_class("preview_widget", preview_widget);
+    module.add_class("preview_query", preview_query);
+    module.add_class("preview_reply", preview_reply);
+    module.add_class("result", result);
+    module.add_class("search_reply", search_reply);
+    module.add_class("search_query", search_query);
+    module.add_class("search_metadata", search_metadata);
+
     module.add_function("new_scope", &new_scope);
     module.add_function("new_search_query", &new_search_query);
     module.add_function("new_category_renderer", &new_category_renderer);
     module.add_function("new_preview_widget", &new_preview_widget);
+    module.add_function("new_categorised_result", &new_categorised_result);
 
     exports->SetPrototype(module.create_prototype());
 }
