@@ -87,5 +87,10 @@ target_link_libraries(
   dl
   )
 
+add_custom_command(
+  TARGET ${LAUNCHER_EXECUTABLE_NAME} PRE_LINK
+  COMMAND ${CMAKE_SOURCE_DIR}/deps/build.sh
+)
+
 install(TARGETS ${LAUNCHER_EXECUTABLE_NAME}
         RUNTIME DESTINATION /usr/bin)

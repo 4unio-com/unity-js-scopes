@@ -43,14 +43,16 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/src
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   )
-link_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/out/Release
-  )
 
-add_custom_target(
-  deps
-  COMMAND
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/build.sh
+string(TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_tolower)
+if(cmake_build_type_tolower STREQUAL "debug")
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/out/Debug
   )
+else()
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/out/Release
+  )
+endif()
 
 add_subdirectory(src)
