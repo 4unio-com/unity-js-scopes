@@ -97,20 +97,9 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
 
   scope_config_ = current_scope_config;
 
-  std::function<void()> f = [this, current_scope_config]
-  {
-      runtime_->run_scope(scope_base_.get(), current_scope_config);
-  };
+  v8::Unlocker ul(v8::Isolate::GetCurrent());
 
-  work.data = (void*)&f;
-
-  // Run work in seperate v8 thread
-  uv_queue_work(uv_default_loop(), &work, run_scope, after);
-
-  // Process all pending tasks on the event queue
-  uv_run(uv_default_loop(), UV_RUN_ONCE);
-
-  //runtime_->run_scope(scope_base_.get(), current_scope_config);
+  runtime_->run_scope(scope_base_.get(), current_scope_config);
 }
 
 std::string JavascriptScopeRuntime::scope_config() const {
