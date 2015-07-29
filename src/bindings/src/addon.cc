@@ -55,12 +55,12 @@ v8::Handle<v8::Object> new_search_query(
   CannedQuery *c =
     v8cpp::from_v8<CannedQuery*>(
         v8::Isolate::GetCurrent(),
-        args[0]->ToObject());
+        args[0]);
 
   SearchMetaData *s =
     v8cpp::from_v8<SearchMetaData*>(
         v8::Isolate::GetCurrent(),
-        args[1]->ToObject());
+        args[1]);
 
   if (!c || !s) {
     throw std::runtime_error("Invalid arguments types");
@@ -71,7 +71,6 @@ v8::Handle<v8::Object> new_search_query(
   }
 
   v8::Local<v8::Function> run_callback =
-
     v8::Handle<v8::Function>::Cast(args[2]);
   v8::Local<v8::Function> cancelled_callback =
     v8::Handle<v8::Function>::Cast(args[3]);

@@ -28,9 +28,9 @@ SearchQuery::SearchQuery(
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
   : unity::scopes::SearchQueryBase(query, metadata),
+    isolate_(v8::Isolate::GetCurrent()),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
-    cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback),
-    isolate_(v8::Isolate::GetCurrent()) {
+    cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
 }
 
 SearchQuery::~SearchQuery() {
@@ -102,11 +102,6 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
 
   v8::Local<v8::Function> run_callback =
     v8cpp::to_local<v8::Function>(isolate_, run_callback_);
-
-  v8::Locker l(isolate_);
-  v8::Isolate::Scope isolate_scope(isolate_);
-  v8::HandleScope handle_scope(isolate_);
-  v8::Context::Scope context_scope(v8::Context::New(isolate_));
 
   assert(v8::Isolate::GetCurrent() == isolate_);
 
