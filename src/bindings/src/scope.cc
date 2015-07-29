@@ -25,8 +25,6 @@
 
 #include "../../common/config.h"
 
-#include <uv.h>
-#include <functional>
 
 JavascriptScopeRuntime::JavascriptScopeRuntime(
       const std::string& config_file)
@@ -61,16 +59,6 @@ ScopeBase* JavascriptScopeRuntime::scope_base() {
   return scope_base_.get();
 }
 
-uv_work_t work;
-void run_scope(uv_work_t* req)
-{
-    std::function<void()>* func = (std::function<void()>*)req->data;
-    (*func)();
-}
-void after(uv_work_t* req, int status)
-{
-}
-
 void JavascriptScopeRuntime::run(const std::string& scope_config) {
   if (!scope_config_.empty()) {
     throw std::runtime_error("Scope already running");
@@ -97,8 +85,8 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
 
   scope_config_ = current_scope_config;
 
-  v8::Unlocker ul(v8::Isolate::GetCurrent());
-
+  // Unlock access to the main isolate so that our callbacks will work
+  v8::Unlocker unlocker(v8::Isolate::GetCurrent());
   runtime_->run_scope(scope_base_.get(), current_scope_config);
 }
 
