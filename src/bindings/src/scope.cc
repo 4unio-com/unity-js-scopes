@@ -28,27 +28,8 @@
 
 JavascriptScopeRuntime::JavascriptScopeRuntime(
       const std::string& config_file)
-      : scope_base_(new ScopeBase()) {
-    std::string current_runtime_config = config_file;
-
-    if (current_runtime_config.empty()) {
-      char * env_runtime_config =
-        std::getenv(kJavascriptUnityRuntimeEnvVarName);
-
-      if (env_runtime_config) {
-        current_runtime_config = env_runtime_config;
-
-        if ( ! boost::ends_with(current_runtime_config, ".ini")) {
-          throw std::runtime_error("Invalid runtime config (ini file)");
-        }
-
-        if (!boost::filesystem::path(current_runtime_config).is_absolute()) {
-          current_runtime_config = boost::filesystem::canonical(current_runtime_config).native();
-        }
-      }
-    }
-
-    runtime_ = unity::scopes::Runtime::create_scope_runtime("simple", current_runtime_config);
+      : scope_base_(new ScopeBase()),
+        runtime_config_(config_file) {
 }
 
 JavascriptScopeRuntime::~JavascriptScopeRuntime() {
@@ -64,6 +45,7 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
     throw std::runtime_error("Scope already running");
   }
 
+  // Configure scope_config_
   std::string current_scope_config = scope_config;
 
   if (current_scope_config.empty()) {
@@ -84,6 +66,29 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
   }
 
   scope_config_ = current_scope_config;
+
+  // Configure runtime_
+  std::string current_runtime_config = runtime_config_;
+
+  if (current_runtime_config.empty()) {
+    char * env_runtime_config =
+      std::getenv(kJavascriptUnityRuntimeEnvVarName);
+
+    if (env_runtime_config) {
+      current_runtime_config = env_runtime_config;
+
+      if ( ! boost::ends_with(current_runtime_config, ".ini")) {
+        throw std::runtime_error("Invalid runtime config (ini file)");
+      }
+
+      if (!boost::filesystem::path(current_runtime_config).is_absolute()) {
+        current_runtime_config = boost::filesystem::canonical(current_runtime_config).native();
+      }
+    }
+  }
+
+  std::string scope_id = boost::filesystem::path(scope_config_).stem().string();
+  runtime_ = unity::scopes::Runtime::create_scope_runtime(scope_id, current_runtime_config);
 
   // Unlock access to the main isolate so that our callbacks will work
   v8cpp::Unlocker unlocker(v8::Isolate::GetCurrent());

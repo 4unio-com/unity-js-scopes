@@ -43,6 +43,7 @@ class JavascriptScopeRuntime
 
   unity::scopes::Runtime::UPtr runtime_;
   std::unique_ptr<ScopeBase> scope_base_;
+  std::string runtime_config_;
   std::string scope_config_;
 };
 
