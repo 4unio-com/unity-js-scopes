@@ -44,6 +44,8 @@ ScopeBase::~ScopeBase() {
 }
 
 void ScopeBase::start(std::string const& scope_id) {
+  v8cpp::Locker locker(isolate_);
+
   if (start_callback_.IsEmpty()) {
     return;
   }
@@ -68,6 +70,8 @@ void ScopeBase::stop() {
 }
 
 void ScopeBase::run() {
+  v8cpp::Locker locker(isolate_);
+
   if (run_callback_.IsEmpty()) {
     return;
   }
@@ -81,6 +85,8 @@ void ScopeBase::run() {
 unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
       unity::scopes::CannedQuery const &query,
       unity::scopes::SearchMetadata const &metadata) {
+  v8cpp::Locker locker(isolate_);
+
   if (search_callback_.IsEmpty()) {
     return nullptr;
   }

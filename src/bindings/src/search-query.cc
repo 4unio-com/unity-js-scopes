@@ -91,6 +91,8 @@ v8::Local<v8::Value> SearchQuery::query(
 }
 
 void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
+  v8cpp::Locker locker(isolate_);
+
   if (run_callback_.IsEmpty()) {
     return;
   }
@@ -98,14 +100,14 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
   // wrap & fire
   SearchReply *sr = new SearchReply(reply);
 
-  //auto wrapped_sr = v8cpp::to_v8(isolate_, sr);
+  auto wrapped_sr = v8cpp::to_v8(isolate_, sr);
 
   v8::Local<v8::Function> run_callback =
     v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
   assert(v8::Isolate::GetCurrent() == isolate_);
 
-  v8cpp::call_v8(isolate_, run_callback, v8cpp::to_v8(isolate_, sr));
+  v8cpp::call_v8(isolate_, run_callback, v8cpp::to_v8(isolate_, wrapped_sr));
 }
 
 void SearchQuery::cancelled() {

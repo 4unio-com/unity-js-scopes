@@ -86,7 +86,7 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
   scope_config_ = current_scope_config;
 
   // Unlock access to the main isolate so that our callbacks will work
-  v8::Unlocker unlocker(v8::Isolate::GetCurrent());
+  v8cpp::Unlocker unlocker(v8::Isolate::GetCurrent());
   runtime_->run_scope(scope_base_.get(), current_scope_config);
 }
 
