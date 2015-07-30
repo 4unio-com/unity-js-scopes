@@ -59,6 +59,8 @@ void ScopeBase::start(std::string const& scope_id) {
 }
 
 void ScopeBase::stop() {
+  v8cpp::Locker locker(isolate_);
+
   if (stop_callback_.IsEmpty()) {
     return;
   }
@@ -114,6 +116,8 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
 unity::scopes::ActivationQueryBase::UPtr ScopeBase::activate(
       unity::scopes::Result const &result,
       unity::scopes::ActionMetadata const &metadata) {
+  v8cpp::Locker locker(isolate_);
+
   return nullptr;
 }
 
@@ -122,12 +126,15 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
       unity::scopes::ActionMetadata const &metadata,
       std::string const &widget_id,
       std::string const &action_id) {
+  v8cpp::Locker locker(isolate_);
   return nullptr;
 }
 
 unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
       unity::scopes::Result const &result,
       unity::scopes::ActionMetadata const &action_metadata) {
+  v8cpp::Locker locker(isolate_);
+
   if (preview_callback_.IsEmpty()) {
     return nullptr;
   }

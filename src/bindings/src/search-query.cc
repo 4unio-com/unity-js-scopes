@@ -109,6 +109,8 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
 }
 
 void SearchQuery::cancelled() {
+  v8cpp::Locker locker(isolate_);
+
   if (cancelled_callback_.IsEmpty()) {
     return;
   }
