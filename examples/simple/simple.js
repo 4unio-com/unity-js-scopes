@@ -37,15 +37,15 @@ scopes.self.initialize(
                 metadata,
                 // run
                 function(search_reply) {
-//                    var qs =
-//                        canned_query.query_string();
+                    var qs =
+                        canned_query.query_string();
                     var category =
                         search_reply.register_category("simple", "hello world from js", "");
                     
                     var categorised_result =
                         scopes.lib.new_categorised_result(category);
                     categorised_result.set_uri("http://www.ubuntu.com");
-                    categorised_result.set_title("Ubuntu");
+                    categorised_result.set_title("'" + qs + "'");
                     
                     search_reply.push(categorised_result);
                 },

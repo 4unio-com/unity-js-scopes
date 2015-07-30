@@ -39,7 +39,7 @@ class CannedQuery
   
  private:
 
-  unity::scopes::CannedQuery const &query_;
+  unity::scopes::CannedQuery const query_;
 };
 
 #endif // _UNITY_JS_CANNED_QUERY_H_
