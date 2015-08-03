@@ -16,5 +16,5 @@ fi
 if [ -d "v8-cpp" ]; then
     cd v8-cpp; cd ..
 else
-    bzr branch lp:v8-cpp
+    bzr branch http://bazaar.launchpad.net/~unity-team/v8-cpp/trunk v8-cpp
 fi
