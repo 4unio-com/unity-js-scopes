@@ -7,5 +7,5 @@ DIR=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 cd $DIR
 
 cd io.js
-./configure --enable-static --debug
+./configure --enable-static
 make -j3
