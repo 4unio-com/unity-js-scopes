@@ -83,10 +83,17 @@ target_link_libraries(
   dl
   )
 
-add_custom_command(
-  TARGET ${LAUNCHER_EXECUTABLE_NAME} PRE_LINK
-  COMMAND ${CMAKE_SOURCE_DIR}/deps/build.sh
-)
+if(cmake_build_type_tolower STREQUAL "debug")
+  add_custom_command(
+    TARGET ${LAUNCHER_EXECUTABLE_NAME} PRE_LINK
+    COMMAND ${CMAKE_SOURCE_DIR}/deps/build-debug.sh
+  )
+else()
+  add_custom_command(
+    TARGET ${LAUNCHER_EXECUTABLE_NAME} PRE_LINK
+    COMMAND ${CMAKE_SOURCE_DIR}/deps/build.sh
+  )
+endif()
 
 install(TARGETS ${LAUNCHER_EXECUTABLE_NAME}
         RUNTIME DESTINATION /usr/bin)
