@@ -7,7 +7,6 @@ Build-Depends: bzr,
                debhelper (>= 9),
                python-pkgconfig,
                g++,
-               git,
                libboost-filesystem-dev,
                libunity-scopes-dev,
 Standards-Version: 3.9.5
