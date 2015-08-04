@@ -6,10 +6,9 @@ cd $DIR
 # io.js
 
 if [ -d "io.js" ]; then
-    cd io.js; git pull; cd ..
+    cd io.js; cd ..
 else
-    git config --global --unset http.proxy
-    git clone --depth 1 http://github.com/nodejs/io.js.git
+    bzr branch http://bazaar.launchpad.net/~webapps/unity-js-scopes/io.js io.js
 fi
 
 # v8cpp
