@@ -1,5 +1,5 @@
 Source: unity-js-scopes
-Section: x11
+Section: libs
 Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Build-Depends: bzr,
@@ -19,7 +19,7 @@ Vcs-Bzr: lp:unity-js-scopes
 Vcs-Browser: https://code.launchpad.net/unity-js-scopes
 
 Package: unity-js-scopes-bindings
-Architecture: armhf
+Architecture: i386 amd64 armhf
 Multi-Arch: foreign
 Depends: ${misc:Depends},
          ${shlibs:Depends},
@@ -29,7 +29,7 @@ Description: Javascript bindings to unity scopes library
  by providing bindings to the unity scopes API.
 
 Package: unity-js-scopes-launcher
-Architecture: armhf
+Architecture: i386 amd64 armhf
 Multi-Arch: foreign
 Depends: ${misc:Depends},
          ${shlibs:Depends},
