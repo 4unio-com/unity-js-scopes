@@ -79,10 +79,6 @@ target_link_libraries(
 
   ${Boost_LIBRARIES}
 
-  icui18n
-  icuuc
-  icudata
-  
   pthread
   dl
   )
