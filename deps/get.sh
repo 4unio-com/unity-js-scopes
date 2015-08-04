@@ -8,6 +8,7 @@ cd $DIR
 if [ -d "io.js" ]; then
     cd io.js; git pull; cd ..
 else
+    git config --global --unset http.proxy
     git clone --depth 1 http://github.com/nodejs/io.js.git
 fi
 
