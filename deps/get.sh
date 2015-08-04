@@ -8,7 +8,7 @@ cd $DIR
 if [ -d "io.js" ]; then
     cd io.js; git pull; cd ..
 else
-    git clone --depth 1 https://github.com/nodejs/io.js.git
+    git clone --depth 1 http://github.com/nodejs/io.js.git
 fi
 
 # v8cpp
