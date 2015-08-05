@@ -577,7 +577,10 @@ If you want to be notified when the file was modified, not just accessed
 you need to compare `curr.mtime` and `prev.mtime`.
 
 _Note: when an `fs.watchFile` operation results in an `ENOENT` error, it will
-invoke the callback once. This is a change in functionality since v0.10._
+ invoke the listener once, with all the fields zeroed (or, for dates, the Unix
+ Epoch). In Windows, `blksize` and `blocks` fields will be `undefined`, instead
+ of zero. If the file is created later on, the listener will be called again,
+ with the latest stat objects. This is a change in functionality since v0.10._
 
 _Note: `fs.watch` is more efficient than `fs.watchFile` and `fs.unwatchFile`.
 `fs.watch` should be used instead of `fs.watchFile` and `fs.unwatchFile`
@@ -798,6 +801,10 @@ on Unix systems, it never was.
 
 Returns a new ReadStream object (See `Readable Stream`).
 
+Be aware that, unlike the default value set for `highWaterMark` on a
+readable stream (16 kb), the stream returned by this method has a
+default value of 64 kb for the same parameter.
+
 `options` is an object or string with the following defaults:
 
     { flags: 'r',
@@ -819,6 +826,9 @@ there's an error.  It is your responsibility to close it and make sure
 there's no file descriptor leak.  If `autoClose` is set to true (default
 behavior), on `error` or `end` the file descriptor will be closed
 automatically.
+
+`mode` sets the file mode (permission and sticky bits), but only if the
+file was created.
 
 An example to read the last 10 bytes of a file which is 100 bytes long:
 
@@ -844,14 +854,14 @@ Returns a new WriteStream object (See `Writable Stream`).
 `options` is an object or string with the following defaults:
 
     { flags: 'w',
-      encoding: null,
+      defaultEncoding: 'utf8',
       fd: null,
       mode: 0o666 }
 
 `options` may also include a `start` option to allow writing data at
 some position past the beginning of the file.  Modifying a file rather
 than replacing it may require a `flags` mode of `r+` rather than the
-default mode `w`. The `encoding` can be `'utf8'`, `'ascii'`, `binary`,
+default mode `w`. The `defaultEncoding` can be `'utf8'`, `'ascii'`, `binary`,
 or `'base64'`.
 
 Like `ReadStream` above, if `fd` is specified, `WriteStream` will ignore the

@@ -172,7 +172,6 @@ inline Environment::Environment(v8::Local<v8::Context> context,
     : isolate_(context->GetIsolate()),
       isolate_data_(IsolateData::GetOrCreate(context->GetIsolate(), loop)),
       timer_base_(uv_now(loop)),
-      using_smalloc_alloc_cb_(false),
       using_domains_(false),
       using_abort_on_uncaught_exc_(false),
       using_asyncwrap_(false),
@@ -199,6 +198,8 @@ inline Environment::~Environment() {
   ENVIRONMENT_STRONG_PERSISTENT_PROPERTIES(V)
 #undef V
   isolate_data()->Put();
+
+  delete[] heap_statistics_buffer_;
 }
 
 inline void Environment::CleanupHandles() {
@@ -291,14 +292,6 @@ inline uint64_t Environment::timer_base() const {
   return timer_base_;
 }
 
-inline bool Environment::using_smalloc_alloc_cb() const {
-  return using_smalloc_alloc_cb_;
-}
-
-inline void Environment::set_using_smalloc_alloc_cb(bool value) {
-  using_smalloc_alloc_cb_ = value;
-}
-
 inline bool Environment::using_abort_on_uncaught_exc() const {
   return using_abort_on_uncaught_exc_;
 }
@@ -333,6 +326,16 @@ inline void Environment::set_printed_error(bool value) {
 
 inline void Environment::set_trace_sync_io(bool value) {
   trace_sync_io_ = value;
+}
+
+inline uint32_t* Environment::heap_statistics_buffer() const {
+  CHECK_NE(heap_statistics_buffer_, nullptr);
+  return heap_statistics_buffer_;
+}
+
+inline void Environment::set_heap_statistics_buffer(uint32_t* pointer) {
+  CHECK_EQ(heap_statistics_buffer_, nullptr);  // Should be set only once.
+  heap_statistics_buffer_ = pointer;
 }
 
 inline Environment* Environment::from_cares_timer_handle(uv_timer_t* handle) {

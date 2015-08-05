@@ -48,7 +48,6 @@
       'lib/querystring.js',
       'lib/readline.js',
       'lib/repl.js',
-      'lib/smalloc.js',
       'lib/stream.js',
       'lib/_stream_readable.js',
       'lib/_stream_writable.js',
@@ -69,10 +68,8 @@
       'lib/v8.js',
       'lib/vm.js',
       'lib/zlib.js',
-
       'lib/internal/child_process.js',
       'lib/internal/freelist.js',
-      'lib/internal/smalloc.js',
       'lib/internal/socket_list.js',
       'lib/internal/repl.js',
       'lib/internal/util.js',
@@ -123,7 +120,6 @@
         'src/node_i18n.cc',
         'src/pipe_wrap.cc',
         'src/signal_wrap.cc',
-        'src/smalloc.cc',
         'src/spawn_sync.cc',
         'src/string_bytes.cc',
         'src/stream_base.cc',
@@ -157,7 +153,6 @@
         'src/node_wrap.h',
         'src/node_i18n.h',
         'src/pipe_wrap.h',
-        'src/smalloc.h',
         'src/tty_wrap.h',
         'src/tcp_wrap.h',
         'src/udp_wrap.h',
@@ -198,6 +193,11 @@
           'sources!': [
             'src/node_main.cc',
           ],
+        }],
+        [ 'node_release_urlbase!=""', {
+          'defines': [
+            'NODE_RELEASE_URLBASE="<(node_release_urlbase)"',
+          ]
         }],
         [ 'v8_enable_i18n_support==1', {
           'defines': [ 'NODE_HAVE_I18N_SUPPORT=1' ],

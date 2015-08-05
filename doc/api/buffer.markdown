@@ -43,7 +43,7 @@ Creating a typed array from a `Buffer` works with the following caveats:
 
 2. The buffer's memory is interpreted as an array, not a byte array.  That is,
    `new Uint32Array(new Buffer([1,2,3,4]))` creates a 4-element `Uint32Array`
-   with elements `[1,2,3,4]`, not an `Uint32Array` with a single element
+   with elements `[1,2,3,4]`, not a `Uint32Array` with a single element
    `[0x1020304]` or `[0x4030201]`.
 
 NOTE: Node.js v0.8 simply retained a reference to the buffer in `array.buffer`
@@ -62,9 +62,14 @@ It can be constructed in a variety of ways.
 
 * `size` Number
 
-Allocates a new buffer of `size` octets. Note, `size` must be no more than
-[kMaxLength](smalloc.html#smalloc_smalloc_kmaxlength). Otherwise, a `RangeError`
-will be thrown here.
+Allocates a new buffer of `size` bytes.  `size` must be less than
+1,073,741,824 bytes (1 GB) on 32 bits architectures or
+2,147,483,648 bytes (2 GB) on 64 bits architectures,
+otherwise a `RangeError` is thrown.
+
+Unlike `ArrayBuffers`, the underlying memory for buffers is not initialized. So
+the contents of a newly created `Buffer` is unknown. Use `buf.fill(0)`to
+initialize a buffer to zeroes.
 
 ### new Buffer(array)
 
@@ -129,11 +134,6 @@ the list together.
 
 If the list has no items, or if the totalLength is 0, then it returns a
 zero-length buffer.
-
-If the list has exactly one item, then the first item of the list is
-returned.
-
-If the list has more than one item, then a new Buffer is created.
 
 If totalLength is not provided, it is read from the buffers in the list.
 However, this adds an additional loop to the function, so it is faster
