@@ -72,9 +72,9 @@ target_link_libraries(
   zlib
   http_parser
 
+  v8_libplatform
   v8_base
   v8_libbase
-  v8_libplatform
   v8_nosnapshot
 
   ${Boost_LIBRARIES}
