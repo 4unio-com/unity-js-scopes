@@ -1,3 +1,4 @@
 ./deps/io.js
 ./deps/v8-cpp
 ./CMakeLists.txt.user
+./examples/simple-click/CMakeLists.txt.user

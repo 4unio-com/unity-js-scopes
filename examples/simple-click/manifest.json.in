@@ -1,0 +1,15 @@
+{
+    "architecture": "@CLICK_ARCH@",
+    "description": "A simple JS scope",
+    "framework": "ubuntu-sdk-15.04",
+    "hooks": {
+        "js-scope": {
+            "apparmor": "js-scope.apparmor",
+            "scope": "js-scope"
+        }
+    },
+    "maintainer": "WebApps <webapps@lists.launchpad.net>",
+    "name": "js-scope.webapps",
+    "title": "js-scope",
+    "version": "0.1"
+}

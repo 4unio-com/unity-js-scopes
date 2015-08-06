@@ -1,0 +1,12 @@
+[ScopeConfig]
+ScopeRunner=/usr/bin/unity-js-scopes-launcher %S %R
+DisplayName = Simple JS Scope
+Description = A simple JS scope
+Author = WebApps
+Icon = icon.png
+
+[Appearance]
+PageHeader.Logo = logo.png
+PageHeader.ForegroundColor = white
+PageHeader.Background = color:///black
+ShapeImages = false
