@@ -17,6 +17,8 @@
  */
 
 var scopes = require('unity-js-scopes')
+var request = require('sync-request');
+var query_url = "http://www.colourlovers.com/api/palettes?format=json&numResults=100&keywords="
 
 scopes.self.initialize(
     {}
@@ -37,17 +39,21 @@ scopes.self.initialize(
                 metadata,
                 // run
                 function(search_reply) {
-                    var qs =
-                        canned_query.query_string();
-                    var category =
-                        search_reply.register_category("simple", "hello world from js", "");
-                    
-                    var categorised_result =
-                        scopes.lib.new_categorised_result(category);
-                    categorised_result.set_uri("http://www.ubuntu.com");
-                    categorised_result.set_title("'" + qs + "'");
-                    
-                    search_reply.push(categorised_result);
+                    var qs = canned_query.query_string();
+                    var cat_title = "";
+                    if (!qs) {
+                        cat_title = "Best palettes"
+                    }
+                    var category = search_reply.register_category("simple", cat_title, "");
+                    var res = request('GET', query_url+qs);
+                    r = JSON.parse(res.getBody())
+                    for(i = 0; i < r.length; i++) {
+                        var categorised_result = scopes.lib.new_categorised_result(category);
+                        categorised_result.set_uri(r[i].url);
+                        categorised_result.set_title(r[i].title);
+                        categorised_result.set_art(r[i].imageUrl);
+                        search_reply.push(categorised_result);
+                    }
                 },
                 // cancelled
                 function() {
@@ -55,5 +61,5 @@ scopes.self.initialize(
         },
         preview: function(result, action_metadata) {}
     }
-);
+    );
 

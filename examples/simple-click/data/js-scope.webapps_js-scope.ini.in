@@ -4,6 +4,7 @@ DisplayName = Simple JS Scope
 Description = A simple JS scope
 Author = WebApps
 Icon = icon.png
+SearchHint = Search
 
 [Appearance]
 PageHeader.Logo = logo.png
