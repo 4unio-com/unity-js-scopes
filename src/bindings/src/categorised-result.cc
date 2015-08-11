@@ -55,3 +55,18 @@ void CategorisedResult::set_title(
 
   unity::scopes::CategorisedResult::set_title(*(v8::String::Utf8Value(args[0]->ToString())));
 }
+
+void CategorisedResult::set_art(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 1) {
+    // TODO fix
+    return;
+  }
+
+  if (!args[0]->IsString()) {
+    // TODO fix
+    return;
+  }
+
+  unity::scopes::CategorisedResult::set_art(*(v8::String::Utf8Value(args[0]->ToString())));
+}

@@ -34,6 +34,7 @@ class CategorisedResult : public unity::scopes::CategorisedResult
   // v8 binding
   void set_uri(v8::FunctionCallbackInfo<v8::Value> const& args);
   void set_title(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void set_art(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
 
