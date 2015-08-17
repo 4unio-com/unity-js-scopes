@@ -65,12 +65,11 @@ int main(int argc, char *argv[]) {
          p.string().c_str(),
          true);
 
-  if (argc == 3) {
+  if (argc == 3 && !std::string(argv[2]).empty()) {
       std::string runtime_filename = argv[2];
 
-      if (runtime_filename.empty()
-          || !boost::filesystem::exists(runtime_filename)) {
-        std::cout << "Invalid or non existant runtime ini file name: "
+      if (!boost::filesystem::exists(runtime_filename)) {
+        std::cout << "Non-existant runtime ini file: "
                   << runtime_filename << std::endl;
         usage();
         return EXIT_FAILURE;

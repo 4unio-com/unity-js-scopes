@@ -1,11 +1,14 @@
 Source: unity-js-scopes
-Section: x11
+Section: libs
 Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Build-Depends: cmake (>= 2.8.9),
+Build-Depends: bzr,
+               cmake (>= 2.8.9),
                debhelper (>= 9),
+               pkg-config,
                g++,
                libboost-filesystem-dev,
+               libnet-cpp-dev,
                libunity-scopes-dev,
 Standards-Version: 3.9.5
 Homepage: https://launchpad.net/unity-js-scopes

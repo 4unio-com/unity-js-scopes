@@ -73,10 +73,6 @@ target_link_libraries(
 
   ${SCOPE_LIBRARIES}
 
-  icui18n
-  icuuc
-  icudata
-
   pthread
   dl
   )

@@ -224,7 +224,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<CategorisedResult> categorised_result(isolate);
     categorised_result
       .add_method("set_uri", &CategorisedResult::set_uri)
-      .add_method("set_title", &CategorisedResult::set_title);
+      .add_method("set_title", &CategorisedResult::set_title)
+      .add_method("set_art", &CategorisedResult::set_art);
 
     v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
