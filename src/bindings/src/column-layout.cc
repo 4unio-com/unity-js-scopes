@@ -62,7 +62,7 @@ v8::Local<v8::Value> ColumnLayout::number_of_columns(
 
 v8::Local<v8::Value> ColumnLayout::column(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (!args.Length() != 1 || !args[0]->IsInt32()) {
+  if (args.Length() != 1 || !args[0]->IsInt32()) {
     return v8cpp::to_v8(args.GetIsolate(), nullptr);
   }
 

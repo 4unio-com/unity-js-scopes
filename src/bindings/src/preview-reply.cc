@@ -29,7 +29,7 @@ PreviewReply::PreviewReply(unity::scopes::PreviewReplyProxy const& reply)
 PreviewReply::~PreviewReply() {
 }
 
-v8::Local<v8::Value> PreviewReply::register_layout(
+void PreviewReply::register_layout(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 3) {
     // TODO fix
