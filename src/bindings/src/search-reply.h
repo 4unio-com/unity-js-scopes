@@ -34,7 +34,7 @@ class SearchReply
 
  private:
 
-  unity::scopes::SearchReplyProxy const& reply_;
+  unity::scopes::SearchReplyProxy const reply_;
 };
 
 #endif // _UNITY_JS_SEARCH_REPLY_H_

@@ -17,8 +17,10 @@
  */
 
 var scopes = require('unity-js-scopes')
-var request = require('sync-request');
-var query_url = "http://www.colourlovers.com/api/palettes?format=json&numResults=100&keywords="
+var http = require('http');
+
+var query_host = "www.colourlovers.com"
+var query_path = "/api/palettes?format=json&numResults=100&keywords="
 
 scopes.self.initialize(
     {}
@@ -45,15 +47,34 @@ scopes.self.initialize(
                         cat_title = "Best palettes"
                     }
                     var category = search_reply.register_category("simple", cat_title, "");
-                    var res = request('GET', query_url+qs);
-                    r = JSON.parse(res.getBody())
-                    for(i = 0; i < r.length; i++) {
-                        var categorised_result = scopes.lib.new_categorised_result(category);
-                        categorised_result.set_uri(r[i].url);
-                        categorised_result.set_title(r[i].title);
-                        categorised_result.set_art(r[i].imageUrl);
-                        search_reply.push(categorised_result);
+
+                    var options = {
+                        host: query_host,
+                        path: query_path + qs
+                    };
+
+                    callback = function(response) {
+                        var res = '';
+
+                        // Another chunk of data has been recieved, so append it to res
+                        response.on('data', function(chunk) {
+                            res += chunk;
+                        });
+
+                        // The whole response has been recieved
+                        response.on('end', function() {
+                            r = JSON.parse(res);
+                            for(i = 0; i < r.length; i++) {
+                                var categorised_result = scopes.lib.new_categorised_result(category);
+                                categorised_result.set_uri(r[i].url);
+                                categorised_result.set_title(r[i].title);
+                                categorised_result.set_art(r[i].imageUrl);
+                                search_reply.push(categorised_result);
+                            }
+                        });
                     }
+
+                    http.request(options, callback).end();
                 },
                 // cancelled
                 function() {
@@ -61,5 +82,5 @@ scopes.self.initialize(
         },
         preview: function(result, action_metadata) {}
     }
-    );
+);
 

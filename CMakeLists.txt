@@ -38,6 +38,7 @@ if(NOT _DEPS_RESULT EQUAL 0)
 endif()
 
 include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/deps/uv/include
   ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/deps/v8/include
   ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/src
   ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/src
