@@ -30,7 +30,7 @@ class PreviewReply
   ~PreviewReply();
 
   // v8 bindings
-  v8::Local<v8::Value> register_layout(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void register_layout(v8::FunctionCallbackInfo<v8::Value> const& args);
   void push(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
