@@ -90,9 +90,13 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
   std::string scope_id = boost::filesystem::path(scope_config_).stem().string();
   runtime_ = unity::scopes::Runtime::create_scope_runtime(scope_id, current_runtime_config);
 
-  // Unlock access to the main isolate so that our callbacks will work
-  v8cpp::Unlocker unlocker(v8::Isolate::GetCurrent());
-  runtime_->run_scope(scope_base_.get(), current_scope_config);
+  // Run scope in a separate thread
+  run_thread_work_.data = this;
+  uv_queue_work(uv_default_loop(), &run_thread_work_, [](uv_work_t* work)
+  {
+    JavascriptScopeRuntime* thiz = (JavascriptScopeRuntime*)work->data;
+    thiz->runtime_->run_scope(thiz->scope_base_.get(), thiz->scope_config_);
+  }, nullptr);
 }
 
 std::string JavascriptScopeRuntime::scope_config() const {

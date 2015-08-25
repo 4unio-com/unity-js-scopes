@@ -26,6 +26,7 @@
 #include <unity/scopes/Runtime.h>
 
 #include <v8-cpp.h>
+#include <uv.h>
 
 #include "scope-base.h"
 
@@ -40,11 +41,11 @@ class JavascriptScopeRuntime
   std::string scope_config() const;
 
  private:
-
   unity::scopes::Runtime::UPtr runtime_;
   std::unique_ptr<ScopeBase> scope_base_;
   std::string runtime_config_;
   std::string scope_config_;
+  uv_work_t run_thread_work_;
 };
 
 #endif // _UNITY_JS_SCOPES_JAVASCRIPT_SCOPE_RUNTIME_H_

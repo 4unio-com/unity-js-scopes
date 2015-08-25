@@ -21,6 +21,7 @@
 #include "canned-query.h"
 #include "search-metadata.h"
 #include "search-reply.h"
+#include "event_queue.h"
 
 SearchQuery::SearchQuery(
       unity::scopes::CannedQuery const& query,
@@ -91,34 +92,36 @@ v8::Local<v8::Value> SearchQuery::query(
 }
 
 void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
-  v8cpp::Locker locker(isolate_);
-
   if (run_callback_.IsEmpty()) {
     return;
   }
 
-  // wrap & fire
-  SearchReply *sr = new SearchReply(reply);
+  EventQueue::instance().run(isolate_, [this, reply]
+  {
+    // wrap & fire
+    SearchReply *sr = new SearchReply(reply);
 
-  auto wrapped_sr = v8cpp::to_v8(isolate_, sr);
+    auto wrapped_sr = v8cpp::to_v8(isolate_, sr);
 
-  v8::Local<v8::Function> run_callback =
-    v8cpp::to_local<v8::Function>(isolate_, run_callback_);
+    v8::Local<v8::Function> run_callback =
+        v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-  v8cpp::call_v8(isolate_, run_callback, wrapped_sr);
+    v8cpp::call_v8(isolate_, run_callback, wrapped_sr);
+  });
 }
 
 void SearchQuery::cancelled() {
-  v8cpp::Locker locker(isolate_);
-
   if (cancelled_callback_.IsEmpty()) {
     return;
   }
 
-  v8::Local<v8::Function> cancelled_callback =
-    v8cpp::to_local<v8::Function>(isolate_, cancelled_callback_);
+  EventQueue::instance().run(isolate_, [this]
+  {
+    v8::Local<v8::Function> cancelled_callback =
+        v8cpp::to_local<v8::Function>(isolate_, cancelled_callback_);
 
-  v8cpp::call_v8(isolate_, cancelled_callback);
+    v8cpp::call_v8(isolate_, cancelled_callback);
+  });
 }
 
 v8::Local<v8::Value> SearchQuery::valid(
