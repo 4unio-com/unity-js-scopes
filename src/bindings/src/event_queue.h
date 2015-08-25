@@ -63,8 +63,7 @@ private:
 
   inline void run_func_(uv_loop_t* loop, std::function<void()> task_func)
   {
-    std::unique_lock<std::mutex> lock(mutex_);
-    task_complete_ = false;
+    std::lock_guard<std::mutex> task_lock(task_mutex_);
 
     uv_async_init(loop, &task_,
                   [](uv_async_t* handle)
@@ -76,29 +75,31 @@ private:
     task_func_ = task_func;
     task_.data = &task_func_;
 
+    std::unique_lock<std::mutex> task_done_lock(task_done_mutex_);
+    task_done_ = false;
     uv_async_send(&task_);
-
-    cond_.wait(lock, [this] { return task_complete_; });
+    task_done_cond_.wait(task_done_lock, [this] { return task_done_; });
   }
 
   inline void cleanup()
   {
-    std::lock_guard<std::mutex> lock(mutex_);
     task_.data = this;
     uv_close((uv_handle_t*) &task_, [](uv_handle_t* handle)
     {
       EventQueue* thiz = (EventQueue*)handle->data;
-      thiz->task_complete_ = true;
-      thiz->cond_.notify_one();
+      std::lock_guard<std::mutex> task_done_lock(thiz->task_done_mutex_);
+      thiz->task_done_ = true;
+      thiz->task_done_cond_.notify_one();
     });
   }
 
+  std::mutex task_mutex_;
   uv_async_t task_;
   std::function<void()> task_func_;
 
-  bool task_complete_ = true;
-  std::mutex mutex_;
-  std::condition_variable cond_;
+  std::mutex task_done_mutex_;
+  bool task_done_ = true;
+  std::condition_variable task_done_cond_;
 };
 
 #endif // _UNITY_JS_EVENT_QUEUE_H_
