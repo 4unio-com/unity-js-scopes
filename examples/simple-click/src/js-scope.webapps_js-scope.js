@@ -80,7 +80,17 @@ scopes.self.initialize(
                 function() {
                 });
         },
-        preview: function(result, action_metadata) {}
+        preview: function(result, action_metadata) {
+            return scopes.lib.new_preview_query(
+                result,
+                action_metadata,
+                // run
+                function(preview_reply) {
+                },
+                // cancelled
+                function() {
+                });
+        }
     }
 );
 

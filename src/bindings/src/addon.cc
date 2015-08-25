@@ -308,6 +308,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_function("new_scope", &new_scope);
     module.add_function("new_search_query", &new_search_query);
     module.add_function("new_category_renderer", &new_category_renderer);
+    module.add_function("new_preview_query", &new_preview_query);
     module.add_function("new_preview_widget", &new_preview_widget);
     module.add_function("new_categorised_result", &new_categorised_result);
 
