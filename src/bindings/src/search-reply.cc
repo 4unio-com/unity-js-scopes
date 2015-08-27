@@ -78,3 +78,8 @@ void SearchReply::push(
 
   reply_->push(static_cast<const unity::scopes::CategorisedResult &>(*r));
 }
+
+void SearchReply::finished()
+{
+  reply_->finished();
+}

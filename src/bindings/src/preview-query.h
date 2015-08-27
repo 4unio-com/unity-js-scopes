@@ -42,6 +42,8 @@ class PreviewQuery : public unity::scopes::PreviewQueryBase
   //  v8::Local<v8::Value> get_action_metadata(v8::FunctionCallbackInfo<v8::Value> const& args);
   
  private:
+  v8::Isolate* isolate_;
+
   v8::Persistent<v8::Function> run_callback_;
   v8::Persistent<v8::Function> cancelled_callback_;
 };

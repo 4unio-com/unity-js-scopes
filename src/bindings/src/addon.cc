@@ -192,6 +192,11 @@ v8::Handle<v8::Object> new_categorised_result(
   return v8cpp::to_v8(v8::Isolate::GetCurrent(), cr);
 }
 
+ColumnLayout* new_column_layout(int num_of_columns)
+{
+  return new ColumnLayout(num_of_columns);
+}
+
 void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
@@ -263,7 +268,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<PreviewReply> preview_reply(isolate);
     preview_reply
       .add_method("register_layout", &PreviewReply::register_layout)
-      .add_method("push", &PreviewReply::push);
+      .add_method("push", &PreviewReply::push)
+      .add_method("finished", &PreviewReply::finished);
 
     v8cpp::Class<Result> result(isolate);
     result
@@ -279,7 +285,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<SearchReply> search_reply(isolate);
     search_reply
       .add_method("register_category", &SearchReply::register_category)
-      .add_method("push", &SearchReply::push);
+      .add_method("push", &SearchReply::push)
+      .add_method("finished", &SearchReply::finished);
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
@@ -311,6 +318,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_function("new_preview_query", &new_preview_query);
     module.add_function("new_preview_widget", &new_preview_widget);
     module.add_function("new_categorised_result", &new_categorised_result);
+    module.add_function("new_column_layout", &new_column_layout);
 
     exports->SetPrototype(module.create_prototype());
 }

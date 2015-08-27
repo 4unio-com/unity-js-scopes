@@ -29,14 +29,25 @@ PreviewReply::PreviewReply(unity::scopes::PreviewReplyProxy const& reply)
 PreviewReply::~PreviewReply() {
 }
 
-void PreviewReply::register_layout(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 3) {
-    // TODO fix
-    throw std::runtime_error("Invalid number of arguments");
+void PreviewReply::register_layout(std::vector<ColumnLayout*> const& columns) {
+  unity::scopes::ColumnLayoutList columns_list;
+  for (auto const& column : columns)
+  {
+    columns_list.emplace_back(column->get_column_layout());
   }
+  reply_->register_layout(columns_list);
 }
 
-void PreviewReply::push(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
+void PreviewReply::push(std::vector<PreviewWidget*> const& widgets) {
+  unity::scopes::PreviewWidgetList widgets_list;
+  for (auto const& widget : widgets)
+  {
+    widgets_list.emplace_back(widget->get_preview_widget());
+  }
+  reply_->push(widgets_list);
+}
+
+void PreviewReply::finished()
+{
+  reply_->finished();
 }

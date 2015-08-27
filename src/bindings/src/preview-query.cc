@@ -17,6 +17,8 @@
  */
 
 #include "preview-query.h"
+#include "preview-reply.h"
+#include "event_queue.h"
 
 PreviewQuery::PreviewQuery(
       unity::scopes::Result const& result,
@@ -24,6 +26,7 @@ PreviewQuery::PreviewQuery(
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
   : unity::scopes::PreviewQueryBase(result, metadata),
+    isolate_(v8::Isolate::GetCurrent()),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
     cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
 }
@@ -58,6 +61,22 @@ void PreviewQuery::onrun(
 }
 
 void PreviewQuery::run(unity::scopes::PreviewReplyProxy const& reply) {
+  if (run_callback_.IsEmpty()) {
+    return;
+  }
+
+  EventQueue::instance().run(isolate_, [this, reply]
+  {
+    // wrap & fire
+    PreviewReply *pr = new PreviewReply(reply);
+
+    auto wrapped_pr = v8cpp::to_v8(isolate_, pr);
+
+    v8::Local<v8::Function> run_callback =
+        v8cpp::to_local<v8::Function>(isolate_, run_callback_);
+
+    v8cpp::call_v8(isolate_, run_callback, wrapped_pr);
+  });
 }
 
 void PreviewQuery::cancelled() {

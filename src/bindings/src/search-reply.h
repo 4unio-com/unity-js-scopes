@@ -31,6 +31,7 @@ class SearchReply
 
   v8::Local<v8::Value> register_category(v8::FunctionCallbackInfo<v8::Value> const& args);
   void push(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void finished();
 
  private:
 
