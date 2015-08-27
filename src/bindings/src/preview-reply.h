@@ -37,7 +37,7 @@ class PreviewReply
   void finished();
 
  private:
-  unity::scopes::PreviewReplyProxy const& reply_;
+  unity::scopes::PreviewReplyProxy const reply_;
 };
 
 #endif // _UNITY_JS_PREVIEW_REPLY_H_
