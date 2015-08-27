@@ -76,7 +76,7 @@ scopes.self.initialize(
                                     break;
                                 }
                             }
-                            search_reply.finished();
+                            search_reply.finished(); // TODO: The user shouldn't need to call this explicitly.
                         });
                     }
 
@@ -117,7 +117,7 @@ scopes.self.initialize(
                     description.add_attribute_mapping("text", "description");
 
                     preview_reply.push([image, header, description ]);
-                    preview_reply.finished();
+                    preview_reply.finished(); // TODO: The user shouldn't need to call this explicitly.
                 },
                 // cancelled
                 function() {
