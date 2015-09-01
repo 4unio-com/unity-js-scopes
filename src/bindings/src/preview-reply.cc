@@ -20,8 +20,6 @@
 
 #include <stdexcept>
 
-#include <unity/scopes/PreviewReply.h>
-
 PreviewReply::PreviewReply(unity::scopes::PreviewReplyProxy const& reply)
   : reply_(reply){
 }

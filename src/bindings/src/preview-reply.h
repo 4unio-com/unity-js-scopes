@@ -19,7 +19,7 @@
 #ifndef _UNITY_JS_PREVIEW_REPLY_H_
 #define _UNITY_JS_PREVIEW_REPLY_H_
 
-#include <unity/scopes/PreviewReplyProxyFwd.h>
+#include <unity/scopes/PreviewReply.h>
 #include "column-layout.h"
 #include "preview-widget.h"
 

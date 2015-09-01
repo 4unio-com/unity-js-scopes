@@ -65,8 +65,7 @@ private:
   {
     std::lock_guard<std::mutex> task_lock(task_mutex_);
 
-    uv_async_init(loop, &task_,
-                  [](uv_async_t* handle)
+    uv_async_init(loop, &task_, [](uv_async_t* handle)
     {
       std::function<void()> task_func_ = *((std::function<void()>*)handle->data);
       task_func_();

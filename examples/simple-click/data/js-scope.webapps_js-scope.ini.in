@@ -1,5 +1,7 @@
 [ScopeConfig]
 ScopeRunner=/usr/bin/unity-js-scopes-launcher %S %R
+#ScopeRunner=/usr/bin/gdbserver :10000 /usr/bin/unity-js-scopes-launcher %S %R
+#DebugMode = true
 DisplayName = Simple JS Scope
 Description = A simple JS scope
 Author = WebApps
