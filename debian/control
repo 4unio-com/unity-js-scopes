@@ -26,3 +26,12 @@ Depends: ${misc:Depends},
 Description: Javascript bindings to unity scopes library
  Provides a means for developers to develop Ubuntu Scopes in Javascript
  by providing bindings to the Unity Scopes API.
+
+Package: unity-js-scopes-launcher
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         unity-js-scopes-bindings (= ${binary:Version}),
+Description: Scope launcher for unity javascript scopes
+ Provides a custom means for developers to launch their Javascript Ubuntu Scopes.
