@@ -8,7 +8,7 @@ configure_file(
 )
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/../data/${SCOPE_NAME}.ini.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/${SCOPE_NAME}.ini.in"
   "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_NAME}.ini"
   @ONLY
   COPYONLY
