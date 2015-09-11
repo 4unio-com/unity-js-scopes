@@ -2,16 +2,7 @@ project(js-scope)
 cmake_minimum_required(VERSION 2.8.10)
 
 # Do not remove this, its required to ensure the correct node binaries are included in the project
-message(STATUS "Retrieving scopes bindings")
-
-execute_process(
-  COMMAND cp -r --parents /node_modules/unity-js-scopes ${CMAKE_SOURCE_DIR}/src
-  RESULT_VARIABLE _BINDINGS_RESULT
-  )
-
-if(NOT _BINDINGS_RESULT EQUAL 0)
-  message(FATAL_ERROR "Retrieving scopes bindings failed")
-endif()
+execute_process(COMMAND cp -r --parents /node_modules/unity-js-scopes ${CMAKE_SOURCE_DIR}/src)
 
 # Do not remove this, its required for the correct functionality of the Ubuntu-SDK
 set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Tells QtCreator location and name of the manifest file")
