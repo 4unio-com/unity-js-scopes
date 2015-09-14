@@ -96,5 +96,5 @@ else()
 endif()
 
 install(TARGETS ${LAUNCHER_EXECUTABLE_NAME}
-  RUNTIME DESTINATION /node_modules/unity-js-scopes/bin
+  RUNTIME DESTINATION /usr/bin
   )

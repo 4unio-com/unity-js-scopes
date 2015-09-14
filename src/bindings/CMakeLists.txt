@@ -90,7 +90,9 @@ set(ADDON_BINARY_FILES
 
 install(DIRECTORY .
   DESTINATION /node_modules/unity-js-scopes
+  USE_SOURCE_PERMISSIONS
   FILES_MATCHING PATTERN "*.js"
+  PATTERN "unity-js-scopes-configure"
   PATTERN "src" EXCLUDE
   PATTERN "CMakeFiles" EXCLUDE
   )
