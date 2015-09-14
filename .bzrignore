@@ -2,4 +2,3 @@
 ./deps/v8-cpp
 ./CMakeLists.txt.user
 ./examples/simple-click/CMakeLists.txt.user
-./examples/simple-click/src/node_modules
