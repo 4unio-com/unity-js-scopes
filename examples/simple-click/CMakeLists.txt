@@ -26,7 +26,7 @@ execute_process(
 
 configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
 
-# Install the click manifest
+# Install the manifest and apparmor files
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json DESTINATION "/")
 install(FILES "js-scope.apparmor" DESTINATION "/")
 

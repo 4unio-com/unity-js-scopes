@@ -2,7 +2,7 @@
 
 # Check that there is 1 argument
 if [ $# != 1 ]; then
-    echo "usage: $0 <path/to/node_modules>"
+    echo "usage: unity-js-scopes-configure <path/to/node_modules>"
     exit 1
 fi
 
