@@ -8,7 +8,7 @@ configure_file(
 )
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/../data/${SCOPE_NAME}.ini.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/${SCOPE_NAME}.ini.in"
   "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_NAME}.ini"
   @ONLY
   COPYONLY
@@ -21,6 +21,13 @@ configure_file(
   COPYONLY
 )
 
+file(
+  COPY
+    "${CMAKE_CURRENT_SOURCE_DIR}/node_modules"
+  DESTINATION
+    ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 # Install the scope ini and js files
 install(
   FILES
@@ -28,4 +35,12 @@ install(
     "${CMAKE_CURRENT_SOURCE_DIR}/${SCOPE_NAME}.js"
   DESTINATION
     ${SCOPE_INSTALL_DIR}
+)
+
+install(
+  DIRECTORY
+    "${CMAKE_CURRENT_SOURCE_DIR}/node_modules"
+  DESTINATION
+    ${SCOPE_INSTALL_DIR}
+  USE_SOURCE_PERMISSIONS
 )

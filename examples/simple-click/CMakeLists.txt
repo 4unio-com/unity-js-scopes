@@ -1,7 +1,12 @@
 project(js-scope)
 cmake_minimum_required(VERSION 2.8.10)
 
-# Do not remove this line, its required for the correct functionality of the Ubuntu-SDK
+# Do not remove this, its required to ensure the correct node binaries are included in the project
+set(CONFIG_CMD /node_modules/unity-js-scopes/bin/unity-js-scopes-configure)
+execute_process(COMMAND ${CONFIG_CMD} ${CMAKE_SOURCE_DIR}/src/node_modules)
+add_custom_target(rebuild_npm_modules ALL COMMAND ${CONFIG_CMD} ${CMAKE_SOURCE_DIR}/src/node_modules)
+
+# Do not remove this, its required for the correct functionality of the Ubuntu-SDK
 set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Tells QtCreator location and name of the manifest file")
 set(UBUNTU_PROJECT_TYPE "Scope" CACHE INTERNAL "Tells QtCreator this is a Scope project")
 
@@ -21,11 +26,11 @@ execute_process(
 
 configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
 
-# Install the click manifest
+# Install the manifest and apparmor files
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json DESTINATION "/")
 install(FILES "js-scope.apparmor" DESTINATION "/")
 
-# Make these files show up in QtCreator
+# Make manifest and apparmor files show up in QtCreator
 add_custom_target(hidden_files
   ALL
   SOURCES

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Check that there is 1 argument
+if [ $# != 1 ]; then
+    echo "usage: unity-js-scopes-configure <path/to/node_modules>"
+    exit 1
+fi
+
+# Check that the argument is a valid directory
+if [ ! -d $1 ]; then
+    echo "'$1' is not a valid directory"
+    exit 1
+fi
+
+# Check that the target directory is named "node_modules"
+if [[ ! $1 == */node_modules ]] && [[ ! $1 == */node_modules/ ]]; then
+    echo "target directory should be named 'node_modules'"
+    exit 1
+fi
+
+# Copy the unity-js-scopes bindings into the target node_modules folder
+rm -rf $1/unity-js-scopes
+cp -r /node_modules/unity-js-scopes $1
+cp /usr/bin/unity-js-scopes-launcher $1/unity-js-scopes/bin
+
+# Rebuild any binary npm modules for the current targeted arch
+if [ ! -f /usr/bin/node ] && [ -f /usr/bin/nodejs ]; then
+    # If we are using the old node + npm:
+    ln -s /usr/bin/nodejs $1/node
+    PATH=$1:$PATH nodejs /usr/lib/nodejs/npm/lib/npm.js --prefix=$1/../ rebuild
+    rm $1/node
+else
+    # Else if we are using the new node + npm:
+    npm --prefix=$1/../ rebuild
+fi
