@@ -30,12 +30,17 @@ configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json DESTINATION "/")
 install(FILES "js-scope.apparmor" DESTINATION "/")
 
-# Make manifest and apparmor files show up in QtCreator
+# Make manifest, apparmor, and js files show up in QtCreator
+file(GLOB_RECURSE
+  _JS_FILES
+  "*.js"
+)
 add_custom_target(hidden_files
   ALL
   SOURCES
     manifest.json.in
     js-scope.apparmor
+    ${_JS_FILES}
 )
 
 # Add our main directories
