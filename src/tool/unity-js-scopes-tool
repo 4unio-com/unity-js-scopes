@@ -2,7 +2,7 @@
 
 # Check that there is 1 argument
 if [ $# != 1 ]; then
-    echo "usage: unity-js-scopes-configure <path/to/node_modules>"
+    echo "Usage: unity-js-scopes-tool <path/to/node_modules>"
     exit 1
 fi
 
@@ -14,7 +14,7 @@ fi
 
 # Check that the target directory is named "node_modules"
 if [[ ! $1 == */node_modules ]] && [[ ! $1 == */node_modules/ ]]; then
-    echo "target directory should be named 'node_modules'"
+    echo "Target directory should be named 'node_modules'"
     exit 1
 fi
 
@@ -26,6 +26,7 @@ rm -rf $1/unity-js-scopes
 echo "Copying '/node_modules/unity-js-scopes' to '$1' ..."
 cp -r /node_modules/unity-js-scopes $1
 echo "Copying '/usr/bin/unity-js-scopes-launcher' to '$1/unity-js-scopes/bin' ..."
+mkdir -p $1/unity-js-scopes/bin
 cp /usr/bin/unity-js-scopes-launcher $1/unity-js-scopes/bin
 
 # Rebuild any binary npm modules for the current targeted arch
