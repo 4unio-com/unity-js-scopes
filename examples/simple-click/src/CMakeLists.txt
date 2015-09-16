@@ -22,7 +22,7 @@ configure_file(
 )
 
 add_custom_target(
-  install_node_modules ALL
+  copy_modules ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_CURRENT_SOURCE_DIR}/node_modules"
     "${CMAKE_CURRENT_BINARY_DIR}/node_modules"

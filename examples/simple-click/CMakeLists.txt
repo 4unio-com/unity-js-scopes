@@ -2,8 +2,8 @@ project(js-scope)
 cmake_minimum_required(VERSION 2.8.10)
 
 # Do not remove this, its required to ensure the correct node binaries are included in the project
-execute_process(COMMAND unity-js-scopes-tool ${CMAKE_SOURCE_DIR}/src/node_modules)
-add_custom_target(rebuild_node_modules ALL COMMAND unity-js-scopes-tool ${CMAKE_SOURCE_DIR}/src/node_modules)
+execute_process(COMMAND unity-js-scopes-tool install ${CMAKE_SOURCE_DIR}/src/node_modules)
+add_custom_target(install_modules ALL COMMAND unity-js-scopes-tool install ${CMAKE_SOURCE_DIR}/src/node_modules)
 
 # Do not remove this, its required for the correct functionality of the Ubuntu-SDK
 set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Tells QtCreator location and name of the manifest file")
