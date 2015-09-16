@@ -21,11 +21,11 @@ configure_file(
   COPYONLY
 )
 
-file(
-  COPY
+add_custom_target(
+  copy_node_modules ALL
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_CURRENT_SOURCE_DIR}/node_modules"
-  DESTINATION
-    ${CMAKE_CURRENT_BINARY_DIR}
+    "${CMAKE_CURRENT_BINARY_DIR}/node_modules"
 )
 
 # Install the scope ini and js files
