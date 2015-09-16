@@ -29,7 +29,8 @@
 #include <boost/filesystem.hpp>
 
 void usage() {
-  std::cout << executable_name()
+  std::cout << "Usage: "
+            << executable_name()
             << " "
             << "<path-to-scope-ini>"
             << " "
