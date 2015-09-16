@@ -6,19 +6,22 @@ if [ $# != 1 ]; then
     exit 1
 fi
 
-# Check that the argument is a valid directory
-if [ ! -d $1 ]; then
-    echo "'$1' is not a valid directory"
-    exit 1
-fi
-
 # Check that the target directory is named "node_modules"
 if [[ ! $1 == */node_modules ]] && [[ ! $1 == */node_modules/ ]]; then
     echo "Target directory should be named 'node_modules'"
     exit 1
 fi
 
+# Check that the argument is not already a file
+if [ -f $1 ]; then
+    echo "'$1' already exists as a file"
+    exit 1
+fi
+
 echo "Installation started."
+
+# Ensure that the target node_modules folder exists
+mkdir -p $1
 
 # Copy the unity-js-scopes bindings into the target node_modules folder
 echo "Removing '$1/unity-js-scopes' ..." 
