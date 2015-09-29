@@ -31,8 +31,13 @@
 
 void usage() {
   std::cout << "Usage: "
+            << std::endl
             << executable_name()
             << " install "
+            << "<path/to/node_modules>"
+            << std::endl
+            << executable_name()
+            << " rebuild "
             << "<path/to/node_modules>"
             << std::endl;
 }
@@ -43,12 +48,13 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (std::string(argv[1]) == "install") {
+  if (std::string(argv[1]) == "install" || std::string(argv[1]) == "rebuild") {
     if (argc != 3) {
       usage();
       return EXIT_FAILURE;
     }
 
+    int result = EXIT_FAILURE;
     std::string modules_dir = argv[2];
 
     // Check that the target path is not empty
@@ -108,30 +114,37 @@ int main(int argc, char *argv[]) {
     boost::filesystem::copy("/usr/bin/unity-js-scopes-launcher",
                             modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
 
-    // Create symlinks for node and node-gyp
-    std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node' symlink ..." << std::endl;
-    boost::filesystem::create_symlink("/usr/bin/unity-js-scopes-tool",
-                                      modules_dir + "/unity-js-scopes/node");
+    if (std::string(argv[1]) == "rebuild")
+    {
+      // Create symlinks for node and node-gyp
+      std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node' symlink ..." << std::endl;
+      boost::filesystem::create_symlink("/usr/bin/unity-js-scopes-tool",
+                                        modules_dir + "/unity-js-scopes/node");
 
-    std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node-gyp' symlink ..." << std::endl;
-    boost::filesystem::create_symlink("/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
-                                      modules_dir + "/unity-js-scopes/node-gyp");
+      std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node-gyp' symlink ..." << std::endl;
+      boost::filesystem::create_symlink("/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
+                                        modules_dir + "/unity-js-scopes/node-gyp");
 
-    std::string path_env = "PATH=" + modules_dir + "/unity-js-scopes" + ":" + getenv("PATH");
-    std::cout << "Setting '" << path_env << "' ..." << std::endl;
-    putenv(const_cast<char*>(path_env.c_str()));
+      std::string path_env = "PATH=" + modules_dir + "/unity-js-scopes" + ":" + getenv("PATH");
+      std::cout << "Setting '" << path_env << "' ..." << std::endl;
+      putenv(const_cast<char*>(path_env.c_str()));
 
-    // Rebuild any binary npm modules for the current targeted arch
-    std::cout << "Rebuilding binary modules in '" << modules_dir << "' ..." << std::endl;
+      // Rebuild any binary npm modules for the current targeted arch
+      std::cout << "Rebuilding binary modules in '" << modules_dir << "' ..." << std::endl;
 
-    std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
-    std::cout << "Running '" << node_cmd << "' ..." << std::endl;
-    int result = system(node_cmd.c_str());
+      std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
+      std::cout << "Running '" << node_cmd << "' ..." << std::endl;
+      result = system(node_cmd.c_str());
 
-    // Cleanup symlinks
-    std::cout << "Cleaning up symlinks ..." << std::endl;
-    boost::filesystem::remove(modules_dir + "/unity-js-scopes/node");
-    boost::filesystem::remove(modules_dir + "/unity-js-scopes/node-gyp");
+      // Cleanup symlinks
+      std::cout << "Cleaning up symlinks ..." << std::endl;
+      boost::filesystem::remove(modules_dir + "/unity-js-scopes/node");
+      boost::filesystem::remove(modules_dir + "/unity-js-scopes/node-gyp");
+    }
+    else
+    {
+      result = EXIT_SUCCESS;
+    }
 
     if (result == EXIT_SUCCESS)
     {
