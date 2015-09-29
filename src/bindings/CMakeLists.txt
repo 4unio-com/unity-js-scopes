@@ -90,6 +90,7 @@ set(ADDON_BINARY_FILES
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/deps/io.js/deps/npm
   DESTINATION /node_modules
+  USE_SOURCE_PERMISSIONS
   )
 
 install(DIRECTORY .

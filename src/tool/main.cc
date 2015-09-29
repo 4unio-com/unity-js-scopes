@@ -166,13 +166,6 @@ int main(int argc, char *argv[]) {
     return result;
   }
   else {
-    std::cout << "Running: \"node";
-    for (int i = 1; i < argc; ++i)
-    {
-      std::cout << " " << argv[i];
-    }
-    std::cout << "\" ..." << std::endl;
-
     return node::Start(argc, argv);
   }
 }
