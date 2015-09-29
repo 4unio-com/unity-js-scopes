@@ -132,14 +132,31 @@ int main(int argc, char *argv[]) {
 
       if (argc > 3)
       {
-        std::cout << "Setting target arch: '" << std::string(argv[3]) << "' ..." << std::endl;
+        std::cout << "Setting target arch to '" << std::string(argv[3]) << "' ..." << std::endl;
         if (std::string(argv[3]) == "armhf")
         {
-          putenv("CC=arm-linux-gnueabihf-gcc-4.9");
-          putenv("CXX=arm-linux-gnueabihf-g++-4.9");
-          putenv("LINK=arm-linux-gnueabihf-g++-4.9");
-          putenv("AR=arm-linux-gnueabihf-ar");
-          putenv("npm_config_arch=arm");
+          if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-5"))
+          {
+            std::cout << "Setting armhf compiler to 'GCC 5' ..." << std::endl;
+            putenv("CC=arm-linux-gnueabihf-gcc-5");
+            putenv("CXX=arm-linux-gnueabihf-g++-5");
+            putenv("LINK=arm-linux-gnueabihf-g++-5");
+            putenv("AR=arm-linux-gnueabihf-ar");
+            putenv("npm_config_arch=arm");
+          }
+          else if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-4.9"))
+          {
+            std::cout << "Setting armhf compiler to 'GCC 4.9' ..." << std::endl;
+            putenv("CC=arm-linux-gnueabihf-gcc-4.9");
+            putenv("CXX=arm-linux-gnueabihf-g++-4.9");
+            putenv("LINK=arm-linux-gnueabihf-g++-4.9");
+            putenv("AR=arm-linux-gnueabihf-ar");
+            putenv("npm_config_arch=arm");
+          }
+          else
+          {
+            std::cout << "WARNING: No armhf compiler found. Using system default." << std::endl;
+          }
         }
       }
 
