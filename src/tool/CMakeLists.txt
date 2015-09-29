@@ -16,7 +16,84 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-install(FILES unity-js-scopes-tool
-  DESTINATION /usr/bin
-  PERMISSIONS WORLD_READ WORLD_EXECUTE
+project(unity-js-scopes-tool CXX)
+
+file(
+    GLOB
+    SRC_FILES
+    ./*.h
+    ./*.cc
+)
+
+add_definitions(
+    -std=c++11
+    -fno-permissive
+    -pedantic
+    -Wall
+    -Wextra
+    -fPIC
+    -Wno-unused-parameter
+)
+
+link_directories(
+  ${Boost_LIB_DIRS}
+)
+
+set(TOOL_EXECUTABLE_NAME unity-js-scopes-tool)
+
+configure_file(
+    config.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+    @ONLY)
+
+add_executable(
+    ${TOOL_EXECUTABLE_NAME}
+    ${SRC_FILES}
+    )
+
+find_package(PkgConfig)
+find_package(Boost
+  COMPONENTS system filesystem
+  REQUIRED)
+
+include_directories(
+  ${Boost_INCLUDE_DIRS}
+  "${CMAKE_SOURCE_DIR}/include"
+  ${SCOPE_INCLUDE_DIRS}
   )
+
+target_link_libraries(
+  ${TOOL_EXECUTABLE_NAME}
+
+  -Wl,--whole-archive iojs -Wl,--no-whole-archive
+  uv
+  cares
+  openssl
+  zlib
+  http_parser
+
+  v8_libplatform
+  v8_base
+  v8_libbase
+  v8_nosnapshot
+
+  ${Boost_LIBRARIES}
+
+  pthread
+  dl
+  )
+
+if(cmake_build_type_tolower STREQUAL "debug")
+  add_custom_command(
+    TARGET ${TOOL_EXECUTABLE_NAME} PRE_LINK
+    COMMAND ${CMAKE_SOURCE_DIR}/deps/build-debug.sh
+  )
+else()
+  add_custom_command(
+    TARGET ${TOOL_EXECUTABLE_NAME} PRE_LINK
+    COMMAND ${CMAKE_SOURCE_DIR}/deps/build.sh
+  )
+endif()
+
+install(TARGETS ${TOOL_EXECUTABLE_NAME}
+        RUNTIME DESTINATION /usr/bin)
