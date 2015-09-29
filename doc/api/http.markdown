@@ -462,7 +462,6 @@ automatically parsed with [url.parse()][].
 
 Options:
 
-- `protocol`: Protocol to use. Defaults to `'http'`.
 - `host`: A domain name or IP address of the server to issue the request to.
   Defaults to `'localhost'`.
 - `hostname`: Alias for `host`. To support `url.parse()` `hostname` is
@@ -912,8 +911,7 @@ is finished.
 
 ### request.abort()
 
-Marks the request as aborting. Calling this will cause remaining data
-in the response to be dropped and the socket to be destroyed.
+Aborts a request.  (New since v0.3.8.)
 
 ### request.setTimeout(timeout[, callback])
 
