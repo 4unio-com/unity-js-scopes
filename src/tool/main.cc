@@ -108,51 +108,30 @@ int main(int argc, char *argv[]) {
     boost::filesystem::copy("/usr/bin/unity-js-scopes-launcher",
                             modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
 
+    // Create symlinks for node and node-gyp
+    std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node' symlink ..." << std::endl;
+    boost::filesystem::create_symlink("/usr/bin/unity-js-scopes-tool",
+                                      modules_dir + "/unity-js-scopes/node");
+
+    std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node-gyp' symlink ..." << std::endl;
+    boost::filesystem::create_symlink("/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
+                                      modules_dir + "/unity-js-scopes/node-gyp");
+
+    std::string path_env = "PATH=" + modules_dir + "/unity-js-scopes" + ":" + getenv("PATH");
+    std::cout << "Setting '" << path_env << "' ..." << std::endl;
+    putenv(const_cast<char*>(path_env.c_str()));
+
     // Rebuild any binary npm modules for the current targeted arch
     std::cout << "Rebuilding binary modules in '" << modules_dir << "' ..." << std::endl;
-    std::string npm_script = "/node_modules/npm/cli.js";
-    std::string prefix_arg = "--prefix='" + modules_dir + "/../'";
-    std::string rebuild_arg = "rebuild";
 
-    std::vector<std::string::value_type>
-        new_args_content(
-          executable_name().size() + 1
-          + npm_script.size() + 1
-          + prefix_arg.size() + 1
-          + rebuild_arg.size() + 1);
+    std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
+    std::cout << "Running '" << node_cmd << "' ..." << std::endl;
+    int result = system(node_cmd.c_str());
 
-    memcpy(&new_args_content[0],
-        executable_name().c_str(),
-        executable_name().size() + 1);
-
-    memcpy(&new_args_content[0]
-        + executable_name().size() + 1,
-        npm_script.c_str(),
-        npm_script.size() + 1);
-
-    memcpy(&new_args_content[0]
-        + executable_name().size() + 1
-        + npm_script.size() + 1,
-        prefix_arg.c_str(),
-        prefix_arg.size() + 1);
-
-    memcpy(&new_args_content[0]
-        + executable_name().size() + 1
-        + npm_script.size() + 1
-        + prefix_arg.size() + 1,
-        rebuild_arg.c_str(),
-        rebuild_arg.size() + 1);
-
-    std::vector<std::string::value_type*>
-        new_args;
-    new_args.push_back(&new_args_content[0]);
-    new_args.push_back(&new_args_content[0] + executable_name().size() + 1);
-    new_args.push_back(&new_args_content[0] + executable_name().size() + 1 + npm_script.size() + 1);
-    new_args.push_back(&new_args_content[0] + executable_name().size() + 1 + npm_script.size() + 1 + prefix_arg.size() + 1);
-
-    int result = node::Start(
-          new_args.size(),
-          &new_args[0]);
+    // Cleanup symlinks
+    std::cout << "Cleaning up symlinks ..." << std::endl;
+    boost::filesystem::remove(modules_dir + "/unity-js-scopes/node");
+    boost::filesystem::remove(modules_dir + "/unity-js-scopes/node-gyp");
 
     if (result == EXIT_SUCCESS)
     {
