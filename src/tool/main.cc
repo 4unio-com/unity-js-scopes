@@ -38,7 +38,7 @@ void usage() {
             << std::endl
             << executable_name()
             << " rebuild "
-            << "<path/to/node_modules>"
+            << "<path/to/node_modules> "
             << "[<target_arch>]"
             << std::endl;
 }
