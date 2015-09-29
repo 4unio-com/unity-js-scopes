@@ -39,6 +39,7 @@ void usage() {
             << executable_name()
             << " rebuild "
             << "<path/to/node_modules>"
+            << "[<target_arch>]"
             << std::endl;
 }
 
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (std::string(argv[1]) == "install" || std::string(argv[1]) == "rebuild") {
-    if (argc != 3) {
+    if (argc < 3) {
       usage();
       return EXIT_FAILURE;
     }
@@ -128,6 +129,19 @@ int main(int argc, char *argv[]) {
       std::string path_env = "PATH=" + modules_dir + "/unity-js-scopes" + ":" + getenv("PATH");
       std::cout << "Setting '" << path_env << "' ..." << std::endl;
       putenv(const_cast<char*>(path_env.c_str()));
+
+      if (argc > 3)
+      {
+        std::cout << "Setting target arch: '" << std::string(argv[3]) << "' ..." << std::endl;
+        if (std::string(argv[3]) == "armhf")
+        {
+          putenv("CC=arm-linux-gnueabihf-gcc-4.9");
+          putenv("CXX=arm-linux-gnueabihf-g++-4.9");
+          putenv("LINK=arm-linux-gnueabihf-g++-4.9");
+          putenv("AR=arm-linux-gnueabihf-ar");
+          putenv("npm_config_arch=arm");
+        }
+      }
 
       // Rebuild any binary npm modules for the current targeted arch
       std::cout << "Rebuilding binary modules in '" << modules_dir << "' ..." << std::endl;
