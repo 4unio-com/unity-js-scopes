@@ -18,7 +18,6 @@
 
 var scopes = require('unity-js-scopes')
 var http = require('http');
-var sleep = require('sleep');
 
 var query_host = "www.colourlovers.com"
 var query_path = "/api/palettes?format=json&numResults=100&keywords="
@@ -71,7 +70,6 @@ scopes.self.initialize(
                                 categorised_result.set_title(r[i].title);
                                 categorised_result.set_art(r[i].imageUrl);
                                 search_reply.push(categorised_result);
-                                sleep.sleep(1);
 
                                 // Limit result count to 15
                                 if (i == 14) {

@@ -1,7 +1,7 @@
 project(js-scope)
 cmake_minimum_required(VERSION 2.8.10)
 
-# This command figures out the target architecture and puts it into the manifest file
+# This command figures out the target architecture
 execute_process(
   COMMAND dpkg-architecture -qDEB_HOST_ARCH
   OUTPUT_VARIABLE CLICK_ARCH
