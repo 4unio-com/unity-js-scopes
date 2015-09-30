@@ -29,7 +29,8 @@
 #include <boost/filesystem.hpp>
 
 void usage() {
-  std::cout << "Usage: "
+  std::cout << "Usage:"
+            << std::endl
             << executable_name()
             << " "
             << "<path-to-scope-ini>"
@@ -39,7 +40,7 @@ void usage() {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 2 || argc > 3) {
+  if (argc < 2 || argc > 3 || std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help") {
     usage();
     return EXIT_FAILURE;
   }
