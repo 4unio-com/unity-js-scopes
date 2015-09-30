@@ -34,7 +34,8 @@ void usage() {
             << std::endl
             << executable_name()
             << " install "
-            << "<path/to/node_modules>"
+            << "<path/to/node_modules> "
+            << "[<npm_module>]"
             << std::endl
             << executable_name()
             << " rebuild "
@@ -92,44 +93,65 @@ int main(int argc, char *argv[]) {
       boost::filesystem::create_directories(modules_dir);
     }
 
-    // Remove any existing unity-js-scopes bindings from the target directory
-    if (boost::filesystem::exists(modules_dir + "/unity-js-scopes")) {
-      std::cout << "Removing '" << modules_dir << "/unity-js-scopes' ..." << std::endl;
-      boost::filesystem::remove_all(modules_dir + "/unity-js-scopes");
+    // Create symlinks for node and node-gyp
+    boost::filesystem::remove(modules_dir + "/node");
+    boost::filesystem::remove(modules_dir + "/node-gyp");
+
+    std::cout << "Creating '" << modules_dir << "/node' symlink ..." << std::endl;
+    boost::filesystem::create_symlink("/usr/bin/unity-js-scopes-tool",
+                                      modules_dir + "/node");
+
+    std::cout << "Creating '" << modules_dir << "/node-gyp' symlink ..." << std::endl;
+    boost::filesystem::create_symlink("/node_modules/npm/bin/node-gyp-bin/node-gyp",
+                                      modules_dir + "/node-gyp");
+
+    std::string abs_modules_dir = boost::filesystem::absolute(boost::filesystem::path(modules_dir)).native();
+    std::string path_env = "PATH=" + abs_modules_dir + ":" + getenv("PATH");
+    std::cout << "Setting '" << path_env << "' ..." << std::endl;
+    putenv(const_cast<char*>(path_env.c_str()));
+
+    // Determine whether we are installing unity-js-scopes or an npm module
+    if (std::string(argv[1]) == "install" && argc > 3
+        && std::string(argv[3]) != "unity-js-scopes") // Install an npm module
+    {
+      std::string npm_module = argv[3];
+
+      // Install the npm module
+      std::cout << "Installing npm module '" << npm_module << "' to '" << modules_dir << "' ..." << std::endl;
+
+      std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' install " + npm_module;
+      std::cout << "Running '" << node_cmd << "' ..." << std::endl;
+      result = system(node_cmd.c_str());
+    }
+    else // Install the unity-js-scopes module
+    {
+      // Remove any existing unity-js-scopes bindings from the target directory
+      if (boost::filesystem::exists(modules_dir + "/unity-js-scopes")) {
+        std::cout << "Removing '" << modules_dir << "/unity-js-scopes' ..." << std::endl;
+        boost::filesystem::remove_all(modules_dir + "/unity-js-scopes");
+      }
+
+      // Copy the unity-js-scopes bindings into the target directory
+      std::cout << "Copying '/node_modules/unity-js-scopes' to '" << modules_dir << "' ..." << std::endl;
+      boost::filesystem::create_directory(modules_dir + "/unity-js-scopes");
+      boost::filesystem::copy("/node_modules/unity-js-scopes/index.js",
+                              modules_dir + "/unity-js-scopes/index.js");
+      boost::filesystem::copy("/node_modules/unity-js-scopes/unity_js_scopes_bindings.node",
+                              modules_dir + "/unity-js-scopes/unity_js_scopes_bindings.node");
+
+      boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/lib");
+      boost::filesystem::copy("/node_modules/unity-js-scopes/lib/scope-core.js",
+                              modules_dir + "/unity-js-scopes/lib/scope-core.js");
+
+      std::cout << "Copying '/usr/bin/unity-js-scopes-launcher' to '" << modules_dir << "/unity-js-scopes/bin' ..." << std::endl;
+      boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/bin");
+      boost::filesystem::copy("/usr/bin/unity-js-scopes-launcher",
+                              modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
     }
 
-    // Copy the unity-js-scopes bindings into the target directory
-    std::cout << "Copying '/node_modules/unity-js-scopes' to '" << modules_dir << "' ..." << std::endl;
-    boost::filesystem::create_directory(modules_dir + "/unity-js-scopes");
-    boost::filesystem::copy("/node_modules/unity-js-scopes/index.js",
-                            modules_dir + "/unity-js-scopes/index.js");
-    boost::filesystem::copy("/node_modules/unity-js-scopes/unity_js_scopes_bindings.node",
-                            modules_dir + "/unity-js-scopes/unity_js_scopes_bindings.node");
-
-    boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/lib");
-    boost::filesystem::copy("/node_modules/unity-js-scopes/lib/scope-core.js",
-                            modules_dir + "/unity-js-scopes/lib/scope-core.js");
-
-    std::cout << "Copying '/usr/bin/unity-js-scopes-launcher' to '" << modules_dir << "/unity-js-scopes/bin' ..." << std::endl;
-    boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/bin");
-    boost::filesystem::copy("/usr/bin/unity-js-scopes-launcher",
-                            modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
-
+    // Handle 'unity-js-scopes rebuild'
     if (std::string(argv[1]) == "rebuild")
     {
-      // Create symlinks for node and node-gyp
-      std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node' symlink ..." << std::endl;
-      boost::filesystem::create_symlink("/usr/bin/unity-js-scopes-tool",
-                                        modules_dir + "/unity-js-scopes/node");
-
-      std::cout << "Creating '" << modules_dir << "/unity-js-scopes/node-gyp' symlink ..." << std::endl;
-      boost::filesystem::create_symlink("/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
-                                        modules_dir + "/unity-js-scopes/node-gyp");
-
-      std::string path_env = "PATH=" + modules_dir + "/unity-js-scopes" + ":" + getenv("PATH");
-      std::cout << "Setting '" << path_env << "' ..." << std::endl;
-      putenv(const_cast<char*>(path_env.c_str()));
-
       if (argc > 3)
       {
         std::cout << "Setting target arch to '" << std::string(argv[3]) << "' ..." << std::endl;
@@ -166,16 +188,16 @@ int main(int argc, char *argv[]) {
       std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
       std::cout << "Running '" << node_cmd << "' ..." << std::endl;
       result = system(node_cmd.c_str());
-
-      // Cleanup symlinks
-      std::cout << "Cleaning up symlinks ..." << std::endl;
-      boost::filesystem::remove(modules_dir + "/unity-js-scopes/node");
-      boost::filesystem::remove(modules_dir + "/unity-js-scopes/node-gyp");
     }
     else
     {
       result = EXIT_SUCCESS;
     }
+
+    // Cleanup symlinks
+    std::cout << "Cleaning up symlinks ..." << std::endl;
+    boost::filesystem::remove(modules_dir + "/node");
+    boost::filesystem::remove(modules_dir + "/node-gyp");
 
     if (result == EXIT_SUCCESS)
     {
