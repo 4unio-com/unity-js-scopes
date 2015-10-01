@@ -23,6 +23,9 @@ project(js-scopes)
 include(CheckCXXCompilerFlag)
 include(CheckIncludeFileCXX)
 
+# Standard install paths
+include(GNUInstallDirs)
+
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE CACHE INTERNAL "")
 
 message(STATUS "Retrieving deps")
