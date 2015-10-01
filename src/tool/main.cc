@@ -23,6 +23,7 @@
 #include "../common/config.h"
 
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <cstring>
 
@@ -41,6 +42,11 @@ void usage() {
             << " build "
             << "<path/to/node_modules> "
             << "[<target_arch>]"
+            << std::endl
+            << executable_name()
+            << " rebuild "
+            << "<path/to/node_modules> "
+            << "[<target_arch>]"
             << std::endl;
 }
 
@@ -50,7 +56,9 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (std::string(argv[1]) == "install" || std::string(argv[1]) == "build") {
+  if (std::string(argv[1]) == "install" ||
+      std::string(argv[1]) == "build" ||
+      std::string(argv[1]) == "rebuild") {
     if (argc < 3) {
       usage();
       return EXIT_FAILURE;
@@ -58,6 +66,9 @@ int main(int argc, char *argv[]) {
 
     int result = EXIT_FAILURE;
     std::string modules_dir = argv[2];
+
+    /// ERROR CHECKS
+    /// ============
 
     // Check that the target path is not empty
     if (modules_dir.empty()) {
@@ -85,6 +96,9 @@ int main(int argc, char *argv[]) {
       return EXIT_FAILURE;
     }
 
+    /// INITIALISE
+    /// ==========
+
     std::cout << "Installation started." << std::endl;
 
     // Ensure that the target directory exists
@@ -110,10 +124,19 @@ int main(int argc, char *argv[]) {
     std::cout << "Setting '" << path_env << "' ..." << std::endl;
     putenv(const_cast<char*>(path_env.c_str()));
 
+    /// INSTALL
+    /// =======
+
     // Determine whether we are installing unity-js-scopes or an npm module
     if (std::string(argv[1]) == "install" && argc > 3
         && std::string(argv[3]) != "unity-js-scopes") // Install an npm module
     {
+      // A new npm module has been installed, we need to reset our should_build flag
+      if (boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
+      {
+        boost::filesystem::remove(modules_dir + "/last-build-arch.txt");
+      }
+
       std::string npm_module = argv[3];
 
       // Install the npm module
@@ -149,13 +172,46 @@ int main(int argc, char *argv[]) {
                               modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
     }
 
-    // Handle 'unity-js-scopes build'
-    if (std::string(argv[1]) == "build")
+    /// REBUILD
+    /// =======
+
+    // A rebuild has been forced, we need to reset our should_build flag
+    if (std::string(argv[1]) == "rebuild" && boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
     {
+      boost::filesystem::remove(modules_dir + "/last-build-arch.txt");
+    }
+
+    /// BUILD
+    /// =====
+
+    // Handle 'unity-js-scopes build' and 'unity-js-scopes rebuild' now
+    if (std::string(argv[1]) == "build" || std::string(argv[1]) == "rebuild")
+    {
+      bool should_build = true;
+      std::string current_arch = "default";
+
       if (argc > 3)
       {
-        std::cout << "Setting target arch to '" << std::string(argv[3]) << "' ..." << std::endl;
-        if (std::string(argv[3]) == "armhf")
+        current_arch = std::string(argv[3]);
+      }
+
+      // Check if we have built for this arch already, if so set should_build to false
+      if (boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
+      {
+        std::ifstream in(modules_dir + "/last-build-arch.txt");
+        std::string last_arch;
+        in >> last_arch;
+        in.close();
+        if (last_arch == current_arch)
+        {
+          should_build = false;
+        }
+      }
+
+      if (should_build)
+      {
+        std::cout << "Setting target arch to '" << current_arch << "' ..." << std::endl;
+        if (current_arch == "armhf")
         {
           if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-5"))
           {
@@ -180,19 +236,34 @@ int main(int argc, char *argv[]) {
             std::cout << "WARNING: No armhf compiler found. Using system default." << std::endl;
           }
         }
+
+        // Build any binary npm modules for the current targeted arch
+        std::cout << "Building binary modules in '" << modules_dir << "' ..." << std::endl;
+
+        std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
+        std::cout << "Running '" << node_cmd << "' ..." << std::endl;
+        result = system(node_cmd.c_str());
+
+        if (result == EXIT_SUCCESS)
+        {
+          // Write the current arch to file so that we can compare with it on the next build
+          std::ofstream out(modules_dir + "/last-build-arch.txt");
+          out << current_arch;
+          out.close();
+        }
       }
-
-      // Build any binary npm modules for the current targeted arch
-      std::cout << "Building binary modules in '" << modules_dir << "' ..." << std::endl;
-
-      std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
-      std::cout << "Running '" << node_cmd << "' ..." << std::endl;
-      result = system(node_cmd.c_str());
+      else
+      {
+        result = EXIT_SUCCESS;
+      }
     }
     else
     {
       result = EXIT_SUCCESS;
     }
+
+    /// FINALISE
+    /// ========
 
     // Cleanup symlinks
     std::cout << "Cleaning up symlinks ..." << std::endl;
