@@ -38,7 +38,7 @@ void usage() {
             << "[<npm_module>]"
             << std::endl
             << executable_name()
-            << " rebuild "
+            << " build "
             << "<path/to/node_modules> "
             << "[<target_arch>]"
             << std::endl;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (std::string(argv[1]) == "install" || std::string(argv[1]) == "rebuild") {
+  if (std::string(argv[1]) == "install" || std::string(argv[1]) == "build") {
     if (argc < 3) {
       usage();
       return EXIT_FAILURE;
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
       // Install the npm module
       std::cout << "Installing npm module '" << npm_module << "' to '" << modules_dir << "' ..." << std::endl;
 
-      std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' install " + npm_module;
+      std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' --ignore-scripts install " + npm_module;
       std::cout << "Running '" << node_cmd << "' ..." << std::endl;
       result = system(node_cmd.c_str());
     }
@@ -149,8 +149,8 @@ int main(int argc, char *argv[]) {
                               modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
     }
 
-    // Handle 'unity-js-scopes rebuild'
-    if (std::string(argv[1]) == "rebuild")
+    // Handle 'unity-js-scopes build'
+    if (std::string(argv[1]) == "build")
     {
       if (argc > 3)
       {
@@ -182,8 +182,8 @@ int main(int argc, char *argv[]) {
         }
       }
 
-      // Rebuild any binary npm modules for the current targeted arch
-      std::cout << "Rebuilding binary modules in '" << modules_dir << "' ..." << std::endl;
+      // Build any binary npm modules for the current targeted arch
+      std::cout << "Building binary modules in '" << modules_dir << "' ..." << std::endl;
 
       std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' rebuild";
       std::cout << "Running '" << node_cmd << "' ..." << std::endl;
