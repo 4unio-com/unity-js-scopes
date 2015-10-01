@@ -34,17 +34,12 @@ void usage() {
   std::cout << "Usage:"
             << std::endl
             << executable_name()
-            << " install "
+            << " [re]install "
             << "<path/to/node_modules> "
             << "[<npm_module>]"
             << std::endl
             << executable_name()
-            << " build "
-            << "<path/to/node_modules> "
-            << "[<target_arch>]"
-            << std::endl
-            << executable_name()
-            << " rebuild "
+            << " [re]build "
             << "<path/to/node_modules> "
             << "[<target_arch>]"
             << std::endl;
@@ -57,6 +52,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (std::string(argv[1]) == "install" ||
+      std::string(argv[1]) == "reinstall" ||
       std::string(argv[1]) == "build" ||
       std::string(argv[1]) == "rebuild") {
     if (argc < 3) {
@@ -128,23 +124,31 @@ int main(int argc, char *argv[]) {
     /// =======
 
     // Determine whether we are installing unity-js-scopes or an npm module
-    if (std::string(argv[1]) == "install" && argc > 3
+    if (boost::algorithm::ends_with(std::string(argv[1]), "install") && argc > 3
         && std::string(argv[3]) != "unity-js-scopes") // Install an npm module
     {
-      // A new npm module has been installed, we need to reset our should_build flag
-      if (boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
-      {
-        boost::filesystem::remove(modules_dir + "/last-build-arch.txt");
-      }
-
       std::string npm_module = argv[3];
 
-      // Install the npm module
-      std::cout << "Installing npm module '" << npm_module << "' to '" << modules_dir << "' ..." << std::endl;
+      // Don't reinstall an already installed module unless "reinstall" is called
+      if (std::string(argv[1]) == "reinstall" || !boost::filesystem::exists(modules_dir + "/" + npm_module))
+      {
+        // A new npm module has been installed, we need to reset our should_build flag
+        if (boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
+        {
+          boost::filesystem::remove(modules_dir + "/last-build-arch.txt");
+        }
 
-      std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' --ignore-scripts install " + npm_module;
-      std::cout << "Running '" << node_cmd << "' ..." << std::endl;
-      result = system(node_cmd.c_str());
+        // Install the npm module
+        std::cout << "Installing npm module '" << npm_module << "' to '" << modules_dir << "' ..." << std::endl;
+
+        std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' --ignore-scripts install " + npm_module;
+        std::cout << "Running '" << node_cmd << "' ..." << std::endl;
+        result = system(node_cmd.c_str());
+      }
+      else
+      {
+        result = EXIT_SUCCESS;
+      }
     }
     else // Install the unity-js-scopes module
     {
@@ -185,7 +189,7 @@ int main(int argc, char *argv[]) {
     /// =====
 
     // Handle 'unity-js-scopes build' and 'unity-js-scopes rebuild' now
-    if (std::string(argv[1]) == "build" || std::string(argv[1]) == "rebuild")
+    if (boost::algorithm::ends_with(std::string(argv[1]), "build"))
     {
       bool should_build = true;
       std::string current_arch = "default";
