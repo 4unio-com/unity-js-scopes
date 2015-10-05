@@ -22,7 +22,7 @@
 #include <string>
 
 inline std::string executable_name() {
-  return "@LAUNCHER_EXECUTABLE_NAME@";
+  return "@TOOL_EXECUTABLE_NAME@";
 }
 
 #endif // __CONFIG_H__

@@ -17,5 +17,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 add_subdirectory(bindings)
+add_subdirectory(common)
 add_subdirectory(launcher)
 add_subdirectory(tool)

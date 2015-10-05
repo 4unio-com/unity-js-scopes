@@ -88,6 +88,11 @@ set(ADDON_BINARY_FILES
   ${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_NODEJS_ADDON_BIN_NAME}.node
   )
 
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/deps/io.js/deps/npm
+  DESTINATION /node_modules
+  USE_SOURCE_PERMISSIONS
+  )
+
 install(DIRECTORY .
   DESTINATION /node_modules/unity-js-scopes
   FILES_MATCHING PATTERN "*.js"
