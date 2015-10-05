@@ -45,6 +45,32 @@ void usage() {
             << std::endl;
 }
 
+void install_unity_js_scopes(std::string const& modules_dir)
+{
+  // Remove any existing unity-js-scopes bindings from the target directory
+  if (boost::filesystem::exists(modules_dir + "/unity-js-scopes")) {
+    std::cout << "Removing '" << modules_dir << "/unity-js-scopes' ..." << std::endl;
+    boost::filesystem::remove_all(modules_dir + "/unity-js-scopes");
+  }
+
+  // Copy the unity-js-scopes bindings into the target directory
+  std::cout << "Copying '/node_modules/unity-js-scopes' to '" << modules_dir << "' ..." << std::endl;
+  boost::filesystem::create_directory(modules_dir + "/unity-js-scopes");
+  boost::filesystem::copy("/node_modules/unity-js-scopes/index.js",
+                          modules_dir + "/unity-js-scopes/index.js");
+  boost::filesystem::copy("/node_modules/unity-js-scopes/unity_js_scopes_bindings.node",
+                          modules_dir + "/unity-js-scopes/unity_js_scopes_bindings.node");
+
+  boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/lib");
+  boost::filesystem::copy("/node_modules/unity-js-scopes/lib/scope-core.js",
+                          modules_dir + "/unity-js-scopes/lib/scope-core.js");
+
+  std::cout << "Copying '/usr/bin/unity-js-scopes-launcher' to '" << modules_dir << "/unity-js-scopes/bin' ..." << std::endl;
+  boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/bin");
+  boost::filesystem::copy("/usr/bin/unity-js-scopes-launcher",
+                          modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
+}
+
 int main(int argc, char *argv[]) {
   if (argc < 2 || std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help") {
     usage();
@@ -150,30 +176,9 @@ int main(int argc, char *argv[]) {
         result = EXIT_SUCCESS;
       }
     }
-    else // Install the unity-js-scopes module
+    else if (std::string(argv[1]) == "reinstall" || !boost::filesystem::exists(modules_dir + "/unity-js-scopes")) // Install the unity-js-scopes module
     {
-      // Remove any existing unity-js-scopes bindings from the target directory
-      if (boost::filesystem::exists(modules_dir + "/unity-js-scopes")) {
-        std::cout << "Removing '" << modules_dir << "/unity-js-scopes' ..." << std::endl;
-        boost::filesystem::remove_all(modules_dir + "/unity-js-scopes");
-      }
-
-      // Copy the unity-js-scopes bindings into the target directory
-      std::cout << "Copying '/node_modules/unity-js-scopes' to '" << modules_dir << "' ..." << std::endl;
-      boost::filesystem::create_directory(modules_dir + "/unity-js-scopes");
-      boost::filesystem::copy("/node_modules/unity-js-scopes/index.js",
-                              modules_dir + "/unity-js-scopes/index.js");
-      boost::filesystem::copy("/node_modules/unity-js-scopes/unity_js_scopes_bindings.node",
-                              modules_dir + "/unity-js-scopes/unity_js_scopes_bindings.node");
-
-      boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/lib");
-      boost::filesystem::copy("/node_modules/unity-js-scopes/lib/scope-core.js",
-                              modules_dir + "/unity-js-scopes/lib/scope-core.js");
-
-      std::cout << "Copying '/usr/bin/unity-js-scopes-launcher' to '" << modules_dir << "/unity-js-scopes/bin' ..." << std::endl;
-      boost::filesystem::create_directory(modules_dir + "/unity-js-scopes/bin");
-      boost::filesystem::copy("/usr/bin/unity-js-scopes-launcher",
-                              modules_dir + "/unity-js-scopes/bin/unity-js-scopes-launcher");
+      install_unity_js_scopes(modules_dir);
     }
 
     /// REBUILD
@@ -240,6 +245,9 @@ int main(int argc, char *argv[]) {
             std::cout << "WARNING: No armhf compiler found. Using system default." << std::endl;
           }
         }
+
+        // Reinstall the unity-js-scopes module for new target arch
+        install_unity_js_scopes(modules_dir);
 
         // Build any binary npm modules for the current targeted arch
         std::cout << "Building binary modules in '" << modules_dir << "' ..." << std::endl;
