@@ -219,26 +219,28 @@ int main(int argc, char *argv[]) {
 
       if (should_build)
       {
+        std::vector<std::string> environment_updates;
+        
         std::cout << "Setting target arch to '" << current_arch << "' ..." << std::endl;
         if (current_arch == "armhf")
         {
           if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-5"))
           {
             std::cout << "Setting armhf compiler to 'GCC 5' ..." << std::endl;
-            putenv("CC=arm-linux-gnueabihf-gcc-5");
-            putenv("CXX=arm-linux-gnueabihf-g++-5");
-            putenv("LINK=arm-linux-gnueabihf-g++-5");
-            putenv("AR=arm-linux-gnueabihf-ar");
-            putenv("npm_config_arch=arm");
+            environment_updates.push_back("CC=arm-linux-gnueabihf-gcc-5");
+            environment_updates.push_back("CXX=arm-linux-gnueabihf-g++-5");
+            environment_updates.push_back("LINK=arm-linux-gnueabihf-g++-5");
+            environment_updates.push_back("AR=arm-linux-gnueabihf-ar");
+            environment_updates.push_back("npm_config_arch=arm");
           }
           else if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-4.9"))
           {
             std::cout << "Setting armhf compiler to 'GCC 4.9' ..." << std::endl;
-            putenv("CC=arm-linux-gnueabihf-gcc-4.9");
-            putenv("CXX=arm-linux-gnueabihf-g++-4.9");
-            putenv("LINK=arm-linux-gnueabihf-g++-4.9");
-            putenv("AR=arm-linux-gnueabihf-ar");
-            putenv("npm_config_arch=arm");
+            environment_updates.push_back("CC=arm-linux-gnueabihf-gcc-4.9");
+            environment_updates.push_back("CXX=arm-linux-gnueabihf-g++-4.9");
+            environment_updates.push_back("LINK=arm-linux-gnueabihf-g++-4.9");
+            environment_updates.push_back("AR=arm-linux-gnueabihf-ar");
+            environment_updates.push_back("npm_config_arch=arm");
           }
           else
           {
@@ -246,6 +248,10 @@ int main(int argc, char *argv[]) {
           }
         }
 
+        for (auto e: environment_updates) {
+          putenv(const_cast<char*>(e.c_str()));
+        }
+        
         // Reinstall the unity-js-scopes module for new target arch
         install_unity_js_scopes(modules_dir);
 
