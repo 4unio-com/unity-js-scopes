@@ -15,6 +15,5 @@ Trying the examples
 
   - Desktop
 
-export NODE_PATH=`pwd`/
-unity-scope-tool `pwd`/examples/simple/simple.ini
+NODE_PATH=`pwd`/ unity-scope-tool `pwd`/examples/simple/simple.ini
 

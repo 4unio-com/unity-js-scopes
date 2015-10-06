@@ -20,6 +20,11 @@
 
 #include <stdexcept>
 
+#include <unity/scopes/ActionMetadata.h>
+#include <unity/scopes/Category.h>
+#include <unity/scopes/CategorisedResult.h>
+#include <unity/scopes/Result.h>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 
@@ -28,8 +33,6 @@
 #include "scope-base.h"
 #include "scope.h"
 #include "canned-query.h"
-#include "category.h"
-#include "categorised-result.h"
 #include "category-renderer.h"
 #include "column-layout.h"
 #include "search-query.h"
@@ -173,25 +176,6 @@ v8::Handle<v8::Object> new_preview_widget(v8::FunctionCallbackInfo<v8::Value> co
   return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
 }
 
-v8::Handle<v8::Object> new_categorised_result(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  Category *c =
-    v8cpp::from_v8<Category*>(v8::Isolate::GetCurrent(),
-                             args[0]->ToObject());
-
-  if (!c) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  CategorisedResult *cr = new CategorisedResult(c);
-
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), cr);
-}
-
 ColumnLayout* new_column_layout(int num_of_columns)
 {
   return new ColumnLayout(num_of_columns);
@@ -218,19 +202,49 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("get_cache_directory", &ScopeBase::get_cache_directory)
       .add_method("get_tmp_directory", &ScopeBase::get_tmp_directory);
 
-    v8cpp::Class<ActionMetaData> action_metadata(isolate);
+    v8cpp::Class<unity::scopes::ActionMetadata> action_metadata(isolate);
+    action_metadata
+      // unity::scopes::ActionMetadata
+      .add_method("set_scope_data", &unity::scopes::ActionMetadata::set_scope_data)
+      .add_method("scope_data", &unity::scopes::ActionMetadata::scope_data)
+      .add_method("set_hint", &unity::scopes::ActionMetadata::set_hint)
+      .add_method("hints", &unity::scopes::ActionMetadata::hints)
+      .add_method("contains_hint", &unity::scopes::ActionMetadata::contains_hint)
+      // unity::scopes::QueryMetadata
+      .add_method("locale", &unity::scopes::QueryMetadata::locale)
+      .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
+      .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
+      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity);
 
-    v8cpp::Class<Category> category(isolate);
+    v8cpp::Class<unity::scopes::Category> category(isolate);
     category
-      .add_method("id", &Category::id)
-      .add_method("title", &Category::title)
-      .add_method("icon", &Category::icon);
+      // unity::scopes::Category
+      .add_method("query", &unity::scopes::Category::query)
+      .add_method("id", &unity::scopes::Category::id)
+      .add_method("title", &unity::scopes::Category::title)
+      .add_method("icon", &unity::scopes::Category::icon);
 
-    v8cpp::Class<CategorisedResult> categorised_result(isolate);
+    v8cpp::Class<unity::scopes::CategorisedResult> categorised_result(isolate);
     categorised_result
-      .add_method("set_uri", &CategorisedResult::set_uri)
-      .add_method("set_title", &CategorisedResult::set_title)
-      .add_method("set_art", &CategorisedResult::set_art);
+      .add_inheritance<unity::scopes::Result>()
+      .set_constructor<unity::scopes::Category::SCPtr>()
+      // unity::scopes::Result
+      .add_method("set_uri", &unity::scopes::Result::set_uri)
+      .add_method("set_title", &unity::scopes::Result::set_title)
+      .add_method("set_art", &unity::scopes::Result::set_art)
+      .add_method("set_dnd_uri", &unity::scopes::Result::set_dnd_uri)
+      .add_method("set_intercept_activation", &unity::scopes::Result::set_intercept_activation)
+      .add_method("direct_activation", &unity::scopes::Result::direct_activation)
+      .add_method("uri", &unity::scopes::Result::uri)
+      .add_method("title", &unity::scopes::Result::title)
+      .add_method("art", &unity::scopes::Result::art)
+      .add_method("dnd_uri", &unity::scopes::Result::dnd_uri)
+      .add_method("contains", &unity::scopes::Result::contains)
+      // unity::scopes::CategorisedResult
+      //      .add_method("set", &unity::scopes::Result::set)
+      // .add_method("get", &unity::scopes::Result::get)
+      .add_method("set_category", &unity::scopes::CategorisedResult::set_category)
+      .add_method("category", &unity::scopes::CategorisedResult::category);
 
     v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
@@ -285,8 +299,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<SearchReply> search_reply(isolate);
     search_reply
       .add_method("register_category", &SearchReply::register_category)
-      .add_method("push", &SearchReply::push)
-      .add_method("finished", &SearchReply::finished);
+      .add_method("push", &SearchReply::push);
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
@@ -317,7 +330,6 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_function("new_category_renderer", &new_category_renderer);
     module.add_function("new_preview_query", &new_preview_query);
     module.add_function("new_preview_widget", &new_preview_widget);
-    module.add_function("new_categorised_result", &new_categorised_result);
     module.add_function("new_column_layout", &new_column_layout);
 
     exports->SetPrototype(module.create_prototype());
