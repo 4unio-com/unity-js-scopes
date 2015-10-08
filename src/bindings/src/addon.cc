@@ -26,6 +26,7 @@
 #include <unity/scopes/CategorisedResult.h>
 #include <unity/scopes/CategoryRenderer.h>
 #include <unity/scopes/Result.h>
+#include <unity/scopes/SearchReply.h>
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
@@ -286,9 +287,10 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("art", &unity::scopes::Result::art)
       .add_method("dnd_uri", &unity::scopes::Result::dnd_uri)
       .add_method("contains", &unity::scopes::Result::contains)
+      // Result
+      .add_method("set", &Result::set)
+      .add_method("get", &Result::get)
       // unity::scopes::CategorisedResult
-      //      .add_method("set", &unity::scopes::Result::set)
-      // .add_method("get", &unity::scopes::Result::get)
       .add_method("set_category", &unity::scopes::CategorisedResult::set_category)
       .add_method("category", &unity::scopes::CategorisedResult::category);
 
@@ -364,8 +366,13 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchReply> search_reply(isolate);
     search_reply
+      // SearchReply
       .add_method("register_category", &SearchReply::register_category)
-      .add_method("push", &SearchReply::push);
+      .add_method("push", &SearchReply::push)
+      .add_method("lookup_category", &SearchReply::lookup_category)
+      // unity::scopes::SearchReply
+      .add_method("error", &unity::scopes::SearchReply::error)
+      .add_method("finished", &unity::scopes::SearchReply::finished);
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
@@ -393,6 +400,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
     module.add_class("action_metadata", action_metadata);
+    module.add_class("activation_query", activation_query);
     module.add_class("category", category);
     module.add_class("categorised_result", categorised_result);
     module.add_class("canned_query", canned_query);
@@ -405,6 +413,9 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("search_reply", search_reply);
     module.add_class("search_query", search_query);
     module.add_class("search_metadata", search_metadata);
+    module.add_class("variant", variant);
+    module.add_class("variant_map", variant_map);
+    module.add_class("variant_array", variant_array);
 
     module.add_function("new_scope", &new_scope);
     module.add_function("new_SearchQuery", &new_SearchQuery);

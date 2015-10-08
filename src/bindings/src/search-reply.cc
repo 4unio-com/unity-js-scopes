@@ -51,3 +51,8 @@ unity::scopes::Category::SCPtr SearchReply::register_category(
       icon,
       category_renderer ? *category_renderer : unity::scopes::CategoryRenderer());
 }
+
+void SearchReply::finished()
+{
+  reply_->finished();
+}

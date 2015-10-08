@@ -22,7 +22,7 @@ var scopes = require('unity-js-scopes')
 // TODO: LANG specific host
 var query_scheme = "https://";
 var query_host = "api.soundcloud.com";
-var query_path_tracks = "tracks.json?client_id={1}&q={2}";
+var query_path_tracks = "/tracks.json?client_id={1}&q={2}";
 
 function SoundCloudClient() {
 }
@@ -42,10 +42,14 @@ SoundCloudClient.prototype = {
                 result_data += chunk;
             });
             http_response.on('end', function() {
-                var results = JSON.parse(result_data);
+                var results;
+
+                try {
+                    results = JSON.parse(result_data);
+                } catch (e) { }
 
                 if (! results
-                    || ! result.length) {
+                    || ! results.length) {
                     callback([]);
                     return;
                 }
@@ -54,9 +58,9 @@ SoundCloudClient.prototype = {
                 for (var i = 0;
                      i < results.length;
                      i++) {
-                    track_results.append({
+                    track_results.push({
                         id: results[i].id,
-                        art: results[i].artwork_url,
+                        art: results[i].artwork_url ? results[i].artwork_url : "",
                         stream_url: results[i].stream_url,
                         uri: results[i].uri,
                         description: results[i].description,
@@ -85,11 +89,11 @@ function scope_result_from_search_result(
         new scopes.lib.categorised_result(category);
 
     categorised_result.set_uri(result.uri)
-    categorised_result.set_title(result.title);
+    categorised_result.set_title(result.description);
     categorised_result.set_art(result.art);
 
-    categorised_result.set("artist", result.artist.username);
-    categorised_result.set("stream", result.artist.stream_url);
+//    categorised_result.set("artist", result.artist.username);
+//    categorised_result.set("stream", result.artist.stream_url);
 
     return categorised_result
 }

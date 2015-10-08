@@ -43,6 +43,8 @@ class SearchReply
 
   void push(std::shared_ptr<unity::scopes::CategorisedResult> categorised_result);
 
+  void finished();
+
  private:
 
   unity::scopes::SearchReplyProxy const reply_;

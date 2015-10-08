@@ -32,8 +32,11 @@ class Result : public unity::scopes::Result
   std::shared_ptr<Result> retrieve_stored_result() const;
   void store(std::shared_ptr<Result> result, bool intercept_activation);
 
-  void set(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Handle<v8::Value> get(const std::string& key) const;
+  static void set(unity::scopes::Result * self,
+                  v8::FunctionCallbackInfo<v8::Value> const& args);
+
+  static v8::Handle<v8::Value> get(const unity::scopes::Result * self,
+                                   const std::string& key);
 };
 
 #endif // _UNITY_JS_RESULT_H_
