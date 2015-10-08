@@ -40,7 +40,7 @@ scopes.self.initialize(
                     var qs =
                         canned_query.query_string();
                     var category =
-                        search_reply.register_category("simple", "hello world from js", "");
+                        search_reply.register_category("simple", "hello world from js", "", null);
                     
                     var categorised_result =
                         new scopes.lib.categorised_result(category);

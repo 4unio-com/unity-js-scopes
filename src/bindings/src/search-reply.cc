@@ -45,5 +45,9 @@ unity::scopes::Category::SCPtr SearchReply::register_category(
       const std::string& title,
       const std::string& icon,
       std::shared_ptr<unity::scopes::CategoryRenderer> category_renderer) {
-  return reply_->register_category(id, title, icon, *category_renderer);
+  return reply_->register_category(
+      id,
+      title,
+      icon,
+      category_renderer ? *category_renderer : unity::scopes::CategoryRenderer());
 }
