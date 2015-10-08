@@ -92,8 +92,8 @@ function scope_result_from_search_result(
     categorised_result.set_title(result.description);
     categorised_result.set_art(result.art);
 
-//    categorised_result.set("artist", result.artist.username);
-//    categorised_result.set("stream", result.artist.stream_url);
+    categorised_result.set("artist", result.artist.username);
+    categorised_result.set("stream", result.artist.stream_url);
 
     return categorised_result
 }
@@ -174,11 +174,11 @@ function on_preview(result, action_metadata) {
             var r = this.result();
 
             var layout1col = new scopes.lib.column_layout(1)
-            layout.add_column(["imageId", "headerId", "actionsId"])
+            layout1col.add_column(["imageId", "headerId", "actionsId"])
 
             var layout2col = new scopes.lib.column_layout(2)
-            layout.add_column(["imageId"])
-            layout.add_column(["headerId", "actionsId"])
+            layout2col.add_column(["imageId"])
+            layout2col.add_column(["headerId", "actionsId"])
 
             preview_reply.register_layout([layout1col, layout2col]);
 
@@ -195,7 +195,8 @@ function on_preview(result, action_metadata) {
                 {
                     "id": "open",
                     "label": "Open",
-                    "uri": r.get("uri")
+                    // TODO fix
+//                    "uri": r.get("uri")
                 }
             );
             preview_reply.push([header_widget, art_widget, actions_widget])

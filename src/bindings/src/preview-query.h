@@ -19,7 +19,9 @@
 #ifndef _UNITY_JS_PREVIEW_QUERY_H_
 #define _UNITY_JS_PREVIEW_QUERY_H_
 
+#include <unity/scopes/ActionMetadata.h>
 #include <unity/scopes/PreviewQueryBase.h>
+#include <unity/scopes/Result.h>
 
 #include <v8-cpp.h>
 
@@ -38,6 +40,10 @@ class PreviewQuery : public unity::scopes::PreviewQueryBase,
 
   // QueryBase implementation
   void cancelled() override;
+
+  // v8 bindings
+  std::shared_ptr<unity::scopes::ActionMetadata> action_metadata() const;
+  std::shared_ptr<unity::scopes::Result> result() const;
   
  private:
   v8::Isolate* isolate_;

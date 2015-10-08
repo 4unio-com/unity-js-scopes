@@ -288,8 +288,8 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("dnd_uri", &unity::scopes::Result::dnd_uri)
       .add_method("contains", &unity::scopes::Result::contains)
       // Result
-      .add_method("set", &Result::set)
-      .add_method("get", &Result::get)
+      // .add_method("set", &Result::set)
+      // .add_method("get", &Result::get)
       // unity::scopes::CategorisedResult
       .add_method("set_category", &unity::scopes::CategorisedResult::set_category)
       .add_method("category", &unity::scopes::CategorisedResult::category);
@@ -335,14 +335,22 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<PreviewQuery> preview_query(isolate);
     preview_query
-      .add_method("run", &PreviewQuery::run)
-      .add_method("cancelled", &PreviewQuery::cancelled);
+      .add_inheritance<unity::scopes::PreviewQueryBase>()
+      // unity::scopes::QueryBase
+      .add_method("valid", &unity::scopes::QueryBase::valid)
+      .add_method("settings", &unity::scopes::QueryBase::settings)
+      // PreviewQuery
+      .add_method("result", &PreviewQuery::result)
+      .add_method("action_metadata", &PreviewQuery::action_metadata);
 
+    // TODO handle info()
     v8cpp::Class<PreviewReply> preview_reply(isolate);
     preview_reply
+      // PreviewReply
       .add_method("register_layout", &PreviewReply::register_layout)
       .add_method("push", &PreviewReply::push)
-      .add_method("finished", &PreviewReply::finished);
+      // unity::scopes::PreviewReply
+      .add_method("finished", &unity::scopes::PreviewReply::finished);
 
     v8cpp::Class<Result> result(isolate);
     result

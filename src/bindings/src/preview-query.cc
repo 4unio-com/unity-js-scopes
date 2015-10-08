@@ -79,3 +79,14 @@ void PreviewQuery::cancelled() {
     );
   });
 }
+
+std::shared_ptr<unity::scopes::ActionMetadata>
+PreviewQuery::action_metadata() const {
+  return std::shared_ptr<unity::scopes::ActionMetadata>(
+      new unity::scopes::ActionMetadata(unity::scopes::PreviewQueryBase::action_metadata()));
+}
+
+std::shared_ptr<unity::scopes::Result> PreviewQuery::result() const {
+  return std::shared_ptr<unity::scopes::Result>(
+      new unity::scopes::Result(unity::scopes::PreviewQueryBase::result()));
+}
