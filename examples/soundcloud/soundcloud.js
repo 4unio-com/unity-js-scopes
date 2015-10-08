@@ -92,8 +92,8 @@ function scope_result_from_search_result(
     categorised_result.set_title(result.description);
     categorised_result.set_art(result.art);
 
-    categorised_result.set("artist", result.artist.username);
-    categorised_result.set("stream", result.artist.stream_url);
+//    categorised_result.set("artist", result.artist.username);
+//    categorised_result.set("stream", result.artist.stream_url);
 
     return categorised_result
 }

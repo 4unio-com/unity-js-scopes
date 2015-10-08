@@ -288,8 +288,8 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("dnd_uri", &unity::scopes::Result::dnd_uri)
       .add_method("contains", &unity::scopes::Result::contains)
       // Result
-      // .add_method("set", &Result::set)
-      // .add_method("get", &Result::get)
+      .add_method("set", &set_result_value<unity::scopes::CategorisedResult>)
+      .add_method("get", &get_result_value<unity::scopes::CategorisedResult>)
       // unity::scopes::CategorisedResult
       .add_method("set_category", &unity::scopes::CategorisedResult::set_category)
       .add_method("category", &unity::scopes::CategorisedResult::category);
@@ -367,8 +367,8 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("direct_activation", &unity::scopes::Result::direct_activation)
       .add_method("has_stored_result", &unity::scopes::Result::has_stored_result)
       // Result
-      .add_method("set", &Result::set)
-      .add_method("get", &Result::get)
+      .add_method("set", &set_result_value<unity::scopes::Result>)
+      .add_method("get", &get_result_value<unity::scopes::Result>)
       .add_method("retrieve_stored_result", &Result::retrieve_stored_result)
       .add_method("store", &Result::store);
 
