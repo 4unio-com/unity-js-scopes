@@ -115,13 +115,16 @@ function on_search(canned_query, metadata) {
         canned_query,
         metadata,
         // Query.run
-        function(self, search_reply) {
+        function(search_reply) {
+            var category_renderer =
+                new scopes.lib.category_renderer(category_description);
+            console.log(category_renderer)
             var category =
                 search_reply.register_category(
                     "tracks",
                     "",
                     "",
-                    new scopes.category_renderer(category_description));
+                    category_renderer);
             
             var query_string =
                 canned_query.query_string().trim();
@@ -204,6 +207,15 @@ scopes.self.initialize(
     {}
     ,
     {
+        run: function() {
+            console.log('Running...')
+        },
+        start: function(scope_id) {
+            console.log('Starting scope id: '
+                        + scope_id
+                        + ', '
+                        + scopes.self.scope_config)
+        },
         search: on_search,
         preview: on_preview,
     }

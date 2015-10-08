@@ -66,6 +66,13 @@ v8::Handle<v8::Object> get_scopes_runtime_version() {
   return o;
 }
 
+std::shared_ptr<unity::scopes::CategoryRenderer>
+new_category_renderer_from_file(const std::string& file_path) {
+  return std::shared_ptr<unity::scopes::CategoryRenderer>(
+      new unity::scopes::CategoryRenderer(
+          unity::scopes::CategoryRenderer::from_file(file_path)));
+}
+
 v8::Handle<v8::Object> new_SearchQuery(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 4) {
@@ -388,6 +395,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_function("new_SearchQuery", &new_SearchQuery);
     module.add_function("new_PreviewQuery", &new_PreviewQuery);
     module.add_function("new_PreviewWidget", &new_PreviewWidget);
+    module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
 
     module.add_function("runtime_version", &get_scopes_runtime_version);
 

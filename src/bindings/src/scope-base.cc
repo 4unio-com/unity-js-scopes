@@ -109,12 +109,11 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   return EventQueue::instance().run<unity::scopes::SearchQueryBase::UPtr>(isolate_, [this, query, metadata]
   {
     // wrap & fire
-    std::shared_ptr<unity::scopes::CannedQuery> q =
-      std::shared_ptr<unity::scopes::CannedQuery>(
+    std::shared_ptr<unity::scopes::CannedQuery> q(
         new unity::scopes::CannedQuery(std::move(query)));
 
-    std::shared_ptr<SearchMetaData> m =
-      std::shared_ptr<SearchMetaData>(new SearchMetaData(metadata));
+    std::shared_ptr<SearchMetaData> m(
+      new SearchMetaData(metadata));
 
     v8::Local<v8::Function> search_callback =
         v8cpp::to_local<v8::Function>(isolate_, search_callback_);
