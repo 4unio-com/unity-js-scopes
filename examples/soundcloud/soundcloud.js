@@ -55,7 +55,7 @@ SoundCloudClient.prototype = {
                      i < results.length;
                      i++) {
                     track_results.append({
-                        id: results[i].id
+                        id: results[i].id,
                         art: results[i].artwork_url,
                         stream_url: results[i].stream_url,
                         uri: results[i].uri,
