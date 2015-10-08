@@ -18,6 +18,8 @@
 
 #include "preview-widget.h"
 
+#include <unity/scopes/VariantBuilder.h>
+
 #include "common.h"
 
 
@@ -61,6 +63,23 @@ void PreviewWidget::add_attribute_value(
     unity::scopes::Variant v(
         args[1]->NumberValue());
     unity::scopes::PreviewWidget::add_attribute_value(key, v);
+  } else if (args[1]->IsObject()) {
+    unity::scopes::VariantBuilder vb;
+
+    unity::scopes::Variant v =
+      unity::scopesjs::to_variant(args[1]);
+
+    if (v.which() == unity::scopes::Variant::Dict) {
+      unity::scopes::VariantMap vm = v.get_dict();
+      std::vector<std::pair<std::string, unity::scopes::Variant>> t;
+
+      for (auto &c : vm) {
+        t.push_back({c.first, c.second});
+      }
+
+      vb.add_tuple(t);
+      unity::scopes::PreviewWidget::add_attribute_value(key, vb.end());
+    }
   }
 }
 
