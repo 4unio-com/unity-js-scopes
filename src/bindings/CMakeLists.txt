@@ -59,7 +59,6 @@ find_package(
 pkg_check_modules(
   SCOPE
   libunity-scopes>=0.6.0
-  net-cpp>=1.1.0
   REQUIRED
   )
 
