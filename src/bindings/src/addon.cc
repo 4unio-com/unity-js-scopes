@@ -370,9 +370,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("register_category", &SearchReply::register_category)
       .add_method("push", &SearchReply::push)
       .add_method("lookup_category", &SearchReply::lookup_category)
-      // unity::scopes::SearchReply
-      .add_method("error", &unity::scopes::SearchReply::error)
-      .add_method("finished", &unity::scopes::SearchReply::finished);
+      .add_method("finished", &SearchReply::finished);
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query

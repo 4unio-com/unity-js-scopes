@@ -122,7 +122,6 @@ function on_search(canned_query, metadata) {
         function(search_reply) {
             var category_renderer =
                 new scopes.lib.category_renderer(category_description);
-            console.log(category_renderer)
             var category =
                 search_reply.register_category(
                     "tracks",
