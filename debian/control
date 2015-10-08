@@ -8,6 +8,7 @@ Build-Depends: bzr,
                pkg-config,
                g++,
                libboost-filesystem-dev,
+               libnet-cpp-dev,
                libunity-scopes-dev,
 Standards-Version: 3.9.5
 Homepage: https://launchpad.net/unity-js-scopes
