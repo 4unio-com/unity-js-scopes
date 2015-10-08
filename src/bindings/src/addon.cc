@@ -373,6 +373,21 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
+    search_metadata
+      .add_inheritance<unity::scopes::SearchMetadata>()
+      // SearchMetadata
+      .add_method("set_cardinality", &unity::scopes::SearchMetadata::set_cardinality)
+      .add_method("cardinality", &unity::scopes::SearchMetadata::cardinality)
+      .add_method("set_location", &unity::scopes::SearchMetadata::set_location)
+      .add_method("location", &unity::scopes::SearchMetadata::location)
+      .add_method("has_location", &unity::scopes::SearchMetadata::has_location)
+      .add_method("set_hint", &unity::scopes::SearchMetadata::set_hint)
+      .add_method("hints", &unity::scopes::SearchMetadata::hints)
+      // QueryMetadata
+      .add_method("locale", &unity::scopes::QueryMetadata::locale)
+      .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
+      .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
+      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity);
 
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);

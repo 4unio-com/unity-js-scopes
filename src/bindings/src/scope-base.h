@@ -23,8 +23,7 @@
 
 #include <unity/scopes/ScopeBase.h>
 
-class ScopeBase : public unity::scopes::ScopeBase,
-  std::enable_shared_from_this<ScopeBase>
+class ScopeBase : public unity::scopes::ScopeBase
 {
  public:
   ScopeBase();
