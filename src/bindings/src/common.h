@@ -16,16 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "category-renderer.h"
+#include <string>
 
-CategoryRenderer::CategoryRenderer(std::string const &json_text)
-  : renderer_(json_text) {
-}
+#include <v8-cpp.h>
 
-CategoryRenderer::~CategoryRenderer() {
-}
+#include "unity/scopes/Variant.h"
 
-v8::Local<v8::Value> CategoryRenderer::data(
-    v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), renderer_.data().c_str());
-}
+
+namespace unity {
+namespace scopesjs {
+
+unity::scopes::Variant
+to_variant(v8::Local<v8::Value> value);
+
+v8::Local<v8::Value>
+from_variant(const unity::scopes::Variant& variant);
+
+} // namespace scopesjs
+} // namespace unity
+

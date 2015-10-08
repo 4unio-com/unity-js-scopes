@@ -18,14 +18,23 @@
 
 #include "action-metadata.h"
 
-ActionMetaData::ActionMetaData(unity::scopes::ActionMetadata const &metadata)
-  : metadata_(metadata) {
+ActionMetaData::ActionMetaData(unity::scopes::ActionMetadata const &action_metadata)
+  : unity::scopes::ActionMetadata(action_metadata) {
+}
+
+ActionMetaData::ActionMetaData(std::string const &locale,
+                               std::string const &form_factor)
+  : unity::scopes::ActionMetadata(locale, form_factor) {
 }
 
 ActionMetaData::~ActionMetaData() {
 }
 
-const unity::scopes::ActionMetadata&
-ActionMetaData::get_action_metadata() const {
-  return metadata_;
+unity::scopes::Variant ActionMetaData::get(const std::string& key) {
+  return (*this)[key];
+}
+
+void ActionMetaData::set(const std::string& key,
+                         const unity::scopes::Variant& val) {
+  (*this)[key] = val;;
 }

@@ -23,7 +23,8 @@
 
 #include <unity/scopes/ScopeBase.h>
 
-class ScopeBase : public unity::scopes::ScopeBase
+class ScopeBase : public unity::scopes::ScopeBase,
+  std::enable_shared_from_this<ScopeBase>
 {
  public:
   ScopeBase();
@@ -36,13 +37,8 @@ class ScopeBase : public unity::scopes::ScopeBase
 
   void onsearch(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onpreview(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  v8::Local<v8::Value> get_scope_directory(
-      v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> get_cache_directory(
-      v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> get_tmp_directory(
-      v8::FunctionCallbackInfo<v8::Value> const& args);
+  void onactivate(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void onperform_action(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   // unity::scopes::ScopeBase implementation
   void start(std::string const& scope_id) override;
@@ -76,6 +72,8 @@ class ScopeBase : public unity::scopes::ScopeBase
 
   v8::Persistent<v8::Function> search_callback_;
   v8::Persistent<v8::Function> preview_callback_;
+  v8::Persistent<v8::Function> activate_callback_;
+  v8::Persistent<v8::Function> perform_action_callback_;
 };
 
 #endif // _UNITY_JS_SCOPES_BASE_H_

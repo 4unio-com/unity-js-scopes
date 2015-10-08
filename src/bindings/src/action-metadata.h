@@ -23,18 +23,17 @@
 
 #include <v8-cpp.h>
 
-
-class ActionMetaData
+class ActionMetaData : public unity::scopes::ActionMetadata
 {
  public:
-  ActionMetaData(unity::scopes::ActionMetadata const &metadata);
+  ActionMetaData(unity::scopes::ActionMetadata const &action_metadata);
+  ActionMetaData(std::string const &locale,
+                 std::string const &form_factor);
   ~ActionMetaData();
 
-  const unity::scopes::ActionMetadata& get_action_metadata() const;
-
- private:
-
-  unity::scopes::ActionMetadata const &metadata_;
+  // unity::scopes::ActionMetadata extra v8 bindings
+  unity::scopes::Variant get(const std::string& key);
+  void set(const std::string& key, const unity::scopes::Variant& val);
 };
 
 #endif // _UNITY_JS_ACTION_METADATA_H_

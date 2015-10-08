@@ -23,29 +23,17 @@
 
 #include <v8-cpp.h>
 
-class Result
+class Result : public unity::scopes::Result
 {
  public:
   Result(unity::scopes::Result const &result);
-  ~Result();
 
-  // v8 binding
-  v8::Local<v8::Value> uri(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void set_uri(v8::FunctionCallbackInfo<v8::Value> const& args);
+  // v8 bindings
+  std::shared_ptr<Result> retrieve_stored_result() const;
+  void store(std::shared_ptr<Result> result, bool intercept_activation);
 
-  v8::Local<v8::Value> title(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void set_title(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  v8::Local<v8::Value> art(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void set_art(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  v8::Local<v8::Value> dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void set_dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  const unity::scopes::Result& get_result() const;
-
- private:
-  unity::scopes::Result result_;
+  void set(v8::FunctionCallbackInfo<v8::Value> const& args);
+  v8::Handle<v8::Value> get(const std::string& key) const;
 };
 
 #endif // _UNITY_JS_RESULT_H_

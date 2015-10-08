@@ -21,8 +21,10 @@
 #include <stdexcept>
 
 #include <unity/scopes/ActionMetadata.h>
+#include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategorisedResult.h>
+#include <unity/scopes/CategoryRenderer.h>
 #include <unity/scopes/Result.h>
 
 #include <boost/algorithm/string/predicate.hpp>
@@ -30,11 +32,9 @@
 
 #include <node.h>
 
+#include "activation-query.h"
 #include "scope-base.h"
 #include "scope.h"
-#include "canned-query.h"
-#include "category-renderer.h"
-#include "column-layout.h"
 #include "search-query.h"
 #include "search-reply.h"
 #include "search-metadata.h"
@@ -49,19 +49,36 @@ JavascriptScopeRuntime* new_scope(const std::string& runtime_config) {
   return new JavascriptScopeRuntime(runtime_config);
 }
 
-v8::Handle<v8::Object> new_search_query(
+v8::Handle<v8::Object> get_scopes_runtime_version() {
+  v8::Handle<v8::Object> o =
+    v8::Object::New(v8::Isolate::GetCurrent());
+
+  int major, minor, micro;
+  unity::scopes::ScopeBase::runtime_version(major, minor, micro);
+
+  o->Set(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "major"),
+         v8::Integer::New(v8::Isolate::GetCurrent(), major));
+  o->Set(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "minor"),
+         v8::Integer::New(v8::Isolate::GetCurrent(), minor));
+  o->Set(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "micro"),
+         v8::Integer::New(v8::Isolate::GetCurrent(), micro));
+
+  return o;
+}
+
+v8::Handle<v8::Object> new_SearchQuery(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 4) {
     throw std::runtime_error("Invalid number of arguments");
   }
 
-  CannedQuery *c =
-    v8cpp::from_v8<CannedQuery*>(
+  std::shared_ptr<unity::scopes::CannedQuery> c =
+    v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
         v8::Isolate::GetCurrent(),
         args[0]->ToObject());
 
-  SearchMetaData *s =
-    v8cpp::from_v8<SearchMetaData*>(
+  std::shared_ptr<SearchMetaData> s =
+    v8cpp::from_v8<std::shared_ptr<SearchMetaData>>(
         v8::Isolate::GetCurrent(),
         args[1]->ToObject());
 
@@ -78,42 +95,31 @@ v8::Handle<v8::Object> new_search_query(
   v8::Local<v8::Function> cancelled_callback =
     v8::Handle<v8::Function>::Cast(args[3]);
 
-  SearchQuery *sq =
+  std::shared_ptr<SearchQuery> sq(
     new SearchQuery(
-        c->get_canned_query(),
+        *c,
         static_cast<const unity::scopes::SearchMetadata&>(*s),
         run_callback,
-        cancelled_callback);
+        cancelled_callback)
+  );
 
   return v8cpp::to_v8(v8::Isolate::GetCurrent(), sq);
 }
 
-v8::Handle<v8::Object> new_category_renderer(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-  if (!args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  std::string json_text = *(v8::String::Utf8Value(args[0]->ToString()));
-
-  CategoryRenderer* category_renderer = new CategoryRenderer(json_text);
-
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), category_renderer);
-}
-
-v8::Handle<v8::Object> new_preview_query(v8::FunctionCallbackInfo<v8::Value> const& args) {
+v8::Handle<v8::Object> new_PreviewQuery(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 4) {
     throw std::runtime_error("Invalid number of arguments");
   }
 
-  Result *r =
-    v8cpp::from_v8<Result*>(v8::Isolate::GetCurrent(), args[0]->ToObject());
+  std::shared_ptr<Result> r =
+    v8cpp::from_v8<std::shared_ptr<Result>>(
+        v8::Isolate::GetCurrent(),
+        args[0]->ToObject());
 
-  ActionMetaData *a =
-    v8cpp::from_v8<ActionMetaData*>(v8::Isolate::GetCurrent(), args[1]->ToObject());
+  std::shared_ptr<unity::scopes::ActionMetadata> a =
+    v8cpp::from_v8<std::shared_ptr<unity::scopes::ActionMetadata>>(
+        v8::Isolate::GetCurrent(),
+        args[1]->ToObject());
 
   if (!r || !a) {
     throw std::runtime_error("Invalid arguments types");
@@ -133,23 +139,25 @@ v8::Handle<v8::Object> new_preview_query(v8::FunctionCallbackInfo<v8::Value> con
   v8::Local<v8::Function> cancelled_callback =
     v8::Handle<v8::Function>::Cast(args[3]);
 
-  PreviewQuery *pq =
-    new PreviewQuery(
-        r->get_result(),
-        a->get_action_metadata(),
+  std::shared_ptr<PreviewQuery> pq(
+      new PreviewQuery(
+        *r,
+        *a,
         run_callback,
-        cancelled_callback);
+        cancelled_callback));
+
   return v8cpp::to_v8(v8::Isolate::GetCurrent(), pq);
 }
 
-v8::Handle<v8::Object> new_preview_widget(v8::FunctionCallbackInfo<v8::Value> const& args) {
+v8::Handle<v8::Object> new_PreviewWidget(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() < 1 || args.Length() > 2) {
     throw std::runtime_error("Invalid number of arguments");
   }
 
   if (args.Length() == 2) {
     if (!args[0]->IsString() || !args[1]->IsString()) {
-      throw std::runtime_error("Invalid arguments types");
+      throw std::runtime_error("Invalid arguments types: should be id, widget_type");
     }
     std::string id =
       *(v8::String::Utf8Value(args[0]->ToString()));
@@ -176,14 +184,27 @@ v8::Handle<v8::Object> new_preview_widget(v8::FunctionCallbackInfo<v8::Value> co
   return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
 }
 
-ColumnLayout* new_column_layout(int num_of_columns)
-{
-  return new ColumnLayout(num_of_columns);
-}
-
 void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+    v8cpp::Class<unity::scopes::VariantMap> variant_map(isolate);
+    v8cpp::Class<unity::scopes::VariantArray> variant_array(isolate);
+
+    // TODO: which enum should be bound
+    v8cpp::Class<unity::scopes::Variant> variant(isolate);
+    variant
+      .add_method("get_int", &unity::scopes::Variant::get_int)
+      .add_method("get_double", &unity::scopes::Variant::get_double)
+      .add_method("get_bool", &unity::scopes::Variant::get_bool)
+      .add_method("get_string", &unity::scopes::Variant::get_string)
+      .add_method("get_dict", &unity::scopes::Variant::get_dict)
+      .add_method("get_array", &unity::scopes::Variant::get_array)
+      .add_method("is_null", &unity::scopes::Variant::is_null)
+      .add_method("which", &unity::scopes::Variant::which)
+      .add_method("serialize_json", &unity::scopes::Variant::serialize_json)
+      .add_method("deserialize_json", &unity::scopes::Variant::deserialize_json)
+      .add_method("which", &unity::scopes::Variant::which);
 
     v8cpp::Class<JavascriptScopeRuntime> js_scope(isolate);
     js_scope
@@ -193,14 +214,18 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<ScopeBase> scope_base(isolate);
     scope_base
+      .add_inheritance<unity::scopes::ScopeBase>()
       .add_method("onstart", &ScopeBase::onstart)
       .add_method("onstop", &ScopeBase::onstop)
       .add_method("onrun", &ScopeBase::onrun)
       .add_method("onsearch", &ScopeBase::onsearch)
       .add_method("onpreview", &ScopeBase::onpreview)
-      .add_method("get_scope_directory", &ScopeBase::get_scope_directory)
-      .add_method("get_cache_directory", &ScopeBase::get_cache_directory)
-      .add_method("get_tmp_directory", &ScopeBase::get_tmp_directory);
+      // unity::scopes::ScopeBase
+      .add_method("scope_directory", &unity::scopes::ScopeBase::scope_directory)
+      .add_method("cache_directory", &unity::scopes::ScopeBase::cache_directory)
+      .add_method("tmp_directory", &unity::scopes::ScopeBase::tmp_directory)
+      .add_method("settings", &unity::scopes::ScopeBase::settings)
+      .add_method("registry", &unity::scopes::ScopeBase::registry);
 
     v8cpp::Class<unity::scopes::ActionMetadata> action_metadata(isolate);
     action_metadata
@@ -215,6 +240,20 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
       .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
       .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity);
+
+    v8cpp::Class<ActivationQuery> activation_query(isolate);
+    activation_query
+      .add_inheritance<unity::scopes::ActivationQueryBase>()
+      // ActivationQuery
+      .add_method("activate", &ActivationQuery::activate)
+      // ActivationQueryBase
+      .add_method("result", &unity::scopes::ActivationQueryBase::result)
+      .add_method("action_metadata", &unity::scopes::ActivationQueryBase::action_metadata)
+      .add_method("widget_id", &unity::scopes::ActivationQueryBase::widget_id)
+      .add_method("action_id", &unity::scopes::ActivationQueryBase::action_id)
+      // QueryBase
+      .add_method("valid", &unity::scopes::QueryBase::valid)
+      .add_method("settings", &unity::scopes::QueryBase::settings);
 
     v8cpp::Class<unity::scopes::Category> category(isolate);
     category
@@ -246,33 +285,44 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_category", &unity::scopes::CategorisedResult::set_category)
       .add_method("category", &unity::scopes::CategorisedResult::category);
 
-    v8cpp::Class<CannedQuery> canned_query(isolate);
+    v8cpp::Class<unity::scopes::CannedQuery> canned_query(isolate);
     canned_query
-      .add_method("query_string", &CannedQuery::query_string)
-      .add_method("to_uri", &CannedQuery::to_uri);
+      .add_method("set_department_id", &unity::scopes::CannedQuery::set_department_id)
+      .add_method("set_query_string", &unity::scopes::CannedQuery::set_query_string)
+      .add_method("set_filter_state", &unity::scopes::CannedQuery::set_filter_state)
+      .add_method("scope_id", &unity::scopes::CannedQuery::scope_id)
+      .add_method("department_id", &unity::scopes::CannedQuery::department_id)
+      .add_method("filter_state", &unity::scopes::CannedQuery::filter_state)
+      .add_method("query_string", &unity::scopes::CannedQuery::query_string)
+      .add_method("to_uri", &unity::scopes::CannedQuery::to_uri);
 
-    v8cpp::Class<CategoryRenderer> category_renderer(isolate);
+    // TODO Should it be more of a value type? (it seems to be used that way
+    // in unity API)
+    v8cpp::Class<unity::scopes::CategoryRenderer> category_renderer(isolate);
     category_renderer
-      .add_method("data", &CategoryRenderer::data);
+      .set_constructor<std::string>()
+      .add_method("data", &unity::scopes::CategoryRenderer::data);
 
-    v8cpp::Class<ColumnLayout> column_layout(isolate);
+    v8cpp::Class<unity::scopes::ColumnLayout> column_layout(isolate);
     column_layout
-      .add_method("add_column", &ColumnLayout::add_column)
-      .add_method("size", &ColumnLayout::size)
-      .add_method("number_of_columns", &ColumnLayout::number_of_columns)
-      .add_method("column", &ColumnLayout::column);
+      .set_constructor<int>()
+      .add_method("add_column", &unity::scopes::ColumnLayout::add_column)
+      .add_method("size", &unity::scopes::ColumnLayout::size)
+      .add_method("number_of_columns", &unity::scopes::ColumnLayout::number_of_columns)
+      .add_method("column", &unity::scopes::ColumnLayout::column);
 
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
+      .add_inheritance<unity::scopes::PreviewWidget>()
+      // unity::scopes::PreviewWidget
+      .add_method("id", &unity::scopes::PreviewWidget::id)
+      .add_method("widget_type", &unity::scopes::PreviewWidget::widget_type)
+      .add_method("attribute_mappings", &unity::scopes::PreviewWidget::attribute_mappings)
+      .add_method("data", &unity::scopes::PreviewWidget::data)
+      .add_method("add_attribute_mapping", &unity::scopes::PreviewWidget::add_attribute_mapping)
+      // PreviewWidget
       .add_method("add_attribute_value", &PreviewWidget::add_attribute_value)
-      .add_method("add_attribute_mapping", &PreviewWidget::add_attribute_mapping)
-      .add_method("add_widget", &PreviewWidget::add_widget)
-      .add_method("id", &PreviewWidget::id)
-      .add_method("widget_type", &PreviewWidget::widget_type)
-      .add_method("attribute_mappings", &PreviewWidget::attribute_mappings)
-      .add_method("attribute_values", &PreviewWidget::attribute_values)
-      .add_method("widgets", &PreviewWidget::widgets)
-      .add_method("data", &PreviewWidget::data);
+      .add_method("add_widget", &PreviewWidget::add_widget);
 
     v8cpp::Class<PreviewQuery> preview_query(isolate);
     preview_query
@@ -287,14 +337,23 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<Result> result(isolate);
     result
-      .add_method("art", &Result::art)
-      .add_method("set_art", &Result::set_art)
-      .add_method("title", &Result::title)
-      .add_method("set_title", &Result::set_title)
-      .add_method("dnd_uri", &Result::dnd_uri)
-      .add_method("set_dnd_uri", &Result::set_dnd_uri)
-      .add_method("uri", &Result::uri)
-      .add_method("set_uri", &Result::set_uri);
+      // unity::scopes::Result
+      .add_method("art", &unity::scopes::Result::art)
+      .add_method("set_art", &unity::scopes::Result::set_art)
+      .add_method("title", &unity::scopes::Result::title)
+      .add_method("set_title", &unity::scopes::Result::set_title)
+      .add_method("dnd_uri", &unity::scopes::Result::dnd_uri)
+      .add_method("set_dnd_uri", &unity::scopes::Result::set_dnd_uri)
+      .add_method("uri", &unity::scopes::Result::uri)
+      .add_method("set_uri", &unity::scopes::Result::set_uri)
+      .add_method("set_intercept_activation", &unity::scopes::Result::set_intercept_activation)
+      .add_method("direct_activation", &unity::scopes::Result::direct_activation)
+      .add_method("has_stored_result", &unity::scopes::Result::has_stored_result)
+      // Result
+      .add_method("set", &Result::set)
+      .add_method("get", &Result::get)
+      .add_method("retrieve_stored_result", &Result::retrieve_stored_result)
+      .add_method("store", &Result::store);
 
     v8cpp::Class<SearchReply> search_reply(isolate);
     search_reply
@@ -326,11 +385,11 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("search_metadata", search_metadata);
 
     module.add_function("new_scope", &new_scope);
-    module.add_function("new_search_query", &new_search_query);
-    module.add_function("new_category_renderer", &new_category_renderer);
-    module.add_function("new_preview_query", &new_preview_query);
-    module.add_function("new_preview_widget", &new_preview_widget);
-    module.add_function("new_column_layout", &new_column_layout);
+    module.add_function("new_SearchQuery", &new_SearchQuery);
+    module.add_function("new_PreviewQuery", &new_PreviewQuery);
+    module.add_function("new_PreviewWidget", &new_PreviewWidget);
+
+    module.add_function("runtime_version", &get_scopes_runtime_version);
 
     exports->SetPrototype(module.create_prototype());
 }

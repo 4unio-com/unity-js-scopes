@@ -16,34 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_PREVIEW_QUERY_H_
-#define _UNITY_JS_PREVIEW_QUERY_H_
+#ifndef _UNITY_JS_ACTIVATION_QUERY_H_
+#define _UNITY_JS_ACTIVATION_QUERY_H_
 
-#include <unity/scopes/PreviewQueryBase.h>
+#include <unity/scopes/ActivationQueryBase.h>
 
 #include <v8-cpp.h>
 
-class PreviewQuery : public unity::scopes::PreviewQueryBase,
-    public std::enable_shared_from_this<PreviewQuery>
+class ActivationQuery : public unity::scopes::ActivationQueryBase,
+  public std::enable_shared_from_this<ActivationQuery>
 {
  public:
-  PreviewQuery(unity::scopes::Result const& result,
-               unity::scopes::ActionMetadata const& metadata,
-               const v8::Local<v8::Function> &run_callback,
-               const v8::Local<v8::Function> &cancelled_callback);
-  ~PreviewQuery() override;
+  ActivationQuery(unity::scopes::Result const& result,
+                  unity::scopes::ActionMetadata const& metadata,
+                  const v8::Local<v8::Function> &cancelled_callback);
+  ~ActivationQuery() override;
+
+  // v8 bindings
+  v8::Local<v8::Value> activate(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   // PreviewQueryBase implementation
-  void run(unity::scopes::PreviewReplyProxy const& reply);
-
-  // QueryBase implementation
   void cancelled() override;
-  
+
  private:
   v8::Isolate* isolate_;
 
-  v8::Persistent<v8::Function> run_callback_;
   v8::Persistent<v8::Function> cancelled_callback_;
 };
 
-#endif // _UNITY_JS_PREVIEW_QUERY_H_
+#endif // _UNITY_JS_ACTIVATION_QUERY_H_

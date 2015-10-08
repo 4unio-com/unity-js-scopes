@@ -16,53 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "preview-query.h"
-#include "preview-reply.h"
+#include "activation-query.h"
+
 #include "event_queue.h"
 
-PreviewQuery::PreviewQuery(
+ActivationQuery::ActivationQuery(
       unity::scopes::Result const& result,
       unity::scopes::ActionMetadata const& metadata,
-      const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
-  : unity::scopes::PreviewQueryBase(result, metadata),
-    isolate_(v8::Isolate::GetCurrent()),
-    run_callback_(v8::Isolate::GetCurrent(), run_callback),
-    cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
+    : unity::scopes::ActivationQueryBase(result, metadata),
+      isolate_(v8::Isolate::GetCurrent()),
+      cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
 }
 
-PreviewQuery::~PreviewQuery() {
-  if (!run_callback_.IsEmpty()) {
-    run_callback_.Reset();
-  }
+ActivationQuery::~ActivationQuery() {
   if (!cancelled_callback_.IsEmpty()) {
     cancelled_callback_.Reset();
   }
 }
 
-void PreviewQuery::run(unity::scopes::PreviewReplyProxy const& reply) {
-  if (run_callback_.IsEmpty()) {
-    return;
-  }
-
-  EventQueue::instance().run(isolate_, [this, reply]
-  {
-    std::shared_ptr<PreviewReply> r =
-      std::shared_ptr<PreviewReply>(new PreviewReply(reply));
-
-    v8::Local<v8::Function> run_callback =
-        v8cpp::to_local<v8::Function>(isolate_, run_callback_);
-
-    v8cpp::call_v8_with_receiver(
-        isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
-        run_callback,
-        v8cpp::to_v8(isolate_, r)
-    );
-  });
-}
-
-void PreviewQuery::cancelled() {
+void ActivationQuery::cancelled() {
   if (cancelled_callback_.IsEmpty()) {
     return;
   }
@@ -79,3 +52,10 @@ void PreviewQuery::cancelled() {
     );
   });
 }
+
+v8::Local<v8::Value>
+ActivationQuery::activate(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  return v8cpp::to_v8(isolate_, nullptr);
+  //   unity::scopes::ActivationResponse 
+}
+

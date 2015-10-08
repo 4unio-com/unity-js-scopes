@@ -16,31 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_COLUMN_LAYOUT_H_
-#define _UNITY_JS_COLUMN_LAYOUT_H_
+#ifndef _UNITY_JS_PREVIEW_QUERY_PROXY_H_
+#define _UNITY_JS_PREVIEW_QUERY_PROXY_H_
 
-#include <unity/scopes/ColumnLayout.h>
+#include <unity/scopes/PreviewQueryBase.h>
 
 #include <v8-cpp.h>
 
-class ColumnLayout
+
+class PreviewQueryProxy : public unity::scopes::PreviewQueryBase
 {
  public:
-  ColumnLayout(int num_of_columns);
-  ~ColumnLayout();
+  PreviewQueryProxy(
+      std::shared_ptr<unity::scopes::PreviewQueryBase> backend);
 
-  // v8 implementation
-  void add_column(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> size(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> number_of_columns(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> column(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void run(unity::scopes::PreviewReplyProxy const &reply) override;
+  unity::scopes::Result result () const;
+  unity::scopes::ActionMetadata action_metadata () const;
+  bool valid() const;
+  unity::scopes::VariantMap settings() const;
+  void cancelled() override;
 
-  const unity::scopes::ColumnLayout&
-    get_column_layout() const;
+  // TODO handle the subsearch override functions
 
  private:
-
-  unity::scopes::ColumnLayout column_layout_;
+  std::shared_ptr<unity::scopes::PreviewQueryBase> backend_;
 };
 
-#endif // _UNITY_JS_COLUMN_LAYOUT_H_
+#endif // _UNITY_JS_SEARCH_QUERY_PROXY_H_
+
+

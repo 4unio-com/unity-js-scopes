@@ -18,12 +18,15 @@
 
 #include "scope-base.h"
 
-#include "canned-query.h"
+#include "action-metadata.h"
+#include "activation-query.h"
+#include "activation-query-proxy.h"
 #include "search-query.h"
+#include "search-query-proxy.h"
 #include "search-metadata.h"
 #include "result.h"
-#include "action-metadata.h"
 #include "preview-query.h"
+#include "preview-query-proxy.h"
 #include "event_queue.h"
 
 ScopeBase::ScopeBase()
@@ -54,9 +57,12 @@ void ScopeBase::start(std::string const& scope_id) {
     v8::Local<v8::Function> start_callback =
         v8cpp::to_local<v8::Function>(isolate_, start_callback_);
 
-    v8cpp::call_v8(isolate_,
-                   start_callback,
-                   v8cpp::to_v8(isolate_, scope_id.c_str()));
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        start_callback,
+        v8cpp::to_v8(isolate_, scope_id.c_str())
+    );
   });
 }
 
@@ -70,7 +76,11 @@ void ScopeBase::stop() {
     v8::Local<v8::Function> stop_callback =
         v8cpp::to_local<v8::Function>(isolate_, stop_callback_);
 
-    v8cpp::call_v8(isolate_, stop_callback);
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        stop_callback
+    );
   });
 }
 
@@ -84,7 +94,11 @@ void ScopeBase::run() {
     v8::Local<v8::Function> run_callback =
         v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-    v8cpp::call_v8(isolate_, run_callback);
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        run_callback
+    );
   });
 }
 
@@ -98,23 +112,29 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   return EventQueue::instance().run<unity::scopes::SearchQueryBase::UPtr>(isolate_, [this, query, metadata]
   {
     // wrap & fire
-    CannedQuery *q = new CannedQuery(query);
-    SearchMetaData *m = new SearchMetaData(metadata);
+    std::shared_ptr<unity::scopes::CannedQuery> q =
+      std::shared_ptr<unity::scopes::CannedQuery>(
+        new unity::scopes::CannedQuery(std::move(query)));
+
+    std::shared_ptr<SearchMetaData> m =
+      std::shared_ptr<SearchMetaData>(new SearchMetaData(metadata));
 
     v8::Local<v8::Function> search_callback =
         v8cpp::to_local<v8::Function>(isolate_, search_callback_);
 
     v8::Handle<v8::Value> result =
-        v8cpp::call_v8(isolate_,
-                       search_callback,
-                       v8cpp::to_v8(isolate_, q),
-                       v8cpp::to_v8(isolate_, m));
+      v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        search_callback,
+        v8cpp::to_v8(isolate_, q),
+        v8cpp::to_v8(isolate_, m)
+      );
 
-    // TODO watch out release
-    SearchQuery * sq =
-        v8cpp::from_v8<SearchQuery*>(isolate_, result);
+    std::shared_ptr<SearchQuery> sq =
+      v8cpp::from_v8<std::shared_ptr<SearchQuery>>(isolate_, result);
 
-    return unity::scopes::SearchQueryBase::UPtr(sq);
+    return unity::scopes::SearchQueryBase::UPtr(new SearchQueryProxy(sq));
   });
 }
 
@@ -132,9 +152,37 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
       unity::scopes::ActionMetadata const &metadata,
       std::string const &widget_id,
       std::string const &action_id) {
-  return EventQueue::instance().run<unity::scopes::ActivationQueryBase::UPtr>(isolate_, [this]
-  {
+  if (perform_action_callback_.IsEmpty()) {
     return nullptr;
+  }
+
+  return EventQueue::instance().run<unity::scopes::ActivationQueryBase::UPtr>(
+      isolate_,
+      [this, result, metadata, widget_id, action_id] {
+
+    std::shared_ptr<Result> r(new Result(result));
+    std::shared_ptr<ActionMetaData> m(new ActionMetaData(metadata));
+
+    v8::Local<v8::Function> perform_action_callback =
+        v8cpp::to_local<v8::Function>(isolate_, perform_action_callback_);
+
+    v8::Handle<v8::Value> wrapped_activation_query =
+        v8cpp::call_v8_with_receiver(
+          isolate_,
+          v8cpp::to_v8(isolate_, shared_from_this()),
+          perform_action_callback,
+          v8cpp::to_v8(isolate_, r),
+          v8cpp::to_v8(isolate_, m),
+          widget_id,
+          action_id
+        );
+
+    std::shared_ptr<ActivationQuery> aq =
+      v8cpp::from_v8<std::shared_ptr<ActivationQuery>>(
+          isolate_,
+          wrapped_activation_query);
+
+    return unity::scopes::ActivationQueryBase::UPtr(new ActivationQueryProxy(aq));
   });
 }
 
@@ -145,26 +193,34 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
     return nullptr;
   }
 
-  return EventQueue::instance().run<unity::scopes::PreviewQueryBase::UPtr>(isolate_, [this, result, action_metadata]
+  return EventQueue::instance().run<unity::scopes::PreviewQueryBase::UPtr>(
+      isolate_,
+      [this, result, action_metadata]
   {
     // wrap & fire
-    Result *r = new Result(result);
-    ActionMetaData *m = new ActionMetaData(action_metadata);
+    std::shared_ptr<Result> r(new Result(result));
+
+    std::shared_ptr<ActionMetaData> m(new ActionMetaData(action_metadata));
 
     v8::Local<v8::Function> preview_callback =
         v8cpp::to_local<v8::Function>(isolate_, preview_callback_);
 
     v8::Handle<v8::Value> wrapped_preview =
-        v8cpp::call_v8(isolate_,
-                       preview_callback,
-                       v8cpp::to_v8(isolate_, r),
-                       v8cpp::to_v8(isolate_, m));
+        v8cpp::call_v8_with_receiver(
+          isolate_,
+          v8cpp::to_v8(isolate_, shared_from_this()),
+          preview_callback,
+          v8cpp::to_v8(isolate_, r),
+          v8cpp::to_v8(isolate_, m)
+        );
 
     // TODO watch out release
-    PreviewQuery * sq =
-        v8cpp::from_v8<PreviewQuery*>(isolate_, wrapped_preview);
+    std::shared_ptr<PreviewQuery> sq =
+      v8cpp::from_v8<std::shared_ptr<PreviewQuery>>(
+          isolate_,
+          wrapped_preview);
 
-    return unity::scopes::PreviewQueryBase::UPtr(sq);
+    return unity::scopes::PreviewQueryBase::UPtr(new PreviewQueryProxy(sq));
   });
 }
 
@@ -266,19 +322,4 @@ void ScopeBase::onpreview(
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   preview_callback_.Reset(args.GetIsolate(), cb);
-}
-
-v8::Local<v8::Value> ScopeBase::get_scope_directory(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), scope_directory().c_str());
-}
-
-v8::Local<v8::Value> ScopeBase::get_cache_directory(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), cache_directory().c_str());
-}
-
-v8::Local<v8::Value> ScopeBase::get_tmp_directory(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), tmp_directory().c_str());
 }

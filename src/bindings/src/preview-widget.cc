@@ -18,13 +18,16 @@
 
 #include "preview-widget.h"
 
+#include "common.h"
+
+
 PreviewWidget::PreviewWidget(std::string const &id,
                              std::string const &widget_type)
-  : preview_widget_(id, widget_type) {
+  : unity::scopes::PreviewWidget(id, widget_type) {
 }
 
 PreviewWidget::PreviewWidget(std::string const &definition)
-  : preview_widget_(definition) {
+  : unity::scopes::PreviewWidget(definition) {
 }
 
 PreviewWidget::~PreviewWidget() {
@@ -45,89 +48,23 @@ void PreviewWidget::add_attribute_value(
   if (args[1]->IsString()) {
     unity::scopes::Variant v(
         *v8::String::Utf8Value(args[1]->ToString()));
-    preview_widget_.add_attribute_value(key, v);
+    unity::scopes::PreviewWidget::add_attribute_value(key, v);
   } else if (args[1]->IsBoolean()) {
     unity::scopes::Variant v(
         args[1]->BooleanValue());
-    preview_widget_.add_attribute_value(key, v);
+    unity::scopes::PreviewWidget::add_attribute_value(key, v);
   } else if (args[1]->IsInt32()) {
     unity::scopes::Variant v(
         args[1]->Int32Value());
-    preview_widget_.add_attribute_value(key, v);
+    unity::scopes::PreviewWidget::add_attribute_value(key, v);
   } else if (args[1]->IsNumber()) {
     unity::scopes::Variant v(
         args[1]->NumberValue());
-    preview_widget_.add_attribute_value(key, v);
+    unity::scopes::PreviewWidget::add_attribute_value(key, v);
   }
-}
-
-void PreviewWidget::add_attribute_mapping(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 2) {
-    return;
-  }
-  if (!args[0]->IsString() || !args[1]->IsString()) {
-    return;
-  }
-
-  std::string key =
-    *v8::String::Utf8Value(args[0]->ToString());
-
-  std::string field_name =
-    *v8::String::Utf8Value(args[1]->ToString());
-
-  preview_widget_.add_attribute_mapping(
-      key, field_name);
 }
 
 void PreviewWidget::add_widget(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1) {
-    return;
-  }
-
-  PreviewWidget *pw =
-    v8cpp::from_v8<PreviewWidget*>(args.GetIsolate(), args[0]);
-  if (!pw) {
-    return;
-  }
-
-  preview_widget_.add_widget(pw->get_preview_widget());
-}
-
-const unity::scopes::PreviewWidget&
-PreviewWidget::get_preview_widget() const {
-  return preview_widget_;
-}
-
-v8::Local<v8::Value> PreviewWidget::id(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), preview_widget_.id());
-}
-
-v8::Local<v8::Value> PreviewWidget::widget_type(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), preview_widget_.widget_type());
-}
-
-v8::Local<v8::Value> PreviewWidget::attribute_mappings(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  std::map<std::string, std::string> am =
-    preview_widget_.attribute_mappings();
-  return v8cpp::to_v8(args.GetIsolate(), am);
-}
-
-v8::Local<v8::Value> PreviewWidget::attribute_values(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), nullptr);
-}
-
-v8::Local<v8::Value> PreviewWidget::widgets(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), nullptr);
-}
-
-v8::Local<v8::Value> PreviewWidget::data(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), preview_widget_.data().c_str());
+      std::shared_ptr<unity::scopes::PreviewWidget> preview_widget) {
+  unity::scopes::PreviewWidget::add_widget(*preview_widget.get());
 }
