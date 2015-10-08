@@ -57,9 +57,8 @@ void ScopeBase::start(std::string const& scope_id) {
     v8::Local<v8::Function> start_callback =
         v8cpp::to_local<v8::Function>(isolate_, start_callback_);
 
-    v8cpp::call_v8_with_receiver(
+    v8cpp::call_v8(
         isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
         start_callback,
         v8cpp::to_v8(isolate_, scope_id.c_str())
     );
@@ -76,9 +75,8 @@ void ScopeBase::stop() {
     v8::Local<v8::Function> stop_callback =
         v8cpp::to_local<v8::Function>(isolate_, stop_callback_);
 
-    v8cpp::call_v8_with_receiver(
+    v8cpp::call_v8(
         isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
         stop_callback
     );
   });
@@ -94,9 +92,8 @@ void ScopeBase::run() {
     v8::Local<v8::Function> run_callback =
         v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-    v8cpp::call_v8_with_receiver(
+    v8cpp::call_v8(
         isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
         run_callback
     );
   });
@@ -123,9 +120,8 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
         v8cpp::to_local<v8::Function>(isolate_, search_callback_);
 
     v8::Handle<v8::Value> result =
-      v8cpp::call_v8_with_receiver(
+      v8cpp::call_v8(
         isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
         search_callback,
         v8cpp::to_v8(isolate_, q),
         v8cpp::to_v8(isolate_, m)
@@ -167,9 +163,8 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
         v8cpp::to_local<v8::Function>(isolate_, perform_action_callback_);
 
     v8::Handle<v8::Value> wrapped_activation_query =
-        v8cpp::call_v8_with_receiver(
+        v8cpp::call_v8(
           isolate_,
-          v8cpp::to_v8(isolate_, shared_from_this()),
           perform_action_callback,
           v8cpp::to_v8(isolate_, r),
           v8cpp::to_v8(isolate_, m),
@@ -206,9 +201,8 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
         v8cpp::to_local<v8::Function>(isolate_, preview_callback_);
 
     v8::Handle<v8::Value> wrapped_preview =
-        v8cpp::call_v8_with_receiver(
+        v8cpp::call_v8(
           isolate_,
-          v8cpp::to_v8(isolate_, shared_from_this()),
           preview_callback,
           v8cpp::to_v8(isolate_, r),
           v8cpp::to_v8(isolate_, m)
