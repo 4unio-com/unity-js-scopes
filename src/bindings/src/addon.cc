@@ -35,16 +35,16 @@
 #include "action-metadata.h"
 #include "activation-query.h"
 #include "categorised-result.h"
+#include "online-account-client.h"
+#include "preview-query.h"
+#include "preview-reply.h"
+#include "preview-widget.h"
 #include "scope-base.h"
 #include "scope.h"
 #include "search-query.h"
 #include "search-reply.h"
 #include "search-metadata.h"
 #include "result.h"
-#include "action-metadata.h"
-#include "preview-query.h"
-#include "preview-reply.h"
-#include "preview-widget.h"
 
 // TODO static
 JavascriptScopeRuntime* new_scope(const std::string& runtime_config) {
@@ -66,6 +66,51 @@ v8::Handle<v8::Object> get_scopes_runtime_version() {
          v8::Integer::New(v8::Isolate::GetCurrent(), micro));
 
   return o;
+}
+
+unity::scopes::OnlineAccountClient::MainLoopSelect
+main_loop_select_from_string(const std::string& main_loop_select) {
+  if (main_loop_select == "RunInExternalMainLoop") {
+    return unity::scopes::OnlineAccountClient::RunInExternalMainLoop;
+  }
+  if (main_loop_select == "CreateInternalMainLoop") {
+    return unity::scopes::OnlineAccountClient::CreateInternalMainLoop;
+  }
+  throw std::runtime_error("Invalid MainLoopSelect value");
+}
+
+std::shared_ptr<OnlineAccountClient>
+new_OnlineAccountClient(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() < 3) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  if (!args[0]->IsString()
+      || !args[1]->IsString()
+      || !args[2]->IsString()) {
+    throw std::runtime_error("Invalid arguments types");
+  }
+
+  std::string service_name =
+    *(v8::String::Utf8Value(args[0]->ToString()));
+  std::string service_type =
+    *(v8::String::Utf8Value(args[1]->ToString()));
+  std::string provider_name =
+    *(v8::String::Utf8Value(args[2]->ToString()));
+
+  std::string main_loop_select;
+  if (args.Length() == 4 && args[3]->IsString()) {
+    *(v8::String::Utf8Value(args[3]->ToString()));
+  }
+
+  return std::shared_ptr<OnlineAccountClient>(
+      new OnlineAccountClient(
+          service_name,
+          service_type,
+          provider_name,
+          main_loop_select.empty()
+           ? unity::scopes::OnlineAccountClient::MainLoopSelect()
+           : main_loop_select_from_string(main_loop_select)));
 }
 
 std::shared_ptr<unity::scopes::CategoryRenderer>
@@ -433,6 +478,16 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_location", &SearchMetaData::set_location)
       .add_method("location", &SearchMetaData::location);
 
+    v8cpp::Class<OnlineAccountClient> online_account_client(isolate);
+    online_account_client
+      // unity::scopes::OnlineAccountClient
+      .add_method("refresh_service_statuses", &OnlineAccountClient::refresh_service_statuses)
+      // OnlineAccountClient
+      .add_method("set_service_update_callback", &OnlineAccountClient::set_service_update_callback)
+      .add_method("get_service_statuses", &OnlineAccountClient::get_service_statuses)
+      .add_method("register_account_login_item", &OnlineAccountClient::register_account_login_item)
+      .add_method("set_service_update_callback", &OnlineAccountClient::register_account_login_widget);
+
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
@@ -445,6 +500,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("category_renderer", category_renderer);
     module.add_class("column_layout", column_layout);
     module.add_class("location", location);
+    module.add_class("online_account_client", online_account_client);
     module.add_class("preview_widget", preview_widget);
     module.add_class("preview_query", preview_query);
     module.add_class("preview_reply", preview_reply);
@@ -456,13 +512,17 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("variant_map", variant_map);
     module.add_class("variant_array", variant_array);
 
+    // Factory functions
     module.add_function("new_scope", &new_scope);
     module.add_function("new_SearchQuery", &new_SearchQuery);
     module.add_function("new_PreviewQuery", &new_PreviewQuery);
     module.add_function("new_PreviewWidget", &new_PreviewWidget);
+    module.add_function("new_OnlineAccountClient", &new_OnlineAccountClient);
+
+    // Standalone functions
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
 
-    module.add_function("runtime_version", &get_scopes_runtime_version);
+   module.add_function("runtime_version", &get_scopes_runtime_version);
 
     exports->SetPrototype(module.create_prototype());
 }
