@@ -19,6 +19,43 @@
 #include "online-account-client.h"
 
 
+namespace {
+
+v8::Handle<v8::Object>
+service_status_to_object(
+      v8::Isolate* isolate,
+      unity::scopes::OnlineAccountClient::ServiceStatus service_status) {
+  v8::Handle<v8::Object> o = v8::Object::New(isolate);
+
+  o->Set(v8::String::NewFromUtf8(isolate, "account_id"),
+         v8::Number::New(isolate, service_status.account_id));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "service_enabled"),
+         v8::Boolean::New(isolate, service_status.service_enabled));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "service_authenticated"),
+         v8::Boolean::New(isolate, service_status.service_authenticated));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "client_id"),
+         v8::String::NewFromUtf8(isolate, service_status.client_id.c_str()));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "client_secret"),
+         v8::String::NewFromUtf8(isolate, service_status.client_secret.c_str()));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "access_token"),
+         v8::String::NewFromUtf8(isolate, service_status.access_token.c_str()));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "token_secret"),
+         v8::String::NewFromUtf8(isolate, service_status.token_secret.c_str()));
+
+  o->Set(v8::String::NewFromUtf8(isolate, "error"),
+         v8::String::NewFromUtf8(isolate, service_status.error.c_str()));
+
+  return o;
+}
+  
+}
+
 OnlineAccountClient::OnlineAccountClient(
       std::string const &service_name,
       std::string const &service_type,
@@ -63,6 +100,16 @@ void OnlineAccountClient::set_service_update_callback(
 }
 
 v8::Handle<v8::Value> OnlineAccountClient::get_service_statuses() {
+  auto service_statuses = oa_client_->get_service_statuses();
+
+  v8::Handle<v8::Array> a =
+    v8::Array::New(isolate_, service_statuses.size());
+
+  for (size_t i = 0; i < service_statuses.size(); ++i) {
+    a->Set(i, service_status_to_object(isolate_, service_statuses[i]));
+  }
+
+  return a;
 }
 
 unity::scopes::OnlineAccountClient::PostLoginAction
@@ -104,39 +151,6 @@ void OnlineAccountClient::register_account_login_widget(
       post_login_action_from_string(login_failed_action));
 }
 
-v8::Handle<v8::Object>
-service_status_to_json(
-      v8::Isolate* isolate,
-      unity::scopes::OnlineAccountClient::ServiceStatus service_status) {
-  v8::Handle<v8::Object> o = v8::Object::New(isolate);
-
-  o->Set(v8::String::NewFromUtf8(isolate, "account_id"),
-         v8::Number::New(isolate, service_status.account_id));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "service_enabled"),
-         v8::Boolean::New(isolate, service_status.service_enabled));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "service_authenticated"),
-         v8::Boolean::New(isolate, service_status.service_authenticated));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "client_id"),
-         v8::String::NewFromUtf8(isolate, service_status.client_id.c_str()));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "client_secret"),
-         v8::String::NewFromUtf8(isolate, service_status.client_secret.c_str()));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "access_token"),
-         v8::String::NewFromUtf8(isolate, service_status.access_token.c_str()));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "token_secret"),
-         v8::String::NewFromUtf8(isolate, service_status.token_secret.c_str()));
-
-  o->Set(v8::String::NewFromUtf8(isolate, "error"),
-         v8::String::NewFromUtf8(isolate, service_status.error.c_str()));
-
-  return o;
-}
-
 void OnlineAccountClient::service_update_callback(
       OnlineAccountClient *self,
       unity::scopes::OnlineAccountClient::ServiceStatus const& service_status) {
@@ -150,6 +164,6 @@ void OnlineAccountClient::service_update_callback(
   v8cpp::call_v8(
       self->isolate_,
       service_update_callback,
-      service_status_to_json(self->isolate_, service_status)
+      service_status_to_object(self->isolate_, service_status)
   );
 }
