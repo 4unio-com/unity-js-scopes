@@ -21,7 +21,8 @@
 
 #include <unity/scopes/SearchReplyProxyFwd.h>
 #include <unity/scopes/Category.h>
-#include <unity/scopes/CategorisedResult.h>
+
+#include "categorised-result.h"
 
 #include <v8-cpp.h>
 
@@ -41,7 +42,7 @@ class SearchReply
   unity::scopes::Category::SCPtr
     lookup_category(const std::string& id);
 
-  void push(std::shared_ptr<unity::scopes::CategorisedResult> categorised_result);
+  void push(std::shared_ptr<CategorisedResult> categorised_result);
 
   void finished();
 

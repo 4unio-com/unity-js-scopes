@@ -21,6 +21,9 @@
 
 #include <unity/scopes/ActivationQueryBase.h>
 
+#include "action-metadata.h"
+#include "result.h"
+
 #include <v8-cpp.h>
 
 class ActivationQuery : public unity::scopes::ActivationQueryBase,
@@ -32,11 +35,13 @@ class ActivationQuery : public unity::scopes::ActivationQueryBase,
                   const v8::Local<v8::Function> &cancelled_callback);
   ~ActivationQuery() override;
 
-  // v8 bindings
-  v8::Local<v8::Value> activate(v8::FunctionCallbackInfo<v8::Value> const& args);
-
   // PreviewQueryBase implementation
   void cancelled() override;
+
+  // v8 bindings
+  std::shared_ptr<ActionMetaData> action_metadata() const;
+  std::shared_ptr<Result> result() const;
+  v8::Local<v8::Value> activate(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
   v8::Isolate* isolate_;

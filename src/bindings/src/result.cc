@@ -36,3 +36,22 @@ void Result::store(
       intercept_activation
   );
 }
+
+void Result::set(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 2) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  if (!args[0]->IsString()) {
+    throw std::runtime_error("Invalid argument type");
+  }
+
+  std::string key =
+    *(v8::String::Utf8Value(args[0]->ToString()));
+
+  (*this)[key] = unity::scopesjs::to_variant(args[1]);
+}
+
+v8::Handle<v8::Value> Result::get(const std::string& key) {
+  return unity::scopesjs::from_variant((*this)[key]);
+}

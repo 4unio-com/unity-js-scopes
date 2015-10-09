@@ -156,8 +156,8 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
       [this, result, metadata, widget_id, action_id] {
 
     std::shared_ptr<Result> r(new Result(result));
-    std::shared_ptr<unity::scopes::ActionMetadata> m(
-        new unity::scopes::ActionMetadata(metadata));
+    std::shared_ptr<ActionMetaData> m(
+        new ActionMetaData(metadata));
 
     v8::Local<v8::Function> perform_action_callback =
         v8cpp::to_local<v8::Function>(isolate_, perform_action_callback_);
@@ -195,8 +195,8 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
     // wrap & fire
     std::shared_ptr<Result> r(new Result(result));
 
-    std::shared_ptr<unity::scopes::ActionMetadata> m(
-        new unity::scopes::ActionMetadata(action_metadata));
+    std::shared_ptr<ActionMetaData> m(
+        new ActionMetaData(action_metadata));
 
     v8::Local<v8::Function> preview_callback =
         v8cpp::to_local<v8::Function>(isolate_, preview_callback_);

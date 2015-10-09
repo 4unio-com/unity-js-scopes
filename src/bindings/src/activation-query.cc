@@ -59,3 +59,13 @@ ActivationQuery::activate(v8::FunctionCallbackInfo<v8::Value> const& args) {
   //   unity::scopes::ActivationResponse 
 }
 
+std::shared_ptr<ActionMetaData>
+ActivationQuery::action_metadata() const {
+  return std::shared_ptr<ActionMetaData>(
+      new ActionMetaData(unity::scopes::ActivationQueryBase::action_metadata()));
+}
+
+std::shared_ptr<Result> ActivationQuery::result() const {
+  return std::shared_ptr<Result>(
+      new Result(unity::scopes::ActivationQueryBase::result()));
+}

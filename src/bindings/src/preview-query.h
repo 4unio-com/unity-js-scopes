@@ -21,7 +21,9 @@
 
 #include <unity/scopes/ActionMetadata.h>
 #include <unity/scopes/PreviewQueryBase.h>
-#include <unity/scopes/Result.h>
+
+#include "action-metadata.h"
+#include "result.h"
 
 #include <v8-cpp.h>
 
@@ -42,8 +44,8 @@ class PreviewQuery : public unity::scopes::PreviewQueryBase,
   void cancelled() override;
 
   // v8 bindings
-  std::shared_ptr<unity::scopes::ActionMetadata> action_metadata() const;
-  std::shared_ptr<unity::scopes::Result> result() const;
+  std::shared_ptr<ActionMetaData> action_metadata() const;
+  std::shared_ptr<Result> result() const;
   
  private:
   v8::Isolate* isolate_;

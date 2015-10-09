@@ -26,12 +26,10 @@
 class SearchMetaData : public unity::scopes::SearchMetadata
 {
  public:
-  SearchMetaData(const unity::scopes::SearchMetadata & other);
-  ~SearchMetaData() override;
+  SearchMetaData(const unity::scopes::SearchMetadata&);
 
-  v8::Local<v8::Value> get_result(v8::FunctionCallbackInfo<v8::Value> const& args);
-
- private:
+  void set_location(std::shared_ptr<unity::scopes::Location> location);
+  std::shared_ptr<unity::scopes::Location> location() const;
 };
 
 #endif // _UNITY_JS_SEARCH_METADATA_H_

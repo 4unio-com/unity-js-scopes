@@ -23,7 +23,6 @@
 #include <unity/scopes/ActionMetadata.h>
 #include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
-#include <unity/scopes/CategorisedResult.h>
 #include <unity/scopes/CategoryRenderer.h>
 #include <unity/scopes/Result.h>
 #include <unity/scopes/SearchReply.h>
@@ -33,7 +32,9 @@
 
 #include <node.h>
 
+#include "action-metadata.h"
 #include "activation-query.h"
+#include "categorised-result.h"
 #include "scope-base.h"
 #include "scope.h"
 #include "search-query.h"
@@ -124,8 +125,8 @@ v8::Handle<v8::Object> new_PreviewQuery(v8::FunctionCallbackInfo<v8::Value> cons
         v8::Isolate::GetCurrent(),
         args[0]->ToObject());
 
-  std::shared_ptr<unity::scopes::ActionMetadata> a =
-    v8cpp::from_v8<std::shared_ptr<unity::scopes::ActionMetadata>>(
+  std::shared_ptr<ActionMetaData> a =
+    v8cpp::from_v8<std::shared_ptr<ActionMetaData>>(
         v8::Isolate::GetCurrent(),
         args[1]->ToObject());
 
@@ -235,8 +236,9 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("settings", &unity::scopes::ScopeBase::settings)
       .add_method("registry", &unity::scopes::ScopeBase::registry);
 
-    v8cpp::Class<unity::scopes::ActionMetadata> action_metadata(isolate);
+    v8cpp::Class<ActionMetaData> action_metadata(isolate);
     action_metadata
+      . add_inheritance<unity::scopes::ActionMetadata>()
       // unity::scopes::ActionMetadata
       .add_method("set_scope_data", &unity::scopes::ActionMetadata::set_scope_data)
       .add_method("scope_data", &unity::scopes::ActionMetadata::scope_data)
@@ -244,19 +246,22 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("hints", &unity::scopes::ActionMetadata::hints)
       .add_method("contains_hint", &unity::scopes::ActionMetadata::contains_hint)
       // unity::scopes::QueryMetadata
-      .add_method("locale", &unity::scopes::QueryMetadata::locale)
-      .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
-      .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
-      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity);
+      .add_method("locale", &unity::scopes::ActionMetadata::locale)
+      .add_method("form_factor", &unity::scopes::ActionMetadata::form_factor)
+      .add_method("set_internet_connectivity", &unity::scopes::ActionMetadata::set_internet_connectivity)
+      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity)
+      // ActionMetaData
+      .add_method("get", &ActionMetaData::get)
+      .add_method("set", &ActionMetaData::set);
 
     v8cpp::Class<ActivationQuery> activation_query(isolate);
     activation_query
       .add_inheritance<unity::scopes::ActivationQueryBase>()
       // ActivationQuery
       .add_method("activate", &ActivationQuery::activate)
-      // ActivationQueryBase
-      .add_method("result", &unity::scopes::ActivationQueryBase::result)
-      .add_method("action_metadata", &unity::scopes::ActivationQueryBase::action_metadata)
+      .add_method("result", &ActivationQuery::result)
+      .add_method("action_metadata", &ActivationQuery::action_metadata)
+      // unity::scopes::ActivationQueryBase
       .add_method("widget_id", &unity::scopes::ActivationQueryBase::widget_id)
       .add_method("action_id", &unity::scopes::ActivationQueryBase::action_id)
       // QueryBase
@@ -271,7 +276,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("title", &unity::scopes::Category::title)
       .add_method("icon", &unity::scopes::Category::icon);
 
-    v8cpp::Class<unity::scopes::CategorisedResult> categorised_result(isolate);
+    v8cpp::Class<CategorisedResult> categorised_result(isolate);
     categorised_result
       .add_inheritance<unity::scopes::Result>()
       .set_constructor<unity::scopes::Category::SCPtr>()
@@ -287,12 +292,12 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("art", &unity::scopes::Result::art)
       .add_method("dnd_uri", &unity::scopes::Result::dnd_uri)
       .add_method("contains", &unity::scopes::Result::contains)
-      // Result
-      .add_method("set", &set_result_value<unity::scopes::CategorisedResult>)
-      .add_method("get", &get_result_value<unity::scopes::CategorisedResult>)
-      // unity::scopes::CategorisedResult
-      .add_method("set_category", &unity::scopes::CategorisedResult::set_category)
-      .add_method("category", &unity::scopes::CategorisedResult::category);
+      // CategorisedResult
+      // TODO fix / proper namedpropertyaccessorhandler
+      .add_method("set", &CategorisedResult::set)
+      .add_method("get", &CategorisedResult::get)
+      .add_method("set_category", &CategorisedResult::set_category)
+      .add_method("category", &CategorisedResult::category);
 
     v8cpp::Class<unity::scopes::CannedQuery> canned_query(isolate);
     canned_query
@@ -367,8 +372,9 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("direct_activation", &unity::scopes::Result::direct_activation)
       .add_method("has_stored_result", &unity::scopes::Result::has_stored_result)
       // Result
-      .add_method("set", &set_result_value<unity::scopes::Result>)
-      .add_method("get", &get_result_value<unity::scopes::Result>)
+      // TODO fix / proper namedpropertyaccessorhandler
+      .add_method("set", &Result::set)
+      .add_method("get", &Result::get)
       .add_method("retrieve_stored_result", &Result::retrieve_stored_result)
       .add_method("store", &Result::store);
 
@@ -385,14 +391,35 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
+    v8cpp::Class<unity::scopes::Location> location(isolate);
+    location
+      // unity::scopes::Location
+      .add_method("altitude", &unity::scopes::Location::altitude)
+      .add_method("has_altitude", &unity::scopes::Location::has_altitude)
+      .add_method("area_code", &unity::scopes::Location::area_code)
+      .add_method("has_area_code", &unity::scopes::Location::has_area_code)
+      .add_method("city", &unity::scopes::Location::city)
+      .add_method("has_city", &unity::scopes::Location::has_city)
+      .add_method("has_country_code", &unity::scopes::Location::has_country_code)
+      .add_method("country_code", &unity::scopes::Location::country_code)
+      .add_method("has_country_name", &unity::scopes::Location::has_country_name)
+      .add_method("country_name", &unity::scopes::Location::country_name)
+      .add_method("has_horizontal_accuracy", &unity::scopes::Location::has_horizontal_accuracy)
+      .add_method("horizontal_accuracy", &unity::scopes::Location::horizontal_accuracy)
+      .add_method("latitude", &unity::scopes::Location::latitude)
+      .add_method("longitude", &unity::scopes::Location::longitude)
+      .add_method("has_region_code", &unity::scopes::Location::has_region_code)
+      .add_method("region_code", &unity::scopes::Location::region_code)
+      .add_method("has_region_name", &unity::scopes::Location::has_region_name)
+      .add_method("region_name", &unity::scopes::Location::region_name)
+      .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
+
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
     search_metadata
       .add_inheritance<unity::scopes::SearchMetadata>()
-      // SearchMetadata
+      // unity::scopes::SearchMetadata
       .add_method("set_cardinality", &unity::scopes::SearchMetadata::set_cardinality)
       .add_method("cardinality", &unity::scopes::SearchMetadata::cardinality)
-      .add_method("set_location", &unity::scopes::SearchMetadata::set_location)
-      .add_method("location", &unity::scopes::SearchMetadata::location)
       .add_method("has_location", &unity::scopes::SearchMetadata::has_location)
       .add_method("set_hint", &unity::scopes::SearchMetadata::set_hint)
       .add_method("hints", &unity::scopes::SearchMetadata::hints)
@@ -400,7 +427,10 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("locale", &unity::scopes::QueryMetadata::locale)
       .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
       .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
-      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity);
+      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity)
+      // SearchMetaData
+      .add_method("set_location", &SearchMetaData::set_location)
+      .add_method("location", &SearchMetaData::location);
 
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
@@ -410,8 +440,10 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("category", category);
     module.add_class("categorised_result", categorised_result);
     module.add_class("canned_query", canned_query);
+    module.add_class("categorised_result", categorised_result);
     module.add_class("category_renderer", category_renderer);
     module.add_class("column_layout", column_layout);
+    module.add_class("location", location);
     module.add_class("preview_widget", preview_widget);
     module.add_class("preview_query", preview_query);
     module.add_class("preview_reply", preview_reply);

@@ -18,9 +18,18 @@
 
 #include "search-metadata.h"
 
-SearchMetaData::SearchMetaData(unity::scopes::SearchMetadata const& other)
-  : unity::scopes::SearchMetadata(other) {
+SearchMetaData::SearchMetaData(const unity::scopes::SearchMetadata& meta_data)
+  : unity::scopes::SearchMetadata(meta_data) {
 }
 
-SearchMetaData::~SearchMetaData() {
+void SearchMetaData::set_location(
+      std::shared_ptr<unity::scopes::Location> location) {
+  if (location) {
+    unity::scopes::SearchMetadata::set_location(*location);
+  }
+}
+
+std::shared_ptr<unity::scopes::Location> SearchMetaData::location() const {
+  return std::shared_ptr<unity::scopes::Location>(
+      new unity::scopes::Location(unity::scopes::SearchMetadata::location()));
 }

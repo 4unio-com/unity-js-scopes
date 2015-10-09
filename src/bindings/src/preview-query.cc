@@ -80,13 +80,13 @@ void PreviewQuery::cancelled() {
   });
 }
 
-std::shared_ptr<unity::scopes::ActionMetadata>
+std::shared_ptr<ActionMetaData>
 PreviewQuery::action_metadata() const {
-  return std::shared_ptr<unity::scopes::ActionMetadata>(
-      new unity::scopes::ActionMetadata(unity::scopes::PreviewQueryBase::action_metadata()));
+  return std::shared_ptr<ActionMetaData>(
+      new ActionMetaData(unity::scopes::PreviewQueryBase::action_metadata()));
 }
 
-std::shared_ptr<unity::scopes::Result> PreviewQuery::result() const {
-  return std::shared_ptr<unity::scopes::Result>(
-      new unity::scopes::Result(unity::scopes::PreviewQueryBase::result()));
+std::shared_ptr<Result> PreviewQuery::result() const {
+  return std::shared_ptr<Result>(
+      new Result(unity::scopes::PreviewQueryBase::result()));
 }

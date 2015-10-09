@@ -36,7 +36,7 @@ unity::scopes::Category::SCPtr SearchReply::lookup_category(
 }
 
 void SearchReply::push(
-      std::shared_ptr<unity::scopes::CategorisedResult> categorised_result) {
+      std::shared_ptr<CategorisedResult> categorised_result) {
   reply_->push(*categorised_result);
 }
 
