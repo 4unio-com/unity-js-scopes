@@ -36,7 +36,7 @@ scopes.self.initialize(
                         + scopes.self.scope_config)
         },
         search: function(canned_query, metadata) {
-            return scopes.lib.new_search_query(
+            return scopes.lib.new_SearchQuery(
                 canned_query,
                 metadata,
                 // run
@@ -65,7 +65,7 @@ scopes.self.initialize(
                         response.on('end', function() {
                             r = JSON.parse(res);
                             for (i = 0; i < r.length; i++) {
-                                var categorised_result = scopes.lib.new_categorised_result(category);
+                                var categorised_result = new scopes.lib.categorised_result(category);
                                 categorised_result.set_uri(r[i].url);
                                 categorised_result.set_title(r[i].title);
                                 categorised_result.set_art(r[i].imageUrl);
@@ -87,14 +87,14 @@ scopes.self.initialize(
                 });
         },
         preview: function(result, action_metadata) {
-            return scopes.lib.new_preview_query(
+            return scopes.lib.new_PreviewQuery(
                 result,
                 action_metadata,
                 // run
                 function(preview_reply) {
-                    var layout1col = scopes.lib.new_column_layout(1);
-                    var layout2col = scopes.lib.new_column_layout(2);
-                    var layout3col = scopes.lib.new_column_layout(3);
+                    var layout1col = new scopes.lib.column_layout(1);
+                    var layout2col = new scopes.lib.column_layout(2);
+                    var layout3col = new scopes.lib.column_layout(3);
                     layout1col.add_column(["image", "header", "summary"]);
 
                     layout2col.add_column(["image"]);
@@ -106,14 +106,14 @@ scopes.self.initialize(
 
                     preview_reply.register_layout([layout1col, layout2col, layout3col]);
 
-                    var header = scopes.lib.new_preview_widget("header", "header");
+                    var header = scopes.lib.new_PreviewWidget("header", "header");
                     header.add_attribute_mapping("title", "title");
                     header.add_attribute_mapping("subtitle", "subtitle");
 
-                    var image = scopes.lib.new_preview_widget("image", "image");
+                    var image = scopes.lib.new_PreviewWidget("image", "image");
                     image.add_attribute_mapping("source", "art");
 
-                    var description = scopes.lib.new_preview_widget("summary", "text");
+                    var description = scopes.lib.new_PreviewWidget("summary", "text");
                     description.add_attribute_mapping("text", "description");
 
                     preview_reply.push([image, header, description ]);

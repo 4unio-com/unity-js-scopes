@@ -70,22 +70,19 @@ Scope.prototype = {
         }
     },
     get scope_directory() {
-        return this._base.get_scope_directory();
+        return this._base.scope_directory();
     },
     get cache_directory() {
-        return this._base.get_cache_directory();
+        return this._base.cache_directory();
     },
     get tmp_directory() {
-        return this._base.get_tmp_directory();
+        return this._base.tmp_directory();
     },
     get registry() {
         return null
     },
     get settings() {
-        return null
-    },
-    get settings() {
-        return null
+        return this._base.settings();
     },
     get scope_config() {
         return this._scope_binding.scope_config();

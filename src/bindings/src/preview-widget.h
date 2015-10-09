@@ -23,7 +23,7 @@
 
 #include <v8-cpp.h>
 
-class PreviewWidget
+class PreviewWidget : public unity::scopes::PreviewWidget
 {
  public:
   PreviewWidget(std::string const &id,
@@ -33,21 +33,7 @@ class PreviewWidget
 
   // v8 binding
   void add_attribute_value(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void add_attribute_mapping(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void add_widget(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  v8::Local<v8::Value> id(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> widget_type(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  v8::Local<v8::Value> attribute_mappings(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> attribute_values(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> widgets(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> data(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-  const unity::scopes::PreviewWidget& get_preview_widget() const;
-
- private:
-  unity::scopes::PreviewWidget preview_widget_;
+  void add_widget(std::shared_ptr<unity::scopes::PreviewWidget> preview_widget);
 };
 
 #endif // _UNITY_JS_PREVIEW_WIDGET_H_

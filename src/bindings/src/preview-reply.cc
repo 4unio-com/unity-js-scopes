@@ -27,20 +27,22 @@ PreviewReply::PreviewReply(unity::scopes::PreviewReplyProxy const& reply)
 PreviewReply::~PreviewReply() {
 }
 
-void PreviewReply::register_layout(std::vector<ColumnLayout*> const& columns) {
+void PreviewReply::register_layout(
+      std::vector<std::shared_ptr<unity::scopes::ColumnLayout>> const& columns) {
   unity::scopes::ColumnLayoutList columns_list;
   for (auto const& column : columns)
   {
-    columns_list.emplace_back(column->get_column_layout());
+    columns_list.push_back(*column);
   }
   reply_->register_layout(columns_list);
 }
 
-void PreviewReply::push(std::vector<PreviewWidget*> const& widgets) {
+void PreviewReply::push(
+      std::vector<std::shared_ptr<unity::scopes::PreviewWidget>> const& widgets) {
   unity::scopes::PreviewWidgetList widgets_list;
   for (auto const& widget : widgets)
   {
-    widgets_list.emplace_back(widget->get_preview_widget());
+    widgets_list.push_back(*widget);
   }
   reply_->push(widgets_list);
 }

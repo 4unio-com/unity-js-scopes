@@ -20,7 +20,7 @@
 #define _UNITY_JS_PREVIEW_REPLY_H_
 
 #include <unity/scopes/PreviewReply.h>
-#include "column-layout.h"
+
 #include "preview-widget.h"
 
 #include <v8-cpp.h>
@@ -32,8 +32,10 @@ class PreviewReply
   ~PreviewReply();
 
   // v8 bindings
-  void register_layout(std::vector<ColumnLayout*> const& columns);
-  void push(std::vector<PreviewWidget*> const& widgets);
+  void register_layout(
+      std::vector<std::shared_ptr<unity::scopes::ColumnLayout>> const& columns);
+  void push(
+      std::vector<std::shared_ptr<unity::scopes::PreviewWidget>> const& widgets);
   void finished();
 
  private:

@@ -18,7 +18,6 @@
 
 #include "search-query.h"
 
-#include "canned-query.h"
 #include "search-metadata.h"
 #include "search-reply.h"
 #include "event_queue.h"
@@ -83,14 +82,6 @@ void SearchQuery::oncancelled(
   cancelled_callback_.Reset(args.GetIsolate(), cb);
 }
 
-v8::Local<v8::Value> SearchQuery::query(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  CannedQuery *q =
-    new CannedQuery(unity::scopes::SearchQueryBase::query());
-
-  return v8cpp::to_v8(isolate_, q);
-}
-
 void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
   if (run_callback_.IsEmpty()) {
     return;
@@ -99,14 +90,18 @@ void SearchQuery::run(unity::scopes::SearchReplyProxy const& reply) {
   EventQueue::instance().run(isolate_, [this, reply]
   {
     // wrap & fire
-    SearchReply *sr = new SearchReply(reply);
-
-    auto wrapped_sr = v8cpp::to_v8(isolate_, sr);
+    std::shared_ptr<SearchReply> sr =
+      std::shared_ptr<SearchReply>(new SearchReply(reply));
 
     v8::Local<v8::Function> run_callback =
-        v8cpp::to_local<v8::Function>(isolate_, run_callback_);
+      v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-    v8cpp::call_v8(isolate_, run_callback, wrapped_sr);
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        run_callback,
+        v8cpp::to_v8(isolate_, sr)
+    );
   });
 }
 
@@ -120,23 +115,10 @@ void SearchQuery::cancelled() {
     v8::Local<v8::Function> cancelled_callback =
         v8cpp::to_local<v8::Function>(isolate_, cancelled_callback_);
 
-    v8cpp::call_v8(isolate_, cancelled_callback);
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        cancelled_callback
+    );
   });
-}
-
-v8::Local<v8::Value> SearchQuery::valid(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(
-      args.GetIsolate(),
-      unity::scopes::SearchQueryBase::valid());
-}
-
-v8::Local<v8::Value> SearchQuery::settings(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), nullptr);
-}
-
-v8::Local<v8::Value> SearchQuery::search_metadata(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  return v8cpp::to_v8(args.GetIsolate(), nullptr);
 }

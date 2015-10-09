@@ -19,61 +19,20 @@
 #include "result.h"
 
 Result::Result(unity::scopes::Result const &result)
-  : result_(result) {
+  : unity::scopes::Result(result) {
 }
 
-Result::~Result() {
+std::shared_ptr<Result>
+Result::retrieve_stored_result() const {
+  return std::shared_ptr<Result>(
+      new Result(unity::scopes::Result::retrieve()));
 }
 
-v8::Local<v8::Value> Result::uri(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  std::string uri = result_.uri();
-  return v8cpp::to_v8(args.GetIsolate(), uri.c_str());
-}
-
-void Result::set_uri(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1 || !args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments");
-  }
-  result_.set_uri(*(v8::String::Utf8Value(args[0]->ToString())));
-}
-
-v8::Local<v8::Value> Result::title(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  std::string title = result_.title();
-  return v8cpp::to_v8(args.GetIsolate(), title.c_str());
-}
-
-void Result::set_title(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1 || !args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments");
-  }
-  result_.set_title(*(v8::String::Utf8Value(args[0]->ToString())));
-}
-
-v8::Local<v8::Value> Result::art(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  std::string art = result_.art();
-  return v8cpp::to_v8(args.GetIsolate(), art.c_str());
-}
-
-void Result::set_art(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1 || !args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments");
-  }
-  result_.set_art(*(v8::String::Utf8Value(args[0]->ToString())));
-}
-
-v8::Local<v8::Value> Result::dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  std::string dnd_uri = result_.dnd_uri();
-  return v8cpp::to_v8(args.GetIsolate(), dnd_uri.c_str());
-}
-
-void Result::set_dnd_uri(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1 || !args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments");
-  }
-  result_.set_dnd_uri(*(v8::String::Utf8Value(args[0]->ToString())));
-}
-
-const unity::scopes::Result& Result::get_result() const {
-  return result_;
+void Result::store(
+      std::shared_ptr<Result> result,
+      bool intercept_activation) {
+  unity::scopes::Result::store(
+      *result,
+      intercept_activation
+  );
 }

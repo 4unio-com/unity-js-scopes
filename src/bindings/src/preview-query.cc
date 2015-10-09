@@ -40,26 +40,6 @@ PreviewQuery::~PreviewQuery() {
   }
 }
 
-void PreviewQuery::onrun(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1) {
-    // TODO fix
-    return;
-  }
-
-  if (!args[0]->IsFunction()) {
-    // TODO fix
-    return;
-  }
-
-  if (!run_callback_.IsEmpty()) {
-    run_callback_.Reset();
-  }
-
-  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
-  run_callback_.Reset(args.GetIsolate(), cb);
-}
-
 void PreviewQuery::run(unity::scopes::PreviewReplyProxy const& reply) {
   if (run_callback_.IsEmpty()) {
     return;
@@ -67,17 +47,46 @@ void PreviewQuery::run(unity::scopes::PreviewReplyProxy const& reply) {
 
   EventQueue::instance().run(isolate_, [this, reply]
   {
-    // wrap & fire
-    PreviewReply *pr = new PreviewReply(reply);
-
-    auto wrapped_pr = v8cpp::to_v8(isolate_, pr);
+    std::shared_ptr<PreviewReply> r =
+      std::shared_ptr<PreviewReply>(new PreviewReply(reply));
 
     v8::Local<v8::Function> run_callback =
         v8cpp::to_local<v8::Function>(isolate_, run_callback_);
 
-    v8cpp::call_v8(isolate_, run_callback, wrapped_pr);
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        run_callback,
+        v8cpp::to_v8(isolate_, r)
+    );
   });
 }
 
 void PreviewQuery::cancelled() {
+  if (cancelled_callback_.IsEmpty()) {
+    return;
+  }
+
+  EventQueue::instance().run(isolate_, [this]
+  {
+    v8::Local<v8::Function> cancelled_callback =
+        v8cpp::to_local<v8::Function>(isolate_, cancelled_callback_);
+
+    v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        cancelled_callback
+    );
+  });
+}
+
+std::shared_ptr<unity::scopes::ActionMetadata>
+PreviewQuery::action_metadata() const {
+  return std::shared_ptr<unity::scopes::ActionMetadata>(
+      new unity::scopes::ActionMetadata(unity::scopes::PreviewQueryBase::action_metadata()));
+}
+
+std::shared_ptr<unity::scopes::Result> PreviewQuery::result() const {
+  return std::shared_ptr<unity::scopes::Result>(
+      new unity::scopes::Result(unity::scopes::PreviewQueryBase::result()));
 }

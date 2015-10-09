@@ -19,11 +19,14 @@
 #ifndef _UNITY_JS_PREVIEW_QUERY_H_
 #define _UNITY_JS_PREVIEW_QUERY_H_
 
+#include <unity/scopes/ActionMetadata.h>
 #include <unity/scopes/PreviewQueryBase.h>
+#include <unity/scopes/Result.h>
 
 #include <v8-cpp.h>
 
-class PreviewQuery : public unity::scopes::PreviewQueryBase
+class PreviewQuery : public unity::scopes::PreviewQueryBase,
+    public std::enable_shared_from_this<PreviewQuery>
 {
  public:
   PreviewQuery(unity::scopes::Result const& result,
@@ -34,12 +37,13 @@ class PreviewQuery : public unity::scopes::PreviewQueryBase
 
   // PreviewQueryBase implementation
   void run(unity::scopes::PreviewReplyProxy const& reply);
-  void cancelled();
 
-  // v8 binding
-  void onrun(v8::FunctionCallbackInfo<v8::Value> const& args);
-  //  v8::Local<v8::Value> get_result(v8::FunctionCallbackInfo<v8::Value> const& args);
-  //  v8::Local<v8::Value> get_action_metadata(v8::FunctionCallbackInfo<v8::Value> const& args);
+  // QueryBase implementation
+  void cancelled() override;
+
+  // v8 bindings
+  std::shared_ptr<unity::scopes::ActionMetadata> action_metadata() const;
+  std::shared_ptr<unity::scopes::Result> result() const;
   
  private:
   v8::Isolate* isolate_;

@@ -16,28 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_CATEGORY_RENDERER_H_
-#define _UNITY_JS_CATEGORY_RENDERER_H_
+#ifndef _UNITY_JS_SEARCH_QUERY_PROXY_H_
+#define _UNITY_JS_SEARCH_QUERY_PROXY_H_
 
-#include <unity/scopes/CategoryRenderer.h>
+#include <unity/scopes/SearchQueryBase.h>
 
 #include <v8-cpp.h>
 
-class CategoryRenderer
+
+class SearchQueryProxy : public unity::scopes::SearchQueryBase
 {
  public:
-  CategoryRenderer(std::string const &json_text);
-  ~CategoryRenderer();
+  SearchQueryProxy(
+      std::shared_ptr<unity::scopes::SearchQueryBase> backend);
 
-  const unity::scopes::CategoryRenderer&
-    get_renderer() const;
+  void run(unity::scopes::SearchReplyProxy const &reply) override;
+  unity::scopes::CannedQuery query() const;
+  unity::scopes::SearchMetadata search_metadata() const;
+  void cancelled() override;
+  bool valid() const;
+  unity::scopes::VariantMap settings() const;
 
-  // v8 implementation
-  v8::Local<v8::Value> data(v8::FunctionCallbackInfo<v8::Value> const& args);
+  // TODO handle the subsearch override functions
 
  private:
-
-  unity::scopes::CategoryRenderer renderer_;
+  std::shared_ptr<unity::scopes::SearchQueryBase> backend_;
 };
 
-#endif // _UNITY_JS_SEARCH_METADATA_H_
+#endif // _UNITY_JS_SEARCH_QUERY_PROXY_H_
+
+

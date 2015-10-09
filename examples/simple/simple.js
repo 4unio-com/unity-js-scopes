@@ -32,7 +32,7 @@ scopes.self.initialize(
                         + scopes.self.scope_config)
         },
         search: function(canned_query, metadata) {
-            return scopes.lib.new_search_query(
+            return scopes.lib.new_SearchQuery(
                 canned_query,
                 metadata,
                 // run
@@ -40,10 +40,14 @@ scopes.self.initialize(
                     var qs =
                         canned_query.query_string();
                     var category =
-                        search_reply.register_category("simple", "hello world from js", "");
-                    
+                        search_reply.register_category(
+                            "simple",
+                            "hello world from js",
+                            "",
+                            null);
+
                     var categorised_result =
-                        scopes.lib.new_categorised_result(category);
+                        new scopes.lib.categorised_result(category);
                     categorised_result.set_uri("http://www.ubuntu.com");
                     categorised_result.set_title("'" + qs + "'");
                     

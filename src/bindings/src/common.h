@@ -16,28 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_CATEGORY_H_
-#define _UNITY_JS_CATEGORY_H_
-
-#include <unity/scopes/Category.h>
+#include <string>
 
 #include <v8-cpp.h>
 
-class Category
-{
- public:
-  Category(unity::scopes::Category::SCPtr category);
-  ~Category();
+#include "unity/scopes/Variant.h"
 
-  // v8 binding
-  v8::Local<v8::Value> id(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> title(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Local<v8::Value> icon(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-  unity::scopes::Category::SCPtr get_category();
+namespace unity {
+namespace scopesjs {
 
- private:
-  unity::scopes::Category::SCPtr category_;
-};
+unity::scopes::Variant
+to_variant(v8::Local<v8::Value> value);
 
-#endif // _UNITY_JS_CATEGORY_H_
+v8::Local<v8::Value>
+from_variant(const unity::scopes::Variant& variant);
+
+} // namespace scopesjs
+} // namespace unity
+

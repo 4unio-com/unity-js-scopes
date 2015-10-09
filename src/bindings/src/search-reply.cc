@@ -22,8 +22,6 @@
 
 #include <unity/scopes/SearchReply.h>
 
-#include "categorised-result.h"
-#include "category.h"
 
 SearchReply::SearchReply(unity::scopes::SearchReplyProxy const& reply)
   : reply_(reply){
@@ -32,51 +30,26 @@ SearchReply::SearchReply(unity::scopes::SearchReplyProxy const& reply)
 SearchReply::~SearchReply() {
 }
 
-v8::Local<v8::Value> SearchReply::register_category(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 3) {
-    // TODO fix
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  if (!args[0]->IsString()
-      || !args[1]->IsString()
-      || !args[2]->IsString()) {
-    // TODO fix
-    throw std::runtime_error("Invalid type of arguments");
-  }
-
-  std::string id;
-  std::string title;
-  std::string icon;
-
-  id = *(v8::String::Utf8Value(args[0]->ToString()));
-  title = *(v8::String::Utf8Value(args[1]->ToString()));
-  icon = *(v8::String::Utf8Value(args[2]->ToString()));
-
-  Category *category = new Category(reply_->register_category(id, title, icon));
-
-  v8::Isolate *isolate = args.GetIsolate();
-
-  return v8cpp::to_v8(isolate, category);
+unity::scopes::Category::SCPtr SearchReply::lookup_category(
+      const std::string& id) {
+  return reply_->lookup_category(id);
 }
 
 void SearchReply::push(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 1) {
-    // TODO fix
-    throw std::runtime_error("Invalid number of arguments");
-  }
+      std::shared_ptr<unity::scopes::CategorisedResult> categorised_result) {
+  reply_->push(*categorised_result);
+}
 
-  CategorisedResult *r =
-    v8cpp::from_v8<CategorisedResult*>(
-        v8::Isolate::GetCurrent(),
-        args[0]->ToObject());
-  if (!r) {
-    throw std::runtime_error("Invalid argument type");
-  }
-
-  reply_->push(static_cast<const unity::scopes::CategorisedResult &>(*r));
+unity::scopes::Category::SCPtr SearchReply::register_category(
+      const std::string& id,
+      const std::string& title,
+      const std::string& icon,
+      std::shared_ptr<unity::scopes::CategoryRenderer> category_renderer) {
+  return reply_->register_category(
+      id,
+      title,
+      icon,
+      category_renderer ? *category_renderer : unity::scopes::CategoryRenderer());
 }
 
 void SearchReply::finished()

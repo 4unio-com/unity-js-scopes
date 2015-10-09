@@ -20,8 +20,11 @@
 #define _UNITY_JS_SEARCH_REPLY_H_
 
 #include <unity/scopes/SearchReplyProxyFwd.h>
+#include <unity/scopes/Category.h>
+#include <unity/scopes/CategorisedResult.h>
 
 #include <v8-cpp.h>
+
 
 class SearchReply
 {
@@ -29,8 +32,17 @@ class SearchReply
   SearchReply(unity::scopes::SearchReplyProxy const& reply);
   ~SearchReply();
 
-  v8::Local<v8::Value> register_category(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void push(v8::FunctionCallbackInfo<v8::Value> const& args);
+  unity::scopes::Category::SCPtr register_category(
+      const std::string& id,
+      const std::string& title,
+      const std::string& icon,
+      std::shared_ptr<unity::scopes::CategoryRenderer> category_renderer);
+
+  unity::scopes::Category::SCPtr
+    lookup_category(const std::string& id);
+
+  void push(std::shared_ptr<unity::scopes::CategorisedResult> categorised_result);
+
   void finished();
 
  private:
