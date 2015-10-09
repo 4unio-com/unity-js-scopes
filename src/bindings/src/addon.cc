@@ -275,6 +275,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("id", &unity::scopes::Category::id)
       .add_method("title", &unity::scopes::Category::title)
       .add_method("icon", &unity::scopes::Category::icon);
+    // TODO renderer_template
 
     v8cpp::Class<CategorisedResult> categorised_result(isolate);
     categorised_result

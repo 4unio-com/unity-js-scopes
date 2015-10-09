@@ -195,7 +195,6 @@ function on_preview(result, action_metadata) {
                 {
                     "id": "open",
                     "label": "Open",
-                    // TODO fix
                     "uri": r.get("uri")
                 }
             );
