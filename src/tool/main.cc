@@ -30,6 +30,38 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 
+std::string get_arch() {
+  std::string result = "";
+
+  {
+    FILE* pipe = popen("dpkg-architecture -qDEB_HOST_ARCH", "r");
+    if (!pipe) return "ERROR";
+    char buffer[128];
+    while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+        result += buffer;
+    }
+    result.pop_back();
+    pclose(pipe);
+  }
+
+  result += "-";
+
+  {
+    FILE* pipe = popen("lsb_release -rs", "r");
+    if (!pipe) return "ERROR";
+    char buffer[128];
+    while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+        result += buffer;
+    }
+    result.pop_back();
+    pclose(pipe);
+  }
+
+  return result;
+}
+
 void usage() {
   std::cout << "Usage:"
             << std::endl
@@ -41,7 +73,6 @@ void usage() {
             << executable_name()
             << " [re]build "
             << "<path/to/node_modules> "
-            << "[<target_arch>]"
             << std::endl;
 }
 
@@ -197,12 +228,7 @@ int main(int argc, char *argv[]) {
     if (boost::algorithm::ends_with(std::string(argv[1]), "build"))
     {
       bool should_build = true;
-      std::string current_arch = "default";
-
-      if (argc > 3)
-      {
-        current_arch = std::string(argv[3]);
-      }
+      std::string current_arch = get_arch();
 
       // Check if we have built for this arch already, if so set should_build to false
       if (boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
@@ -222,7 +248,7 @@ int main(int argc, char *argv[]) {
         std::vector<std::string> environment_updates;
         
         std::cout << "Setting target arch to '" << current_arch << "' ..." << std::endl;
-        if (current_arch == "armhf")
+        if (boost::algorithm::starts_with(current_arch, "armhf"))
         {
           if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-5"))
           {
