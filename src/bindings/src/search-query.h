@@ -27,8 +27,8 @@ class SearchQuery : public unity::scopes::SearchQueryBase,
     public std::enable_shared_from_this<SearchQuery>
 {
  public:
-  SearchQuery(unity::scopes::CannedQuery const& query,
-              unity::scopes::SearchMetadata const& metadata,
+  SearchQuery(std::shared_ptr<unity::scopes::CannedQuery> query,
+              std::shared_ptr<unity::scopes::SearchMetadata> metadata,
               const v8::Local<v8::Function> &run_callback,
               const v8::Local<v8::Function> &cancelled_callback);
   ~SearchQuery() override;

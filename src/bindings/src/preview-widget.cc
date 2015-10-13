@@ -23,16 +23,33 @@
 #include "common.h"
 
 
-PreviewWidget::PreviewWidget(std::string const &id,
-                             std::string const &widget_type)
-  : unity::scopes::PreviewWidget(id, widget_type) {
+PreviewWidget::PreviewWidget(v8::Local<v8::Value> arg1,
+                             v8::Local<v8::Value> arg2)
+      : isolate_(v8::Isolate::GetCurrent()) {
+  if (!arg1->IsString()) {
+    throw std::runtime_error("Invalid type");
+  }
+
+  if (arg2->IsString()) {
+    std::string id =
+      *(v8::String::Utf8Value(arg1->ToString()));
+    std::string widget_type =
+      *(v8::String::Utf8Value(arg2->ToString()));
+
+    preview_widget_.reset(
+        new unity::scopes::PreviewWidget(id, widget_type));
+  } else {
+    std::string definition =
+      *(v8::String::Utf8Value(arg1->ToString()));
+
+    preview_widget_.reset(
+        new unity::scopes::PreviewWidget(definition));
+  }
 }
 
-PreviewWidget::PreviewWidget(std::string const &definition)
-  : unity::scopes::PreviewWidget(definition) {
-}
-
-PreviewWidget::~PreviewWidget() {
+PreviewWidget::PreviewWidget(const unity::scopes::PreviewWidget& preview_widget)
+  : isolate_(v8::Isolate::GetCurrent()),
+    preview_widget_(new unity::scopes::PreviewWidget(preview_widget)) {
 }
 
 void PreviewWidget::add_attribute_value(
@@ -50,19 +67,19 @@ void PreviewWidget::add_attribute_value(
   if (args[1]->IsString()) {
     unity::scopes::Variant v(
         *v8::String::Utf8Value(args[1]->ToString()));
-    unity::scopes::PreviewWidget::add_attribute_value(key, v);
+    preview_widget_->add_attribute_value(key, v);
   } else if (args[1]->IsBoolean()) {
     unity::scopes::Variant v(
         args[1]->BooleanValue());
-    unity::scopes::PreviewWidget::add_attribute_value(key, v);
+    preview_widget_->add_attribute_value(key, v);
   } else if (args[1]->IsInt32()) {
     unity::scopes::Variant v(
         args[1]->Int32Value());
-    unity::scopes::PreviewWidget::add_attribute_value(key, v);
+    preview_widget_->add_attribute_value(key, v);
   } else if (args[1]->IsNumber()) {
     unity::scopes::Variant v(
         args[1]->NumberValue());
-    unity::scopes::PreviewWidget::add_attribute_value(key, v);
+    preview_widget_->add_attribute_value(key, v);
   } else if (args[1]->IsObject()) {
     unity::scopes::VariantBuilder vb;
 
@@ -78,12 +95,58 @@ void PreviewWidget::add_attribute_value(
       }
 
       vb.add_tuple(t);
-      unity::scopes::PreviewWidget::add_attribute_value(key, vb.end());
+      preview_widget_->add_attribute_value(key, vb.end());
     }
   }
 }
 
 void PreviewWidget::add_widget(
       std::shared_ptr<unity::scopes::PreviewWidget> preview_widget) {
-  unity::scopes::PreviewWidget::add_widget(*preview_widget.get());
+  preview_widget_->add_widget(*preview_widget.get());
+}
+
+std::string PreviewWidget::id() const {
+  return preview_widget_->id();
+}
+
+void PreviewWidget::add_attribute_mapping(const std::string& k,
+                                          const std::string& field_name) {
+  preview_widget_->add_attribute_mapping(k, field_name);
+}
+
+std::string PreviewWidget::widget_type() const {
+  return preview_widget_->widget_type();
+}
+
+std::map<std::string, std::string> PreviewWidget::attribute_mappings() const {
+  return preview_widget_->attribute_mappings();
+}
+
+v8::Local<v8::Object> PreviewWidget::attribute_values() const {
+  v8::Handle<v8::Object> o = v8::Object::New(isolate_);
+
+  for (auto& v: preview_widget_->attribute_values()) {
+    o->Set(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(),
+                                   v.first.c_str()),
+           unity::scopesjs::from_variant(v.second));
+  }
+
+  return o;
+}
+
+std::vector<std::shared_ptr<PreviewWidget>> PreviewWidget::widgets() const {
+  std::vector<std::shared_ptr<PreviewWidget>>
+    ws;
+  for (auto & w: preview_widget_->widgets()) {
+    ws.push_back(std::shared_ptr<PreviewWidget>(new PreviewWidget(w)));
+  }
+  return ws;
+}
+
+std::string PreviewWidget::data() const {
+  return preview_widget_->data();
+}
+
+const unity::scopes::PreviewWidget PreviewWidget::preview_widget() const {
+  return *preview_widget_;
 }

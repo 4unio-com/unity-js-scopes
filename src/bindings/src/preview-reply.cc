@@ -38,11 +38,11 @@ void PreviewReply::register_layout(
 }
 
 void PreviewReply::push(
-      std::vector<std::shared_ptr<unity::scopes::PreviewWidget>> const& widgets) {
+      std::vector<std::shared_ptr<PreviewWidget>> const& widgets) {
   unity::scopes::PreviewWidgetList widgets_list;
   for (auto const& widget : widgets)
   {
-    widgets_list.push_back(*widget);
+    widgets_list.push_back(widget->preview_widget());
   }
   reply_->push(widgets_list);
 }

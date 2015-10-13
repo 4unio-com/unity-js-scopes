@@ -32,7 +32,7 @@ scopes.self.initialize(
                         + scopes.self.scope_config)
         },
         search: function(canned_query, metadata) {
-            return scopes.lib.new_SearchQuery(
+            return new scopes.lib.search_query(
                 canned_query,
                 metadata,
                 // run

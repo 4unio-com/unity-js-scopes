@@ -115,7 +115,7 @@ function on_search(canned_query, metadata) {
       } \
     }";
 
-    return scopes.lib.new_SearchQuery(
+    return new scopes.lib.search_query(
         canned_query,
         metadata,
         // Query.run
@@ -166,7 +166,7 @@ function on_search(canned_query, metadata) {
 };
 
 function on_preview(result, action_metadata) {
-    return scopes.lib.new_PreviewQuery(
+    return new scopes.lib.preview_query(
         result,
         action_metadata,
         // run
@@ -182,14 +182,14 @@ function on_preview(result, action_metadata) {
 
             preview_reply.register_layout([layout1col, layout2col]);
 
-            var header_widget = scopes.lib.new_PreviewWidget("headerId", "header");
+            var header_widget = new scopes.lib.preview_widget("headerId", "header");
             header_widget.add_attribute_mapping("title", "title");
             header_widget.add_attribute_mapping("subtitle", "subtitle");
 
-            var art_widget = scopes.lib.new_PreviewWidget("imageId", "image");
+            var art_widget = new scopes.lib.preview_widget("imageId", "image");
             art_widget.add_attribute_mapping("source", "art");
 
-            var actions_widget = scopes.lib.new_PreviewWidget("actionsId", "actions");
+            var actions_widget = new scopes.lib.preview_widget("actionsId", "actions");
             actions_widget.add_attribute_value(
                 "actions",
                 {

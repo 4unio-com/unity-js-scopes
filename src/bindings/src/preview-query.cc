@@ -21,11 +21,11 @@
 #include "event_queue.h"
 
 PreviewQuery::PreviewQuery(
-      unity::scopes::Result const& result,
-      unity::scopes::ActionMetadata const& metadata,
+      std::shared_ptr<Result> result,
+      std::shared_ptr<ActionMetaData> metadata,
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
-  : unity::scopes::PreviewQueryBase(result, metadata),
+  : unity::scopes::PreviewQueryBase(*result, *metadata),
     isolate_(v8::Isolate::GetCurrent()),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
     cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
