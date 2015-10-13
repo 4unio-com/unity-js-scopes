@@ -356,7 +356,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("register_layout", &PreviewReply::register_layout)
       .add_method("push", &PreviewReply::push)
       // unity::scopes::PreviewReply
-      .add_method("finished", &unity::scopes::PreviewReply::finished);
+      .add_method("finished", &PreviewReply::finished);
 
     v8cpp::Class<Result> result(isolate);
     result
