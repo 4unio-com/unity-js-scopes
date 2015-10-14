@@ -89,8 +89,18 @@ Scope.prototype = {
     },
 };
 
+var PostLoginAction = {
+    Unknown: "Unknown",
+    DoNothing: "DoNothing",
+    InvalidateResults: "InvalidateResults",
+    ContinueActivation: "ContinueActivation"
+};
+
 module.exports = {
-    lib: lib
+    lib: lib,
+    defs: {
+        PostLoginAction: PostLoginAction
+    }
 }
 
 Object.defineProperty(

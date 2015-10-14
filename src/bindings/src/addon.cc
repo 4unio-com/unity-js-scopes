@@ -444,6 +444,19 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("register_account_login_item", &OnlineAccountClient::register_account_login_item)
       .add_method("set_service_update_callback", &OnlineAccountClient::register_account_login_widget);
 
+    v8cpp::Class<unity::scopes::OnlineAccountClient::ServiceStatus> online_account_service_status(isolate);
+    online_account_service_status
+      .set_constructor<>()
+      // unity::scopes::OnlineAccountClient::ServiceStatus
+      .add_member("account_id", &unity::scopes::OnlineAccountClient::ServiceStatus::account_id)
+      .add_member("service_enabled", &unity::scopes::OnlineAccountClient::ServiceStatus::service_enabled)
+      .add_member("service_authenticated", &unity::scopes::OnlineAccountClient::ServiceStatus::service_authenticated)
+      .add_member("client_id", &unity::scopes::OnlineAccountClient::ServiceStatus::client_id)
+      .add_member("client_secret", &unity::scopes::OnlineAccountClient::ServiceStatus::client_secret)
+      .add_member("access_token", &unity::scopes::OnlineAccountClient::ServiceStatus::access_token)
+      .add_member("token_secret", &unity::scopes::OnlineAccountClient::ServiceStatus::token_secret)
+      .add_member("error", &unity::scopes::OnlineAccountClient::ServiceStatus::error);
+
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
