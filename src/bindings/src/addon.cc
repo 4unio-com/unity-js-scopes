@@ -75,124 +75,6 @@ new_category_renderer_from_file(const std::string& file_path) {
           unity::scopes::CategoryRenderer::from_file(file_path)));
 }
 
-v8::Handle<v8::Object> new_SearchQuery(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 4) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  std::shared_ptr<unity::scopes::CannedQuery> c =
-    v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
-        v8::Isolate::GetCurrent(),
-        args[0]->ToObject());
-
-  std::shared_ptr<SearchMetaData> s =
-    v8cpp::from_v8<std::shared_ptr<SearchMetaData>>(
-        v8::Isolate::GetCurrent(),
-        args[1]->ToObject());
-
-  if (!c || !s) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  if (!args[2]->IsFunction() || !args[3]->IsFunction()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  v8::Local<v8::Function> run_callback =
-    v8::Handle<v8::Function>::Cast(args[2]);
-  v8::Local<v8::Function> cancelled_callback =
-    v8::Handle<v8::Function>::Cast(args[3]);
-
-  std::shared_ptr<SearchQuery> sq(
-    new SearchQuery(
-        *c,
-        static_cast<const unity::scopes::SearchMetadata&>(*s),
-        run_callback,
-        cancelled_callback)
-  );
-
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), sq);
-}
-
-v8::Handle<v8::Object> new_PreviewQuery(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 4) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  std::shared_ptr<Result> r =
-    v8cpp::from_v8<std::shared_ptr<Result>>(
-        v8::Isolate::GetCurrent(),
-        args[0]->ToObject());
-
-  std::shared_ptr<ActionMetaData> a =
-    v8cpp::from_v8<std::shared_ptr<ActionMetaData>>(
-        v8::Isolate::GetCurrent(),
-        args[1]->ToObject());
-
-  if (!r || !a) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  if (!args[2]->IsFunction()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  v8::Local<v8::Function> run_callback =
-    v8::Handle<v8::Function>::Cast(args[2]);
-
-  if (!args[3]->IsFunction()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  v8::Local<v8::Function> cancelled_callback =
-    v8::Handle<v8::Function>::Cast(args[3]);
-
-  std::shared_ptr<PreviewQuery> pq(
-      new PreviewQuery(
-        *r,
-        *a,
-        run_callback,
-        cancelled_callback));
-
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), pq);
-}
-
-v8::Handle<v8::Object> new_PreviewWidget(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() < 1 || args.Length() > 2) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  if (args.Length() == 2) {
-    if (!args[0]->IsString() || !args[1]->IsString()) {
-      throw std::runtime_error("Invalid arguments types: should be id, widget_type");
-    }
-    std::string id =
-      *(v8::String::Utf8Value(args[0]->ToString()));
-
-    std::string widget_type =
-      *(v8::String::Utf8Value(args[1]->ToString()));
-
-    PreviewWidget* preview_widget =
-      new PreviewWidget(id, widget_type);
-
-    return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
-  }
-
-  if (!args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-  
-  std::string definition =
-    *(v8::String::Utf8Value(args[0]->ToString()));
-  
-  PreviewWidget* preview_widget =
-    new PreviewWidget(definition);
-  
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
-}
-
 void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
@@ -328,20 +210,22 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
-      .add_inheritance<unity::scopes::PreviewWidget>()
-      // unity::scopes::PreviewWidget
-      .add_method("id", &unity::scopes::PreviewWidget::id)
-      .add_method("widget_type", &unity::scopes::PreviewWidget::widget_type)
-      .add_method("attribute_mappings", &unity::scopes::PreviewWidget::attribute_mappings)
-      .add_method("data", &unity::scopes::PreviewWidget::data)
-      .add_method("add_attribute_mapping", &unity::scopes::PreviewWidget::add_attribute_mapping)
+      .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>>()
       // PreviewWidget
+      .add_method("id", &PreviewWidget::id)
+      .add_method("widget_type", &PreviewWidget::widget_type)
+      .add_method("attribute_mappings", &PreviewWidget::attribute_mappings)
+      .add_method("attribute_values", &PreviewWidget::attribute_values)
+      .add_method("widgets", &PreviewWidget::widgets)
+      .add_method("data", &PreviewWidget::data)
+      .add_method("add_attribute_mapping", &PreviewWidget::add_attribute_mapping)
       .add_method("add_attribute_value", &PreviewWidget::add_attribute_value)
       .add_method("add_widget", &PreviewWidget::add_widget);
 
     v8cpp::Class<PreviewQuery> preview_query(isolate);
     preview_query
       .add_inheritance<unity::scopes::PreviewQueryBase>()
+      .set_constructor<std::shared_ptr<Result>, std::shared_ptr<ActionMetaData>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       // unity::scopes::QueryBase
       .add_method("valid", &unity::scopes::QueryBase::valid)
       .add_method("settings", &unity::scopes::QueryBase::settings)
@@ -389,6 +273,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
+      .set_constructor<std::shared_ptr<unity::scopes::CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
@@ -457,9 +342,6 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("variant_array", variant_array);
 
     module.add_function("new_scope", &new_scope);
-    module.add_function("new_SearchQuery", &new_SearchQuery);
-    module.add_function("new_PreviewQuery", &new_PreviewQuery);
-    module.add_function("new_PreviewWidget", &new_PreviewWidget);
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
 
     module.add_function("runtime_version", &get_scopes_runtime_version);

@@ -31,8 +31,8 @@ class PreviewQuery : public unity::scopes::PreviewQueryBase,
     public std::enable_shared_from_this<PreviewQuery>
 {
  public:
-  PreviewQuery(unity::scopes::Result const& result,
-               unity::scopes::ActionMetadata const& metadata,
+  PreviewQuery(std::shared_ptr<Result> result,
+               std::shared_ptr<ActionMetaData> metadata,
                const v8::Local<v8::Function> &run_callback,
                const v8::Local<v8::Function> &cancelled_callback);
   ~PreviewQuery() override;
