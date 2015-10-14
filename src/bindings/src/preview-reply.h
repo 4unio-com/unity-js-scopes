@@ -35,7 +35,7 @@ class PreviewReply
   void register_layout(
       std::vector<std::shared_ptr<unity::scopes::ColumnLayout>> const& columns);
   void push(
-      std::vector<std::shared_ptr<unity::scopes::PreviewWidget>> const& widgets);
+      std::vector<std::shared_ptr<PreviewWidget>> const& widgets);
   void finished();
 
  private:
