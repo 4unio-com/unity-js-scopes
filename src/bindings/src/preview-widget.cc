@@ -147,6 +147,6 @@ std::string PreviewWidget::data() const {
   return preview_widget_->data();
 }
 
-const unity::scopes::PreviewWidget PreviewWidget::preview_widget() const {
+unity::scopes::PreviewWidget & PreviewWidget::preview_widget() const {
   return *preview_widget_;
 }
