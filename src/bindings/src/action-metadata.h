@@ -23,6 +23,46 @@
 
 #include <v8-cpp.h>
 
+/**
+
+--doc:class ActionMetadata
+ * Metadata passed to scopes for preview and activation
+ * 
+ * @class ActionMetadata
+--/doc:class
+
+--doc:prototype ActionMetadata
+--doc:member
+ * Check if this ActionMetadata has a hint
+ * @param value String
+ * @return Boolean
+--doc:/member
+contains_hint: function(String: key) {
+}
+--/doc:member
+
+--doc:member
+ * Set the value of an attribute
+ * @param key String
+ * @param value String
+--doc:/member
+set: function(String: key, String: value) {
+}
+--/doc:member
+
+--doc:member
+ * Get the value of an attribute
+ * @param key String
+ * @return String, Number or Object
+--doc:/member
+get: function(String: key) {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class ActionMetaData : public unity::scopes::ActionMetadata
 {
  public:

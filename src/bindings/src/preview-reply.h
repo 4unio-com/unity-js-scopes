@@ -25,6 +25,52 @@
 
 #include <v8-cpp.h>
 
+/**
+
+--doc:class PreviewReply
+ * Allows the results of a preview to be sent to the preview requester.
+ * 
+ * @class PreviewReply
+--/doc:class
+
+--doc:prototype PreviewReply
+
+--doc:member
+ * Registers a list of column layouts for the current preview
+ * @param layout Array of Column layout
+--doc:/member
+register_layout: function(Array or ColumnLayout: layout) {
+}
+--/doc:member
+
+--doc:member
+ * Sends widget definitions to the sender of the preview query
+ * @param widget_list Array of PreviewWidget
+--doc:/member
+push: function(Array of PreviewWidget: widget_list) {
+}
+--/doc:member
+
+--doc:member
+ * Informs the source of a query that the query results are complete
+ * @return Boolean
+--doc:/member
+finished: function() {
+}
+--/doc:member
+
+--doc:member
+ * Informs the source of a query that the query was terminated due to an error
+ * @return error String error
+--doc:/member
+error: function(String: error) {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class PreviewReply
 {
  public:

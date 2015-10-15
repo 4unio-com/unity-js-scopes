@@ -23,6 +23,76 @@
 
 #include <v8-cpp.h>
 
+
+/**
+
+--doc:class SearchQuery
+ * Represents a particular query
+ * 
+ * @class SearchQuery
+ * 
+ * @example
+
+     var scopes = require('unity-js-scopes')
+     function on_search(canned_query, metadata) {
+       return scopes.lib.new_SearchQuery(
+         canned_query,
+         metadata,
+         // run
+         function(search_reply) {}
+         // cancelled
+         function() {});
+     }
+     scopes.self.initialize(
+      {}
+      ,
+      {
+        run: function() { },
+        start: function(scope_id) { },
+        search: on_search,
+      }
+    );
+
+--/doc:class
+
+--doc:prototype SearchQuery
+
+--doc:member
+ * Get a canned query for this search request
+ * @return CannedQuery
+--doc:/member
+query: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get metadata for this search request
+ * @return SearchMetadata
+--doc:/member
+search_metadata: function() {
+}
+--/doc:member
+
+--doc:member
+ * Check whether this query is still valid
+ * @return Boolean
+--doc:/member
+valid: function() {
+}
+--/doc:member
+
+--doc:member
+ * Returns a dictionary with the scope's current settings
+ * @return Dictionary
+--doc:/member
+settings: function() {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class SearchQuery : public unity::scopes::SearchQueryBase,
     public std::enable_shared_from_this<SearchQuery>
 {

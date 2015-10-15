@@ -23,6 +23,93 @@
 
 #include <v8-cpp.h>
 
+/**
+
+--doc:class PreviewWidget
+ * A widget for a preview.
+ * 
+ * @class PreviewWidget
+--/doc:class
+
+--doc:prototype PreviewWidget
+
+--doc:member
+ * Adds an attribute definition and its value
+ * @param key Attribute definition
+ * @param value Value. The value can be a string, number, object
+--doc:/member
+add_attribute_value: function(String: key, Variant: value) {
+}
+--/doc:member
+
+--doc:member
+ * Adds an attribute definition using a component mapping
+ * @param key Attribute definition
+ * @param value Value
+--doc:/member
+add_attribute_mapping: function(String: key, String: value) {
+}
+--/doc:member
+
+--doc:member
+ * Adds a widget into expandable widget
+ * @param widget The widget that needs to be added
+--doc:/member
+add_widget: function(PreviewWidget: widget) {
+}
+--/doc:member
+
+--doc:member
+ * Get the identifier of this widget
+ * @return Id string
+--doc:/member
+id: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get type name of this widget
+ * @return Widget type
+--doc:/member
+widget_type: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the components of this widget
+ * @return Dictionary of widget components
+--doc:/member
+attribute_mappings: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the attributes of this widget
+ * @return Object corresponding to attributes of this widget
+--doc:/member
+attribute_values: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get widgets of 'expandable' widget
+ * @return List of PreviewWidget
+--doc:/member
+widgets: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get a JSON representation of this widget
+ * @return String representation of widget
+--doc:/member
+data: function() {
+}
+--/doc:member
+
+--/doc:prototype
+ */
+
 class PreviewWidget : public unity::scopes::PreviewWidget
 {
  public:

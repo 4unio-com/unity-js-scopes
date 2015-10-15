@@ -27,6 +27,74 @@
 
 #include <v8-cpp.h>
 
+/**
+
+--doc:class PreviewQuery
+ * Represents a particular preview
+ * 
+ * @class PreviewQuery
+ * 
+ * @example
+
+     var scopes = require('unity-js-scopes')
+     function on_preview(result, action_metadata) {
+       return new scopes.lib.preview_query(
+         result,
+         action_metadata,
+         // run
+         function(preview_reply) {},
+         // cancelled
+         function() {});
+     }
+     scopes.self.initialize(
+      {}
+      ,
+      {
+        run: function() { },
+        start: function(scope_id) { },
+        preview: on_preview,
+      }
+    );
+
+--/doc:class
+
+--doc:prototype PreviewQuery
+--doc:member
+ * Get result for this preview request
+ * @return Result
+--doc:/member
+result: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get metadata for this preview request
+ * @return ActionMetadata
+--doc:/member
+action_metadata: function() {
+}
+--/doc:member
+
+--doc:member
+ * Check whether this query is still valid
+ * @return Boolean
+--doc:/member
+valid: function() {
+}
+--/doc:member
+
+--doc:member
+ * Returns a dictionary with the scope's current settings
+ * @return Dictionary
+--doc:/member
+settings: function() {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class PreviewQuery : public unity::scopes::PreviewQueryBase,
     public std::enable_shared_from_this<PreviewQuery>
 {
