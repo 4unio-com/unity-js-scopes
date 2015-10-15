@@ -17,6 +17,7 @@
  */
 
 #include "online-account-client.h"
+#include "event_queue.h"
 
 OnlineAccountClient::OnlineAccountClient(
       std::string const &service_name,
@@ -109,15 +110,20 @@ void OnlineAccountClient::service_update_callback(
     return;
   }
 
-  v8::Local<v8::Function> service_update_callback =
-    v8cpp::to_local<v8::Function>(self->isolate_, self->service_update_callback_);
-
   using unity::scopes::OnlineAccountClient;
 
-  v8cpp::call_v8(
+  EventQueue::instance().run(self->isolate_, [self, service_status]
+  {
+    v8::Local<v8::Function> service_update_callback =
+        v8cpp::to_local<v8::Function>(
+            self->isolate_,
+            self->service_update_callback_);
+
+    v8cpp::call_v8(
       self->isolate_,
       service_update_callback,
       std::shared_ptr<OnlineAccountClient::ServiceStatus>(
           new OnlineAccountClient::ServiceStatus(service_status))
-  );
+    );
+  });
 }
