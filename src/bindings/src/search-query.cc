@@ -23,11 +23,11 @@
 #include "event_queue.h"
 
 SearchQuery::SearchQuery(
-      std::shared_ptr<unity::scopes::CannedQuery> query,
+      std::shared_ptr<CannedQuery> query,
       std::shared_ptr<unity::scopes::SearchMetadata> metadata,
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
-  : unity::scopes::SearchQueryBase(*query, *metadata),
+  : unity::scopes::SearchQueryBase(query->canned_query(), *metadata),
     isolate_(v8::Isolate::GetCurrent()),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
     cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {

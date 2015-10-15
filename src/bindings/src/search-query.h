@@ -21,13 +21,15 @@
 
 #include <unity/scopes/SearchQueryBase.h>
 
+#include "canned-query.h"
+
 #include <v8-cpp.h>
 
 class SearchQuery : public unity::scopes::SearchQueryBase,
     public std::enable_shared_from_this<SearchQuery>
 {
  public:
-  SearchQuery(std::shared_ptr<unity::scopes::CannedQuery> query,
+  SearchQuery(std::shared_ptr<CannedQuery> query,
               std::shared_ptr<unity::scopes::SearchMetadata> metadata,
               const v8::Local<v8::Function> &run_callback,
               const v8::Local<v8::Function> &cancelled_callback);

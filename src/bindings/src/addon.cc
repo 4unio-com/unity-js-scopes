@@ -21,7 +21,6 @@
 #include <stdexcept>
 
 #include <unity/scopes/ActionMetadata.h>
-#include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategoryRenderer.h>
 #include <unity/scopes/Result.h>
@@ -34,6 +33,7 @@
 
 #include "action-metadata.h"
 #include "activation-query.h"
+#include "canned-query.h"
 #include "categorised-result.h"
 #include "scope-base.h"
 #include "scope.h"
@@ -182,16 +182,17 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_category", &CategorisedResult::set_category)
       .add_method("category", &CategorisedResult::category);
 
-    v8cpp::Class<unity::scopes::CannedQuery> canned_query(isolate);
+    v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
-      .add_method("set_department_id", &unity::scopes::CannedQuery::set_department_id)
-      .add_method("set_query_string", &unity::scopes::CannedQuery::set_query_string)
-      .add_method("set_filter_state", &unity::scopes::CannedQuery::set_filter_state)
-      .add_method("scope_id", &unity::scopes::CannedQuery::scope_id)
-      .add_method("department_id", &unity::scopes::CannedQuery::department_id)
-      .add_method("filter_state", &unity::scopes::CannedQuery::filter_state)
-      .add_method("query_string", &unity::scopes::CannedQuery::query_string)
-      .add_method("to_uri", &unity::scopes::CannedQuery::to_uri);
+      .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>, v8::Local<v8::Value>>()
+      .add_method("set_department_id", &CannedQuery::set_department_id)
+      .add_method("set_query_string", &CannedQuery::set_query_string)
+      .add_method("set_filter_state", &CannedQuery::set_filter_state)
+      .add_method("scope_id", &CannedQuery::scope_id)
+      .add_method("department_id", &CannedQuery::department_id)
+      .add_method("query_string", &CannedQuery::query_string)
+      .add_method("to_uri", &CannedQuery::to_uri)
+      .add_method("filter_state", &CannedQuery::filter_state);
 
     // TODO Should it be more of a value type? (it seems to be used that way
     // in unity API)
@@ -207,6 +208,12 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("size", &unity::scopes::ColumnLayout::size)
       .add_method("number_of_columns", &unity::scopes::ColumnLayout::number_of_columns)
       .add_method("column", &unity::scopes::ColumnLayout::column);
+
+    v8cpp::Class<unity::scopes::FilterState> filter_state(isolate);
+    filter_state
+      .set_constructor<>()
+      .add_method("has_filter", &unity::scopes::FilterState::has_filter)
+      .add_method("remove", &unity::scopes::FilterState::remove);
 
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
@@ -273,7 +280,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
-      .set_constructor<std::shared_ptr<unity::scopes::CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
+      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
@@ -329,6 +336,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("categorised_result", categorised_result);
     module.add_class("category_renderer", category_renderer);
     module.add_class("column_layout", column_layout);
+    module.add_class("filter_state", filter_state);
     module.add_class("location", location);
     module.add_class("preview_widget", preview_widget);
     module.add_class("preview_query", preview_query);
