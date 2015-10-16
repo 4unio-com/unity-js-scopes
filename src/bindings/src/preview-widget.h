@@ -41,7 +41,7 @@ class PreviewWidget
   std::vector<std::shared_ptr<PreviewWidget>> widgets() const;
   std::string data() const;
 
-  const unity::scopes::PreviewWidget preview_widget() const;
+  unity::scopes::PreviewWidget & preview_widget() const;
 
  private:
   v8::Isolate* isolate_;
