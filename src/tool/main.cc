@@ -35,7 +35,7 @@ std::string get_arch() {
 
   {
     FILE* pipe = popen("dpkg-architecture -qDEB_HOST_ARCH", "r");
-    if (!pipe) return "ERROR";
+    if (!pipe) throw std::runtime_error("'dpkg-architecture' command failed");
     char buffer[128];
     while (!feof(pipe)) {
       if (fgets(buffer, 128, pipe) != NULL)
@@ -49,7 +49,7 @@ std::string get_arch() {
 
   {
     FILE* pipe = popen("lsb_release -rs", "r");
-    if (!pipe) return "ERROR";
+    if (!pipe) throw std::runtime_error("'lsb_release' command failed");
     char buffer[128];
     while (!feof(pipe)) {
       if (fgets(buffer, 128, pipe) != NULL)
@@ -228,7 +228,15 @@ int main(int argc, char *argv[]) {
     if (boost::algorithm::ends_with(std::string(argv[1]), "build"))
     {
       bool should_build = true;
-      std::string current_arch = get_arch();
+      std::string current_arch = "default";
+      try
+      {
+        current_arch = get_arch();
+      }
+      catch (std::exception const& e)
+      {
+        std::cout << "Failed to detect target architecture (using 'default' instead): " << e.what() << " ..." << std::endl;
+      }
 
       // Check if we have built for this arch already, if so set should_build to false
       if (boost::filesystem::exists(modules_dir + "/last-build-arch.txt"))
@@ -247,7 +255,7 @@ int main(int argc, char *argv[]) {
       {
         std::vector<std::string> environment_updates;
         
-        std::cout << "Setting target arch to '" << current_arch << "' ..." << std::endl;
+        std::cout << "Setting target architecture to '" << current_arch << "' ..." << std::endl;
         if (boost::algorithm::starts_with(current_arch, "armhf"))
         {
           if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-5"))
