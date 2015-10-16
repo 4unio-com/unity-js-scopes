@@ -37,7 +37,7 @@ class OnlineAccountClient : public std::enable_shared_from_this<OnlineAccountCli
 
   // v8 bindings
   void set_service_update_callback(v8::FunctionCallbackInfo<v8::Value> const& args);
-  v8::Handle<v8::Value> get_service_statuses();
+  std::vector<unity::scopes::OnlineAccountClient::ServiceStatus> get_service_statuses();
   void register_account_login_item(std::shared_ptr<Result> result,
                                    std::shared_ptr<unity::scopes::CannedQuery> canned_query,
                                    const std::string& login_passed_action,

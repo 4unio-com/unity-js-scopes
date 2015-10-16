@@ -321,9 +321,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<OnlineAccountClient> online_account_client(isolate);
     online_account_client
       .set_constructor<std::string, std::string, std::string>()
-      // unity::scopes::OnlineAccountClient
-      .add_method("refresh_service_statuses", &OnlineAccountClient::refresh_service_statuses)
       // OnlineAccountClient
+      .add_method("refresh_service_statuses", &OnlineAccountClient::refresh_service_statuses)
       .add_method("set_service_update_callback", &OnlineAccountClient::set_service_update_callback)
       .add_method("get_service_statuses", &OnlineAccountClient::get_service_statuses)
       .add_method("register_account_login_item", &OnlineAccountClient::register_account_login_item)

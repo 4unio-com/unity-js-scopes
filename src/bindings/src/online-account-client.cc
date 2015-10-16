@@ -60,8 +60,9 @@ void OnlineAccountClient::set_service_update_callback(
   service_update_callback_.Reset(args.GetIsolate(), cb);
 }
 
-v8::Handle<v8::Value> OnlineAccountClient::get_service_statuses() {
-  return v8cpp::to_v8(isolate_, oa_client_->get_service_statuses());
+std::vector<unity::scopes::OnlineAccountClient::ServiceStatus>
+OnlineAccountClient::get_service_statuses() {
+  return oa_client_->get_service_statuses();
 }
 
 unity::scopes::OnlineAccountClient::PostLoginAction
