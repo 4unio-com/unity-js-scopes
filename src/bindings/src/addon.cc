@@ -24,6 +24,7 @@
 #include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategoryRenderer.h>
+#include <unity/scopes/Department.h>
 #include <unity/scopes/Result.h>
 #include <unity/scopes/SearchReply.h>
 
@@ -208,6 +209,43 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("number_of_columns", &unity::scopes::ColumnLayout::number_of_columns)
       .add_method("column", &unity::scopes::ColumnLayout::column);
 
+    v8cpp::Class<Department> department(isolate);
+    department
+      .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>, v8::Local<v8::Value>>()
+      .add_method("set_subdepartments", &Department::set_subdepartments)
+      .add_method("add_subdepartment", &Department::add_subdepartment)
+      .add_method("set_alternate_label", &Department::set_alternate_label)
+      .add_method("set_has_subdepartments", &Department::set_has_subdepartments)
+      .add_method("id", &Department::id)
+      .add_method("label", &Department::label)
+      .add_method("alternate_label", &Department::alternate_label)
+      .add_method("query", &Department::query)
+      .add_method("subdepartments", &Department::subdepartments)
+      .add_method("has_subdepartments", &Department::has_subdepartments);
+
+    v8cpp::Class<unity::scopes::Location> location(isolate);
+    location
+      // unity::scopes::Location
+      .add_method("altitude", &unity::scopes::Location::altitude)
+      .add_method("has_altitude", &unity::scopes::Location::has_altitude)
+      .add_method("area_code", &unity::scopes::Location::area_code)
+      .add_method("has_area_code", &unity::scopes::Location::has_area_code)
+      .add_method("city", &unity::scopes::Location::city)
+      .add_method("has_city", &unity::scopes::Location::has_city)
+      .add_method("has_country_code", &unity::scopes::Location::has_country_code)
+      .add_method("country_code", &unity::scopes::Location::country_code)
+      .add_method("has_country_name", &unity::scopes::Location::has_country_name)
+      .add_method("country_name", &unity::scopes::Location::country_name)
+      .add_method("has_horizontal_accuracy", &unity::scopes::Location::has_horizontal_accuracy)
+      .add_method("horizontal_accuracy", &unity::scopes::Location::horizontal_accuracy)
+      .add_method("latitude", &unity::scopes::Location::latitude)
+      .add_method("longitude", &unity::scopes::Location::longitude)
+      .add_method("has_region_code", &unity::scopes::Location::has_region_code)
+      .add_method("region_code", &unity::scopes::Location::region_code)
+      .add_method("has_region_name", &unity::scopes::Location::has_region_name)
+      .add_method("region_name", &unity::scopes::Location::region_name)
+      .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
+
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
       .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>>()
@@ -277,29 +315,6 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
-    v8cpp::Class<unity::scopes::Location> location(isolate);
-    location
-      // unity::scopes::Location
-      .add_method("altitude", &unity::scopes::Location::altitude)
-      .add_method("has_altitude", &unity::scopes::Location::has_altitude)
-      .add_method("area_code", &unity::scopes::Location::area_code)
-      .add_method("has_area_code", &unity::scopes::Location::has_area_code)
-      .add_method("city", &unity::scopes::Location::city)
-      .add_method("has_city", &unity::scopes::Location::has_city)
-      .add_method("has_country_code", &unity::scopes::Location::has_country_code)
-      .add_method("country_code", &unity::scopes::Location::country_code)
-      .add_method("has_country_name", &unity::scopes::Location::has_country_name)
-      .add_method("country_name", &unity::scopes::Location::country_name)
-      .add_method("has_horizontal_accuracy", &unity::scopes::Location::has_horizontal_accuracy)
-      .add_method("horizontal_accuracy", &unity::scopes::Location::horizontal_accuracy)
-      .add_method("latitude", &unity::scopes::Location::latitude)
-      .add_method("longitude", &unity::scopes::Location::longitude)
-      .add_method("has_region_code", &unity::scopes::Location::has_region_code)
-      .add_method("region_code", &unity::scopes::Location::region_code)
-      .add_method("has_region_name", &unity::scopes::Location::has_region_name)
-      .add_method("region_name", &unity::scopes::Location::region_name)
-      .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
-
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
     search_metadata
       .add_inheritance<unity::scopes::SearchMetadata>()
@@ -352,6 +367,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("categorised_result", categorised_result);
     module.add_class("category_renderer", category_renderer);
     module.add_class("column_layout", column_layout);
+    module.add_class("department", department);
     module.add_class("location", location);
     module.add_class("online_account_client", online_account_client);
     module.add_class("preview_widget", preview_widget);
