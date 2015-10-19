@@ -61,23 +61,27 @@ void Registry::set_scope_state_callback(const std::string& scope_id,
                                         v8::Local<v8::Function> callback) {
   core::ScopedConnection connection =
     proxy_->set_scope_state_callback(scope_id, [this, callback] (bool is_running) {
-      v8cpp::call_v8_with_receiver(
-        isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
-        callback,
-        v8cpp::to_v8(isolate_, is_running)
-      );
+        EventQueue::instance().run(isolate_, [this, callback, is_running] {
+            v8cpp::call_v8_with_receiver(
+                isolate_,
+                v8cpp::to_v8(isolate_, shared_from_this()),
+                callback,
+                v8cpp::to_v8(isolate_, is_running)
+            );
+          });
     });
 }
 
 void Registry::set_list_update_callback(v8::Local<v8::Function> callback) {
   core::ScopedConnection connection =
     proxy_->set_list_update_callback([this, callback] () {
-      v8cpp::call_v8_with_receiver(
-        isolate_,
-        v8cpp::to_v8(isolate_, shared_from_this()),
-        callback
-      );
+        EventQueue::instance().run(isolate_, [this, callback] {
+            v8cpp::call_v8_with_receiver(
+                isolate_,
+                v8cpp::to_v8(isolate_, shared_from_this()),
+                callback
+            );
+          });
     });
 }
 
