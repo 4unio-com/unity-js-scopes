@@ -49,11 +49,6 @@ if not os.path.exists(yuidoc_config):
     print("Could not find the yui configuration file path")
     sys.exit(1)
 
-#try:
-#    shutil.rmtree(target_doc_directory)
-#except:
-#    pass
-
 def generate_js_file(filename):
     content = open(filename).read()
     if not str.find(content, '--doc:class'):
@@ -107,7 +102,9 @@ def generate_js_files(source_folder):
 
 generate_js_files(source_directory)
 
-result = subprocess.check_call(['yuidoc', '-o', target_doc_directory, '-c', yuidoc_config, source_directory])
+yuidoc_command_line = 'yuidoc -o {} -c {} {}'.format(target_doc_directory, yuidoc_config, source_directory)
+
+result = subprocess.check_call(yuidoc_command_line.split(' '))
 
 if result > 0:
     sys.exit(1)
