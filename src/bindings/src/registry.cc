@@ -20,6 +20,13 @@
 
 #include "event_queue.h"
 
+namespace {
+
+std::map<std::shared_ptr<Registry>,
+         std::shared_ptr<core::ScopedConnection>> active_scoped_connections_;
+
+}
+
 Registry::Registry(unity::scopes::RegistryProxy proxy)
   : isolate_(v8::Isolate::GetCurrent())
   , proxy_(proxy) {
@@ -52,8 +59,25 @@ bool Registry::is_scope_running(const std::string& scope_id) {
 
 void Registry::set_scope_state_callback(const std::string& scope_id,
                                         v8::Local<v8::Function> callback) {
+  core::ScopedConnection connection =
+    proxy_->set_scope_state_callback(scope_id, [this, callback] (bool is_running) {
+      v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        callback,
+        v8cpp::to_v8(isolate_, is_running)
+      );
+    });
 }
 
 void Registry::set_list_update_callback(v8::Local<v8::Function> callback) {
+  core::ScopedConnection connection =
+    proxy_->set_list_update_callback([this, callback] () {
+      v8cpp::call_v8_with_receiver(
+        isolate_,
+        v8cpp::to_v8(isolate_, shared_from_this()),
+        callback
+      );
+    });
 }
 
