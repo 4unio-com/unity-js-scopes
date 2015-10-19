@@ -44,7 +44,9 @@
 #include "search-query.h"
 #include "search-reply.h"
 #include "search-metadata.h"
+#include "registry.h"
 #include "result.h"
+#include "variant.h"
 
 // TODO static
 JavascriptScopeRuntime* new_scope(const std::string& runtime_config) {
@@ -79,23 +81,19 @@ void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
-    v8cpp::Class<unity::scopes::VariantMap> variant_map(isolate);
-    v8cpp::Class<unity::scopes::VariantArray> variant_array(isolate);
-
     // TODO: which enum should be bound
-    v8cpp::Class<unity::scopes::Variant> variant(isolate);
+    v8cpp::Class<Variant> variant(isolate);
     variant
-      .add_method("get_int", &unity::scopes::Variant::get_int)
-      .add_method("get_double", &unity::scopes::Variant::get_double)
-      .add_method("get_bool", &unity::scopes::Variant::get_bool)
-      .add_method("get_string", &unity::scopes::Variant::get_string)
-      .add_method("get_dict", &unity::scopes::Variant::get_dict)
-      .add_method("get_array", &unity::scopes::Variant::get_array)
-      .add_method("is_null", &unity::scopes::Variant::is_null)
-      .add_method("which", &unity::scopes::Variant::which)
-      .add_method("serialize_json", &unity::scopes::Variant::serialize_json)
-      .add_method("deserialize_json", &unity::scopes::Variant::deserialize_json)
-      .add_method("which", &unity::scopes::Variant::which);
+      .set_constructor<v8::Local<v8::Value>>()
+      .add_method("get_int", &Variant::get_int)
+      .add_method("get_double", &Variant::get_double)
+      .add_method("get_bool", &Variant::get_bool)
+      .add_method("get_string", &Variant::get_string)
+      .add_method("get_dict", &Variant::get_dict)
+      .add_method("get_array", &Variant::get_array)
+      .add_method("is_null", &Variant::is_null)
+      .add_method("which", &Variant::which)
+      .add_method("serialize_json", &Variant::serialize_json);
 
     v8cpp::Class<JavascriptScopeRuntime> js_scope(isolate);
     js_scope
@@ -208,6 +206,29 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("number_of_columns", &unity::scopes::ColumnLayout::number_of_columns)
       .add_method("column", &unity::scopes::ColumnLayout::column);
 
+    v8cpp::Class<unity::scopes::Location> location(isolate);
+    location
+      // unity::scopes::Location
+      .add_method("altitude", &unity::scopes::Location::altitude)
+      .add_method("has_altitude", &unity::scopes::Location::has_altitude)
+      .add_method("area_code", &unity::scopes::Location::area_code)
+      .add_method("has_area_code", &unity::scopes::Location::has_area_code)
+      .add_method("city", &unity::scopes::Location::city)
+      .add_method("has_city", &unity::scopes::Location::has_city)
+      .add_method("has_country_code", &unity::scopes::Location::has_country_code)
+      .add_method("country_code", &unity::scopes::Location::country_code)
+      .add_method("has_country_name", &unity::scopes::Location::has_country_name)
+      .add_method("country_name", &unity::scopes::Location::country_name)
+      .add_method("has_horizontal_accuracy", &unity::scopes::Location::has_horizontal_accuracy)
+      .add_method("horizontal_accuracy", &unity::scopes::Location::horizontal_accuracy)
+      .add_method("latitude", &unity::scopes::Location::latitude)
+      .add_method("longitude", &unity::scopes::Location::longitude)
+      .add_method("has_region_code", &unity::scopes::Location::has_region_code)
+      .add_method("region_code", &unity::scopes::Location::region_code)
+      .add_method("has_region_name", &unity::scopes::Location::has_region_name)
+      .add_method("region_name", &unity::scopes::Location::region_name)
+      .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
+
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
       .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>>()
@@ -277,28 +298,35 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
-    v8cpp::Class<unity::scopes::Location> location(isolate);
-    location
-      // unity::scopes::Location
-      .add_method("altitude", &unity::scopes::Location::altitude)
-      .add_method("has_altitude", &unity::scopes::Location::has_altitude)
-      .add_method("area_code", &unity::scopes::Location::area_code)
-      .add_method("has_area_code", &unity::scopes::Location::has_area_code)
-      .add_method("city", &unity::scopes::Location::city)
-      .add_method("has_city", &unity::scopes::Location::has_city)
-      .add_method("has_country_code", &unity::scopes::Location::has_country_code)
-      .add_method("country_code", &unity::scopes::Location::country_code)
-      .add_method("has_country_name", &unity::scopes::Location::has_country_name)
-      .add_method("country_name", &unity::scopes::Location::country_name)
-      .add_method("has_horizontal_accuracy", &unity::scopes::Location::has_horizontal_accuracy)
-      .add_method("horizontal_accuracy", &unity::scopes::Location::horizontal_accuracy)
-      .add_method("latitude", &unity::scopes::Location::latitude)
-      .add_method("longitude", &unity::scopes::Location::longitude)
-      .add_method("has_region_code", &unity::scopes::Location::has_region_code)
-      .add_method("region_code", &unity::scopes::Location::region_code)
-      .add_method("has_region_name", &unity::scopes::Location::has_region_name)
-      .add_method("region_name", &unity::scopes::Location::region_name)
-      .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
+    v8cpp::Class<Registry> registry(isolate);
+    registry
+      // Registry
+      .add_method("get_metadata", &Registry::get_metadata)
+      .add_method("list", &Registry::list)
+      .add_method("list_if", &Registry::list_if)
+      .add_method("is_scope_running", &Registry::is_scope_running)
+      .add_method("set_scope_state_callback", &Registry::set_scope_state_callback)
+      .add_method("set_list_update_callback", &Registry::set_list_update_callback);
+
+    v8cpp::Class<unity::scopes::ScopeMetadata> scope_metadata(isolate);
+    scope_metadata
+      // unity::scopes::ScopeMetadata
+      .add_method("scope_id", &unity::scopes::ScopeMetadata::scope_id)
+      // .add_method("scope_proxy", &unity::scopes::ScopeMetadata::scope_proxy)
+      .add_method("display_name", &unity::scopes::ScopeMetadata::display_name)
+      .add_method("description", &unity::scopes::ScopeMetadata::description)
+      .add_method("author", &unity::scopes::ScopeMetadata::author)
+      .add_method("art", &unity::scopes::ScopeMetadata::art)
+      .add_method("icon", &unity::scopes::ScopeMetadata::icon)
+      .add_method("search_hint", &unity::scopes::ScopeMetadata::search_hint)
+      .add_method("hot_key", &unity::scopes::ScopeMetadata::hot_key)
+      .add_method("invisible", &unity::scopes::ScopeMetadata::invisible)
+      // .add_method("appearance_attributes", &unity::scopes::ScopeMetadata::appearance_attributes)
+      .add_method("scope_directory", &unity::scopes::ScopeMetadata::scope_directory)
+      // .add_method("serialize", &unity::scopes::ScopeMetadata::serialize)
+      // .add_method("results_ttl_type", &unity::scopes::ScopeMetadata::results_ttl_type)
+      // .add_method("settings_definitions", &unity::scopes::ScopeMetadata::settings_definitions)
+      .add_method("location_data_needed", &unity::scopes::ScopeMetadata::location_data_needed);
 
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
     search_metadata
@@ -362,8 +390,6 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("search_query", search_query);
     module.add_class("search_metadata", search_metadata);
     module.add_class("variant", variant);
-    module.add_class("variant_map", variant_map);
-    module.add_class("variant_array", variant_array);
 
     // Factory functions
     module.add_function("new_scope", &new_scope);

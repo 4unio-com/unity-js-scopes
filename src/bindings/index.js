@@ -89,6 +89,17 @@ Scope.prototype = {
     },
 };
 
+var VariantType = {
+    Null: "Null",
+    Int: "Int",
+    Int64: "Int64",
+    Bool: "Bool",
+    String: "String",
+    Double: "Double",
+    Dict: "Dict",
+    Array: "Array"
+};
+
 var PostLoginAction = {
     Unknown: "Unknown",
     DoNothing: "DoNothing",
@@ -99,7 +110,8 @@ var PostLoginAction = {
 module.exports = {
     lib: lib,
     defs: {
-        PostLoginAction: PostLoginAction
+        PostLoginAction: PostLoginAction,
+        VariantType: VariantType
     }
 }
 
