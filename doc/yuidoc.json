@@ -3,6 +3,6 @@
     "description": "Javascript API for Ubuntu Scopes development",
     "version": "0.1",
     "options": {
-        "outdir": "./docsbuild",
+        "outdir": "./docsbuild"
     }
 }
