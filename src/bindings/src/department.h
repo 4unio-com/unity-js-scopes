@@ -28,9 +28,7 @@ class Department
 {
  public:
   Department(const unity::scopes::Department& d);
-  Department(v8::Local<v8::Value> arg1
-             , v8::Local<v8::Value> arg2
-             , v8::Local<v8::Value> arg3);
+  Department(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   // v8 bindings
   void set_subdepartments(std::vector<std::shared_ptr<Department>> departments);
@@ -40,15 +38,14 @@ class Department
   std::string id() const;
   std::string label() const;
   std::string alternate_label() const;
-  std::shared_ptr<unity::scopes::CannedQuery> query () const;
+  unity::scopes::CannedQuery query () const;
   std::vector<std::shared_ptr<Department>> subdepartments() const;
   bool has_subdepartments() const;
 
-  const unity::scopes::Department& department() const;
-  unity::scopes::Department& department();
-  
+  unity::scopes::Department::SPtr department();
+
  private:
-  std::unique_ptr<unity::scopes::Department> department_;
+  std::shared_ptr<unity::scopes::Department> department_;
 };
 
 #endif // _UNITY_JS_DEPARTMENT_H_

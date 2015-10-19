@@ -23,25 +23,27 @@ Department::Department(const unity::scopes::Department& d)
   : department_(new unity::scopes::Department(d)) {
 }
 
-Department::Department(v8::Local<v8::Value> arg1
-                       , v8::Local<v8::Value> arg2
-                       , v8::Local<v8::Value> arg3) {
-  if (arg1->IsString()) {
+Department::Department(v8::FunctionCallbackInfo<v8::Value> const & args) {
+  if (args.Length() != 2 || args.Length() != 3) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  if (args[0]->IsString()) {
     auto department_id =
-      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), arg1);
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
     auto cq =
       v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
-          v8::Isolate::GetCurrent(), arg2);
+          v8::Isolate::GetCurrent(), args[1]);
     auto label =
-      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), arg3);
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[2]);
 
     department_ = unity::scopes::Department::create(department_id, *cq, label);
   } else {
     auto cq =
       v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
-          v8::Isolate::GetCurrent(), arg1);
+          v8::Isolate::GetCurrent(), args[0]);
     auto label =
-      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), arg2);
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[1]);
 
     department_ = unity::scopes::Department::create(*cq, label);
   }
@@ -50,14 +52,13 @@ Department::Department(v8::Local<v8::Value> arg1
 void Department::set_subdepartments(std::vector<std::shared_ptr<Department>> departments) {
   unity::scopes::DepartmentList deps;
   for (auto & d: departments) {
-    deps.push_back(unity::scopes::Department::SCPtr(new unity::scopes::Department(d->department())));
+    deps.push_back(std::make_shared<unity::scopes::Department>(*d->department()));
   }
   department_->set_subdepartments(deps);
 }
 
 void Department::add_subdepartment(std::shared_ptr<Department> const &department) {
-  unity::scopes::Department::SCPtr dep(new unity::scopes::Department(department->department()));
-  department_->add_subdepartment(dep);
+  department_->add_subdepartment(department->department());
 }
 
 void Department::set_alternate_label(std::string const &label) {
@@ -80,10 +81,9 @@ std::string Department::alternate_label() const {
   return department_->alternate_label();
 }
 
-std::shared_ptr<unity::scopes::CannedQuery>
+unity::scopes::CannedQuery
 Department::query () const {
-  return std::shared_ptr<unity::scopes::CannedQuery> (
-      new unity::scopes::CannedQuery(department_->query()));
+  return department_->query();
 }
 
 std::vector<std::shared_ptr<Department>>
@@ -99,10 +99,6 @@ bool Department::has_subdepartments() const {
   return department_->has_subdepartments();
 }
 
-const unity::scopes::Department& Department::department() const {
-  return *department_.get();
-}
-
-unity::scopes::Department& Department::department() {
-  return *department_.get();
+unity::scopes::Department::SPtr Department::department() {
+  return department_;
 }

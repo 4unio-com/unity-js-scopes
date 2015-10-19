@@ -58,7 +58,5 @@ void SearchReply::finished()
 }
 
 void SearchReply::register_departments(std::shared_ptr<Department> department) {
-  reply_->register_departments(
-      unity::scopes::Department::SCPtr(
-           new unity::scopes::Department(department->department())));
+  reply_->register_departments(department->department());
 }

@@ -24,7 +24,6 @@
 #include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategoryRenderer.h>
-#include <unity/scopes/Department.h>
 #include <unity/scopes/Result.h>
 #include <unity/scopes/SearchReply.h>
 
@@ -36,6 +35,7 @@
 #include "action-metadata.h"
 #include "activation-query.h"
 #include "categorised-result.h"
+#include "department.h"
 #include "online-account-client.h"
 #include "preview-query.h"
 #include "preview-reply.h"
@@ -211,7 +211,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<Department> department(isolate);
     department
-      .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>, v8::Local<v8::Value>>()
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
       .add_method("set_subdepartments", &Department::set_subdepartments)
       .add_method("add_subdepartment", &Department::add_subdepartment)
       .add_method("set_alternate_label", &Department::set_alternate_label)
