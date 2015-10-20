@@ -29,7 +29,13 @@ var self;
  * A Scope object is not directly constructible but it is automatically created
  * when the scope module is imported and is accessible through the 'self' exported
  * member.
- *
+ * 
+ * After the scopes runtime has obtained initialization runtime configurations from
+ * the scope, it calls start(), which allows the scope to intialize itself. This is
+ * followed by a call to run().
+ * 
+ * When the scope should complete its activities, the runtime calls stop().
+ * 
  * @example
  * 
  *     var scopes = require('unity-js-scopes')

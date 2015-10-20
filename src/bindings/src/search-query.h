@@ -28,14 +28,16 @@
 
 --doc:class SearchQuery
  * Represents a particular query
- * 
+ *
+ * A scope must return an instance of this class from its implementation of Scope.search().
+ *
  * @class SearchQuery
  * 
  * @example
 
      var scopes = require('unity-js-scopes')
      function on_search(canned_query, metadata) {
-       return scopes.lib.new_SearchQuery(
+       return new scopes.lib.search_query(
          canned_query,
          metadata,
          // run
@@ -54,6 +56,24 @@
     );
 
 --/doc:class
+
+--doc:constructor
+ * Creates a SearchQuery object
+ * 
+ * @param canned_query
+ * @param metadata
+ * @param run Function({SearchReply}) Function callback that is to be called by the scope runtime to start the query.
+              Your implementation of run() can use the provided SearchReply object to
+              push results for the query and call finished() on the reply object when
+              you are done with pushing results. You can push results from within run(),
+              in which case the query implicitly completes when run() returns.
+              Alternatively, run() can store the reply object and return immediately.
+ * @param cancelled Function() Called by the scopes runtime when the query originator cancels a query.
+              Your implementation of this method should ensure that the scope stops
+              processing the current query as soon as possible. Any calls to a `push()` method
+              once a query is cancelled are ignored, so continuing to push after cancellation
+              only wastes CPU cycles.
+--/doc:constructor
 
 --doc:prototype SearchQuery
 
@@ -75,7 +95,7 @@ search_metadata: function() {
 
 --doc:member
  * Check whether this query is still valid
- * @return Boolean
+ * @return Boolean False if the query is finished or was cancelled ealier.
 --doc:/member
 valid: function() {
 }

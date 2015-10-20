@@ -69,6 +69,7 @@ def generate_js_file(filename):
     js_file_content_template = """
 /**
  {}
+ {}
  */
 function {}{{}}
 
@@ -79,8 +80,16 @@ function {}{{}}
     member_re = r"^--doc:member(.*?)--/doc:member"
     members = re.findall(member_re, content, re.MULTILINE|re.DOTALL)
 
+    constructor_re = "doc:constructor(.*)--/doc:constructor"
+    r = re.search(constructor_re, content, re.MULTILINE|re.DOTALL)
+    constructor_doc = ''
+    if r:
+        constructor_doc = r.group(1)
+        print(constructor_doc)
+
     js_file_content = js_file_content_template.format(
         class_doc,
+        constructor_doc,
         class_name,
         class_name,
         ",\n".join(["/**\n" + member[:member.find('--doc:/member')] + "\n*/\n" + member[member.find('--doc:/member')+len('--doc:/member'):] for member in members])

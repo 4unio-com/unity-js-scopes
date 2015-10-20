@@ -23,6 +23,205 @@
 
 #include <v8-cpp.h>
 
+/**
+
+--doc:class CategorisedResult
+ * A result, including the category it belongs to.
+ * 
+ * @class CategorisedResult
+--/doc:class
+
+--doc:constructor
+ * Creates a CategorisedResult with given category,
+ *   with all base attributes initially empty.
+ * 
+ * @param category The category for the result.
+--/doc:constructor
+
+--doc:prototype CategorisedResult
+
+--doc:member
+ * Updates the category of this result.
+ * @param category The category for the result.
+--doc:/member
+set_category: function(Category: category) {
+}
+--/doc:member
+
+--doc:member
+ * Get the category instance this result belongs to.
+ * @return {Category} The category instance.
+--doc:/member
+category: function() {
+}
+--/doc:member
+
+--doc:member
+ * This method is meant to be used by aggregator scopes which want to modify
+ * results they receive, but want to keep a copy of the original result so
+ * that they can be correctly handled by the original scopes
+ * who created them when it comes to activation or previews.
+ * Scopes middleware will automatically pass the correct inner stored result
+ * to the activation or preview request handler
+ * 
+ * @param {Result} The original result to store within this result.
+ * @param {Boolean} intercept_activation True if this scope should receive activation and preview requests.
+--doc:/member
+store: function({Result}: result, {Boolean}: intercept_activation) {
+}
+--/doc:member
+
+--doc:member
+ * Check if this Result instance has a stored result.
+ * @return {Boolean} True if there is a stored result
+--doc:/member
+has_stored_result: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get a stored result.
+ * @return {Result} stored result
+--doc:/member
+retrieve: function() {
+}
+--/doc:member
+
+--doc:member
+ * Set the "uri" attribute of this result.
+ * @param uri {String}
+--doc:/member
+set_uri: function(uri) {
+}
+--/doc:member
+
+--doc:member
+ * Set the "title" attribute of this result.
+ * @param title {String}
+--doc:/member
+set_title: function(title) {
+}
+--/doc:member
+
+--doc:member
+ * Set the "art" attribute of this result.
+ * @param art {String}
+--doc:/member
+set_art: function(art) {
+}
+--/doc:member
+
+--doc:member
+ * Set the "dnd_uri" attribute of this result.
+ * @param dnd_uri {String}
+--doc:/member
+set_dnd_uri: function(dnd_uri) {
+}
+--/doc:member
+
+--doc:member
+ * Indicates to the receiver that this scope should intercept
+ * activation requests for this result.
+ * By default, a scope receives preview requests for the results it
+ * creates, but does not receive activation requests (they are handled
+ * directly by the shell). Intercepting activation implies intercepting
+ * preview requests as well; this is important for scopes that forward
+ * results from other scopes and call set_intercept_activation() on these scopes.
+ * A scope that sets intercept activation flag for a result should re-implement
+ * Scope.activate() and provide an implementation of ActivationQuery that
+ * handles the actual activation. If not called, the result will be activated
+ * directly by the Unity shell whithout involving the scope, assuming an appropriate
+ * URI schema handler is present on the system.
+ * 
+--doc:/member
+set_intercept_activation: function() {
+}
+--/doc:member
+
+--doc:member
+ * Check if this result should be activated directly by the shell
+ * because the scope doesn't handle activation of this result.
+ * @return {Boolean} True if this result needs to be activated directly.
+--doc:/member
+direct_activation: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the "uri" property of this Result.
+ * This method returns an empty string if this attribute is not of type String.
+ * @return {String} The value of "uri" or the empty string.
+--doc:/member
+uri: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the "title" property of this Result.
+ * This method returns an empty string if this attribute is not of type String.
+ * @return {String} The value of "title" or the empty string.
+--doc:/member
+title: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the "art" property of this Result.
+ * This method returns an empty string if this attribute is not of type String.
+ * @return {String} The value of "art" or the empty string.
+--doc:/member
+art: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the "dnd_uri" property of this Result.
+ * This method returns an empty string if this attribute is not of type String.
+ * @return {String} The value of "dnd_uri" or the empty string.
+--doc:/member
+dnd_uri: function() {
+}
+--/doc:member
+
+--doc:member
+ * Check if this Result has an attribute.
+ * @param key The attribute name.
+ * @return {Boolean} True if the attribute is set.
+--doc:/member
+contains: function(key) {
+}
+--/doc:member
+
+--doc:member
+ * Check if this result is an online account login result.
+ * @return {Boolean} True if this result is an online account login result.
+--doc:/member
+is_account_login_result: function() {
+}
+--/doc:member
+
+--doc:member
+ * Gets the value of a custom metadata attribute.
+ * @param key {String} The name of the attribute.
+ * @return Attribute value or null
+--doc:/member
+get: function(key) {
+}
+--/doc:member
+
+--doc:member
+ * Sets the value of a custom metadata attribute.
+ * @param key {String} The name of the attribute.
+ * @param value The value of the attribute.
+--doc:/member
+set: function(key, value) {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class CategorisedResult : public unity::scopes::CategorisedResult
 {
  public:

@@ -58,6 +58,25 @@
 
 --/doc:class
 
+
+--doc:constructor
+ * Creates a SearchQuery object
+ * 
+ * @param canned_query CannedQuery
+ * @param action_metadata ActionMetadata
+ * @param run Function({PreviewReply}) Function callback that is to be called by the scope runtime to start the preview.
+              Your implementation of run() can use the provided PreviewReply object to
+              push results for the preview and call finished() on the reply object when
+              you are done with pushing results. You can push results from within run(),
+              in which case the preview implicitly completes when run() returns.
+              Alternatively, run() can store the reply object and return immediately.
+ * @param cancelled Function() Called by the scopes runtime when the query originator cancels a query.
+              Your implementation of this method should ensure that the scope stops
+              processing the current query as soon as possible. Any calls to a `push()` method
+              once a query is cancelled are ignored, so continuing to push after cancellation
+              only wastes CPU cycles.
+--/doc:constructor
+
 --doc:prototype PreviewQuery
 --doc:member
  * Get result for this preview request
