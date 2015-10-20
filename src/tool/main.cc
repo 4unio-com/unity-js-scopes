@@ -30,6 +30,38 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 
+std::string get_arch() {
+  std::string result = "";
+
+  {
+    FILE* pipe = popen("dpkg-architecture -qDEB_HOST_ARCH", "r");
+    if (!pipe) throw std::runtime_error("'dpkg-architecture' command failed");
+    char buffer[128];
+    while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+        result += buffer;
+    }
+    result.pop_back();
+    pclose(pipe);
+  }
+
+  result += "-";
+
+  {
+    FILE* pipe = popen("lsb_release -rs", "r");
+    if (!pipe) throw std::runtime_error("'lsb_release' command failed");
+    char buffer[128];
+    while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+        result += buffer;
+    }
+    result.pop_back();
+    pclose(pipe);
+  }
+
+  return result;
+}
+
 void usage() {
   std::cout << "Usage:"
             << std::endl
@@ -41,7 +73,6 @@ void usage() {
             << executable_name()
             << " [re]build "
             << "<path/to/node_modules> "
-            << "[<target_arch>]"
             << std::endl;
 }
 
@@ -198,10 +229,13 @@ int main(int argc, char *argv[]) {
     {
       bool should_build = true;
       std::string current_arch = "default";
-
-      if (argc > 3)
+      try
       {
-        current_arch = std::string(argv[3]);
+        current_arch = get_arch();
+      }
+      catch (std::exception const& e)
+      {
+        std::cout << "Failed to detect target architecture (using 'default' instead): " << e.what() << " ..." << std::endl;
       }
 
       // Check if we have built for this arch already, if so set should_build to false
@@ -221,8 +255,8 @@ int main(int argc, char *argv[]) {
       {
         std::vector<std::string> environment_updates;
         
-        std::cout << "Setting target arch to '" << current_arch << "' ..." << std::endl;
-        if (current_arch == "armhf")
+        std::cout << "Setting target architecture to '" << current_arch << "' ..." << std::endl;
+        if (boost::algorithm::starts_with(current_arch, "armhf"))
         {
           if (boost::filesystem::exists("/usr/bin/arm-linux-gnueabihf-gcc-5"))
           {
