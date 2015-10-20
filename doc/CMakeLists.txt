@@ -18,7 +18,7 @@
 
 add_custom_target(
   doc
-  ./generate-doc.py ${CMAKE_CURRENT_SOURCE_DIR}/../src/bindings ${CMAKE_BINARY_DIR}/doc/docbuild
+  ./generate-doc.py ${CMAKE_CURRENT_SOURCE_DIR}/../src/bindings/src ${CMAKE_BINARY_DIR}/doc/docbuild
   )
 
 install(DIRECTORY ${CMAKE_BUILD_DIR}/doc/out

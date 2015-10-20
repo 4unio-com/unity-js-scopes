@@ -108,7 +108,7 @@ def generate_js_files(source_folder):
 
 generate_js_files(source_directory)
 
-yuidoc_command_line = 'yuidoc -o {} -c {} {}'.format(target_doc_directory, yuidoc_config, source_directory)
+yuidoc_command_line = 'yuidoc -o {} -c {} {}'.format(target_doc_directory, yuidoc_config, os.path.join(source_directory, ".."))
 print(yuidoc_command_line)
 result = subprocess.check_call(yuidoc_command_line.split(' '))
 
