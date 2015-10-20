@@ -52,7 +52,7 @@ Department::Department(v8::FunctionCallbackInfo<v8::Value> const & args) {
 void Department::set_subdepartments(std::vector<std::shared_ptr<Department>> departments) {
   unity::scopes::DepartmentList deps;
   for (auto & d: departments) {
-    deps.push_back(std::make_shared<unity::scopes::Department>(*d->department()));
+    deps.push_back(d->department());
   }
   department_->set_subdepartments(deps);
 }
@@ -90,7 +90,7 @@ std::vector<std::shared_ptr<Department>>
 Department::subdepartments() const {
   std::vector<std::shared_ptr<Department>> deps;
   for (auto & d: department_->subdepartments()) {
-    deps.push_back(std::shared_ptr<Department>(new Department(*d)));
+    deps.push_back(std::make_shared<Department>(*d));
   }
   return deps;
 }
@@ -99,6 +99,6 @@ bool Department::has_subdepartments() const {
   return department_->has_subdepartments();
 }
 
-unity::scopes::Department::SPtr Department::department() {
+unity::scopes::Department::SCPtr Department::department() {
   return department_;
 }

@@ -42,7 +42,7 @@ class Department
   std::vector<std::shared_ptr<Department>> subdepartments() const;
   bool has_subdepartments() const;
 
-  unity::scopes::Department::SPtr department();
+  unity::scopes::Department::SCPtr department();
 
  private:
   std::shared_ptr<unity::scopes::Department> department_;
