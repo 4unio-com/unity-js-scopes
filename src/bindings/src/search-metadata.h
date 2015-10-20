@@ -26,7 +26,6 @@
 /**
 
 --doc:class SearchMetaData
- * @module ScopeJS
  * 
  * Metadata passed with search requests.
  * 
@@ -36,6 +35,7 @@
  *  or
  *  - with cardinality, locale, and form factor.
  *
+ * @module ScopeJS
  * @class SearchMetaData
 --/doc:class
 

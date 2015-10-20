@@ -29,10 +29,10 @@
 /**
 
 --doc:class ActivationQuery
- * @module ScopeJS
  * 
  * Represents an activation request that is executed inside a scope
  * 
+ * @module ScopeJS
  * @class ActivationQuery
 --/doc:class
 

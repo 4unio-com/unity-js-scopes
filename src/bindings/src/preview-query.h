@@ -30,10 +30,10 @@
 /**
 
 --doc:class PreviewQuery
- * @module ScopeJS
  * 
  * Represents a particular preview
  * 
+ * @module ScopeJS
  * @class PreviewQuery
  * 
  * @example

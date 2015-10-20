@@ -19,13 +19,13 @@
 /**
 
 --doc:class Category
- * @module ScopeJS
  * 
  * A set of related results returned by a scope
  *  and displayed within a single pane in the Unity dash.
  * 
  * To create a Category, use SearchReply.register_category.
  * 
+ * @module ScopeJS
  * @class Category
 --/doc:class
 

@@ -26,9 +26,10 @@
 /**
 
 --doc:class ActionMetadata
- * @module ScopeJS
  * 
  * Metadata passed to scopes for preview and activation
+ * 
+ * @module ScopeJS
  * 
  * @class ActionMetadata
 --/doc:class

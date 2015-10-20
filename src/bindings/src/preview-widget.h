@@ -26,9 +26,10 @@
 /**
 
 --doc:class PreviewWidget
- * @module ScopeJS
  * 
  * A widget for a preview.
+ * 
+ * @module ScopeJS
  * 
  * @class PreviewWidget
 --/doc:class

@@ -19,10 +19,10 @@ de/*
 /**
 
 --doc:class CategoryRenderer
- * @module ScopeJS
  * 
  * A category renderer template in JSON format.
  * 
+ * @module ScopeJS
  * @class CategoryRenderer
 --/doc:class
 

@@ -30,10 +30,10 @@
 /**
 
 --doc:class SearchReply
- * @module ScopeJS
  * 
  * Allows the results of a preview to be sent to the preview requester.
  * 
+ * @module ScopeJS
  * @class SearchReply
 --/doc:class
 

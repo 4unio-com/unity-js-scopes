@@ -27,12 +27,13 @@
 /**
 
 --doc:class SearchQuery
- * @module ScopeJS
  * 
  * Represents a particular query
  *
  * A scope must return an instance of this class from its implementation of Scope.search().
  *
+ * @module ScopeJS
+ * 
  * @class SearchQuery
  * 
  * @example

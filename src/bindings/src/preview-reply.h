@@ -28,9 +28,10 @@
 /**
 
 --doc:class PreviewReply
- * @module ScopeJS
  * 
  * Allows the results of a preview to be sent to the preview requester.
+ * 
+ * @module ScopeJS
  * 
  * @class PreviewReply
 --/doc:class

@@ -28,12 +28,12 @@
 /**
 
 --doc:class Result
- * @module ScopeJS
  * 
  * The attributes of a result returned by a Scope
  * 
  * The Result API provides convenience methods for some typical attributes (title, art), but scopes are free to add and use any custom attributes with set/get methods. The only required attribute is 'uri' and it must not be empty before calling Reply.push().
  *
+ * @module ScopeJS
  * @class Result
 --/doc:class
 

@@ -19,10 +19,10 @@ de/*
 /**
 
 --doc:class ColumnLayout
- * @module ScopeJS
  * 
  * Describes a column layout for preview widgets.
  * 
+ * @module ScopeJS
  * @class ColumnLayout
 --/doc:class
 

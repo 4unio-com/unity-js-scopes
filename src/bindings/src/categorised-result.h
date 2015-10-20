@@ -26,10 +26,10 @@
 /**
 
 --doc:class CategorisedResult
- * @module ScopeJS
  * 
  * A result, including the category it belongs to.
  * 
+ * @module ScopeJS
  * @class CategorisedResult
 --/doc:class
 

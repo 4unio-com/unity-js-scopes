@@ -23,8 +23,6 @@ var core = require('./lib/scope-core.js');
 var self;
 
 /**
- * @module ScopeJS
- * 
  * Scope corresponds to the bridge between the ubuntu scope runtime
  * and the actual scope.
  * 
@@ -39,9 +37,11 @@ var self;
  * When the scope should complete its activities, the runtime calls stop().
  * 
  * @example
+      var scopes = require('unity-js-scopes')
+      scopes.self
+  
+ * @module ScopeJS
  * 
- *     var scopes = require('unity-js-scopes')
- *     scopes.self
  * 
  * @class Scope
  */
