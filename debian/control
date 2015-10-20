@@ -6,6 +6,7 @@ Build-Depends: bzr,
                cmake (>= 2.8.9),
                debhelper (>= 9),
                pkg-config,
+               python3,
                g++,
                libboost-filesystem-dev,
                libunity-scopes-dev,
@@ -53,3 +54,12 @@ Depends: ${misc:Depends},
          unity-js-scopes-bindings (= ${binary:Version}),
 Description: Examples for javascript unity scopes
  Provides a set of examples for unity scopes written in javascript.
+
+Package: unity-js-scopes-doc
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         unity-js-scopes-bindings (= ${binary:Version}),
+Description: Documentation for javascript unity scopes
+ Provides the documenttaion for unity scopes javascript API.

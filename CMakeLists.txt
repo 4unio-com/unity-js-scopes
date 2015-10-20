@@ -60,6 +60,8 @@ else()
 endif()
 
 add_subdirectory(src)
+add_subdirectory(doc)
 
 install(DIRECTORY examples
         DESTINATION ${CMAKE_INSTALL_DATADIR}/unity-js-scopes)
+

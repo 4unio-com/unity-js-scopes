@@ -22,9 +22,64 @@ var core = require('./lib/scope-core.js');
 // Init the first time it is accessed
 var self;
 
+/**
+ * @module ScopeJS
+ * 
+ * Scope corresponds to the bridge between the ubuntu scope runtime
+ * and the actual scope.
+ * 
+ * A Scope object is not directly constructible but it is automatically created
+ * when the scope module is imported and is accessible through the 'self' exported
+ * member.
+ * 
+ * After the scopes runtime has obtained initialization runtime configurations from
+ * the scope, it calls start(), which allows the scope to intialize itself. This is
+ * followed by a call to run().
+ * 
+ * When the scope should complete its activities, the runtime calls stop().
+ * 
+ * @example
+ * 
+ *     var scopes = require('unity-js-scopes')
+ *     scopes.self
+ * 
+ * @class Scope
+ */
 function Scope() {}
 
 Scope.prototype = {
+    /**
+     * This member function is the entry point to setting up a scope's behavior
+     * and configuring it to the runtime scope.
+     *
+     * @method initialize
+     * @param options {Object} A dictionary of options for the scope runtime.
+     *      The option keys are:
+     *         - scope_id: the scope id
+     * @param runtime_config {Object} A dictionary of runtime configuration settings for the scope runtime.
+     *      The configuration keys are:
+     *         - run {Function()}: Callback called by the scopes run time after it has called start() to hand a thread of control to the scope
+     *         - starting {Function(String: scope_id)}: Callback called by the scopes run time after the create function completes
+     *         - stop {Function()}: Callback called by the scopes run time when the scope should shut down
+     *         - search {Function(CannedQuery: canned_query, SearchMetaData: metadata)}: Callback called by the scopes run time when a scope needs to instantiate a query
+     *         - perform_action {Function(Result: result, ActionMetaData: metadata, String: widget_id, String: ation_id)}: Callback invoked when a scope is requested to handle a preview action
+     *         - preview {Function(Result: result, ActionMetaData: metadata)}: Callback invoked when a scope is requested to create a preview for a particular result
+     *
+     * @example
+              var scopes = require('unity-js-scopes')
+              scopes.self.initialize(
+                {}, {
+                  run: function() {}
+                  start: function(scope_id) {
+                    console.log('Starting scope id: '
+                      + scope_id
+                      + ', '
+                      + scopes.self.scope_config)
+                  },
+                  search: function(canned_query, metadata) {}
+                }
+              );
+    */
     initialize: function(options, runtime_config) {
         this._setup_backend();
 
@@ -69,24 +124,52 @@ Scope.prototype = {
             this._base = this._scope_binding.scope_base();
         }
     },
+    /**
+     * Returns the directory that stores the scope's configuration files and shared library    
+     *
+     * @property scope_directory
+     */
     get scope_directory() {
         return this._base.scope_directory();
     },
+    /**
+     * Returns a directory that is (exclusively) writable for the scope
+     *
+     * @property cache_directory
+     */
     get cache_directory() {
         return this._base.cache_directory();
     },
+    /**
+     * Returns a tmp directory that is (exclusively) writable for the scope
+     * 
+     * @property tmp_directory
+     */
     get tmp_directory() {
         return this._base.tmp_directory();
     },
+    /**
+     * Returns the scope registry
+     * 
+     * @property registry
+     */
     get registry() {
         return null
     },
+    /**
+     * Returns a dictionary with the scope's current settings
+     * 
+     * @property settings
+     */
     get settings() {
         return this._base.settings();
     },
-    get scope_config() {
-        return this._scope_binding.scope_config();
-    },
+};
+
+ConnectivityStatus = {
+    Unknown: "Unknown",
+    Connected: "Connected",
+    Disconnected: "Disconnected"
 };
 
 var PostLoginAction = {
@@ -99,7 +182,8 @@ var PostLoginAction = {
 module.exports = {
     lib: lib,
     defs: {
-        PostLoginAction: PostLoginAction
+        PostLoginAction: PostLoginAction,
+        ConnectivityStatus: ConnectivityStatus
     }
 }
 

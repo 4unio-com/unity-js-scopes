@@ -1,4 +1,4 @@
-/*
+de/*
  * Copyright 2015 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
@@ -16,25 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "action-metadata.h"
+/**
 
-ActionMetaData::ActionMetaData(unity::scopes::ActionMetadata const &action_metadata)
-  : unity::scopes::ActionMetadata(action_metadata) {
-}
+--doc:class CategoryRenderer
+ * @module ScopeJS
+ * 
+ * A category renderer template in JSON format.
+ * 
+ * @class CategoryRenderer
+--/doc:class
 
-ActionMetaData::ActionMetaData(std::string const &locale,
-                               std::string const &form_factor)
-  : unity::scopes::ActionMetadata(locale, form_factor) {
-}
+--doc:constructor
+ * 
+ * @constructor
+ * @param json_text Renderer template in JSON format
+--/doc:constructor
 
-ActionMetaData::~ActionMetaData() {
+--doc:prototype CategoryRenderer
+--doc:member
+ * Returns complete renderer template definition in JSON format.
+ * @method data
+ * @return String The renderer template (JSON)
+--doc:/member
+data: function() {
 }
+--/doc:member
 
-unity::scopes::Variant ActionMetaData::get(const std::string& key) {
-  return (*this)[key];
-}
+--/doc:prototype
 
-void ActionMetaData::set(const std::string& key,
-                         const unity::scopes::Variant& val) {
-  (*this)[key] = val;
-}
+ */
+
