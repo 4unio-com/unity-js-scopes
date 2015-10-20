@@ -33,6 +33,7 @@
 
 --doc:member
  * Get identifier of this Category
+ * @method id
  * @return String The category identifier.
 --doc:/member
 id: function() {
@@ -41,6 +42,7 @@ id: function() {
 
 --doc:member
  * Get title of this Category
+ * @method title
  * @return String The category title.
 --doc:/member
 title: function() {
@@ -49,6 +51,7 @@ title: function() {
 
 --doc:member
  * Get icon of this Category
+ * @method icon
  * @return String The category icon.
 --doc:/member
 icon: function() {
@@ -57,6 +60,7 @@ icon: function() {
 
 --doc:member
  * Query to perform when this category is expanded
+ * @method query
  * @return CannedQuery The expansion query or null.
 --doc:/member
 query: function() {
