@@ -26,6 +26,8 @@
 /**
 
 --doc:class ActionMetadata
+ * @module ScopeJS
+ * 
  * Metadata passed to scopes for preview and activation
  * 
  * @class ActionMetadata
@@ -34,28 +36,31 @@
 --doc:prototype ActionMetadata
 --doc:member
  * Check if this ActionMetadata has a hint
- * @param value String
+ * @method contains_hint
+ * @param hint {String}
  * @return Boolean
 --doc:/member
-contains_hint: function(String: key) {
+contains_hint: function(hint) {
 }
 --/doc:member
 
 --doc:member
  * Set the value of an attribute
- * @param key String
- * @param value String
+ * @method set
+ * @param key {String}
+ * @param value {String}, {Number} or {Object}
 --doc:/member
-set: function(String: key, String: value) {
+set: function(key, value) {
 }
 --/doc:member
 
 --doc:member
  * Get the value of an attribute
- * @param key String
- * @return String, Number or Object
+ * @method get
+ * @param key {String}
+ * @return {String}, {Number} or {Object}
 --doc:/member
-get: function(String: key) {
+get: function(key) {
 }
 --/doc:member
 

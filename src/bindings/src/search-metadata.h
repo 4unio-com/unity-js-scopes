@@ -23,13 +23,233 @@
 
 #include <v8-cpp.h>
 
-class SearchMetaData : public unity::scopes::SearchMetadata
+/**
+
+--doc:class SearchMetaData
+ * @module ScopeJS
+ * 
+ * Metadata passed with search requests.
+ * 
+ * @class SearchMetaData
+--/doc:class
+
+--doc:constructor
+ * Create SearchMetadata.
+ * Two forms of construction are allowed depending on the number
+ * and types of the parameters:
+ *  - with locale and form factor
+ *  or
+ *  - with cardinality, locale, and form factor.
+ *
+ * 
+ * @param cardinality maximum number of search results
+ * @param locale locale string, eg. en_EN
+ * @param form_factor form factor name, e.g. phone, desktop, phone-version etc.
+ * @constructor
+ * @param category The category for the result.
+--/doc:constructor
+
+--doc:prototype SearchMetaData
+
+--doc:member
+ * Set cardinality.
+ * @method set_cardinality
+ * @param cardinality {Int}
+--doc:/member
+set_cardinality: function(cardinality) {
+}
+--/doc:member
+
+--doc:member
+ * Get cardinality.
+ * @method cardinality
+ * @return {Int}
+--doc:/member
+cardinality: function() {
+}
+--/doc:member
+
+--doc:member
+ * Set location.
+ * @method set_location
+ * @param location {Location} data
+--doc:/member
+set_location: function(location) {
+}
+--/doc:member
+
+--doc:member
+ * Get location.
+ * @method location
+ * @return {Location} data representing the current location, including attributes such as city and country.
+--doc:/member
+location: function() {
+}
+--/doc:member
+
+--doc:member
+ * Does the SearchMetadata have a location.
+ * @method has_location
+ * @return {Boolean} True if there is a location property.
+--doc:/member
+has_location: function() {
+}
+--/doc:member
+
+--doc:member
+ * Remove location data entirely.
+ * This method does nothing if no location data is present.
+ * @method remove_location
+--doc:/member
+remove_location: function() {
+}
+--/doc:member
+
+--doc:member
+ * Set the list of scope keywords used to initiate this search request.
+ * @method set_aggregated_keywords
+ * @param aggregated_keywords {Array of String} The list of scope keywords used to initiate this search request.
+--doc:/member
+set_aggregated_keywords: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the list of scope keywords used to initiate this search request.
+ * @method aggregated_keywords
+ * @return {Array of String} The list of scope keywords used to initiate this search request.
+--doc:/member
+aggregated_keywords: function() {
+}
+--/doc:member
+
+--doc:member
+ * Check if this search request originated from an aggregator scope.
+ * @method is_aggregated
+ * @return {Boolean} True if this search request originated from an aggregator scope.
+--doc:/member
+is_aggregated: function() {
+}
+--/doc:member
+
+--doc:member
+ * Sets a hint.
+ * @method set_hint
+ * @param key {String} The name of the hint.
+ * @param value Hint value
+--doc:/member
+set_hint: function(key, value) {
+}
+--/doc:member
+
+--doc:member
+ * Get all hints.
+ * @method hints
+ * @return {Dictionary}
+--doc:/member
+hints: function() {
+}
+--/doc:member
+
+--doc:member
+ * Check if this SearchMetadata has a hint.
+ * @method contains_hint
+ * @param key {String} The hint name.
+ * @return {Boolean} True if the hint is set.
+--doc:/member
+contains_hint: function(key) {
+}
+--/doc:member
+
+--doc:member
+ * Set the value of an attribute
+ * @method set
+ * @param key {String}
+ * @param value {String}, {Number} or {Object}
+--doc:/member
+set: function(key, value) {
+}
+--/doc:member
+
+--doc:member
+ * Get the value of an attribute
+ * @method get
+ * @param key {String}
+ * @return {String}, {Number} or {Object}
+--doc:/member
+get: function(key) {
+}
+--/doc:member
+
+--doc:member
+ * Get the form factor string.
+ * @method form_factor
+ * @return The form factor string
+--doc:/member
+form_factor: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the locale string.
+ * @method locale
+ * @return The locale string
+--doc:/member
+locale: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get internet connectivity status.
+ * @method internet_connectivity
+ * @return {ConnectivityStatus} The internet connectivity status.
+--doc:/member
+internet_connectivity: function() {
+}
+--/doc:member
+
+--doc:member
+ * Set internet connectivity status.
+ * @method set_internet_connectivity
+ * @param {ConnectivityStatus} The internet connectivity status.
+--doc:/member
+set_internet_connectivity: function(connectivity_status) {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
+class SearchMetaData
 {
  public:
+  SearchMetaData(v8::FunctionCallbackInfo<v8::Value> const& args);
   SearchMetaData(const unity::scopes::SearchMetadata&);
 
-  void set_location(std::shared_ptr<unity::scopes::Location> location);
-  std::shared_ptr<unity::scopes::Location> location() const;
+  void set_cardinality(int cardinality);
+  int cardinality() const;
+  bool has_location() const;
+  void remove_location();
+  void set_aggregated_keywords(std::set<std::string> const& aggregated_keywords);
+  std::set<std::string> aggregated_keywords() const;
+  bool is_aggregated() const;
+  void set_hint(std::string const& key, v8::Local<v8::Value> value);
+  v8::Local<v8::Value> hints() const;
+  void set(const std::string& k, v8::Local<v8::Value> value);
+  v8::Local<v8::Value> get(const std::string& k);
+  void set_location(const unity::scopes::Location& location);
+  unity::scopes::Location location() const;
+
+  std::string locale() const;
+  std::string form_factor() const;
+  void set_internet_connectivity(const std::string& internet_connectivity);
+  std::string internet_connectivity() const;
+
+  std::shared_ptr<unity::scopes::SearchMetadata> metadata();
+
+ private:
+  std::shared_ptr<unity::scopes::SearchMetadata> metadata_;
 };
 
 #endif // _UNITY_JS_SEARCH_METADATA_H_

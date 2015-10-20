@@ -30,6 +30,8 @@
 /**
 
 --doc:class PreviewQuery
+ * @module ScopeJS
+ * 
  * Represents a particular preview
  * 
  * @class PreviewQuery
@@ -62,6 +64,7 @@
 --doc:constructor
  * Creates a SearchQuery object
  * 
+ * @constructor
  * @param canned_query CannedQuery
  * @param action_metadata ActionMetadata
  * @param run Function({PreviewReply}) Function callback that is to be called by the scope runtime to start the preview.
@@ -80,6 +83,7 @@
 --doc:prototype PreviewQuery
 --doc:member
  * Get result for this preview request
+ * @method result
  * @return Result
 --doc:/member
 result: function() {
@@ -88,6 +92,7 @@ result: function() {
 
 --doc:member
  * Get metadata for this preview request
+ * @method action_metadata
  * @return ActionMetadata
 --doc:/member
 action_metadata: function() {
@@ -96,6 +101,7 @@ action_metadata: function() {
 
 --doc:member
  * Check whether this query is still valid
+ * @method valid
  * @return Boolean
 --doc:/member
 valid: function() {
@@ -104,6 +110,7 @@ valid: function() {
 
 --doc:member
  * Returns a dictionary with the scope's current settings
+ * @method settings
  * @return Dictionary
 --doc:/member
 settings: function() {

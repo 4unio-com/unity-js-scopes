@@ -19,6 +19,8 @@ de/*
 /**
 
 --doc:class ColumnLayout
+ * @module ScopeJS
+ * 
  * Describes a column layout for preview widgets.
  * 
  * @class ColumnLayout
@@ -27,6 +29,7 @@ de/*
 --doc:constructor
  * Creates a layout definition that expects num_of_columns columns to be added with ColumnLayout.add_column.
  * 
+ * @constructor
  * @param num_of_columns The number of columns for the layout.
 --/doc:constructor
 
@@ -34,6 +37,7 @@ de/*
 
 --doc:member
  * Adds a new column and assigns widgets to it.
+ * @method add_column
  * @param widget_ids ColumnLayout expects exactly the number of columns passed to the constructor to be created with the add_column method.
 --doc:/member
 add_column: function(Array of Strings: widget_ids) {
@@ -42,6 +46,7 @@ add_column: function(Array of Strings: widget_ids) {
 
 --doc:member
  * Get the current number of columns in this layout.
+ * @method size
  * @return The number of columns added with add_column()
 --doc:/member
 size: function() {
@@ -50,6 +55,7 @@ size: function() {
 
 --doc:member
  * Get the number of columns expected by this layout as specified in the constructor.
+ * @method number_of_columns
  * @return The number of columns expected by this layout.
 --doc:/member
 number_of_columns: function() {
@@ -58,10 +64,11 @@ number_of_columns: function() {
 
 --doc:member
  * Retrieve the list of widgets for given column.
+ * @method column
  * @param index The index of a column.
  * @return The widget identifiers for the given column index.
 --doc:/member
-number_of_columns: function(index) {
+column: function(index) {
 }
 --/doc:member
 

@@ -1,4 +1,4 @@
-de/*
+/*
  * Copyright 2015 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
@@ -19,6 +19,8 @@ de/*
 /**
 
 --doc:class Category
+ * @module ScopeJS
+ * 
  * A set of related results returned by a scope
  *  and displayed within a single pane in the Unity dash.
  * 

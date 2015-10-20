@@ -164,8 +164,17 @@ Scope.prototype = {
     },
 };
 
+ConnectivityStatus = {
+    Unknown: "Unknown",
+    Connected: "Connected",
+    Disconnected: "Disconnected"
+};
+
 module.exports = {
     lib: lib
+    defs: {
+        ConnectivityStatus: ConnectivityStatus
+    }
 }
 
 Object.defineProperty(

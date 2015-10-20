@@ -63,15 +63,13 @@ def generate_js_file(filename):
         print("Skipping " + filename)
         return
 
-    class_name = r.group(1)
-    class_doc = r.group(2)
+    class_name = r.group(1).strip()
+    class_doc = r.group(2).strip()
 
-    js_file_content_template = """
-/**
+    js_file_content_template = """/**
  {}
- {}
- */
-function {}{{}}
+ {}*/
+function {}(){{}}
 
 {}.prototype = {{
 {}
@@ -84,15 +82,14 @@ function {}{{}}
     r = re.search(constructor_re, content, re.MULTILINE|re.DOTALL)
     constructor_doc = ''
     if r:
-        constructor_doc = r.group(1)
-        print(constructor_doc)
+        constructor_doc = r.group(1).strip()
 
     js_file_content = js_file_content_template.format(
         class_doc,
         constructor_doc,
         class_name,
         class_name,
-        ",\n".join(["/**\n" + member[:member.find('--doc:/member')] + "\n*/\n" + member[member.find('--doc:/member')+len('--doc:/member'):] for member in members])
+        ",\n".join(["/**\n" + member[:member.find('--doc:/member')].strip() + "\n*/\n" + member[member.find('--doc:/member')+len('--doc:/member'):].strip() for member in members])
         )
 
     path, name = os.path.split(filename)
@@ -112,7 +109,7 @@ def generate_js_files(source_folder):
 generate_js_files(source_directory)
 
 yuidoc_command_line = 'yuidoc -o {} -c {} {}'.format(target_doc_directory, yuidoc_config, source_directory)
-
+print(yuidoc_command_line)
 result = subprocess.check_call(yuidoc_command_line.split(' '))
 
 if result > 0:

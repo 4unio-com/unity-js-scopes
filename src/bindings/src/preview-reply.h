@@ -28,6 +28,8 @@
 /**
 
 --doc:class PreviewReply
+ * @module ScopeJS
+ * 
  * Allows the results of a preview to be sent to the preview requester.
  * 
  * @class PreviewReply
@@ -37,22 +39,25 @@
 
 --doc:member
  * Registers a list of column layouts for the current preview
- * @param layout Array of Column layout
+ * @method register_layout
+ * @param layout {Array of Column layout}
 --doc:/member
-register_layout: function(Array or ColumnLayout: layout) {
+register_layout: function(layout) {
 }
 --/doc:member
 
 --doc:member
  * Sends widget definitions to the sender of the preview query
- * @param widget_list Array of PreviewWidget
+ * @method push
+ * @param widget_list {Array of PreviewWidget}
 --doc:/member
-push: function(Array of PreviewWidget: widget_list) {
+push: function(widget_list) {
 }
 --/doc:member
 
 --doc:member
  * Informs the source of a query that the query results are complete
+ * @method finished
  * @return Boolean
 --doc:/member
 finished: function() {
@@ -61,9 +66,10 @@ finished: function() {
 
 --doc:member
  * Informs the source of a query that the query was terminated due to an error
+ * @method error
  * @return error String error
 --doc:/member
-error: function(String: error) {
+error: function(error) {
 }
 --/doc:member
 

@@ -28,6 +28,8 @@
 /**
 
 --doc:class Result
+ * @module ScopeJS
+ * 
  * The attributes of a result returned by a Scope
  * 
  * The Result API provides convenience methods for some typical attributes (title, art), but scopes are free to add and use any custom attributes with set/get methods. The only required attribute is 'uri' and it must not be empty before calling Reply.push().
@@ -39,7 +41,8 @@
 
 --doc:member
  * Check if this Result instance has a stored result
- * @return Boolean
+ * @method has_stored_result
+ * @return {Boolean}
 --doc:/member
 has_stored_result: function() {
 }
@@ -47,7 +50,8 @@ has_stored_result: function() {
 
 --doc:member
  * Get a stored result
- * @return Result
+ * @method retrieve
+ * @return {Result}
 --doc:/member
 retrieve: function() {
 }
@@ -55,38 +59,43 @@ retrieve: function() {
 
 --doc:member
  * Set the "uri" attribute of this result.
- * @param uri String
+ * @method set_uri
+ * @param uri {String}
 --doc:/member
-set_uri: function(String: uri) {
+set_uri: function(uri) {
 }
 --/doc:member
 
 --doc:member
  * Set the "title" attribute of this result.
- * @param title String
+ * @method set_title
+ * @param title {String}
 --doc:/member
-set_title: function(String: title) {
+set_title: function(title) {
 }
 --/doc:member
 
 --doc:member
  * Set the "art" attribute of this result.
- * @param art String
+ * @method set_art
+ * @param art {String}
 --doc:/member
-set_art: function(String: art) {
+set_art: function(art) {
 }
 --/doc:member
 
 --doc:member
  * Set the "dnd_uri" attribute of this result.
- * @param dnd_uri String
+ * @method set_dnd_uri
+ * @param dnd_uri {String}
 --doc:/member
-set_dnd_uri: function(String: dnd_uri) {
+set_dnd_uri: function(dnd_uri) {
 }
 --/doc:member
 
 --doc:member
  * Indicates to the receiver that this scope should intercept activation requests for this result
+ * @method set_intercept_activation
 --doc:/member
 set_intercept_activation: function() {
 }
@@ -94,7 +103,8 @@ set_intercept_activation: function() {
 
 --doc:member
  * Check if this result should be activated directly by the shell because the scope doesn't handle activation of this result
- * @return Boolean
+ * @method direct_activation
+ * @return {Boolean}
 --doc:/member
 direct_activation: function() {
 }
@@ -102,7 +112,8 @@ direct_activation: function() {
 
 --doc:member
  * Get the "uri" property of this Result
- * @return String
+ * @method uri
+ * @return {String}
 --doc:/member
 uri: function() {
 }
@@ -110,7 +121,8 @@ uri: function() {
 
 --doc:member
  * Get the "title" property of this Result
- * @return String
+ * @method title
+ * @return {String}
 --doc:/member
 title: function() {
 }
@@ -118,7 +130,8 @@ title: function() {
 
 --doc:member
  * Get the "art" property of this Result
- * @return String
+ * @method art
+ * @return {String}
 --doc:/member
 art: function() {
 }
@@ -126,7 +139,8 @@ art: function() {
 
 --doc:member
  * Get the "dnd_uri" property of this Result
- * @return String
+ * @method dnd_uri
+ * @return {String}
 --doc:/member
 dnd_uri: function() {
 }
@@ -134,7 +148,8 @@ dnd_uri: function() {
 
 --doc:member
  * Check if this Result has an attribute
- * @return Boolean
+ * @method contains
+ * @return {Boolean}
 --doc:/member
 contains: function() {
 }
@@ -142,28 +157,31 @@ contains: function() {
 
 --doc:member
  * Get the value of an attribute
- * @param value String
- * @return Dictonary
+ * @method value
+ * @param value {String}
+ * @return {Dictonary}
 --doc:/member
-value: function(String: value) {
+value: function(value) {
 }
 --/doc:member
 
 --doc:member
  * Set the value of an attribute
- * @param key String
- * @param value String
+ * @method set
+ * @param key {String}
+ * @param value {String}
 --doc:/member
-set: function(String: key, String: value) {
+set: function(key, value) {
 }
 --/doc:member
 
 --doc:member
  * Get the value of an attribute
- * @param key String
- * @return String, Number or Object
+ * @method get
+ * @param key {String}
+ * @return {String}, {Number} or {Object}
 --doc:/member
-get: function(String: key) {
+get: function(key) {
 }
 --/doc:member
 

@@ -36,5 +36,5 @@ unity::scopes::Variant ActionMetaData::get(const std::string& key) {
 
 void ActionMetaData::set(const std::string& key,
                          const unity::scopes::Variant& val) {
-  (*this)[key] = val;;
+  (*this)[key] = val;
 }

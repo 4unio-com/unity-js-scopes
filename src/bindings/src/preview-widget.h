@@ -26,6 +26,8 @@
 /**
 
 --doc:class PreviewWidget
+ * @module ScopeJS
+ * 
  * A widget for a preview.
  * 
  * @class PreviewWidget
@@ -35,33 +37,37 @@
 
 --doc:member
  * Adds an attribute definition and its value
- * @param key Attribute definition
- * @param value Value. The value can be a string, number, object
+ * @method add_attribute_value
+ * @param key {String} Attribute definition
+ * @param value {String}, {Number}, {Object}. The value can be a string, number, object
 --doc:/member
-add_attribute_value: function(String: key, Variant: value) {
+add_attribute_value: function(key, value) {
 }
 --/doc:member
 
 --doc:member
  * Adds an attribute definition using a component mapping
- * @param key Attribute definition
- * @param value Value
+ * @method add_attribute_mapping
+ * @param key {String} Attribute definition
+ * @param value {String} Value
 --doc:/member
-add_attribute_mapping: function(String: key, String: value) {
+add_attribute_mapping: function(key, value) {
 }
 --/doc:member
 
 --doc:member
  * Adds a widget into expandable widget
- * @param widget The widget that needs to be added
+ * @method add_widget
+ * @param widget {PreviewWidget} The widget that needs to be added
 --doc:/member
-add_widget: function(PreviewWidget: widget) {
+add_widget: function(widget) {
 }
 --/doc:member
 
 --doc:member
  * Get the identifier of this widget
- * @return Id string
+ * @method id
+ * @return Id {String}
 --doc:/member
 id: function() {
 }
@@ -69,7 +75,8 @@ id: function() {
 
 --doc:member
  * Get type name of this widget
- * @return Widget type
+ * @method widget_type
+ * @return {String} Widget type
 --doc:/member
 widget_type: function() {
 }
@@ -77,6 +84,7 @@ widget_type: function() {
 
 --doc:member
  * Get the components of this widget
+ * @method attribute_mappings
  * @return Dictionary of widget components
 --doc:/member
 attribute_mappings: function() {
@@ -85,6 +93,7 @@ attribute_mappings: function() {
 
 --doc:member
  * Get the attributes of this widget
+ * @method attribute_values
  * @return Object corresponding to attributes of this widget
 --doc:/member
 attribute_values: function() {
@@ -93,6 +102,7 @@ attribute_values: function() {
 
 --doc:member
  * Get widgets of 'expandable' widget
+ * @method widgets
  * @return List of PreviewWidget
 --doc:/member
 widgets: function() {
@@ -101,6 +111,7 @@ widgets: function() {
 
 --doc:member
  * Get a JSON representation of this widget
+ * @method data
  * @return String representation of widget
 --doc:/member
 data: function() {

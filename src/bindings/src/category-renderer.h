@@ -19,6 +19,8 @@ de/*
 /**
 
 --doc:class CategoryRenderer
+ * @module ScopeJS
+ * 
  * A category renderer template in JSON format.
  * 
  * @class CategoryRenderer
@@ -27,12 +29,14 @@ de/*
 --doc:constructor
  * Creates a CategoryRenderer from a JSON string
  * 
+ * @constructor
  * @param json_text Renderer template in JSON format
 --/doc:constructor
 
 --doc:prototype CategoryRenderer
 --doc:member
  * Returns complete renderer template definition in JSON format.
+ * @method data
  * @return String The renderer template (JSON)
 --doc:/member
 data: function() {

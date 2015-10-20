@@ -75,124 +75,6 @@ new_category_renderer_from_file(const std::string& file_path) {
           unity::scopes::CategoryRenderer::from_file(file_path)));
 }
 
-v8::Handle<v8::Object> new_SearchQuery(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 4) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  std::shared_ptr<unity::scopes::CannedQuery> c =
-    v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
-        v8::Isolate::GetCurrent(),
-        args[0]->ToObject());
-
-  std::shared_ptr<SearchMetaData> s =
-    v8cpp::from_v8<std::shared_ptr<SearchMetaData>>(
-        v8::Isolate::GetCurrent(),
-        args[1]->ToObject());
-
-  if (!c || !s) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  if (!args[2]->IsFunction() || !args[3]->IsFunction()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  v8::Local<v8::Function> run_callback =
-    v8::Handle<v8::Function>::Cast(args[2]);
-  v8::Local<v8::Function> cancelled_callback =
-    v8::Handle<v8::Function>::Cast(args[3]);
-
-  std::shared_ptr<SearchQuery> sq(
-    new SearchQuery(
-        *c,
-        static_cast<const unity::scopes::SearchMetadata&>(*s),
-        run_callback,
-        cancelled_callback)
-  );
-
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), sq);
-}
-
-v8::Handle<v8::Object> new_PreviewQuery(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 4) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  std::shared_ptr<Result> r =
-    v8cpp::from_v8<std::shared_ptr<Result>>(
-        v8::Isolate::GetCurrent(),
-        args[0]->ToObject());
-
-  std::shared_ptr<ActionMetaData> a =
-    v8cpp::from_v8<std::shared_ptr<ActionMetaData>>(
-        v8::Isolate::GetCurrent(),
-        args[1]->ToObject());
-
-  if (!r || !a) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  if (!args[2]->IsFunction()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  v8::Local<v8::Function> run_callback =
-    v8::Handle<v8::Function>::Cast(args[2]);
-
-  if (!args[3]->IsFunction()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-
-  v8::Local<v8::Function> cancelled_callback =
-    v8::Handle<v8::Function>::Cast(args[3]);
-
-  std::shared_ptr<PreviewQuery> pq(
-      new PreviewQuery(
-        *r,
-        *a,
-        run_callback,
-        cancelled_callback));
-
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), pq);
-}
-
-v8::Handle<v8::Object> new_PreviewWidget(
-      v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() < 1 || args.Length() > 2) {
-    throw std::runtime_error("Invalid number of arguments");
-  }
-
-  if (args.Length() == 2) {
-    if (!args[0]->IsString() || !args[1]->IsString()) {
-      throw std::runtime_error("Invalid arguments types: should be id, widget_type");
-    }
-    std::string id =
-      *(v8::String::Utf8Value(args[0]->ToString()));
-
-    std::string widget_type =
-      *(v8::String::Utf8Value(args[1]->ToString()));
-
-    PreviewWidget* preview_widget =
-      new PreviewWidget(id, widget_type);
-
-    return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
-  }
-
-  if (!args[0]->IsString()) {
-    throw std::runtime_error("Invalid arguments types");
-  }
-  
-  std::string definition =
-    *(v8::String::Utf8Value(args[0]->ToString()));
-  
-  PreviewWidget* preview_widget =
-    new PreviewWidget(definition);
-  
-  return v8cpp::to_v8(v8::Isolate::GetCurrent(), preview_widget);
-}
-
 void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
@@ -417,21 +299,25 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
     search_metadata
-      .add_inheritance<unity::scopes::SearchMetadata>()
-      // unity::scopes::SearchMetadata
-      .add_method("set_cardinality", &unity::scopes::SearchMetadata::set_cardinality)
-      .add_method("cardinality", &unity::scopes::SearchMetadata::cardinality)
-      .add_method("has_location", &unity::scopes::SearchMetadata::has_location)
-      .add_method("set_hint", &unity::scopes::SearchMetadata::set_hint)
-      .add_method("hints", &unity::scopes::SearchMetadata::hints)
-      // QueryMetadata
-      .add_method("locale", &unity::scopes::QueryMetadata::locale)
-      .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
-      .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
-      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity)
-      // SearchMetaData
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      // SearchMetadata
+      .add_method("set_cardinality", &SearchMetaData::set_cardinality)
+      .add_method("cardinality", &SearchMetaData::cardinality)
+      .add_method("has_location", &SearchMetaData::has_location)
+      .add_method("remove_location", &SearchMetaData::remove_location)
+      .add_method("set_aggregated_keywords", &SearchMetaData::set_aggregated_keywords)
+      .add_method("aggregated_keywords", &SearchMetaData::aggregated_keywords)
+      .add_method("is_aggregated", &SearchMetaData::is_aggregated)
+      .add_method("set_hint", &SearchMetaData::set_hint)
+      .add_method("hints", &SearchMetaData::hints)
+      .add_method("set", &SearchMetaData::set)
+      .add_method("get", &SearchMetaData::get)
       .add_method("set_location", &SearchMetaData::set_location)
-      .add_method("location", &SearchMetaData::location);
+      .add_method("location", &SearchMetaData::location)
+      .add_method("locale", &SearchMetaData::locale)
+      .add_method("form_factor", &SearchMetaData::form_factor)
+      .add_method("set_internet_connectivity", &SearchMetaData::set_internet_connectivity)
+      .add_method("internet_connectivity", &SearchMetaData::internet_connectivity);
 
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
@@ -457,9 +343,6 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("variant_array", variant_array);
 
     module.add_function("new_scope", &new_scope);
-    module.add_function("new_SearchQuery", &new_SearchQuery);
-    module.add_function("new_PreviewQuery", &new_PreviewQuery);
-    module.add_function("new_PreviewWidget", &new_PreviewWidget);
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
 
     module.add_function("runtime_version", &get_scopes_runtime_version);

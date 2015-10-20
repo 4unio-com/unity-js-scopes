@@ -30,6 +30,8 @@
 /**
 
 --doc:class SearchReply
+ * @module ScopeJS
+ * 
  * Allows the results of a preview to be sent to the preview requester.
  * 
  * @class SearchReply
@@ -39,6 +41,7 @@
 
 --doc:member
  * Register new category and send it to the source of the query
+ * @method register_category
  * @param id String id
  * @param title String title
  * @param icon String icon
@@ -50,6 +53,7 @@ register_category: function(String: id, String: title, String: icon, [optional] 
 
 --doc:member
  * Returns a previously registered category
+ * @method id
  * @param id
 --doc:/member
 lookup_category: function(String: id) {
@@ -58,6 +62,7 @@ lookup_category: function(String: id) {
 
 --doc:member
  * Sends a single result to the source of a query
+ * @method push
  * @param result CategorisedResult
 --doc:/member
 push: function(CategorisedResult: result) {
@@ -66,6 +71,7 @@ push: function(CategorisedResult: result) {
 
 --doc:member
  * Informs the source of a query that the query was terminated due to an error
+ * @method error
  * @return error String error
 --doc:/member
 error: function(String: error) {
@@ -74,6 +80,7 @@ error: function(String: error) {
 
 --doc:member
  * Informs the source of a query that the query results are complete
+ * @method finished
 --doc:/member
 finished: function() {
 }

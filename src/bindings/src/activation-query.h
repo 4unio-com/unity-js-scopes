@@ -29,6 +29,8 @@
 /**
 
 --doc:class ActivationQuery
+ * @module ScopeJS
+ * 
  * Represents an activation request that is executed inside a scope
  * 
  * @class ActivationQuery
@@ -38,6 +40,7 @@
 
 --doc:member
  * Return response to the activation request
+ * @method activate
  * @return ActivationResponse
 --doc:/member
 activate: function() {
@@ -46,6 +49,7 @@ activate: function() {
 
 --doc:member
  * Get the result for this activation request handler
+ * @method result
  * @return Result
 --doc:/member
 result: function() {
@@ -54,6 +58,7 @@ result: function() {
 
 --doc:member
  * Get the metadata for this activation request handler
+ * @method action_metadata
  * @return ActionMetadata
 --doc:/member
 action_metadata: function() {
@@ -62,6 +67,7 @@ action_metadata: function() {
 
 --doc:member
  * Get the widget identifier for this activation request handler
+ * @method widget_id
  * @return String
 --doc:/member
 widget_id: function() {
@@ -70,6 +76,7 @@ widget_id: function() {
 
 --doc:member
  * Get the action identifier for this activation request handler
+ * @method action_id
  * @return String
 --doc:/member
 action_id: function() {
@@ -78,6 +85,7 @@ action_id: function() {
 
 --doc:member
  * Check whether this query is still valid
+ * @method valid
  * @return Boolean
 --doc:/member
 valid: function() {
@@ -86,6 +94,7 @@ valid: function() {
 
 --doc:member
  * Returns a dictionary with the scope's current settings
+ * @method settings
  * @return Dictionary
 --doc:/member
 settings: function() {

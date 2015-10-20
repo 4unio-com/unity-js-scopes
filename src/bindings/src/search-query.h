@@ -27,6 +27,8 @@
 /**
 
 --doc:class SearchQuery
+ * @module ScopeJS
+ * 
  * Represents a particular query
  *
  * A scope must return an instance of this class from its implementation of Scope.search().
@@ -79,6 +81,7 @@
 
 --doc:member
  * Get a canned query for this search request
+ * @method query
  * @return CannedQuery
 --doc:/member
 query: function() {
@@ -87,6 +90,7 @@ query: function() {
 
 --doc:member
  * Get metadata for this search request
+ * @method search_metadata
  * @return SearchMetadata
 --doc:/member
 search_metadata: function() {
@@ -95,6 +99,7 @@ search_metadata: function() {
 
 --doc:member
  * Check whether this query is still valid
+ * @method valid
  * @return Boolean False if the query is finished or was cancelled ealier.
 --doc:/member
 valid: function() {
@@ -103,6 +108,7 @@ valid: function() {
 
 --doc:member
  * Returns a dictionary with the scope's current settings
+ * @method settings
  * @return Dictionary
 --doc:/member
 settings: function() {
