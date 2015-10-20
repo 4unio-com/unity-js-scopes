@@ -34,9 +34,7 @@
 --/doc:class
 
 --doc:constructor
- * Creates a CategorisedResult with given category,
- *   with all base attributes initially empty.
- * 
+ *
  * @constructor
  * @param category The category for the result.
 --/doc:constructor

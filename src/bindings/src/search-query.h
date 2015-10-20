@@ -60,8 +60,8 @@
 --/doc:class
 
 --doc:constructor
- * Creates a SearchQuery object
  * 
+ * @constructor
  * @param canned_query
  * @param metadata
  * @param run Function({SearchReply}) Function callback that is to be called by the scope runtime to start the query.

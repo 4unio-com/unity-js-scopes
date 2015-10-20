@@ -27,7 +27,6 @@ de/*
 --/doc:class
 
 --doc:constructor
- * Creates a CategoryRenderer from a JSON string
  * 
  * @constructor
  * @param json_text Renderer template in JSON format

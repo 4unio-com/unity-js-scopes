@@ -27,7 +27,6 @@ de/*
 --/doc:class
 
 --doc:constructor
- * Creates a layout definition that expects num_of_columns columns to be added with ColumnLayout.add_column.
  * 
  * @constructor
  * @param num_of_columns The number of columns for the layout.

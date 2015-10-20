@@ -30,22 +30,21 @@
  * 
  * Metadata passed with search requests.
  * 
- * @class SearchMetaData
---/doc:class
-
---doc:constructor
- * Create SearchMetadata.
  * Two forms of construction are allowed depending on the number
  * and types of the parameters:
  *  - with locale and form factor
  *  or
  *  - with cardinality, locale, and form factor.
  *
+ * @class SearchMetaData
+--/doc:class
+
+--doc:constructor
  * 
+ * @constructor
  * @param cardinality maximum number of search results
  * @param locale locale string, eg. en_EN
  * @param form_factor form factor name, e.g. phone, desktop, phone-version etc.
- * @constructor
  * @param category The category for the result.
 --/doc:constructor
 

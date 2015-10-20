@@ -23,6 +23,8 @@ var core = require('./lib/scope-core.js');
 var self;
 
 /**
+ * @module ScopeJS
+ * 
  * Scope corresponds to the bridge between the ubuntu scope runtime
  * and the actual scope.
  * 

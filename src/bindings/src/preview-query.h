@@ -62,8 +62,7 @@
 
 
 --doc:constructor
- * Creates a SearchQuery object
- * 
+ *  
  * @constructor
  * @param canned_query CannedQuery
  * @param action_metadata ActionMetadata
