@@ -35,6 +35,7 @@
 #include "activation-query.h"
 #include "canned-query.h"
 #include "categorised-result.h"
+#include "option-selector-filter.h"
 #include "scope-base.h"
 #include "scope.h"
 #include "search-query.h"
@@ -215,6 +216,27 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("has_filter", &unity::scopes::FilterState::has_filter)
       .add_method("remove", &unity::scopes::FilterState::remove);
 
+    v8cpp::Class<unity::scopes::FilterOption> filter_option(isolate);
+    filter_option
+      .add_method("id", &unity::scopes::FilterOption::id)
+      .add_method("label", &unity::scopes::FilterOption::label);
+
+    v8cpp::Class<OptionSelectorFilter> option_selector_filter(isolate);
+    option_selector_filter
+      .set_constructor<std::string, std::string, bool>()
+      .add_method("label", &OptionSelectorFilter::label)
+      .add_method("multi_select", &OptionSelectorFilter::multi_select)
+      .add_method("add_option", &OptionSelectorFilter::add_option)
+      .add_method("options", &OptionSelectorFilter::options)
+      .add_method("has_active_option", &OptionSelectorFilter::has_active_option)
+      .add_method("active_options", &OptionSelectorFilter::active_options)
+      .add_method("update_state", &OptionSelectorFilter::update_state)
+      // FilterBase
+      .add_method("set_display_hints", &OptionSelectorFilter::set_display_hints)
+      .add_method("display_hints", &OptionSelectorFilter::display_hints)
+      .add_method("id", &OptionSelectorFilter::id)
+      .add_method("filter_type", &OptionSelectorFilter::filter_type);
+
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
       .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>>()
@@ -336,8 +358,10 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("categorised_result", categorised_result);
     module.add_class("category_renderer", category_renderer);
     module.add_class("column_layout", column_layout);
+    module.add_class("filter_option", filter_option);
     module.add_class("filter_state", filter_state);
     module.add_class("location", location);
+    module.add_class("option_selector_filter", option_selector_filter);
     module.add_class("preview_widget", preview_widget);
     module.add_class("preview_query", preview_query);
     module.add_class("preview_reply", preview_reply);
@@ -352,6 +376,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_function("new_scope", &new_scope);
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
 
+    module.add_function("create_option_selector_filter", &unity::scopes::OptionSelectorFilter::create);
+    
     module.add_function("runtime_version", &get_scopes_runtime_version);
 
     exports->SetPrototype(module.create_prototype());

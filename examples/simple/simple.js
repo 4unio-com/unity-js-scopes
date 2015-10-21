@@ -50,7 +50,15 @@ scopes.self.initialize(
                         new scopes.lib.categorised_result(category);
                     categorised_result.set_uri("http://www.ubuntu.com");
                     categorised_result.set_title("'" + qs + "'");
-                    
+
+                    var filter_state =
+                        new scopes.lib.filter_state();
+                    var option_state =
+                        new scopes.lib.option_selector_filter('id', 'push', false);
+
+                    var p = search_reply.push([option_state], filter_state);
+                    console.log(' push : ' + p);
+
                     search_reply.push(categorised_result);
                 },
                 // cancelled

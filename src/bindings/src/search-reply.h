@@ -31,7 +31,6 @@ class SearchReply
 {
  public:
   SearchReply(unity::scopes::SearchReplyProxy const& reply);
-  ~SearchReply();
 
   unity::scopes::Category::SCPtr register_category(
       const std::string& id,
@@ -42,12 +41,13 @@ class SearchReply
   unity::scopes::Category::SCPtr
     lookup_category(const std::string& id);
 
-  void push(std::shared_ptr<CategorisedResult> categorised_result);
+  bool push(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   void finished();
 
  private:
 
+  v8::Isolate* isolate_;
   unity::scopes::SearchReplyProxy const reply_;
 };
 
