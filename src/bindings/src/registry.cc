@@ -23,7 +23,9 @@
 namespace {
 
 std::map<std::shared_ptr<Registry>,
-         std::shared_ptr<core::ScopedConnection>> active_scoped_connections_;
+         core::ScopedConnection> active_scope_state_connections_;
+std::map<std::shared_ptr<Registry>,
+         core::ScopedConnection> active_list_update_connections_;
 
 }
 
@@ -59,6 +61,13 @@ bool Registry::is_scope_running(const std::string& scope_id) {
 
 void Registry::set_scope_state_callback(const std::string& scope_id,
                                         v8::Local<v8::Function> callback) {
+  {
+    auto it = active_scope_state_connections_.find(shared_from_this());
+    if (it != active_scope_state_connections_.end()) {
+      active_scope_state_connections_.erase(it);
+    }
+  }
+
   core::ScopedConnection connection =
     proxy_->set_scope_state_callback(scope_id, [this, callback] (bool is_running) {
         EventQueue::instance().run(isolate_, [this, callback, is_running] {
@@ -70,9 +79,21 @@ void Registry::set_scope_state_callback(const std::string& scope_id,
             );
           });
     });
+
+  active_scope_state_connections_.insert(
+      std::make_pair(
+          shared_from_this(),
+          core::ScopedConnection(std::move(connection))));
 }
 
 void Registry::set_list_update_callback(v8::Local<v8::Function> callback) {
+  {
+    auto it = active_list_update_connections_.find(shared_from_this());
+    if (it != active_list_update_connections_.end()) {
+      active_list_update_connections_.erase(it);
+    }
+  }
+
   core::ScopedConnection connection =
     proxy_->set_list_update_callback([this, callback] () {
         EventQueue::instance().run(isolate_, [this, callback] {
@@ -83,5 +104,10 @@ void Registry::set_list_update_callback(v8::Local<v8::Function> callback) {
             );
           });
     });
+
+  active_list_update_connections_.insert(
+      std::make_pair(
+          shared_from_this(),
+          core::ScopedConnection(std::move(connection))));
 }
 

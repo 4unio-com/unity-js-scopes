@@ -109,12 +109,12 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &ScopeBase::onrun)
       .add_method("onsearch", &ScopeBase::onsearch)
       .add_method("onpreview", &ScopeBase::onpreview)
+      .add_method("registry", &ScopeBase::get_registry)
       // unity::scopes::ScopeBase
       .add_method("scope_directory", &unity::scopes::ScopeBase::scope_directory)
       .add_method("cache_directory", &unity::scopes::ScopeBase::cache_directory)
       .add_method("tmp_directory", &unity::scopes::ScopeBase::tmp_directory)
-      .add_method("settings", &unity::scopes::ScopeBase::settings)
-      .add_method("registry", &unity::scopes::ScopeBase::registry);
+      .add_method("settings", &unity::scopes::ScopeBase::settings);
 
     v8cpp::Class<ActionMetaData> action_metadata(isolate);
     action_metadata

@@ -18,6 +18,80 @@
 
 var scopes = require('unity-js-scopes')
 
+var SCOPE_NAME = 'simple'
+
+function dump_scope_metadata(metadata) {
+    console.log('Scope info');
+    console.log('  ' + metadata.scope_id());
+    console.log('  ' + metadata.display_name());
+    console.log('  ' + metadata.description());
+    console.log('  ' + metadata.author());
+    console.log('  ' + metadata.art());
+    console.log('  ' + metadata.icon());
+    console.log('  ' + metadata.search_hint());
+    console.log('  ' + metadata.hot_key());
+    console.log('  ' + metadata.invisible());
+    console.log('  ' + metadata.scope_directory());
+    console.log('  ' + metadata.location_data_needed());
+}
+
+function dump_scope_registry_data() {
+    try {
+        console.log('Registry data ' +
+                    scopes.self.registry.is_scope_running(SCOPE_NAME));
+    } catch (e) {
+        console.log('   ' + e);
+    }
+
+    try {
+        var scopes_metadata = scopes.self.registry.list()
+
+        for (var s in scopes_metadata) {
+            dump_scope_metadata(scopes_metadata[s])
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    try {
+        console.log('First pass')
+        var scopes_metadata = scopes.self.registry.list_if(function(info) {
+            return info.scope_id() == 'forth'
+        })
+
+        for (var s in scopes_metadata) {
+            dump_scope_metadata(scopes_metadata[s])
+        }
+
+        console.log('Second pass')
+        scopes_metadata = scopes.self.registry.list_if(function(info) {
+            return info.scope_id() == 'simple'
+        })
+
+        for (var s in scopes_metadata) {
+            dump_scope_metadata(scopes_metadata[s])
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    try {
+        var scopes_metadata = scopes.self.registry.list()
+
+        for (var s in scopes_metadata) {
+            scopes.self.registry.set_scope_state_callback(
+                scopes_metadata[s].scope_id(),
+                function(is_running) {
+                    console.log('I am possibly running '
+                                + (is_running ? '(yes) ' : '(no) ') 
+                                + scopes_metadata[s].scope_id())
+            })
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 scopes.self.initialize(
     {}
     ,
@@ -30,6 +104,7 @@ scopes.self.initialize(
                         + scope_id
                         + ', '
                         + scopes.self.scope_config)
+            dump_scope_registry_data();
         },
         search: function(canned_query, metadata) {
             return new scopes.lib.search_query(

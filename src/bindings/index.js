@@ -79,7 +79,7 @@ Scope.prototype = {
         return this._base.tmp_directory();
     },
     get registry() {
-        return null
+        return this._base.registry();
     },
     get settings() {
         return this._base.settings();
