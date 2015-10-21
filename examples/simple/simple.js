@@ -53,10 +53,12 @@ scopes.self.initialize(
 
                     var filter_state =
                         new scopes.lib.filter_state();
-                    var option_state =
-                        new scopes.lib.option_selector_filter('id', 'push', false);
+                    var option_filter =
+                        new scopes.lib.option_selector_filter('me', 'push', false);
+                    var option = option_filter.add_option("id", "yes");
 
-                    var p = search_reply.push([option_state], filter_state);
+                    var p = search_reply.push([option_filter], filter_state);
+
                     console.log(' push : ' + p);
 
                     search_reply.push(categorised_result);

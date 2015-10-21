@@ -19,10 +19,34 @@
 #include "search-reply.h"
 
 #include "categorised-result.h"
+#include "option-selector-filter.h"
 
 #include <stdexcept>
 
 #include <unity/scopes/SearchReply.h>
+
+
+namespace {
+
+unity::scopes::Filters from_v8_to_filters(
+      v8::Isolate* isolate,
+      v8::Local<v8::Value> value) {
+  unity::scopes::Filters
+    filter_bases;
+  v8::Handle<v8::Object> o = v8::Handle<v8::Object>::Cast(value);
+  for (size_t i = 0;
+       i < o->Get(v8::String::NewFromUtf8(isolate, "length"))->ToObject()->Uint32Value();
+       ++i) {
+    v8::Local<v8::Value> fv = o->Get(i);
+    try {
+      auto f = v8cpp::from_v8<std::shared_ptr<OptionSelectorFilter>>(isolate, fv);
+      filter_bases.push_back(f->get_filter());
+    } catch(...) { }
+  }
+  return filter_bases;
+}
+  
+}
 
 
 SearchReply::SearchReply(unity::scopes::SearchReplyProxy const& reply)
@@ -46,15 +70,13 @@ bool SearchReply::push(v8::FunctionCallbackInfo<v8::Value> const& args) {
     return reply_->push(*cr);
   }
 
-  // TODO fix v8cpp shortcoming here
-  auto filters =
-    v8cpp::from_v8<std::list<v8::Value>>(isolate_, args[0]);
-  //  auto filter_state =
-  //  v8cpp::from_v8<std::shared_ptr<unity::scopes::FilterState>>(isolate_, args[1]);
+  auto filter_state =
+      v8cpp::from_v8<std::shared_ptr<unity::scopes::FilterState>>(isolate_, args[1]);
 
+  // TODO fix v8cpp shortcoming here
   return reply_->push(
-      unity::scopes::Filters(),
-      unity::scopes::FilterState());//*filter_state);
+      from_v8_to_filters(isolate_, args[0]),
+      *filter_state);
 }
 
 unity::scopes::Category::SCPtr SearchReply::register_category(

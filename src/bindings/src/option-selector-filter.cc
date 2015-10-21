@@ -80,3 +80,7 @@ unity::scopes::VariantMap OptionSelectorFilter::serialize() const {
 std::string OptionSelectorFilter::filter_type() const {
   return filter_->filter_type();
 }
+
+unity::scopes::OptionSelectorFilter::SPtr OptionSelectorFilter::get_filter() {
+  return filter_;
+}

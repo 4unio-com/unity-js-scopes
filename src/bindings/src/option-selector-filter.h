@@ -43,8 +43,10 @@ class OptionSelectorFilter
   unity::scopes::VariantMap serialize() const;
   std::string filter_type() const;
 
+  unity::scopes::OptionSelectorFilter::SPtr get_filter();
+
  private:
-  unity::scopes::OptionSelectorFilter::UPtr filter_;
+  unity::scopes::OptionSelectorFilter::SPtr filter_;
 };
 
 #endif // _UNITY_JS_OPTION_SELECTOR_FILTER_H_
