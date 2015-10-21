@@ -23,6 +23,7 @@
 #include <unity/scopes/Category.h>
 
 #include "categorised-result.h"
+#include "department.h"
 
 #include <v8-cpp.h>
 
@@ -32,6 +33,8 @@ class SearchReply
  public:
   SearchReply(unity::scopes::SearchReplyProxy const& reply);
   ~SearchReply();
+
+  void register_departments(std::shared_ptr<Department> department);
 
   unity::scopes::Category::SCPtr register_category(
       const std::string& id,

@@ -56,3 +56,7 @@ void SearchReply::finished()
 {
   reply_->finished();
 }
+
+void SearchReply::register_departments(std::shared_ptr<Department> department) {
+  reply_->register_departments(department->department());
+}
