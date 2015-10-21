@@ -21,6 +21,7 @@
 #include "action-metadata.h"
 #include "activation-query.h"
 #include "activation-query-proxy.h"
+#include "canned-query.h"
 #include "search-query.h"
 #include "search-query-proxy.h"
 #include "search-metadata.h"
@@ -109,8 +110,8 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
   return EventQueue::instance().run<unity::scopes::SearchQueryBase::UPtr>(isolate_, [this, query, metadata]
   {
     // wrap & fire
-    std::shared_ptr<unity::scopes::CannedQuery> q(
-        new unity::scopes::CannedQuery(std::move(query)));
+    std::shared_ptr<CannedQuery> q(
+        new CannedQuery(query));
 
     std::shared_ptr<SearchMetaData> m(
       new SearchMetaData(metadata));
