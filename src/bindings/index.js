@@ -79,7 +79,7 @@ Scope.prototype = {
         return this._base.tmp_directory();
     },
     get registry() {
-        return null
+        return this._base.registry();
     },
     get settings() {
         return this._base.settings();
@@ -87,6 +87,17 @@ Scope.prototype = {
     get scope_config() {
         return this._scope_binding.scope_config();
     },
+};
+
+var VariantType = {
+    Null: "Null",
+    Int: "Int",
+    Int64: "Int64",
+    Bool: "Bool",
+    String: "String",
+    Double: "Double",
+    Dict: "Dict",
+    Array: "Array"
 };
 
 var PostLoginAction = {
@@ -99,7 +110,8 @@ var PostLoginAction = {
 module.exports = {
     lib: lib,
     defs: {
-        PostLoginAction: PostLoginAction
+        PostLoginAction: PostLoginAction,
+        VariantType: VariantType
     }
 }
 

@@ -318,3 +318,7 @@ void ScopeBase::onpreview(
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   preview_callback_.Reset(args.GetIsolate(), cb);
 }
+
+std::shared_ptr<Registry> ScopeBase::get_registry() const {
+  return std::shared_ptr<Registry>(new Registry(registry()));
+}

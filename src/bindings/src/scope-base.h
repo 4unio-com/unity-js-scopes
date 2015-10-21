@@ -23,6 +23,8 @@
 
 #include <unity/scopes/ScopeBase.h>
 
+#include "registry.h"
+
 class ScopeBase : public unity::scopes::ScopeBase
 {
  public:
@@ -39,6 +41,8 @@ class ScopeBase : public unity::scopes::ScopeBase
   void onactivate(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onperform_action(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+  std::shared_ptr<Registry> get_registry() const;
+  
   // unity::scopes::ScopeBase implementation
   void start(std::string const& scope_id) override;
   void stop() override;
