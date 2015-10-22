@@ -340,27 +340,31 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
-      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
+      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
     v8cpp::Class<SearchMetaData> search_metadata(isolate);
     search_metadata
-      .add_inheritance<unity::scopes::SearchMetadata>()
-      // unity::scopes::SearchMetadata
-      .add_method("set_cardinality", &unity::scopes::SearchMetadata::set_cardinality)
-      .add_method("cardinality", &unity::scopes::SearchMetadata::cardinality)
-      .add_method("has_location", &unity::scopes::SearchMetadata::has_location)
-      .add_method("set_hint", &unity::scopes::SearchMetadata::set_hint)
-      .add_method("hints", &unity::scopes::SearchMetadata::hints)
-      // QueryMetadata
-      .add_method("locale", &unity::scopes::QueryMetadata::locale)
-      .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
-      .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
-      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity)
-      // SearchMetaData
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      // SearchMetadata
+      .add_method("set_cardinality", &SearchMetaData::set_cardinality)
+      .add_method("cardinality", &SearchMetaData::cardinality)
+      .add_method("has_location", &SearchMetaData::has_location)
+      .add_method("remove_location", &SearchMetaData::remove_location)
+      .add_method("set_aggregated_keywords", &SearchMetaData::set_aggregated_keywords)
+      .add_method("aggregated_keywords", &SearchMetaData::aggregated_keywords)
+      .add_method("is_aggregated", &SearchMetaData::is_aggregated)
+      .add_method("set_hint", &SearchMetaData::set_hint)
+      .add_method("hints", &SearchMetaData::hints)
+      .add_method("set", &SearchMetaData::set)
+      .add_method("get", &SearchMetaData::get)
       .add_method("set_location", &SearchMetaData::set_location)
-      .add_method("location", &SearchMetaData::location);
+      .add_method("location", &SearchMetaData::location)
+      .add_method("locale", &SearchMetaData::locale)
+      .add_method("form_factor", &SearchMetaData::form_factor)
+      .add_method("set_internet_connectivity", &SearchMetaData::set_internet_connectivity)
+      .add_method("internet_connectivity", &SearchMetaData::internet_connectivity);
 
     v8cpp::Class<OnlineAccountClient> online_account_client(isolate);
     online_account_client
