@@ -186,7 +186,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
-      .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>, v8::Local<v8::Value>>()
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
       .add_method("set_department_id", &CannedQuery::set_department_id)
       .add_method("set_query_string", &CannedQuery::set_query_string)
       .add_method("set_filter_state", &CannedQuery::set_filter_state)

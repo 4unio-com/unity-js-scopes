@@ -27,9 +27,7 @@ class CannedQuery
 {
  public:
   CannedQuery(const unity::scopes::CannedQuery& canned_query);
-  CannedQuery(v8::Local<v8::Value> arg1,
-              v8::Local<v8::Value> arg2,
-              v8::Local<v8::Value> arg3);
+  CannedQuery(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   // v8 bindings
   void set_department_id(const std::string& department_id);
@@ -40,7 +38,7 @@ class CannedQuery
   std::string department_id() const;
   std::string query_string() const;
   std::string to_uri() const;
-  std::shared_ptr<unity::scopes::FilterState> filter_state() const;
+  unity::scopes::FilterState filter_state() const;
 
   unity::scopes::CannedQuery & canned_query();
 

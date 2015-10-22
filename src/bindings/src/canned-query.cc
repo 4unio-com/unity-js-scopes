@@ -18,23 +18,25 @@
 
 #include "canned-query.h"
 
-CannedQuery::CannedQuery(v8::Local<v8::Value> arg1,
-                         v8::Local<v8::Value> arg2,
-                         v8::Local<v8::Value> arg3) {
-  if (!arg1->IsString()) {
+CannedQuery::CannedQuery(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 3) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  if (!args[0]->IsString()) {
     throw std::runtime_error("Invalid type for argument index 1");
   }
 
   std::string scope_id =
-    *(v8::String::Utf8Value(arg1->ToString()));
+    *(v8::String::Utf8Value(args[0]->ToString()));
 
-  if (arg2->IsString() && arg3->IsString()) {
+  if (args[1]->IsString() && args[2]->IsString()) {
 
     std::string query_str =
-      *(v8::String::Utf8Value(arg2->ToString()));
+      *(v8::String::Utf8Value(args[1]->ToString()));
 
     std::string department_id =
-      *(v8::String::Utf8Value(arg3->ToString()));
+      *(v8::String::Utf8Value(args[2]->ToString()));
 
     query_.reset(
         new unity::scopes::CannedQuery(
@@ -79,10 +81,8 @@ std::string CannedQuery::to_uri() const {
   return query_->to_uri();
 }
 
-std::shared_ptr<unity::scopes::FilterState> CannedQuery::filter_state() const {
-  return std::shared_ptr<unity::scopes::FilterState>(
-      new unity::scopes::FilterState(
-          query_->filter_state()));
+unity::scopes::FilterState CannedQuery::filter_state() const {
+  return query_->filter_state();
 }
 
 unity::scopes::CannedQuery & CannedQuery::canned_query() {
