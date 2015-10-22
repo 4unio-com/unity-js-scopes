@@ -18,7 +18,7 @@
         <file source="src/data/icon.png" binary="true"/>
         <file source="src/data/logo.png" binary="true"/>
 
-        <file source="src/displayName.js" target="src/%ClickHookName:l%.js"/>
+        <file source="src/displayName.js.in" target="src/%ClickHookName:l%.js"/>
         <file source="src/CMakeLists.txt"/>
 
         <file source="CMakeLists.txt" openproject="true"/>
