@@ -340,7 +340,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
-      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
+      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<SearchMetaData>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
