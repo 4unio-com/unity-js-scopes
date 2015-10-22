@@ -63,3 +63,6 @@ add_subdirectory(src)
 
 install(DIRECTORY examples
         DESTINATION ${CMAKE_INSTALL_DATADIR}/unity-js-scopes)
+
+install(DIRECTORY qtc-templates/scope-js
+        DESTINATION /usr/share/qtcreator/templates/wizards/ubuntu)

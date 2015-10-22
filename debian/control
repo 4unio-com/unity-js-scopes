@@ -22,8 +22,8 @@ Architecture: any
 Multi-Arch: foreign
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-Description: Javascript bindings to unity scopes library
- Provides a means for developers to develop Ubuntu Scopes in Javascript
+Description: JavaScript bindings to Unity Scopes API
+ Provides a means for developers to develop Ubuntu Scopes in JavaScript
  by providing bindings to the Unity Scopes API.
 
 Package: unity-js-scopes-launcher
@@ -32,8 +32,8 @@ Multi-Arch: foreign
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          unity-js-scopes-bindings (= ${binary:Version}),
-Description: Scope launcher for unity javascript scopes
- Provides a means for developers to launch their Javascript Ubuntu Scopes.
+Description: Scope launcher for Unity JavaScript Scopes
+ Provides a means for developers to launch their JavaScript Ubuntu Scopes.
 
 Package: unity-js-scopes-tool
 Architecture: any
@@ -42,14 +42,17 @@ Depends: ${misc:Depends},
          ${shlibs:Depends},
          unity-js-scopes-bindings (= ${binary:Version}),
          unity-js-scopes-launcher (= ${binary:Version}),
-Description: Scope tool for unity javascript scopes
- Provides a means for developers to configure their Javascript Ubuntu Scopes.
+Description: Scope tool for Unity JavaScript Scopes
+ Provides a means for developers to configure their JavaScript Ubuntu Scopes.
 
-Package: unity-js-scopes-examples
+Package: unity-js-scopes-dev
 Architecture: any
 Multi-Arch: foreign
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          unity-js-scopes-bindings (= ${binary:Version}),
-Description: Examples for javascript unity scopes
- Provides a set of examples for unity scopes written in javascript.
+         unity-js-scopes-launcher (= ${binary:Version}),
+         unity-js-scopes-tool (= ${binary:Version}),
+Description: Development files for Unity JavaScript Scopes
+ Provides a set of Qt Creator templates and examples for Ubuntu Scopes
+ written in JavaScript.
