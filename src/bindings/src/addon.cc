@@ -21,7 +21,6 @@
 #include <stdexcept>
 
 #include <unity/scopes/ActionMetadata.h>
-#include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategoryRenderer.h>
 #include <unity/scopes/Result.h>
@@ -34,9 +33,11 @@
 
 #include "action-metadata.h"
 #include "activation-query.h"
+#include "canned-query.h"
 #include "categorised-result.h"
 #include "department.h"
 #include "online-account-client.h"
+#include "option-selector-filter.h"
 #include "preview-query.h"
 #include "preview-reply.h"
 #include "preview-widget.h"
@@ -183,16 +184,17 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_category", &CategorisedResult::set_category)
       .add_method("category", &CategorisedResult::category);
 
-    v8cpp::Class<unity::scopes::CannedQuery> canned_query(isolate);
+    v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
-      .add_method("set_department_id", &unity::scopes::CannedQuery::set_department_id)
-      .add_method("set_query_string", &unity::scopes::CannedQuery::set_query_string)
-      .add_method("set_filter_state", &unity::scopes::CannedQuery::set_filter_state)
-      .add_method("scope_id", &unity::scopes::CannedQuery::scope_id)
-      .add_method("department_id", &unity::scopes::CannedQuery::department_id)
-      .add_method("filter_state", &unity::scopes::CannedQuery::filter_state)
-      .add_method("query_string", &unity::scopes::CannedQuery::query_string)
-      .add_method("to_uri", &unity::scopes::CannedQuery::to_uri);
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      .add_method("set_department_id", &CannedQuery::set_department_id)
+      .add_method("set_query_string", &CannedQuery::set_query_string)
+      .add_method("set_filter_state", &CannedQuery::set_filter_state)
+      .add_method("scope_id", &CannedQuery::scope_id)
+      .add_method("department_id", &CannedQuery::department_id)
+      .add_method("query_string", &CannedQuery::query_string)
+      .add_method("to_uri", &CannedQuery::to_uri)
+      .add_method("filter_state", &CannedQuery::filter_state);
 
     // TODO Should it be more of a value type? (it seems to be used that way
     // in unity API)
@@ -245,6 +247,33 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("has_region_name", &unity::scopes::Location::has_region_name)
       .add_method("region_name", &unity::scopes::Location::region_name)
       .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
+
+    v8cpp::Class<unity::scopes::FilterState> filter_state(isolate);
+    filter_state
+      .set_constructor<>()
+      .add_method("has_filter", &unity::scopes::FilterState::has_filter)
+      .add_method("remove", &unity::scopes::FilterState::remove);
+
+    v8cpp::Class<unity::scopes::FilterOption> filter_option(isolate);
+    filter_option
+      .add_method("id", &unity::scopes::FilterOption::id)
+      .add_method("label", &unity::scopes::FilterOption::label);
+
+    v8cpp::Class<OptionSelectorFilter> option_selector_filter(isolate);
+    option_selector_filter
+      .set_constructor<std::string, std::string, bool>()
+      .add_method("label", &OptionSelectorFilter::label)
+      .add_method("multi_select", &OptionSelectorFilter::multi_select)
+      .add_method("add_option", &OptionSelectorFilter::add_option)
+      .add_method("options", &OptionSelectorFilter::options)
+      .add_method("has_active_option", &OptionSelectorFilter::has_active_option)
+      .add_method("active_options", &OptionSelectorFilter::active_options)
+      .add_method("update_state", &OptionSelectorFilter::update_state)
+      // FilterBase
+      .add_method("set_display_hints", &OptionSelectorFilter::set_display_hints)
+      .add_method("display_hints", &OptionSelectorFilter::display_hints)
+      .add_method("id", &OptionSelectorFilter::id)
+      .add_method("filter_type", &OptionSelectorFilter::filter_type);
 
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
@@ -311,7 +340,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
-      .set_constructor<std::shared_ptr<unity::scopes::CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
+      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
@@ -368,8 +397,11 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("category_renderer", category_renderer);
     module.add_class("column_layout", column_layout);
     module.add_class("department", department);
+    module.add_class("filter_option", filter_option);
+    module.add_class("filter_state", filter_state);
     module.add_class("location", location);
     module.add_class("online_account_client", online_account_client);
+    module.add_class("option_selector_filter", option_selector_filter);
     module.add_class("preview_widget", preview_widget);
     module.add_class("preview_query", preview_query);
     module.add_class("preview_reply", preview_reply);
@@ -387,6 +419,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     // Standalone functions
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
 
+    module.add_function("create_option_selector_filter", &unity::scopes::OptionSelectorFilter::create);
+    
     module.add_function("runtime_version", &get_scopes_runtime_version);
 
     exports->SetPrototype(module.create_prototype());
