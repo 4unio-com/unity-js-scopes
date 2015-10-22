@@ -2,7 +2,7 @@
 ScopeRunner=./node_modules/unity-js-scopes/bin/unity-js-scopes-launcher %S %R
 _DisplayName=%ProjectName:c% Scope
 _Description=This is a %ProjectName:c% scope
-Author = Firstname Lastname
+Author = %ClickMaintainer%
 Icon = icon.png
 
 [Appearance]
