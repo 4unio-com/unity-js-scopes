@@ -113,8 +113,8 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
     std::shared_ptr<CannedQuery> q(
         new CannedQuery(query));
 
-    std::shared_ptr<SearchMetaData> m(
-      new SearchMetaData(metadata));
+    std::shared_ptr<SearchMetadata> m(
+      new SearchMetadata(metadata));
 
     v8::Local<v8::Function> search_callback =
         v8cpp::to_local<v8::Function>(isolate_, search_callback_);

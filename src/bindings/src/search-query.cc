@@ -24,7 +24,7 @@
 
 SearchQuery::SearchQuery(
       std::shared_ptr<CannedQuery> query,
-      std::shared_ptr<SearchMetaData> metadata,
+      std::shared_ptr<SearchMetadata> metadata,
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
   : unity::scopes::SearchQueryBase(query->canned_query(), *metadata->metadata()),

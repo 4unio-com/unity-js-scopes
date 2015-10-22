@@ -25,7 +25,7 @@
 
 /**
 
---doc:class SearchMetaData
+--doc:class SearchMetadata
  * 
  * Metadata passed with search requests.
  * 
@@ -36,7 +36,7 @@
  *  - with cardinality, locale, and form factor.
  *
  * @module ScopeJS
- * @class SearchMetaData
+ * @class SearchMetadata
 --/doc:class
 
 --doc:constructor
@@ -48,7 +48,7 @@
  * @param category The category for the result.
 --/doc:constructor
 
---doc:prototype SearchMetaData
+--doc:prototype SearchMetadata
 
 --doc:member
  * Set cardinality.
@@ -220,11 +220,11 @@ set_internet_connectivity: function(connectivity_status) {
 
  */
 
-class SearchMetaData
+class SearchMetadata
 {
  public:
-  SearchMetaData(v8::FunctionCallbackInfo<v8::Value> const& args);
-  SearchMetaData(const unity::scopes::SearchMetadata&);
+  SearchMetadata(v8::FunctionCallbackInfo<v8::Value> const& args);
+  SearchMetadata(const unity::scopes::SearchMetadata&);
 
   void set_cardinality(int cardinality);
   int cardinality() const;

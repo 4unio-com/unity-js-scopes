@@ -52,7 +52,7 @@ string_from_connectivity_status(unity::scopes::QueryMetadata::ConnectivityStatus
 }
 
 
-SearchMetaData::SearchMetaData(v8::FunctionCallbackInfo<v8::Value> const& args) {
+SearchMetadata::SearchMetadata(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 2 || args.Length() != 3) {
     throw std::runtime_error("Invalid number of arguments");
   }
@@ -76,79 +76,79 @@ SearchMetaData::SearchMetaData(v8::FunctionCallbackInfo<v8::Value> const& args) 
   }
 }
 
-SearchMetaData::SearchMetaData(const unity::scopes::SearchMetadata& meta_data)
+SearchMetadata::SearchMetadata(const unity::scopes::SearchMetadata& meta_data)
   : metadata_(new unity::scopes::SearchMetadata(meta_data)) {
 }
 
-void SearchMetaData::set_location(
+void SearchMetadata::set_location(
       const unity::scopes::Location& location) {
   metadata_->set_location(location);
 }
 
-unity::scopes::Location SearchMetaData::location() const {
+unity::scopes::Location SearchMetadata::location() const {
   return metadata_->location();
 }
 
-void SearchMetaData::set_cardinality(int cardinality) {
+void SearchMetadata::set_cardinality(int cardinality) {
   metadata_->set_cardinality(cardinality);
 }
  
-int SearchMetaData::cardinality() const {
+int SearchMetadata::cardinality() const {
   return metadata_->cardinality();
 }
 
-bool SearchMetaData::has_location() const {
+bool SearchMetadata::has_location() const {
   return metadata_->has_location();
 }
 
-void SearchMetaData::remove_location() {
+void SearchMetadata::remove_location() {
   metadata_->remove_location();
 }
 
-void SearchMetaData::set_aggregated_keywords(std::set<std::string> const& aggregated_keywords) {
+void SearchMetadata::set_aggregated_keywords(std::set<std::string> const& aggregated_keywords) {
   metadata_->set_aggregated_keywords(aggregated_keywords);
 }
 
-std::set<std::string> SearchMetaData::aggregated_keywords() const {
+std::set<std::string> SearchMetadata::aggregated_keywords() const {
   return metadata_->aggregated_keywords();
 }
 
-bool SearchMetaData::is_aggregated() const {
+bool SearchMetadata::is_aggregated() const {
   return metadata_->is_aggregated();
 }
 
-void SearchMetaData::set_hint(std::string const& key, v8::Local<v8::Value> value) {
+void SearchMetadata::set_hint(std::string const& key, v8::Local<v8::Value> value) {
   metadata_->set_hint(key, unity::scopesjs::to_variant(value));
 }
 
-v8::Local<v8::Value> SearchMetaData::hints() const {
+v8::Local<v8::Value> SearchMetadata::hints() const {
   return unity::scopesjs::from_variant(unity::scopes::Variant(metadata_->hints()));
 }
 
-void SearchMetaData::set(const std::string& k, v8::Local<v8::Value> value) {
+void SearchMetadata::set(const std::string& k, v8::Local<v8::Value> value) {
   (*metadata_)[k] = unity::scopesjs::to_variant(value);
 }
 
-v8::Local<v8::Value> SearchMetaData::get(const std::string& k) {
+v8::Local<v8::Value> SearchMetadata::get(const std::string& k) {
   return unity::scopesjs::from_variant((*metadata_)[k]);
 }
 
-std::shared_ptr<unity::scopes::SearchMetadata> SearchMetaData::metadata() {
+std::shared_ptr<unity::scopes::SearchMetadata> SearchMetadata::metadata() {
   return metadata_;
 }
 
-std::string SearchMetaData::locale() const {
+std::string SearchMetadata::locale() const {
   return metadata_->locale();
 }
 
-std::string SearchMetaData::form_factor() const {
+std::string SearchMetadata::form_factor() const {
   return metadata_->form_factor();
 }
 
-void SearchMetaData::set_internet_connectivity(const std::string& internet_connectivity) {
+void SearchMetadata::set_internet_connectivity(const std::string& internet_connectivity) {
   metadata_->set_internet_connectivity(connectivity_status_from_string(internet_connectivity));
 }
 
-std::string SearchMetaData::internet_connectivity() const {
+std::string SearchMetadata::internet_connectivity() const {
   return string_from_connectivity_status(metadata_->internet_connectivity());
 }
