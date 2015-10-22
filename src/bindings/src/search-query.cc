@@ -24,10 +24,10 @@
 
 SearchQuery::SearchQuery(
       std::shared_ptr<unity::scopes::CannedQuery> query,
-      std::shared_ptr<unity::scopes::SearchMetadata> metadata,
+      std::shared_ptr<SearchMetaData> metadata,
       const v8::Local<v8::Function> &run_callback,
       const v8::Local<v8::Function> &cancelled_callback)
-  : unity::scopes::SearchQueryBase(*query, *metadata),
+  : unity::scopes::SearchQueryBase(*query, *metadata->metadata()),
     isolate_(v8::Isolate::GetCurrent()),
     run_callback_(v8::Isolate::GetCurrent(), run_callback),
     cancelled_callback_(v8::Isolate::GetCurrent(), cancelled_callback) {
