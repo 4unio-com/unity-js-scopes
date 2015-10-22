@@ -114,3 +114,30 @@ result = subprocess.check_call(yuidoc_command_line.split(' '))
 
 if result > 0:
     sys.exit(1)
+
+def patch_yui_files_docs(doc_root_folder):
+    header = """/**
+ * Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+ * Code licensed under the BSD License:
+ * https://github.com/yui/yuidoc/blob/master/LICENSE
+ */
+"""
+
+    yui_files = """
+assets/js/yui-prettify.js
+assets/js/api-list.js
+assets/js/apidocs.js
+assets/js/api-search.js
+assets/js/api-filter.js
+assets/vendor/prettify/prettify-min.js
+api.js
+"""
+    for f in yui_files.split():
+        fp = os.path.join(doc_root_folder, f)
+        content = ''
+        with open(fp) as o:
+            content = o.read()
+        with open(fp, "w+") as o:
+            o.write(header + content)
+
+patch_yui_files_docs(target_doc_directory)

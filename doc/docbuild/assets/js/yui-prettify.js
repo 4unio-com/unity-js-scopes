@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+ * Code licensed under the BSD License:
+ * https://github.com/yui/yuidoc/blob/master/LICENSE
+ */
 YUI().use('node', function(Y) {
     var code = Y.all('.prettyprint.linenums');
     if (code.size()) {
