@@ -21,5 +21,5 @@ add_custom_target(
   ./generate-doc.py ${CMAKE_CURRENT_SOURCE_DIR}/../src/bindings/src ${CMAKE_BINARY_DIR}/doc/docbuild
   )
 
-install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/docbuild
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docbuild
         DESTINATION ${CMAKE_INSTALL_DATADIR}/unity-js-scopes/doc)
