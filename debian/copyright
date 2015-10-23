@@ -26,7 +26,7 @@ Files: doc/docbuild/assets/js/yui-prettify.js: BSD (3 clause)
        doc/docbuild/assets/vendor/prettify/prettify-min.js: BSD (3 clause)
        doc/docbuild/api.js: BSD (3 clause)
 Copyright: 2011 Yahoo! Inc.
-License: BSD-3-clause
+License: BSD (3 clause)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:
