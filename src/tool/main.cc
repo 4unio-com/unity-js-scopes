@@ -50,6 +50,27 @@ std::string get_arch() {
   return exec_cmd("dpkg-architecture -qDEB_HOST_ARCH") + "-" + exec_cmd("lsb_release -rs");
 }
 
+int setup_chroot(std::string const& fw)
+{
+  if (exec_cmd("click chroot -a armhf -f ubuntu-sdk-" + fw + " maint echo 1") == "1")
+  {
+    std::string setup_script;
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install software-properties-common -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint add-apt-repository ppa:ubuntu-sdk-team/staging -y \n";
+
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint sh -c \"find /etc/apt/sources.list.d//*.list \
+          -exec apt-get update -o Dir::Etc::sourcelist='{}' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0' \\;\" \n";
+
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-bindings:armhf -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-launcher:armhf -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-tool -y --force-yes \n";
+
+    std::cout << "Setting up " << fw << " chroot ..." << std::endl;
+    return system(setup_script.c_str());
+  }
+  return EXIT_SUCCESS;
+}
+
 void usage() {
   std::cout << "Usage:"
             << std::endl
@@ -335,27 +356,10 @@ int main(int argc, char *argv[]) {
     // Set up 15.04 chroot
     try
     {
-      if (exec_cmd("click chroot -a armhf -f ubuntu-sdk-15.04 maint echo 1") == "1")
+      if (setup_chroot("15.04") == EXIT_FAILURE)
       {
-        std::string script_1504 =
-          R"(
-            click chroot -a armhf -f ubuntu-sdk-15.04 maint apt-get install software-properties-common -y --force-yes
-            click chroot -a armhf -f ubuntu-sdk-15.04 maint add-apt-repository ppa:ubuntu-sdk-team/staging -y
-
-            click chroot -a armhf -f ubuntu-sdk-15.04 maint sh -c "find /etc/apt/sources.list.d//*.list \
-              -exec apt-get update -o Dir::Etc::sourcelist='{}' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0' \;"
-
-            click chroot -a armhf -f ubuntu-sdk-15.04 maint apt-get install unity-js-scopes-bindings:armhf -y --force-yes
-            click chroot -a armhf -f ubuntu-sdk-15.04 maint apt-get install unity-js-scopes-launcher:armhf -y --force-yes
-            click chroot -a armhf -f ubuntu-sdk-15.04 maint apt-get install unity-js-scopes-tool -y --force-yes
-          )";
-
-        std::cout << "Setting up 15.04 chroot ..." << std::endl;
-        if (system(script_1504.c_str()) == EXIT_FAILURE)
-        {
-          std::cout << "Setup failed." << std::endl;
-          return EXIT_FAILURE;
-        }
+        std::cout << "Setup failed." << std::endl;
+        return EXIT_FAILURE;
       }
     }
     catch (std::exception const& e)
@@ -366,27 +370,10 @@ int main(int argc, char *argv[]) {
     // Set up 15.10 chroot
     try
     {
-      if (exec_cmd("click chroot -a armhf -f ubuntu-sdk-15.10 maint echo 1") == "1")
+      if (setup_chroot("15.10") == EXIT_FAILURE)
       {
-        std::string script_1510 =
-          R"(
-            click chroot -a armhf -f ubuntu-sdk-15.10 maint apt-get install software-properties-common -y --force-yes
-            click chroot -a armhf -f ubuntu-sdk-15.10 maint add-apt-repository ppa:ubuntu-sdk-team/staging -y
-
-            click chroot -a armhf -f ubuntu-sdk-15.10 maint sh -c "find /etc/apt/sources.list.d//*.list \
-              -exec apt-get update -o Dir::Etc::sourcelist='{}' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0' \;"
-
-            click chroot -a armhf -f ubuntu-sdk-15.10 maint apt-get install unity-js-scopes-bindings:armhf -y --force-yes
-            click chroot -a armhf -f ubuntu-sdk-15.10 maint apt-get install unity-js-scopes-launcher:armhf -y --force-yes
-            click chroot -a armhf -f ubuntu-sdk-15.10 maint apt-get install unity-js-scopes-tool -y --force-yes
-          )";
-
-        std::cout << "Setting up 15.10 chroot ..." << std::endl;
-        if (system(script_1510.c_str()) == EXIT_FAILURE)
-        {
-          std::cout << "Setup failed." << std::endl;
-          return EXIT_FAILURE;
-        }
+        std::cout << "Setup failed." << std::endl;
+        return EXIT_FAILURE;
       }
     }
     catch (std::exception const& e)
