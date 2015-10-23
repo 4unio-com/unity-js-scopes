@@ -18,13 +18,13 @@ License: GPL-3
  On Debian systems, the full text of the GNU General Public License
  version 3 can be found in the file /usr/share/common-licenses/GPL-3.
 
-Files: doc/docbuild/assets/js/yui-prettify.js: BSD (3 clause)
-       doc/docbuild/assets/js/api-list.js: BSD (3 clause)
-       doc/docbuild/assets/js/apidocs.js: BSD (3 clause)
-       doc/docbuild/assets/js/api-search.js: BSD (3 clause)
-       doc/docbuild/assets/js/api-filter.js: BSD (3 clause)
-       doc/docbuild/assets/vendor/prettify/prettify-min.js: BSD (3 clause)
-       doc/docbuild/api.js: BSD (3 clause)
+Files: doc/docbuild/assets/js/yui-prettify.js
+       doc/docbuild/assets/js/api-list.js
+       doc/docbuild/assets/js/apidocs.js
+       doc/docbuild/assets/js/api-search.js
+       doc/docbuild/assets/js/api-filter.js
+       doc/docbuild/assets/vendor/prettify/prettify-min.js
+       doc/docbuild/api.js
 Copyright: 2011 Yahoo! Inc.
 License: BSD (3 clause)
  Redistribution and use in source and binary forms, with or without
