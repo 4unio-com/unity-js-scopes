@@ -51,3 +51,7 @@ void PreviewReply::finished()
 {
   reply_->finished();
 }
+
+void PreviewReply::info(const unity::scopes::OperationInfo& info) {
+  reply_->info(info);
+}

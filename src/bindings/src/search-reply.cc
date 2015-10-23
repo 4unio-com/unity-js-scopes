@@ -99,3 +99,7 @@ void SearchReply::finished()
 void SearchReply::register_departments(std::shared_ptr<Department> department) {
   reply_->register_departments(department->department());
 }
+
+void SearchReply::info(const unity::scopes::OperationInfo& info) {
+  reply_->info(info);
+}

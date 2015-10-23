@@ -96,10 +96,24 @@ var PostLoginAction = {
     ContinueActivation: "ContinueActivation"
 };
 
+var OperationInfo = {
+    Code: {
+        Unknown: 0,
+        NoInternet: 1,
+        PoorInternet: 2,
+        NoLocationData: 3,
+        InaccurateLocationData: 4,
+        ResultsIncomplete: 5,
+        DefaultSettingsUsed: 6,
+        SettingsProblem: 7
+    }
+};
+
 module.exports = {
     lib: lib,
     defs: {
-        PostLoginAction: PostLoginAction
+        PostLoginAction: PostLoginAction,
+        OperationInfo: OperationInfo
     }
 }
 

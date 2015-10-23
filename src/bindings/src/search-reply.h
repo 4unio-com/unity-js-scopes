@@ -19,6 +19,7 @@
 #ifndef _UNITY_JS_SEARCH_REPLY_H_
 #define _UNITY_JS_SEARCH_REPLY_H_
 
+#include <unity/scopes/OperationInfo.h>
 #include <unity/scopes/SearchReplyProxyFwd.h>
 #include <unity/scopes/Category.h>
 
@@ -47,6 +48,8 @@ class SearchReply
   bool push(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   void finished();
+
+  void info(const unity::scopes::OperationInfo& info);
 
  private:
 

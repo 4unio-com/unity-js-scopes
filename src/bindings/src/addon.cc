@@ -23,6 +23,7 @@
 #include <unity/scopes/ActionMetadata.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategoryRenderer.h>
+#include <unity/scopes/OperationInfo.h>
 #include <unity/scopes/Result.h>
 #include <unity/scopes/SearchReply.h>
 
@@ -275,6 +276,12 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("id", &OptionSelectorFilter::id)
       .add_method("filter_type", &OptionSelectorFilter::filter_type);
 
+    v8cpp::Class<unity::scopes::OperationInfo> operation_info(isolate);
+    operation_info
+      .set_constructor<unity::scopes::OperationInfo::InfoCode, std::string>()
+      .add_method("code", &unity::scopes::OperationInfo::code)
+      .add_method("message", &unity::scopes::OperationInfo::message);
+
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
       .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>>()
@@ -306,7 +313,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       // PreviewReply
       .add_method("register_layout", &PreviewReply::register_layout)
       .add_method("push", &PreviewReply::push)
-      // unity::scopes::PreviewReply
+      .add_method("info", &PreviewReply::info)
       .add_method("finished", &PreviewReply::finished);
 
     v8cpp::Class<Result> result(isolate);
@@ -334,6 +341,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     search_reply
       // SearchReply
       .add_method("register_category", &SearchReply::register_category)
+      .add_method("info", &SearchReply::info)
       .add_method("push", &SearchReply::push)
       .add_method("lookup_category", &SearchReply::lookup_category)
       .add_method("finished", &SearchReply::finished);
@@ -401,6 +409,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("filter_state", filter_state);
     module.add_class("location", location);
     module.add_class("online_account_client", online_account_client);
+    module.add_class("operation_info", operation_info);
     module.add_class("option_selector_filter", option_selector_filter);
     module.add_class("preview_widget", preview_widget);
     module.add_class("preview_query", preview_query);
