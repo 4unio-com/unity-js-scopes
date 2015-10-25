@@ -67,3 +67,5 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
         DESTINATION /usr/share/qtcreator/templates/wizards/ubuntu)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
+        DESTINATION /usr/ubuntu-sdk-ide/share/qtcreator/templates/wizards/ubuntu)
