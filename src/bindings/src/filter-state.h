@@ -18,27 +18,37 @@
 
 /**
 
---doc:class CategoryRenderer
+--doc:class FilterOption
  * 
- * A category renderer template in JSON format.
+ * Captures state of multiple filters.
  * 
  * @module ScopeJS
- * @class CategoryRenderer
+ * @class FilterOption
 --/doc:class
 
 --doc:constructor
  * 
  * @constructor
- * @param json_text Renderer template in JSON format
 --/doc:constructor
 
---doc:prototype CategoryRenderer
+--doc:prototype FilterState
+
 --doc:member
- * Returns complete renderer template definition in JSON format.
- * @method data
- * @return String The renderer template (JSON)
+ * Check if state for the given filter has been stored
+ * @method has_filter
+ * @param id String filter id
+ * @return True if state for the given filter has been stored
 --doc:/member
-data: function() {
+has_filter: function(id) {
+}
+--/doc:member
+
+--doc:member
+ * Removes the state for a specific filter
+ * @method remove
+ * @param id String filter id
+--doc:/member
+remove: function(id) {
 }
 --/doc:member
 

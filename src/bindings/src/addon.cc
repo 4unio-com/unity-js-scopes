@@ -406,6 +406,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("FilterState", filter_state);
     module.add_class("Location", location);
     module.add_class("OnlineAccountClient", online_account_client);
+    module.add_class("OnlineAccountClientServiceStatus", online_account_service_status);
     module.add_class("OptionSelectorFilter", option_selector_filter);
     module.add_class("PreviewWidget", preview_widget);
     module.add_class("PreviewQuery", preview_query);

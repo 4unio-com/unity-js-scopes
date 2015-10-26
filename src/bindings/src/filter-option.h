@@ -18,27 +18,31 @@
 
 /**
 
---doc:class CategoryRenderer
+--doc:class FilterOption
  * 
- * A category renderer template in JSON format.
+ * Holds definition of filter option for OptionSelectorFilter
  * 
  * @module ScopeJS
- * @class CategoryRenderer
+ * @class FilterOption
 --/doc:class
 
---doc:constructor
- * 
- * @constructor
- * @param json_text Renderer template in JSON format
---/doc:constructor
-
 --doc:prototype CategoryRenderer
+
 --doc:member
- * Returns complete renderer template definition in JSON format.
- * @method data
- * @return String The renderer template (JSON)
+ * Get the identifier of this filter option
+ * @method id
+ * @return String The option identifier
 --doc:/member
-data: function() {
+id: function() {
+}
+--/doc:member
+
+--doc:member
+ * Get the label of this filter option
+ * @method label
+ * @return String The option label
+--doc:/member
+label: function() {
 }
 --/doc:member
 

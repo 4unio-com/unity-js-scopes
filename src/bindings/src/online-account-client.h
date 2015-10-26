@@ -28,6 +28,80 @@
 
 #include <v8-cpp.h>
 
+/**
+
+--doc:class OnlineAccountClient
+ * 
+ * A simple interface for integrating online accounts access and monitoring into scopes.
+ * 
+ * @module ScopeJS
+ * @class OnlineAccountClient
+--/doc:class
+
+--doc:constructor
+ * 
+ * @constructor
+ * @param service_name {String} The name of the service (E.g. "com.ubuntu.scopes.youtube_youtube")
+ * @param service_type {String} The type of service (E.g. "sharing")
+ * @param provider_name {String} The name of the service provider (E.g. "google")
+--/doc:constructor
+
+--doc:prototype OnlineAccountClient
+
+--doc:member
+ * Get statuses for all services matching the name, type and provider specified on construction
+ * @method get_service_statuses
+ * @return {Array of OnlineAccountClientServiceStatus} list of service statuses
+--doc:/member
+get_service_statuses: function() {
+}
+--/doc:member
+
+--doc:member
+ * Refresh all service statuses
+ * WARNING: If a service update callback is set, this method will invoke that callback for each service monitored. Therefore, DO NOT call this method from within your callback function!
+ * @method refresh_service_statuses
+--doc:/member
+refresh_service_statuses: function() {
+}
+--/doc:member
+
+--doc:member
+ * Register a result item that requires the user to be logged in.
+ * @param result {Result} The result item that needs account access
+ * @param query {CannedQuery} The scope's current query
+ * @param login_passed_action {PostLoginAction} The action to take upon successful login
+ * @param login_failed_action {PostLoginAction} The action to take upon unsuccessful login
+ * @method register_account_login_item
+--doc:/member
+refresh_account_login_item: function(result, query, login_passed_action, login_failed_action) {
+}
+--/doc:member
+
+--doc:member
+ * Refresh all service statuses
+ * @method register_account_login_item
+ * @param widget {PreviewWidget} The widget item that needs account access
+ * @param login_passed_action {PostLoginAction} The action to take upon successful login
+ * @param login_failed_action {PostLoginAction} The action to take upon unsuccessful login
+--doc:/member
+register_account_login_item: function(widget, login_passed_action, login_failed_action) {
+}
+--/doc:member
+
+--doc:member
+ * Set the callback function to be invoked when a service status changes
+ * @method set_service_update_callback
+ * @param {Function(OnlineAccountServiceStatus)} callback
+--doc:/member
+set_service_update_callback: function(callback) {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class OnlineAccountClient : public std::enable_shared_from_this<OnlineAccountClient>
 {
  public:
