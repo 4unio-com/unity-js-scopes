@@ -86,7 +86,7 @@ function scope_result_from_search_result(
     result) {
 
     var categorised_result =
-        new scopes.lib.categorised_result(category);
+        new scopes.lib.CategorisedResult(category);
 
     categorised_result.set_uri(result.uri)
     categorised_result.set_title(result.description);
@@ -115,13 +115,13 @@ function on_search(canned_query, metadata) {
       } \
     }";
 
-    return new scopes.lib.search_query(
+    return new scopes.lib.SearchQuery(
         canned_query,
         metadata,
         // Query.run
         function(search_reply) {
             var category_renderer =
-                new scopes.lib.category_renderer(category_description);
+                new scopes.lib.CategoryRenderer(category_description);
             var category =
                 search_reply.register_category(
                     "tracks",
@@ -166,30 +166,30 @@ function on_search(canned_query, metadata) {
 };
 
 function on_preview(result, action_metadata) {
-    return new scopes.lib.preview_query(
+    return new scopes.lib.PreviewQuery(
         result,
         action_metadata,
         // run
         function(preview_reply) {
             var r = this.result();
 
-            var layout1col = new scopes.lib.column_layout(1)
+            var layout1col = new scopes.lib.ColumnLayout(1)
             layout1col.add_column(["imageId", "headerId", "actionsId"])
 
-            var layout2col = new scopes.lib.column_layout(2)
+            var layout2col = new scopes.lib.ColumnLayout(2)
             layout2col.add_column(["imageId"])
             layout2col.add_column(["headerId", "actionsId"])
 
             preview_reply.register_layout([layout1col, layout2col]);
 
-            var header_widget = new scopes.lib.preview_widget("headerId", "header");
+            var header_widget = new scopes.lib.PreviewWidget("headerId", "header");
             header_widget.add_attribute_mapping("title", "title");
             header_widget.add_attribute_mapping("subtitle", "subtitle");
 
-            var art_widget = new scopes.lib.preview_widget("imageId", "image");
+            var art_widget = new scopes.lib.PreviewWidget("imageId", "image");
             art_widget.add_attribute_mapping("source", "art");
 
-            var actions_widget = new scopes.lib.preview_widget("actionsId", "actions");
+            var actions_widget = new scopes.lib.PreviewWidget("actionsId", "actions");
             actions_widget.add_attribute_value(
                 "actions",
                 {

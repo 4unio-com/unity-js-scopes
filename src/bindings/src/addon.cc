@@ -392,39 +392,38 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
-    module.add_class("action_metadata", action_metadata);
-    module.add_class("activation_query", activation_query);
-    module.add_class("category", category);
-    module.add_class("categorised_result", categorised_result);
-    module.add_class("canned_query", canned_query);
-    module.add_class("categorised_result", categorised_result);
-    module.add_class("category_renderer", category_renderer);
-    module.add_class("column_layout", column_layout);
-    module.add_class("department", department);
-    module.add_class("filter_option", filter_option);
-    module.add_class("filter_state", filter_state);
-    module.add_class("location", location);
-    module.add_class("online_account_client", online_account_client);
-    module.add_class("option_selector_filter", option_selector_filter);
-    module.add_class("preview_widget", preview_widget);
-    module.add_class("preview_query", preview_query);
-    module.add_class("preview_reply", preview_reply);
-    module.add_class("result", result);
-    module.add_class("search_reply", search_reply);
-    module.add_class("search_query", search_query);
-    module.add_class("search_metadata", search_metadata);
-    module.add_class("variant", variant);
-    module.add_class("variant_map", variant_map);
-    module.add_class("variant_array", variant_array);
+
+    module.add_class("ActionMetadata", action_metadata);
+    module.add_class("ActivationQuery", activation_query);
+    module.add_class("Category", category);
+    module.add_class("CategorisedResult", categorised_result);
+    module.add_class("CannedQuery", canned_query);
+    module.add_class("CategorisedResult", categorised_result);
+    module.add_class("CategoryRenderer", category_renderer);
+    module.add_class("ColumnLayout", column_layout);
+    module.add_class("Department", department);
+    module.add_class("FilterOption", filter_option);
+    module.add_class("FilterState", filter_state);
+    module.add_class("Location", location);
+    module.add_class("OnlineAccountClient", online_account_client);
+    module.add_class("OnlineAccountClientServiceStatus", online_account_service_status);
+    module.add_class("OptionSelectorFilter", option_selector_filter);
+    module.add_class("PreviewWidget", preview_widget);
+    module.add_class("PreviewQuery", preview_query);
+    module.add_class("PreviewReply", preview_reply);
+    module.add_class("Result", result);
+    module.add_class("SearchReply", search_reply);
+    module.add_class("SearchQuery", search_query);
+    module.add_class("SearchMetadata", search_metadata);
+    module.add_class("Variant", variant);
+    module.add_class("Variant_map", variant_map);
+    module.add_class("Variant_array", variant_array);
 
     // Factory functions
     module.add_function("new_scope", &new_scope);
 
     // Standalone functions
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
-
-    module.add_function("create_option_selector_filter", &unity::scopes::OptionSelectorFilter::create);
-    
     module.add_function("runtime_version", &get_scopes_runtime_version);
 
     exports->SetPrototype(module.create_prototype());

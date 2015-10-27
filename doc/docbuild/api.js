@@ -24,7 +24,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
@@ -34,12 +33,17 @@ YUI.add("yuidoc-meta", function(Y) {
         "Category",
         "CategoryRenderer",
         "ColumnLayout",
+        "Department",
+        "FilterOption",
+        "OnlineAccountClient",
+        "OnlineAccountClientServiceStatus",
+        "OptionSelectorFilter",
         "PreviewQuery",
         "PreviewReply",
         "PreviewWidget",
         "Result",
         "Scope",
-        "SearchMetaData",
+        "SearchMetadata",
         "SearchQuery",
         "SearchReply"
     ],

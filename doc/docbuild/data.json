@@ -61,6 +61,58 @@
             "fors": {},
             "namespaces": {}
         },
+        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "modules": {},
+            "classes": {
+                "Department": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "modules": {},
+            "classes": {
+                "FilterOption": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "modules": {},
+            "classes": {
+                "OnlineAccountClientServiceStatus": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "modules": {},
+            "classes": {
+                "OnlineAccountClient": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "modules": {},
+            "classes": {
+                "OptionSelectorFilter": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js": {
             "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
             "modules": {},
@@ -101,7 +153,7 @@
             "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
             "modules": {},
             "classes": {
-                "SearchMetaData": 1
+                "SearchMetadata": 1
             },
             "fors": {},
             "namespaces": {}
@@ -145,11 +197,16 @@
                 "CategoryRenderer": 1,
                 "Category": 1,
                 "ColumnLayout": 1,
+                "Department": 1,
+                "FilterOption": 1,
+                "OnlineAccountClientServiceStatus": 1,
+                "OnlineAccountClient": 1,
+                "OptionSelectorFilter": 1,
                 "PreviewQuery": 1,
                 "PreviewReply": 1,
                 "PreviewWidget": 1,
                 "Result": 1,
-                "SearchMetaData": 1,
+                "SearchMetadata": 1,
                 "SearchQuery": 1,
                 "SearchReply": 1,
                 "Scope": 1
@@ -161,27 +218,15 @@
             "line": 25,
             "description": "Metadata passed to scopes for preview and activation",
             "is_constructor": 1,
-            "example": [
-                "\n\n     var scopes = require('unity-js-scopes')\n     function on_preview(result, action_metadata) {\n       return new scopes.lib.preview_query(\n         result,\n         action_metadata,\n         // run\n         function(preview_reply) {},\n         // cancelled\n         function() {});\n     }\n     scopes.self.initialize(\n      {}\n      ,\n      {\n        run: function() { },\n        start: function(scope_id) { },\n        preview: on_preview,\n      }\n    );"
-            ],
             "params": [
                 {
-                    "name": "canned_query",
-                    "description": "CannedQuery"
-                },
-                {
-                    "name": "action_metadata",
-                    "description": "ActionMetadata"
-                },
-                {
-                    "name": "run",
-                    "description": "Function() Function callback that is to be called by the scope runtime to start the preview.\n              Your implementation of run() can use the provided PreviewReply object to\n              push results for the preview and call finished() on the reply object when\n              you are done with pushing results. You can push results from within run(),\n              in which case the preview implicitly completes when run() returns.\n              Alternatively, run() can store the reply object and return immediately.",
-                    "type": "PreviewReply"
-                },
-                {
-                    "name": "cancelled",
-                    "description": "Function() Called by the scopes runtime when the query originator cancels a query.\n              Your implementation of this method should ensure that the scope stops\n              processing the current query as soon as possible. Any calls to a `push()` method\n              once a query is cancelled are ignored, so continuing to push after cancellation"
+                    "name": "query",
+                    "description": "query associated with the Department",
+                    "type": "CannedQuery"
                 }
+            ],
+            "example": [
+                "\n\n     var scopes = require('unity-js-scopes')\n     function on_preview(result, action_metadata) {\n       return new scopes.lib.preview_query(\n         result,\n         action_metadata,\n         // run\n         function(preview_reply) {},\n         // cancelled\n         function() {});\n     }\n     scopes.self.initialize(\n      {}\n      ,\n      {\n        run: function() { },\n        start: function(scope_id) { },\n        preview: on_preview,\n      }\n    );"
             ]
         }
     },
@@ -270,6 +315,76 @@
             "line": 1,
             "description": "Describes a column layout for preview widgets."
         },
+        "Department": {
+            "name": "Department",
+            "shortname": "Department",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 1,
+            "description": "A department with optional sub-department"
+        },
+        "FilterOption": {
+            "name": "FilterOption",
+            "shortname": "FilterOption",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "line": 1,
+            "description": "Captures state of multiple filters."
+        },
+        "OnlineAccountClientServiceStatus": {
+            "name": "OnlineAccountClientServiceStatus",
+            "shortname": "OnlineAccountClientServiceStatus",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 1,
+            "description": "An object that contains the details about a service's status and authorization parameters"
+        },
+        "OnlineAccountClient": {
+            "name": "OnlineAccountClient",
+            "shortname": "OnlineAccountClient",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "line": 1,
+            "description": "A simple interface for integrating online accounts access and monitoring into scopes."
+        },
+        "OptionSelectorFilter": {
+            "name": "OptionSelectorFilter",
+            "shortname": "OptionSelectorFilter",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 1,
+            "description": "A selection filter that displays a list of choices and allows one or more of them to be selected"
+        },
         "PreviewQuery": {
             "name": "PreviewQuery",
             "shortname": "PreviewQuery",
@@ -326,9 +441,9 @@
             "line": 1,
             "description": "The attributes of a result returned by a Scope\nThe Result API provides convenience methods for some typical attributes (title, art), but scopes are free to add and use any custom attributes with set/get methods. The only required attribute is 'uri' and it must not be empty before calling Reply.push()."
         },
-        "SearchMetaData": {
-            "name": "SearchMetaData",
-            "shortname": "SearchMetaData",
+        "SearchMetadata": {
+            "name": "SearchMetadata",
+            "shortname": "SearchMetadata",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -933,6 +1048,534 @@
             "module": "ScopeJS"
         },
         {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 14,
+            "description": "Add sub-department to this department",
+            "itemtype": "method",
+            "name": "add_subdepartment",
+            "params": [
+                {
+                    "name": "sub",
+                    "description": "department",
+                    "type": "Department"
+                }
+            ],
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 21,
+            "description": "Get the alternate label of this department\nReturn the alternate label of this department. The alternate label expresses the plural \"all\" form of the normal label. For example, if the normal label is \"Books\", then the alternate label is \"All Books\". Note that alternate label and can be empty - in that case the normal label should be displayed instead",
+            "itemtype": "method",
+            "name": "alternate_label",
+            "return": {
+                "description": "alternate label",
+                "type": "String"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 29,
+            "description": "Set sub-departments of this department",
+            "params": [
+                {
+                    "name": "departments",
+                    "description": "",
+                    "type": "Array of Department"
+                }
+            ],
+            "itemtype": "method",
+            "name": "set_subdepartments",
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 36,
+            "description": "Sets has_subdepartments flag of this department",
+            "itemtype": "method",
+            "name": "set_has_subdepartments",
+            "params": [
+                {
+                    "name": "subdepartments",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 43,
+            "description": "Get the identifier of this department",
+            "itemtype": "method",
+            "name": "id",
+            "return": {
+                "description": "identifier of this department",
+                "type": "String"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 50,
+            "description": "Get the label of this department",
+            "itemtype": "method",
+            "name": "label",
+            "return": {
+                "description": "label of this department",
+                "type": "String"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 57,
+            "description": "Get the alternate label of this department",
+            "itemtype": "method",
+            "name": "alternate_label",
+            "return": {
+                "description": "alternate label of this department",
+                "type": "String"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 64,
+            "description": "Get the canned query associated with this department",
+            "itemtype": "method",
+            "name": "query",
+            "return": {
+                "description": "canned query associated with this department",
+                "type": "CannedQuery"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 71,
+            "description": "Get list of sub-departments of this department",
+            "itemtype": "method",
+            "name": "subdepartments",
+            "return": {
+                "description": "list of sub-departments of this department",
+                "type": "Array of Department"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "line": 78,
+            "description": "Check if this department has subdepartments or has_subdepartments flag is set",
+            "itemtype": "method",
+            "name": "has_subdepartments",
+            "return": {
+                "description": "True if this department has subdepartments or has_subdepartments flag is set",
+                "type": "Boolean"
+            },
+            "class": "Department",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js",
+            "line": 11,
+            "description": "Get the identifier of this filter option",
+            "itemtype": "method",
+            "name": "id",
+            "return": {
+                "description": "String The option identifier"
+            },
+            "class": "FilterOption",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js",
+            "line": 18,
+            "description": "Get the label of this filter option",
+            "itemtype": "method",
+            "name": "label",
+            "return": {
+                "description": "String The option label"
+            },
+            "class": "FilterOption",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "line": 12,
+            "description": "Check if state for the given filter has been stored",
+            "itemtype": "method",
+            "name": "has_filter",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "String filter id"
+                }
+            ],
+            "return": {
+                "description": "True if state for the given filter has been stored"
+            },
+            "class": "FilterOption",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "line": 20,
+            "description": "Removes the state for a specific filter",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "String filter id"
+                }
+            ],
+            "class": "FilterOption",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 11,
+            "description": "Check if state for the given filter has been stored",
+            "itemtype": "property",
+            "name": "account_id",
+            "type": "String",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 16,
+            "description": "True if this service is enabled",
+            "itemtype": "property",
+            "name": "service_enabled",
+            "type": "Boolean",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 21,
+            "description": "True if this service is authenticated",
+            "itemtype": "property",
+            "name": "service_authenticated",
+            "type": "Boolean",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 26,
+            "description": "\"ConsumerKey\" / \"ClientId\" OAuth (1 / 2) parameter.",
+            "itemtype": "property",
+            "name": "client_id",
+            "type": "String",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 31,
+            "description": "\"ClientSecret\" / \"ConsumerSecret\" OAuth (1 / 2) parameter.",
+            "itemtype": "property",
+            "name": "client_secret",
+            "type": "String",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 36,
+            "description": "\"AccessToken\" OAuth parameter.",
+            "itemtype": "property",
+            "name": "access_token",
+            "type": "String",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 41,
+            "description": "\"TokenSecret\" OAuth parameter.",
+            "itemtype": "property",
+            "name": "token_secret",
+            "type": "String",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "line": 46,
+            "description": "Error message (empty if no error occurred).",
+            "itemtype": "property",
+            "name": "error",
+            "type": "String",
+            "class": "OnlineAccountClientServiceStatus",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "line": 15,
+            "description": "Get statuses for all services matching the name, type and provider specified on construction",
+            "itemtype": "method",
+            "name": "get_service_statuses",
+            "return": {
+                "description": "list of service statuses",
+                "type": "Array of OnlineAccountClientServiceStatus"
+            },
+            "class": "OnlineAccountClient",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "line": 22,
+            "description": "Refresh all service statuses\nWARNING: If a service update callback is set, this method will invoke that callback for each service monitored. Therefore, DO NOT call this method from within your callback function!",
+            "itemtype": "method",
+            "name": "refresh_service_statuses",
+            "class": "OnlineAccountClient",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "line": 29,
+            "description": "Register a result item that requires the user to be logged in.",
+            "params": [
+                {
+                    "name": "result",
+                    "description": "The result item that needs account access",
+                    "type": "Result"
+                },
+                {
+                    "name": "query",
+                    "description": "The scope's current query",
+                    "type": "CannedQuery"
+                },
+                {
+                    "name": "login_passed_action",
+                    "description": "The action to take upon successful login",
+                    "type": "PostLoginAction"
+                },
+                {
+                    "name": "login_failed_action",
+                    "description": "The action to take upon unsuccessful login",
+                    "type": "PostLoginAction"
+                }
+            ],
+            "itemtype": "method",
+            "name": "register_account_login_item",
+            "class": "OnlineAccountClient",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "line": 39,
+            "description": "Refresh all service statuses",
+            "itemtype": "method",
+            "name": "register_account_login_item",
+            "params": [
+                {
+                    "name": "widget",
+                    "description": "The widget item that needs account access",
+                    "type": "PreviewWidget"
+                },
+                {
+                    "name": "login_passed_action",
+                    "description": "The action to take upon successful login",
+                    "type": "PostLoginAction"
+                },
+                {
+                    "name": "login_failed_action",
+                    "description": "The action to take upon unsuccessful login",
+                    "type": "PostLoginAction"
+                }
+            ],
+            "class": "OnlineAccountClient",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "line": 48,
+            "description": "Set the callback function to be invoked when a service status changes",
+            "itemtype": "method",
+            "name": "set_service_update_callback",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function(OnlineAccountServiceStatus)"
+                }
+            ],
+            "class": "OnlineAccountClient",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 15,
+            "description": "Get the label of this filter",
+            "itemtype": "method",
+            "name": "label",
+            "return": {
+                "description": "label of this filter",
+                "type": "String"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 22,
+            "description": "Check if this filter supports multiple options to be selected",
+            "itemtype": "method",
+            "name": "multi_select",
+            "return": {
+                "description": "True if this filter multiple options to be selected",
+                "type": "Boolean"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 29,
+            "description": "Add a new option to this filter",
+            "itemtype": "method",
+            "name": "add_option",
+            "return": {
+                "description": "FilterOption The added filter option"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 36,
+            "description": "Get all options of this filter, in the order they were added",
+            "itemtype": "method",
+            "name": "options",
+            "return": {
+                "description": "",
+                "type": "Array of FilterOption"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 43,
+            "description": "Check if an option is active for this filter",
+            "itemtype": "method",
+            "name": "has_active_option",
+            "params": [
+                {
+                    "name": "filter_state",
+                    "description": "FilterState"
+                }
+            ],
+            "return": {
+                "description": "True if an option is active for this filter",
+                "type": "Boolean"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 51,
+            "description": "Get active options from an instance of FilterState for this filter",
+            "itemtype": "method",
+            "name": "active_options",
+            "params": [
+                {
+                    "name": "filter_state",
+                    "description": "FilterState"
+                }
+            ],
+            "return": {
+                "description": "LIst of active FilterOption",
+                "type": "Array of FilterOption"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 59,
+            "description": "Marks given FilterOption of this filter instance as active (or not active) in a FilterState object.\nRecords the given FilterOption as \"selected\" in the FilterState. This is meant to be used to modify a FilterState received with a search request before sending it back to the client (UI shell).",
+            "itemtype": "method",
+            "name": "update_state",
+            "params": [
+                {
+                    "name": "filter_state",
+                    "description": "",
+                    "type": "FilterState"
+                },
+                {
+                    "name": "option",
+                    "description": "",
+                    "type": "FilterOption"
+                },
+                {
+                    "name": "active",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 69,
+            "description": "Sets display hints for the Shell UI",
+            "itemtype": "method",
+            "name": "set_display_hints",
+            "params": [
+                {
+                    "name": "hints",
+                    "description": "0 is Default filter hint, 1 is Primary filter hint",
+                    "type": "Int"
+                }
+            ],
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 76,
+            "description": "Get the identifier of this filter",
+            "itemtype": "method",
+            "name": "id",
+            "return": {
+                "description": "identifier of this filter",
+                "type": "String"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "line": 83,
+            "description": "Get the type name of this filter",
+            "itemtype": "method",
+            "name": "filter_type",
+            "return": {
+                "description": "type name of this filter",
+                "type": "String"
+            },
+            "class": "OptionSelectorFilter",
+            "module": "ScopeJS"
+        },
+        {
             "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
             "line": 47,
             "description": "Get result for this preview request",
@@ -1419,7 +2062,7 @@
                     "type": "Int"
                 }
             ],
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1432,7 +2075,7 @@
                 "description": "",
                 "type": "Int"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1448,7 +2091,7 @@
                     "type": "Location"
                 }
             ],
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1461,7 +2104,7 @@
                 "description": "data representing the current location, including attributes such as city and country.",
                 "type": "Location"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1474,7 +2117,7 @@
                 "description": "True if there is a location property.",
                 "type": "Boolean"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1483,7 +2126,7 @@
             "description": "Remove location data entirely.\nThis method does nothing if no location data is present.",
             "itemtype": "method",
             "name": "remove_location",
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1499,7 +2142,7 @@
                     "type": "Array of String"
                 }
             ],
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1512,7 +2155,7 @@
                 "description": "The list of scope keywords used to initiate this search request.",
                 "type": "Array of String"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1525,7 +2168,7 @@
                 "description": "True if this search request originated from an aggregator scope.",
                 "type": "Boolean"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1545,7 +2188,7 @@
                     "description": "Hint value"
                 }
             ],
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1558,7 +2201,7 @@
                 "description": "",
                 "type": "Dictionary"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1578,7 +2221,7 @@
                 "description": "True if the hint is set.",
                 "type": "Boolean"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1599,7 +2242,7 @@
                     "type": "String"
                 }
             ],
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1619,7 +2262,7 @@
                 "description": ", {Number} or {Object}",
                 "type": "String"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1631,7 +2274,7 @@
             "return": {
                 "description": "The form factor string"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1643,7 +2286,7 @@
             "return": {
                 "description": "The locale string"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1656,7 +2299,7 @@
                 "description": "The internet connectivity status.",
                 "type": "ConnectivityStatus"
             },
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
@@ -1672,7 +2315,7 @@
                     "type": "ConnectivityStatus"
                 }
             ],
-            "class": "SearchMetaData",
+            "class": "SearchMetadata",
             "module": "ScopeJS"
         },
         {
