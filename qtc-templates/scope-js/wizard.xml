@@ -24,7 +24,7 @@
         <file source="CMakeLists.txt" openproject="true"/>
         <file source="displayName.apparmor" target="%ClickHookName:l%.apparmor"/>
         <file source="manifest.json.in" openeditor="true"/>
-        <file source=".bzrignore"/>
+        <file source="bzrignore" target=".bzrignore"/>
     </files>
 
     <!-- Create a 2nd wizard page with click package parameters -->
