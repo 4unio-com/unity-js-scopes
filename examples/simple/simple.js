@@ -58,8 +58,13 @@ scopes.self.initialize(
                     var option = option_filter.add_option("id", "yes");
 
                     var p = search_reply.push([option_filter], filter_state);
-
                     console.log(' push : ' + p);
+
+                    // You can specify information about a search reply context
+                    search_reply.info(
+                        new scopes.lib.OperationInfo(
+                            scopes.defs.OperationInfo.Code.PoorInternet,
+                            "Poor internet connection"));
 
                     search_reply.push(categorised_result);
                 },
