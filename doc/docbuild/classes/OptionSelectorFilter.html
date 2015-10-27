@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>OptionSelectorFilter - Javascript Scopes API</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="Javascript Scopes API" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/ActionMetadata.html">ActionMetadata</a></li>
+                                <li><a href="../classes/ActivationQuery.html">ActivationQuery</a></li>
+                                <li><a href="../classes/CategorisedResult.html">CategorisedResult</a></li>
+                                <li><a href="../classes/Category.html">Category</a></li>
+                                <li><a href="../classes/CategoryRenderer.html">CategoryRenderer</a></li>
+                                <li><a href="../classes/ColumnLayout.html">ColumnLayout</a></li>
+                                <li><a href="../classes/Department.html">Department</a></li>
+                                <li><a href="../classes/FilterOption.html">FilterOption</a></li>
+                                <li><a href="../classes/OnlineAccountClient.html">OnlineAccountClient</a></li>
+                                <li><a href="../classes/OnlineAccountClientServiceStatus.html">OnlineAccountClientServiceStatus</a></li>
+                                <li><a href="../classes/OptionSelectorFilter.html">OptionSelectorFilter</a></li>
+                                <li><a href="../classes/PreviewQuery.html">PreviewQuery</a></li>
+                                <li><a href="../classes/PreviewReply.html">PreviewReply</a></li>
+                                <li><a href="../classes/PreviewWidget.html">PreviewWidget</a></li>
+                                <li><a href="../classes/Result.html">Result</a></li>
+                                <li><a href="../classes/Scope.html">Scope</a></li>
+                                <li><a href="../classes/SearchMetadata.html">SearchMetadata</a></li>
+                                <li><a href="../classes/SearchQuery.html">SearchQuery</a></li>
+                                <li><a href="../classes/SearchReply.html">SearchReply</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ScopeJS.html">ScopeJS</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>OptionSelectorFilter Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l1"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:1</code></a>
+        </div>
+
+            Module: <a href="../modules/ScopeJS.html">ScopeJS</a>
+
+</div>
+
+
+<div class="box intro">
+    <p>A selection filter that displays a list of choices and allows one or more of them to be selected</p>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_active_options">active_options</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_add_option">add_option</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_filter_type">filter_type</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_has_active_option">has_active_option</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_id">id</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_label">label</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_multi_select">multi_select</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_options">options</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_set_display_hints">set_display_hints</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_update_state">update_state</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_active_options" class="method item">
+    <h3 class="name"><code>active_options</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>filter_state</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Array of FilterOption</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l51"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:51</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get active options from an instance of FilterState for this filter</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">filter_state</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>FilterState</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array of FilterOption</span>:
+                    <p>LIst of active FilterOption</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_add_option" class="method item">
+    <h3 class="name"><code>add_option</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l29"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:29</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Add a new option to this filter</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    <p>FilterOption The added filter option</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_filter_type" class="method item">
+    <h3 class="name"><code>filter_type</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l83"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:83</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get the type name of this filter</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">String</span>:
+                    <p>type name of this filter</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_has_active_option" class="method item">
+    <h3 class="name"><code>has_active_option</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>filter_state</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l43"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:43</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check if an option is active for this filter</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">filter_state</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>FilterState</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Boolean</span>:
+                    <p>True if an option is active for this filter</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_id" class="method item">
+    <h3 class="name"><code>id</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l76"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:76</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get the identifier of this filter</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">String</span>:
+                    <p>identifier of this filter</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_label" class="method item">
+    <h3 class="name"><code>label</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l15"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:15</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get the label of this filter</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">String</span>:
+                    <p>label of this filter</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_multi_select" class="method item">
+    <h3 class="name"><code>multi_select</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l22"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:22</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Check if this filter supports multiple options to be selected</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Boolean</span>:
+                    <p>True if this filter multiple options to be selected</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_options" class="method item">
+    <h3 class="name"><code>options</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Array of FilterOption</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l36"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:36</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get all options of this filter, in the order they were added</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array of FilterOption</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_set_display_hints" class="method item">
+    <h3 class="name"><code>set_display_hints</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>hints</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l69"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:69</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Sets display hints for the Shell UI</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">hints</code>
+                        <span class="type">Int</span>
+
+
+                    <div class="param-description">
+                        <p>0 is Default filter hint, 1 is Primary filter hint</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_update_state" class="method item">
+    <h3 class="name"><code>update_state</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>filter_state</code>
+                </li>
+                <li class="arg">
+                        <code>option</code>
+                </li>
+                <li class="arg">
+                        <code>active</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_src_option-selector-filter.js.html#l59"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;src&#x2F;option-selector-filter.js:59</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Marks given FilterOption of this filter instance as active (or not active) in a FilterState object.
+Records the given FilterOption as &quot;selected&quot; in the FilterState. This is meant to be used to modify a FilterState received with a search request before sending it back to the client (UI shell).</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">filter_state</code>
+                        <span class="type">FilterState</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">option</code>
+                        <span class="type"><a href="../classes/FilterOption.html" class="crosslink">FilterOption</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">active</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+            </div>
+
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -59,8 +59,8 @@ Description: Development files for Unity JavaScript Scopes
  written in JavaScript.
 
 Package: unity-js-scopes-doc
-Architecture: any
-Multi-Arch: foreign
+Section: doc
+Architecture: all
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          unity-js-scopes-bindings (= ${binary:Version}),

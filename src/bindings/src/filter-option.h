@@ -26,7 +26,7 @@
  * @class FilterOption
 --/doc:class
 
---doc:prototype CategoryRenderer
+--doc:prototype FilterOption
 
 --doc:member
  * Get the identifier of this filter option
