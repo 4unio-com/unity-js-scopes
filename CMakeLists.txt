@@ -60,6 +60,12 @@ else()
 endif()
 
 add_subdirectory(src)
+add_subdirectory(doc)
 
-install(DIRECTORY examples
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples
         DESTINATION ${CMAKE_INSTALL_DATADIR}/unity-js-scopes)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
+        DESTINATION /usr/share/qtcreator/templates/wizards/ubuntu)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
+        DESTINATION /usr/ubuntu-sdk-ide/share/qtcreator/templates/wizards/ubuntu)

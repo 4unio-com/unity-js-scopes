@@ -19,6 +19,7 @@
 #ifndef _UNITY_JS_SEARCH_REPLY_H_
 #define _UNITY_JS_SEARCH_REPLY_H_
 
+#include <unity/scopes/OperationInfo.h>
 #include <unity/scopes/SearchReplyProxyFwd.h>
 #include <unity/scopes/Category.h>
 
@@ -28,11 +29,73 @@
 #include <v8-cpp.h>
 
 
+/**
+
+--doc:class SearchReply
+ * 
+ * Allows the results of a preview to be sent to the preview requester.
+ * 
+ * @module ScopeJS
+ * @class SearchReply
+--/doc:class
+
+--doc:prototype SearchReply
+
+--doc:member
+ * Register new category and send it to the source of the query
+ * @method register_category
+ * @param id String id
+ * @param title String title
+ * @param icon String icon
+ * @param category_renderer CategoryRenderer
+--doc:/member
+register_category: function(String: id, String: title, String: icon, [optional] CategoryRenderer: category_renderer) {
+}
+--/doc:member
+
+--doc:member
+ * Returns a previously registered category
+ * @method id
+ * @param id
+--doc:/member
+lookup_category: function(String: id) {
+}
+--/doc:member
+
+--doc:member
+ * Sends a single result to the source of a query
+ * @method push
+ * @param result CategorisedResult
+--doc:/member
+push: function(CategorisedResult: result) {
+}
+--/doc:member
+
+--doc:member
+ * Informs the source of a query that the query was terminated due to an error
+ * @method error
+ * @return error String error
+--doc:/member
+error: function(String: error) {
+}
+--/doc:member
+
+--doc:member
+ * Informs the source of a query that the query results are complete
+ * @method finished
+--doc:/member
+finished: function() {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
+
 class SearchReply
 {
  public:
   SearchReply(unity::scopes::SearchReplyProxy const& reply);
-  ~SearchReply();
 
   void register_departments(std::shared_ptr<Department> department);
 
@@ -45,12 +108,15 @@ class SearchReply
   unity::scopes::Category::SCPtr
     lookup_category(const std::string& id);
 
-  void push(std::shared_ptr<CategorisedResult> categorised_result);
+  bool push(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   void finished();
 
+  void info(const unity::scopes::OperationInfo& info);
+
  private:
 
+  v8::Isolate* isolate_;
   unity::scopes::SearchReplyProxy const reply_;
 };
 

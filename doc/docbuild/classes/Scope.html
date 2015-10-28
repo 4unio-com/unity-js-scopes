@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Scope - Javascript Scopes API</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="Javascript Scopes API" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/ActionMetadata.html">ActionMetadata</a></li>
+                                <li><a href="../classes/ActivationQuery.html">ActivationQuery</a></li>
+                                <li><a href="../classes/CategorisedResult.html">CategorisedResult</a></li>
+                                <li><a href="../classes/Category.html">Category</a></li>
+                                <li><a href="../classes/CategoryRenderer.html">CategoryRenderer</a></li>
+                                <li><a href="../classes/ColumnLayout.html">ColumnLayout</a></li>
+                                <li><a href="../classes/Department.html">Department</a></li>
+                                <li><a href="../classes/FilterOption.html">FilterOption</a></li>
+                                <li><a href="../classes/OnlineAccountClient.html">OnlineAccountClient</a></li>
+                                <li><a href="../classes/OnlineAccountClientServiceStatus.html">OnlineAccountClientServiceStatus</a></li>
+                                <li><a href="../classes/OptionSelectorFilter.html">OptionSelectorFilter</a></li>
+                                <li><a href="../classes/PreviewQuery.html">PreviewQuery</a></li>
+                                <li><a href="../classes/PreviewReply.html">PreviewReply</a></li>
+                                <li><a href="../classes/PreviewWidget.html">PreviewWidget</a></li>
+                                <li><a href="../classes/Result.html">Result</a></li>
+                                <li><a href="../classes/Scope.html">Scope</a></li>
+                                <li><a href="../classes/SearchMetadata.html">SearchMetadata</a></li>
+                                <li><a href="../classes/SearchQuery.html">SearchQuery</a></li>
+                                <li><a href="../classes/SearchReply.html">SearchReply</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ScopeJS.html">ScopeJS</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Scope Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l25"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:25</code></a>
+        </div>
+
+            Module: <a href="../modules/ScopeJS.html">ScopeJS</a>
+
+</div>
+
+
+<div class="box intro">
+    <p>Scope corresponds to the bridge between the ubuntu scope runtime
+and the actual scope.</p>
+<p>A Scope object is not directly constructible but it is automatically created
+when the scope module is imported and is accessible through the 'self' exported
+member.</p>
+<p>After the scopes runtime has obtained initialization runtime configurations from
+the scope, it calls start(), which allows the scope to intialize itself. This is
+followed by a call to run().</p>
+<p>When the scope should complete its activities, the runtime calls stop().</p>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_initialize">initialize</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property">
+                                <a href="#property_cache_directory">cache_directory</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_registry">registry</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_scope_directory">scope_directory</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_settings">settings</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_tmp_directory">tmp_directory</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_initialize" class="method item">
+    <h3 class="name"><code>initialize</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>options</code>
+                </li>
+                <li class="arg">
+                        <code>runtime_config</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l51"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:51</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This member function is the entry point to setting up a scope's behavior
+and configuring it to the runtime scope.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>A dictionary of options for the scope runtime.
+The option keys are:
+- scope_id: the scope id</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">runtime_config</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>A dictionary of runtime configuration settings for the scope runtime.
+The configuration keys are:
+- run {Function()}: Callback called by the scopes run time after it has called start() to hand a thread of control to the scope
+- starting {Function(String: scope_id)}: Callback called by the scopes run time after the create function completes
+- stop {Function()}: Callback called by the scopes run time when the scope should shut down
+- search {Function(CannedQuery: canned_query, SearchMetaData: metadata)}: Callback called by the scopes run time when a scope needs to instantiate a query
+- perform_action {Function(Result: result, ActionMetaData: metadata, String: widget_id, String: ation_id)}: Callback invoked when a scope is requested to handle a preview action
+- preview {Function(Result: result, ActionMetaData: metadata)}: Callback invoked when a scope is requested to create a preview for a particular result</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>         var scopes = require('unity-js-scopes')
+         scopes.self.initialize(
+           {}, {
+             run: function() {}
+             start: function(scope_id) {
+               console.log('Starting scope id: '
+                 + scope_id
+                 + ', '
+                 + scopes.self.scope_config)
+             },
+             search: function(canned_query, metadata) {}
+           }
+         );</code></pre>
+
+            </div>
+        </div>
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property_cache_directory" class="property item">
+                        <h3 class="name"><code>cache_directory</code></h3>
+                        <span class="type">Unknown</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l135"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:135</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns a directory that is (exclusively) writable for the scope</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_registry" class="property item">
+                        <h3 class="name"><code>registry</code></h3>
+                        <span class="type">Unknown</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l151"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:151</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns the scope registry</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_scope_directory" class="property item">
+                        <h3 class="name"><code>scope_directory</code></h3>
+                        <span class="type">Unknown</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l127"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:127</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns the directory that stores the scope's configuration files and shared library</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_settings" class="property item">
+                        <h3 class="name"><code>settings</code></h3>
+                        <span class="type">Unknown</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l159"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:159</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns a dictionary with the scope's current settings</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_tmp_directory" class="property item">
+                        <h3 class="name"><code>tmp_directory</code></h3>
+                        <span class="type">Unknown</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/_home_alex_dev_work_webapps_branches_scopes_doc_src_bindings_index.js.html#l143"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;doc&#x2F;src&#x2F;bindings&#x2F;index.js:143</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns a tmp directory that is (exclusively) writable for the scope</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

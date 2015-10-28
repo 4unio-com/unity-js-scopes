@@ -30,40 +30,52 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 
-std::string get_arch() {
+std::string exec_cmd(std::string const& cmd) {
   std::string result = "";
 
-  {
-    FILE* pipe = popen("dpkg-architecture -qDEB_HOST_ARCH", "r");
-    if (!pipe) throw std::runtime_error("'dpkg-architecture' command failed");
-    char buffer[128];
-    while (!feof(pipe)) {
-      if (fgets(buffer, 128, pipe) != NULL)
-        result += buffer;
-    }
-    result.pop_back();
-    pclose(pipe);
+  FILE* pipe = popen(cmd.c_str(), "r");
+  if (!pipe) throw std::runtime_error("'" + cmd + "' command failed");
+  char buffer[128];
+  while (!feof(pipe)) {
+    if (fgets(buffer, 128, pipe) != NULL)
+      result += buffer;
   }
-
-  result += "-";
-
-  {
-    FILE* pipe = popen("lsb_release -rs", "r");
-    if (!pipe) throw std::runtime_error("'lsb_release' command failed");
-    char buffer[128];
-    while (!feof(pipe)) {
-      if (fgets(buffer, 128, pipe) != NULL)
-        result += buffer;
-    }
-    result.pop_back();
-    pclose(pipe);
-  }
+  result.pop_back();
+  pclose(pipe);
 
   return result;
 }
 
+std::string get_arch() {
+  return exec_cmd("dpkg-architecture -qDEB_HOST_ARCH") + "-" + exec_cmd("lsb_release -rs");
+}
+
+int setup_chroot(std::string const& fw)
+{
+  if (exec_cmd("click chroot -a armhf -f ubuntu-sdk-" + fw + " maint echo 1") == "1")
+  {
+    std::string setup_script;
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install software-properties-common -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint add-apt-repository ppa:ubuntu-sdk-team/staging -y \n";
+
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint sh -c \"find /etc/apt/sources.list.d//*.list \
+          -exec apt-get update -o Dir::Etc::sourcelist='{}' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0' \\;\" \n";
+
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-bindings:armhf -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-launcher:armhf -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-tool -y --force-yes \n";
+
+    std::cout << "Setting up " << fw << " chroot ..." << std::endl;
+    return system(setup_script.c_str());
+  }
+  return EXIT_SUCCESS;
+}
+
 void usage() {
   std::cout << "Usage:"
+            << std::endl
+            << executable_name()
+            << " setup "
             << std::endl
             << executable_name()
             << " [re]install "
@@ -332,6 +344,53 @@ int main(int argc, char *argv[]) {
     }
 
     return result;
+  }
+  else if (std::string(argv[1]) == "setup") {
+    if (argc > 2) {
+      usage();
+      return EXIT_FAILURE;
+    }
+
+    std::cout << "Setup started." << std::endl;
+
+    // Set up 15.04 chroot
+    try
+    {
+      if (setup_chroot("15.04") == EXIT_FAILURE)
+      {
+        std::cout << "Setup failed." << std::endl;
+        return EXIT_FAILURE;
+      }
+    }
+    catch (std::exception const& e)
+    {
+      std::cout << "Failed to detect 15.04 chroot: " << e.what() << " ..." << std::endl;
+    }
+
+    // Set up 15.10 chroot
+    try
+    {
+      if (setup_chroot("15.10") == EXIT_FAILURE)
+      {
+        std::cout << "Setup failed." << std::endl;
+        return EXIT_FAILURE;
+      }
+    }
+    catch (std::exception const& e)
+    {
+      std::cout << "Failed to detect 15.10 chroot: " << e.what() << " ..." << std::endl;
+    }
+
+    // Remount chroots
+    std::cout << "Remounting chroots ..." << std::endl;
+    if (system("click-chroot-agent --reload") == EXIT_FAILURE)
+    {
+      std::cout << "Setup failed." << std::endl;
+      return EXIT_FAILURE;
+    }
+
+    std::cout << "Setup complete." << std::endl;
+    return EXIT_SUCCESS;
   }
   else {
     return node::Start(argc, argv);

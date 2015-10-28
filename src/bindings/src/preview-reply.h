@@ -19,11 +19,65 @@
 #ifndef _UNITY_JS_PREVIEW_REPLY_H_
 #define _UNITY_JS_PREVIEW_REPLY_H_
 
+#include <unity/scopes/OperationInfo.h>
 #include <unity/scopes/PreviewReply.h>
 
 #include "preview-widget.h"
 
 #include <v8-cpp.h>
+
+/**
+
+--doc:class PreviewReply
+ * 
+ * Allows the results of a preview to be sent to the preview requester.
+ * 
+ * @module ScopeJS
+ * 
+ * @class PreviewReply
+--/doc:class
+
+--doc:prototype PreviewReply
+
+--doc:member
+ * Registers a list of column layouts for the current preview
+ * @method register_layout
+ * @param layout {Array of Column layout}
+--doc:/member
+register_layout: function(layout) {
+}
+--/doc:member
+
+--doc:member
+ * Sends widget definitions to the sender of the preview query
+ * @method push
+ * @param widget_list {Array of PreviewWidget}
+--doc:/member
+push: function(widget_list) {
+}
+--/doc:member
+
+--doc:member
+ * Informs the source of a query that the query results are complete
+ * @method finished
+ * @return Boolean
+--doc:/member
+finished: function() {
+}
+--/doc:member
+
+--doc:member
+ * Informs the source of a query that the query was terminated due to an error
+ * @method error
+ * @return error String error
+--doc:/member
+error: function(error) {
+}
+--/doc:member
+
+--/doc:prototype
+
+ */
 
 class PreviewReply
 {
@@ -37,7 +91,8 @@ class PreviewReply
   void push(
       std::vector<std::shared_ptr<PreviewWidget>> const& widgets);
   void finished();
-
+  void info(const unity::scopes::OperationInfo& info);
+  
  private:
   unity::scopes::PreviewReplyProxy const reply_;
 };

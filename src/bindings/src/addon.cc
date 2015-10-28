@@ -21,9 +21,9 @@
 #include <stdexcept>
 
 #include <unity/scopes/ActionMetadata.h>
-#include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/Category.h>
 #include <unity/scopes/CategoryRenderer.h>
+#include <unity/scopes/OperationInfo.h>
 #include <unity/scopes/Result.h>
 #include <unity/scopes/SearchReply.h>
 
@@ -34,9 +34,11 @@
 
 #include "action-metadata.h"
 #include "activation-query.h"
+#include "canned-query.h"
 #include "categorised-result.h"
 #include "department.h"
 #include "online-account-client.h"
+#include "option-selector-filter.h"
 #include "preview-query.h"
 #include "preview-reply.h"
 #include "preview-widget.h"
@@ -181,16 +183,17 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_category", &CategorisedResult::set_category)
       .add_method("category", &CategorisedResult::category);
 
-    v8cpp::Class<unity::scopes::CannedQuery> canned_query(isolate);
+    v8cpp::Class<CannedQuery> canned_query(isolate);
     canned_query
-      .add_method("set_department_id", &unity::scopes::CannedQuery::set_department_id)
-      .add_method("set_query_string", &unity::scopes::CannedQuery::set_query_string)
-      .add_method("set_filter_state", &unity::scopes::CannedQuery::set_filter_state)
-      .add_method("scope_id", &unity::scopes::CannedQuery::scope_id)
-      .add_method("department_id", &unity::scopes::CannedQuery::department_id)
-      .add_method("filter_state", &unity::scopes::CannedQuery::filter_state)
-      .add_method("query_string", &unity::scopes::CannedQuery::query_string)
-      .add_method("to_uri", &unity::scopes::CannedQuery::to_uri);
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      .add_method("set_department_id", &CannedQuery::set_department_id)
+      .add_method("set_query_string", &CannedQuery::set_query_string)
+      .add_method("set_filter_state", &CannedQuery::set_filter_state)
+      .add_method("scope_id", &CannedQuery::scope_id)
+      .add_method("department_id", &CannedQuery::department_id)
+      .add_method("query_string", &CannedQuery::query_string)
+      .add_method("to_uri", &CannedQuery::to_uri)
+      .add_method("filter_state", &CannedQuery::filter_state);
 
     // TODO Should it be more of a value type? (it seems to be used that way
     // in unity API)
@@ -244,6 +247,39 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("region_name", &unity::scopes::Location::region_name)
       .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
 
+    v8cpp::Class<unity::scopes::FilterState> filter_state(isolate);
+    filter_state
+      .set_constructor<>()
+      .add_method("has_filter", &unity::scopes::FilterState::has_filter)
+      .add_method("remove", &unity::scopes::FilterState::remove);
+
+    v8cpp::Class<unity::scopes::FilterOption> filter_option(isolate);
+    filter_option
+      .add_method("id", &unity::scopes::FilterOption::id)
+      .add_method("label", &unity::scopes::FilterOption::label);
+
+    v8cpp::Class<OptionSelectorFilter> option_selector_filter(isolate);
+    option_selector_filter
+      .set_constructor<std::string, std::string, bool>()
+      .add_method("label", &OptionSelectorFilter::label)
+      .add_method("multi_select", &OptionSelectorFilter::multi_select)
+      .add_method("add_option", &OptionSelectorFilter::add_option)
+      .add_method("options", &OptionSelectorFilter::options)
+      .add_method("has_active_option", &OptionSelectorFilter::has_active_option)
+      .add_method("active_options", &OptionSelectorFilter::active_options)
+      .add_method("update_state", &OptionSelectorFilter::update_state)
+      // FilterBase
+      .add_method("set_display_hints", &OptionSelectorFilter::set_display_hints)
+      .add_method("display_hints", &OptionSelectorFilter::display_hints)
+      .add_method("id", &OptionSelectorFilter::id)
+      .add_method("filter_type", &OptionSelectorFilter::filter_type);
+
+    v8cpp::Class<unity::scopes::OperationInfo> operation_info(isolate);
+    operation_info
+      .set_constructor<unity::scopes::OperationInfo::InfoCode, std::string>()
+      .add_method("code", &unity::scopes::OperationInfo::code)
+      .add_method("message", &unity::scopes::OperationInfo::message);
+
     v8cpp::Class<PreviewWidget> preview_widget(isolate);
     preview_widget
       .set_constructor<v8::Local<v8::Value>, v8::Local<v8::Value>>()
@@ -275,7 +311,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       // PreviewReply
       .add_method("register_layout", &PreviewReply::register_layout)
       .add_method("push", &PreviewReply::push)
-      // unity::scopes::PreviewReply
+      .add_method("info", &PreviewReply::info)
       .add_method("finished", &PreviewReply::finished);
 
     v8cpp::Class<Result> result(isolate);
@@ -303,13 +339,14 @@ void InitAll(v8::Handle<v8::Object> exports)
     search_reply
       // SearchReply
       .add_method("register_category", &SearchReply::register_category)
+      .add_method("info", &SearchReply::info)
       .add_method("push", &SearchReply::push)
       .add_method("lookup_category", &SearchReply::lookup_category)
       .add_method("finished", &SearchReply::finished);
 
     v8cpp::Class<SearchQuery> search_query(isolate);
     search_query
-      .set_constructor<std::shared_ptr<unity::scopes::CannedQuery>, std::shared_ptr<unity::scopes::SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
+      .set_constructor<std::shared_ptr<CannedQuery>, std::shared_ptr<SearchMetadata>, v8::Local<v8::Function>, v8::Local<v8::Function>>()
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
@@ -343,23 +380,27 @@ void InitAll(v8::Handle<v8::Object> exports)
       // .add_method("settings_definitions", &unity::scopes::ScopeMetadata::settings_definitions)
       .add_method("location_data_needed", &unity::scopes::ScopeMetadata::location_data_needed);
 
-    v8cpp::Class<SearchMetaData> search_metadata(isolate);
+    v8cpp::Class<SearchMetadata> search_metadata(isolate);
     search_metadata
-      .add_inheritance<unity::scopes::SearchMetadata>()
-      // unity::scopes::SearchMetadata
-      .add_method("set_cardinality", &unity::scopes::SearchMetadata::set_cardinality)
-      .add_method("cardinality", &unity::scopes::SearchMetadata::cardinality)
-      .add_method("has_location", &unity::scopes::SearchMetadata::has_location)
-      .add_method("set_hint", &unity::scopes::SearchMetadata::set_hint)
-      .add_method("hints", &unity::scopes::SearchMetadata::hints)
-      // QueryMetadata
-      .add_method("locale", &unity::scopes::QueryMetadata::locale)
-      .add_method("form_factor", &unity::scopes::QueryMetadata::form_factor)
-      .add_method("set_internet_connectivity", &unity::scopes::QueryMetadata::set_internet_connectivity)
-      .add_method("internet_connectivity", &unity::scopes::QueryMetadata::internet_connectivity)
-      // SearchMetaData
-      .add_method("set_location", &SearchMetaData::set_location)
-      .add_method("location", &SearchMetaData::location);
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      // SearchMetadata
+      .add_method("set_cardinality", &SearchMetadata::set_cardinality)
+      .add_method("cardinality", &SearchMetadata::cardinality)
+      .add_method("has_location", &SearchMetadata::has_location)
+      .add_method("remove_location", &SearchMetadata::remove_location)
+      .add_method("set_aggregated_keywords", &SearchMetadata::set_aggregated_keywords)
+      .add_method("aggregated_keywords", &SearchMetadata::aggregated_keywords)
+      .add_method("is_aggregated", &SearchMetadata::is_aggregated)
+      .add_method("set_hint", &SearchMetadata::set_hint)
+      .add_method("hints", &SearchMetadata::hints)
+      .add_method("set", &SearchMetadata::set)
+      .add_method("get", &SearchMetadata::get)
+      .add_method("set_location", &SearchMetadata::set_location)
+      .add_method("location", &SearchMetadata::location)
+      .add_method("locale", &SearchMetadata::locale)
+      .add_method("form_factor", &SearchMetadata::form_factor)
+      .add_method("set_internet_connectivity", &SearchMetadata::set_internet_connectivity)
+      .add_method("internet_connectivity", &SearchMetadata::internet_connectivity);
 
     v8cpp::Class<OnlineAccountClient> online_account_client(isolate);
     online_account_client
@@ -387,32 +428,38 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
-    module.add_class("action_metadata", action_metadata);
-    module.add_class("activation_query", activation_query);
-    module.add_class("category", category);
-    module.add_class("categorised_result", categorised_result);
-    module.add_class("canned_query", canned_query);
-    module.add_class("categorised_result", categorised_result);
-    module.add_class("category_renderer", category_renderer);
-    module.add_class("column_layout", column_layout);
-    module.add_class("department", department);
-    module.add_class("location", location);
-    module.add_class("online_account_client", online_account_client);
-    module.add_class("preview_widget", preview_widget);
-    module.add_class("preview_query", preview_query);
-    module.add_class("preview_reply", preview_reply);
-    module.add_class("result", result);
-    module.add_class("search_reply", search_reply);
-    module.add_class("search_query", search_query);
-    module.add_class("search_metadata", search_metadata);
-    module.add_class("variant", variant);
+    module.add_class("ActionMetadata", action_metadata);
+    module.add_class("ActivationQuery", activation_query);
+    module.add_class("Category", category);
+    module.add_class("CategorisedResult", categorised_result);
+    module.add_class("CannedQuery", canned_query);
+    module.add_class("CategorisedResult", categorised_result);
+    module.add_class("CategoryRenderer", category_renderer);
+    module.add_class("ColumnLayout", column_layout);
+    module.add_class("Department", department);
+    module.add_class("FilterOption", filter_option);
+    module.add_class("FilterState", filter_state);
+    module.add_class("Location", location);
+    module.add_class("OnlineAccountClient", online_account_client);
+    module.add_class("OnlineAccountClientServiceStatus", online_account_service_status);
+    module.add_class("OperationInfo", operation_info);
+    module.add_class("OptionSelectorFilter", option_selector_filter);
+    module.add_class("PreviewWidget", preview_widget);
+    module.add_class("PreviewQuery", preview_query);
+    module.add_class("PreviewReply", preview_reply);
+    module.add_class("Registry", registry);
+    module.add_class("Result", result);
+    module.add_class("ScopeMetadata", scope_metadata);
+    module.add_class("SearchReply", search_reply);
+    module.add_class("SearchQuery", search_query);
+    module.add_class("SearchMetadata", search_metadata);
+    module.add_class("Variant", variant);
 
     // Factory functions
     module.add_function("new_scope", &new_scope);
 
     // Standalone functions
     module.add_function("new_category_renderer_from_file", &new_category_renderer_from_file);
-
     module.add_function("runtime_version", &get_scopes_runtime_version);
 
     exports->SetPrototype(module.create_prototype());

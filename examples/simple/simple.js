@@ -107,7 +107,7 @@ scopes.self.initialize(
             dump_scope_registry_data();
         },
         search: function(canned_query, metadata) {
-            return new scopes.lib.search_query(
+            return new scopes.lib.SearchQuery(
                 canned_query,
                 metadata,
                 // run
@@ -122,10 +122,25 @@ scopes.self.initialize(
                             null);
 
                     var categorised_result =
-                        new scopes.lib.categorised_result(category);
+                        new scopes.lib.CategorisedResult(category);
                     categorised_result.set_uri("http://www.ubuntu.com");
                     categorised_result.set_title("'" + qs + "'");
-                    
+
+                    var filter_state =
+                        new scopes.lib.FilterState();
+                    var option_filter =
+                        new scopes.lib.OptionSelectorFilter('me', 'push', false);
+                    var option = option_filter.add_option("id", "yes");
+
+                    var p = search_reply.push([option_filter], filter_state);
+                    console.log(' push : ' + p);
+
+                    // You can specify information about a search reply context
+                    search_reply.info(
+                        new scopes.lib.OperationInfo(
+                            scopes.defs.OperationInfo.Code.PoorInternet,
+                            "Poor internet connection"));
+
                     search_reply.push(categorised_result);
                 },
                 // cancelled

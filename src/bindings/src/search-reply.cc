@@ -18,16 +18,40 @@
 
 #include "search-reply.h"
 
+#include "categorised-result.h"
+#include "option-selector-filter.h"
+
 #include <stdexcept>
 
 #include <unity/scopes/SearchReply.h>
 
 
-SearchReply::SearchReply(unity::scopes::SearchReplyProxy const& reply)
-  : reply_(reply){
+namespace {
+
+unity::scopes::Filters from_v8_to_filters(
+      v8::Isolate* isolate,
+      v8::Local<v8::Value> value) {
+  unity::scopes::Filters
+    filter_bases;
+  v8::Handle<v8::Object> o = v8::Handle<v8::Object>::Cast(value);
+  for (size_t i = 0;
+       i < o->Get(v8::String::NewFromUtf8(isolate, "length"))->ToObject()->Uint32Value();
+       ++i) {
+    v8::Local<v8::Value> fv = o->Get(i);
+    try {
+      auto f = v8cpp::from_v8<std::shared_ptr<OptionSelectorFilter>>(isolate, fv);
+      filter_bases.push_back(f->get_filter());
+    } catch(...) { }
+  }
+  return filter_bases;
+}
+  
 }
 
-SearchReply::~SearchReply() {
+
+SearchReply::SearchReply(unity::scopes::SearchReplyProxy const& reply)
+  : isolate_(v8::Isolate::GetCurrent())
+  , reply_(reply){
 }
 
 unity::scopes::Category::SCPtr SearchReply::lookup_category(
@@ -35,9 +59,24 @@ unity::scopes::Category::SCPtr SearchReply::lookup_category(
   return reply_->lookup_category(id);
 }
 
-void SearchReply::push(
-      std::shared_ptr<CategorisedResult> categorised_result) {
-  reply_->push(*categorised_result);
+bool SearchReply::push(v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 1 && args.Length() != 2) {
+    throw std::runtime_error("Invalid number of arguments");
+  }
+
+  if (args.Length() == 1) {
+    auto cr =
+      v8cpp::from_v8<std::shared_ptr<CategorisedResult>>(isolate_, args[0]);
+    return reply_->push(*cr);
+  }
+
+  auto filter_state =
+      v8cpp::from_v8<std::shared_ptr<unity::scopes::FilterState>>(isolate_, args[1]);
+
+  // TODO fix v8cpp shortcoming here
+  return reply_->push(
+      from_v8_to_filters(isolate_, args[0]),
+      *filter_state);
 }
 
 unity::scopes::Category::SCPtr SearchReply::register_category(
@@ -59,4 +98,8 @@ void SearchReply::finished()
 
 void SearchReply::register_departments(std::shared_ptr<Department> department) {
   reply_->register_departments(department->department());
+}
+
+void SearchReply::info(const unity::scopes::OperationInfo& info) {
+  reply_->info(info);
 }
