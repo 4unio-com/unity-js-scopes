@@ -22,10 +22,28 @@
 
 namespace {
 
+// Moveable v8::UniquePersistent
+template <typename T>
+struct MoveablePersistent : public v8::UniquePersistent<T>
+{
+    using BaseClass = v8::UniquePersistent<T>;
+    using BaseClass::BaseClass;
+
+    MoveablePersistent(MoveablePersistent&& src)
+        : BaseClass(src.Pass())
+    {
+    }
+
+    MoveablePersistent(MoveablePersistent const&) = delete;
+};
+
 std::map<std::shared_ptr<Registry>,
-         core::ScopedConnection> active_scope_state_connections_;
+         std::pair<core::ScopedConnection,
+                   MoveablePersistent<v8::Function>>> active_scope_state_connections_;
+
 std::map<std::shared_ptr<Registry>,
-         core::ScopedConnection> active_list_update_connections_;
+         std::pair<core::ScopedConnection,
+                   MoveablePersistent<v8::Function>>> active_list_update_connections_;
 
 }
 
@@ -71,19 +89,27 @@ void Registry::set_scope_state_callback(const std::string& scope_id,
   core::ScopedConnection connection =
     proxy_->set_scope_state_callback(scope_id, [this, callback] (bool is_running) {
         EventQueue::instance().run(isolate_, [this, callback, is_running] {
+            auto it = active_scope_state_connections_.find(shared_from_this());
+            v8::Local<v8::Function> cb =
+              v8cpp::to_local<v8::Function>(isolate_, it->second.second);
+
             v8cpp::call_v8_with_receiver(
-                isolate_,
+                isolate_, 
                 v8cpp::to_v8(isolate_, shared_from_this()),
-                callback,
+                cb,
                 v8cpp::to_v8(isolate_, is_running)
             );
           });
     });
 
+  MoveablePersistent<v8::Function> persistent_callback(isolate_, callback);
+
   active_scope_state_connections_.insert(
       std::make_pair(
           shared_from_this(),
-          core::ScopedConnection(std::move(connection))));
+          std::make_pair(
+              core::ScopedConnection(std::move(connection)),
+              std::move(persistent_callback))));
 }
 
 void Registry::set_list_update_callback(v8::Local<v8::Function> callback) {
@@ -97,17 +123,25 @@ void Registry::set_list_update_callback(v8::Local<v8::Function> callback) {
   core::ScopedConnection connection =
     proxy_->set_list_update_callback([this, callback] () {
         EventQueue::instance().run(isolate_, [this, callback] {
+            auto it = active_list_update_connections_.find(shared_from_this());
+            v8::Local<v8::Function> cb =
+              v8cpp::to_local<v8::Function>(isolate_, it->second.second);
+
             v8cpp::call_v8_with_receiver(
                 isolate_,
                 v8cpp::to_v8(isolate_, shared_from_this()),
-                callback
+                cb
             );
           });
     });
 
+  MoveablePersistent<v8::Function> persistent_callback(isolate_, callback);
+
   active_list_update_connections_.insert(
       std::make_pair(
           shared_from_this(),
-          core::ScopedConnection(std::move(connection))));
+          std::make_pair(
+              core::ScopedConnection(std::move(connection)),
+              std::move(persistent_callback))));
 }
 
