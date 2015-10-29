@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FilterOption - Javascript Scopes API</title>
+    <title>Registry - Javascript Scopes API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,12 +96,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>FilterOption Class</h1>
+<h1>Registry Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_filter-state.js.html#l1"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;filter-state.js:1</code></a>
+            Defined in: <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l1"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:1</code></a>
         </div>
 
             Module: <a href="../modules/ScopeJS.html">ScopeJS</a>
@@ -110,7 +110,7 @@
 
 
 <div class="box intro">
-    <p>Captures state of multiple filters.</p>
+    <p>White pages service for available scopes</p>
 
 </div>
 
@@ -131,19 +131,27 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_has_filter">has_filter</a>
+                                <a href="#method_get_metadata">get_metadata</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_id">id</a>
+                                <a href="#method_is_scope_running">is_scope_running</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_label">label</a>
+                                <a href="#method_list">list</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_remove">remove</a>
+                                <a href="#method_list_if">list_if</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_set_list_update_callback">set_list_update_callback</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_set_scope_state_callback">set_scope_state_callback</a>
 
                             </li>
                     </ul>
@@ -156,8 +164,8 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_has_filter" class="method item">
-    <h3 class="name"><code>has_filter</code></h3>
+<div id="method_get_metadata" class="method item">
+    <h3 class="name"><code>get_metadata</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -168,7 +176,7 @@
         </div>
 
         <span class="returns-inline">
-            <span class="type"></span>
+            <span class="type"><a href="../classes/ScopeMetadata.html" class="crosslink">ScopeMetadata</a></span>
         </span>
 
 
@@ -180,7 +188,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_filter-state.js.html#l12"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;filter-state.js:12</code></a>
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l12"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:12</code></a>
         </p>
 
 
@@ -188,7 +196,7 @@
     </div>
 
     <div class="description">
-        <p>Check if state for the given filter has been stored</p>
+        <p>Returns the metadata for the scope with the given ID</p>
 
     </div>
 
@@ -198,11 +206,11 @@
             <ul class="params-list">
                 <li class="param">
                         <code class="param-name">id</code>
-                        <span class="type">Object</span>
+                        <span class="type">String</span>
 
 
                     <div class="param-description">
-                        <p>String filter id</p>
+                        <p>Attribute definition</p>
 
                     </div>
 
@@ -214,104 +222,190 @@
             <h4>Returns:</h4>
 
             <div class="returns-description">
-                    <p>True if state for the given filter has been stored</p>
-
+                        <span class="type"><a href="../classes/ScopeMetadata.html" class="crosslink">ScopeMetadata</a></span>:
             </div>
         </div>
 
 
 </div>
-<div id="method_id" class="method item">
-    <h3 class="name"><code>id</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_filter-option.js.html#l11"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;filter-option.js:11</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the identifier of this filter option</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                    <p>String The option identifier</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_label" class="method item">
-    <h3 class="name"><code>label</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_filter-option.js.html#l18"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;filter-option.js:18</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the label of this filter option</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                    <p>String The option label</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_remove" class="method item">
-    <h3 class="name"><code>remove</code></h3>
+<div id="method_is_scope_running" class="method item">
+    <h3 class="name"><code>is_scope_running</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
-                        <code>id</code>
+                        <code>scope_id</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l35"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:35</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns whether a scope is currently running or not</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">scope_id</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The ID of the scope from which we wish to retrieve state</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Boolean</span>:
+                    <p>True if the scope is running, and False if it is not running</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_list" class="method item">
+    <h3 class="name"><code>list</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Dictionary of String -> ScopeMetadata</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l20"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:20</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns a map containing the metadata for all scopes</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Dictionary of String -> ScopeMetadata</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_list_if" class="method item">
+    <h3 class="name"><code>list_if</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>predicate</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Dictionary of String -> ScopeMetadata</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l27"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:27</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Returns a map containing only those scopes for which predicate returns true</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">predicate</code>
+                        <span class="type">Function(ScopeMetadata)</span>
+
+
+                    <div class="param-description">
+                        <p>a function that must return true for each metadata item to be included in the map.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Dictionary of String -> ScopeMetadata</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_set_list_update_callback" class="method item">
+    <h3 class="name"><code>set_list_update_callback</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>callback</code>
                 </li>
             </ul><span class="paren">)</span>
         </div>
@@ -326,7 +420,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_filter-state.js.html#l20"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;filter-state.js:20</code></a>
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l51"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:51</code></a>
         </p>
 
 
@@ -334,7 +428,8 @@
     </div>
 
     <div class="description">
-        <p>Removes the state for a specific filter</p>
+        <p>Assigns a callback method to be executed when the registry's scope list changes</p>
+<p>Note: Upon receiving this callback, you should retrieve the updated scopes list via the list() method if you wish to retain synchronisation between client and server</p>
 
     </div>
 
@@ -343,12 +438,80 @@
 
             <ul class="params-list">
                 <li class="param">
-                        <code class="param-name">id</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">callback</code>
+                        <span class="type">Function()</span>
 
 
                     <div class="param-description">
-                        <p>String filter id</p>
+                        <p>The function that is invoked when an update occurs</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_set_scope_state_callback" class="method item">
+    <h3 class="name"><code>set_scope_state_callback</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>scope_id</code>
+                </li>
+                <li class="arg">
+                        <code>callback</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/_home_alex_dev_work_webapps_branches_scopes_registry_src_bindings_src_registry.js.html#l43"><code>&#x2F;home&#x2F;alex&#x2F;dev&#x2F;work&#x2F;webapps&#x2F;branches&#x2F;scopes&#x2F;registry&#x2F;src&#x2F;bindings&#x2F;src&#x2F;registry.js:43</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Assigns a callback method to be executed when a scope's running state (started / stopped) changes</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">scope_id</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The ID of the scope from which we wish to retrieve state changes</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">callback</code>
+                        <span class="type">Function(is_running: Boolean)</span>
+
+
+                    <div class="param-description">
+                        <p>The function that is invoked when a scope changes running state</p>
 
                     </div>
 
