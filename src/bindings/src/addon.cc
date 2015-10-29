@@ -47,7 +47,9 @@
 #include "search-query.h"
 #include "search-reply.h"
 #include "search-metadata.h"
+#include "registry.h"
 #include "result.h"
+#include "variant.h"
 
 // TODO static
 JavascriptScopeRuntime* new_scope(const std::string& runtime_config) {
@@ -82,23 +84,19 @@ void InitAll(v8::Handle<v8::Object> exports)
 {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
-    v8cpp::Class<unity::scopes::VariantMap> variant_map(isolate);
-    v8cpp::Class<unity::scopes::VariantArray> variant_array(isolate);
-
     // TODO: which enum should be bound
-    v8cpp::Class<unity::scopes::Variant> variant(isolate);
+    v8cpp::Class<Variant> variant(isolate);
     variant
-      .add_method("get_int", &unity::scopes::Variant::get_int)
-      .add_method("get_double", &unity::scopes::Variant::get_double)
-      .add_method("get_bool", &unity::scopes::Variant::get_bool)
-      .add_method("get_string", &unity::scopes::Variant::get_string)
-      .add_method("get_dict", &unity::scopes::Variant::get_dict)
-      .add_method("get_array", &unity::scopes::Variant::get_array)
-      .add_method("is_null", &unity::scopes::Variant::is_null)
-      .add_method("which", &unity::scopes::Variant::which)
-      .add_method("serialize_json", &unity::scopes::Variant::serialize_json)
-      .add_method("deserialize_json", &unity::scopes::Variant::deserialize_json)
-      .add_method("which", &unity::scopes::Variant::which);
+      .set_constructor<v8::Local<v8::Value>>()
+      .add_method("get_int", &Variant::get_int)
+      .add_method("get_double", &Variant::get_double)
+      .add_method("get_bool", &Variant::get_bool)
+      .add_method("get_string", &Variant::get_string)
+      .add_method("get_dict", &Variant::get_dict)
+      .add_method("get_array", &Variant::get_array)
+      .add_method("is_null", &Variant::is_null)
+      .add_method("which", &Variant::which)
+      .add_method("serialize_json", &Variant::serialize_json);
 
     v8cpp::Class<JavascriptScopeRuntime> js_scope(isolate);
     js_scope
@@ -114,12 +112,12 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &ScopeBase::onrun)
       .add_method("onsearch", &ScopeBase::onsearch)
       .add_method("onpreview", &ScopeBase::onpreview)
+      .add_method("registry", &ScopeBase::get_registry)
       // unity::scopes::ScopeBase
       .add_method("scope_directory", &unity::scopes::ScopeBase::scope_directory)
       .add_method("cache_directory", &unity::scopes::ScopeBase::cache_directory)
       .add_method("tmp_directory", &unity::scopes::ScopeBase::tmp_directory)
-      .add_method("settings", &unity::scopes::ScopeBase::settings)
-      .add_method("registry", &unity::scopes::ScopeBase::registry);
+      .add_method("settings", &unity::scopes::ScopeBase::settings);
 
     v8cpp::Class<ActionMetaData> action_metadata(isolate);
     action_metadata
@@ -352,6 +350,36 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
+    v8cpp::Class<Registry> registry(isolate);
+    registry
+      // Registry
+      .add_method("get_metadata", &Registry::get_metadata)
+      .add_method("list", &Registry::list)
+      .add_method("list_if", &Registry::list_if)
+      .add_method("is_scope_running", &Registry::is_scope_running)
+      .add_method("set_scope_state_callback", &Registry::set_scope_state_callback)
+      .add_method("set_list_update_callback", &Registry::set_list_update_callback);
+
+    v8cpp::Class<unity::scopes::ScopeMetadata> scope_metadata(isolate);
+    scope_metadata
+      // unity::scopes::ScopeMetadata
+      .add_method("scope_id", &unity::scopes::ScopeMetadata::scope_id)
+      // .add_method("scope_proxy", &unity::scopes::ScopeMetadata::scope_proxy)
+      .add_method("display_name", &unity::scopes::ScopeMetadata::display_name)
+      .add_method("description", &unity::scopes::ScopeMetadata::description)
+      .add_method("author", &unity::scopes::ScopeMetadata::author)
+      .add_method("art", &unity::scopes::ScopeMetadata::art)
+      .add_method("icon", &unity::scopes::ScopeMetadata::icon)
+      .add_method("search_hint", &unity::scopes::ScopeMetadata::search_hint)
+      .add_method("hot_key", &unity::scopes::ScopeMetadata::hot_key)
+      .add_method("invisible", &unity::scopes::ScopeMetadata::invisible)
+      // .add_method("appearance_attributes", &unity::scopes::ScopeMetadata::appearance_attributes)
+      .add_method("scope_directory", &unity::scopes::ScopeMetadata::scope_directory)
+      // .add_method("serialize", &unity::scopes::ScopeMetadata::serialize)
+      // .add_method("results_ttl_type", &unity::scopes::ScopeMetadata::results_ttl_type)
+      // .add_method("settings_definitions", &unity::scopes::ScopeMetadata::settings_definitions)
+      .add_method("location_data_needed", &unity::scopes::ScopeMetadata::location_data_needed);
+
     v8cpp::Class<SearchMetadata> search_metadata(isolate);
     search_metadata
       .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
@@ -400,7 +428,6 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
-
     module.add_class("ActionMetadata", action_metadata);
     module.add_class("ActivationQuery", activation_query);
     module.add_class("Category", category);
@@ -420,13 +447,13 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("PreviewWidget", preview_widget);
     module.add_class("PreviewQuery", preview_query);
     module.add_class("PreviewReply", preview_reply);
+    module.add_class("Registry", registry);
     module.add_class("Result", result);
+    module.add_class("ScopeMetadata", scope_metadata);
     module.add_class("SearchReply", search_reply);
     module.add_class("SearchQuery", search_query);
     module.add_class("SearchMetadata", search_metadata);
     module.add_class("Variant", variant);
-    module.add_class("Variant_map", variant_map);
-    module.add_class("Variant_array", variant_array);
 
     // Factory functions
     module.add_function("new_scope", &new_scope);
