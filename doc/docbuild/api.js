@@ -41,8 +41,10 @@ YUI.add("yuidoc-meta", function(Y) {
         "PreviewQuery",
         "PreviewReply",
         "PreviewWidget",
+        "Registry",
         "Result",
         "Scope",
+        "ScopeMetadata",
         "SearchMetadata",
         "SearchQuery",
         "SearchReply"

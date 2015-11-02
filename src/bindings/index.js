@@ -154,7 +154,7 @@ Scope.prototype = {
      * @property registry
      */
     get registry() {
-        return null
+        return this._base.registry();
     },
     /**
      * Returns a dictionary with the scope's current settings
@@ -170,6 +170,17 @@ ConnectivityStatus = {
     Unknown: "Unknown",
     Connected: "Connected",
     Disconnected: "Disconnected"
+};
+
+var VariantType = {
+    Null: "Null",
+    Int: "Int",
+    Int64: "Int64",
+    Bool: "Bool",
+    String: "String",
+    Double: "Double",
+    Dict: "Dict",
+    Array: "Array"
 };
 
 var PostLoginAction = {
@@ -196,6 +207,7 @@ module.exports = {
     lib: lib,
     defs: {
         PostLoginAction: PostLoginAction,
+        VariantType: VariantType,
         ConnectivityStatus: ConnectivityStatus,
         OperationInfo: OperationInfo
     }

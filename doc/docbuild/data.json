@@ -5,8 +5,8 @@
         "version": "0.1"
     },
     "files": {
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/action-metadata.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/action-metadata.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/action-metadata.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/action-metadata.js",
             "modules": {
                 "ScopeJS": 1
             },
@@ -16,8 +16,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "modules": {},
             "classes": {
                 "ActivationQuery": 1
@@ -25,8 +25,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "modules": {},
             "classes": {
                 "CategorisedResult": 1
@@ -34,8 +34,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category-renderer.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category-renderer.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category-renderer.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category-renderer.js",
             "modules": {},
             "classes": {
                 "CategoryRenderer": 1
@@ -43,8 +43,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js",
             "modules": {},
             "classes": {
                 "Category": 1
@@ -52,8 +52,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js",
             "modules": {},
             "classes": {
                 "ColumnLayout": 1
@@ -61,8 +61,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "modules": {},
             "classes": {
                 "Department": 1
@@ -70,15 +70,15 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-option.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-option.js",
             "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-state.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-state.js",
             "modules": {},
             "classes": {
                 "FilterOption": 1
@@ -86,8 +86,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "modules": {},
             "classes": {
                 "OnlineAccountClientServiceStatus": 1
@@ -95,8 +95,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "modules": {},
             "classes": {
                 "OnlineAccountClient": 1
@@ -104,8 +104,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "modules": {},
             "classes": {
                 "OptionSelectorFilter": 1
@@ -113,8 +113,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js",
             "modules": {},
             "classes": {
                 "PreviewQuery": 1
@@ -122,8 +122,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js",
             "modules": {},
             "classes": {
                 "PreviewReply": 1
@@ -131,8 +131,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "modules": {},
             "classes": {
                 "PreviewWidget": 1
@@ -140,8 +140,17 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "modules": {},
+            "classes": {
+                "Registry": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "modules": {},
             "classes": {
                 "Result": 1
@@ -149,8 +158,17 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "modules": {},
+            "classes": {
+                "ScopeMetadata": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "modules": {},
             "classes": {
                 "SearchMetadata": 1
@@ -158,8 +176,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js",
             "modules": {},
             "classes": {
                 "SearchQuery": 1
@@ -167,8 +185,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "modules": {},
             "classes": {
                 "SearchReply": 1
@@ -176,8 +194,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js": {
-            "name": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+        "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js": {
+            "name": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "modules": {},
             "classes": {
                 "Scope": 1
@@ -205,7 +223,9 @@
                 "PreviewQuery": 1,
                 "PreviewReply": 1,
                 "PreviewWidget": 1,
+                "Registry": 1,
                 "Result": 1,
+                "ScopeMetadata": 1,
                 "SearchMetadata": 1,
                 "SearchQuery": 1,
                 "SearchReply": 1,
@@ -214,7 +234,7 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 25,
             "description": "Metadata passed to scopes for preview and activation",
             "is_constructor": 1,
@@ -241,7 +261,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/action-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/action-metadata.js",
             "line": 1,
             "description": "Metadata passed to scopes for preview and activation"
         },
@@ -255,7 +275,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 1,
             "description": "Represents an activation request that is executed inside a scope"
         },
@@ -269,7 +289,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 1,
             "description": "A result, including the category it belongs to."
         },
@@ -283,7 +303,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category-renderer.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category-renderer.js",
             "line": 1,
             "description": "A category renderer template in JSON format."
         },
@@ -297,7 +317,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js",
             "line": 1,
             "description": "A set of related results returned by a scope\n  and displayed within a single pane in the Unity dash.\nTo create a Category, use SearchReply.register_category."
         },
@@ -311,7 +331,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js",
             "line": 1,
             "description": "Describes a column layout for preview widgets."
         },
@@ -325,7 +345,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 1,
             "description": "A department with optional sub-department"
         },
@@ -339,7 +359,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-state.js",
             "line": 1,
             "description": "Captures state of multiple filters."
         },
@@ -353,7 +373,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 1,
             "description": "An object that contains the details about a service's status and authorization parameters"
         },
@@ -367,7 +387,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "line": 1,
             "description": "A simple interface for integrating online accounts access and monitoring into scopes."
         },
@@ -381,7 +401,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 1,
             "description": "A selection filter that displays a list of choices and allows one or more of them to be selected"
         },
@@ -395,7 +415,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js",
             "line": 1,
             "description": "Represents a particular preview"
         },
@@ -409,7 +429,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js",
             "line": 1,
             "description": "Allows the results of a preview to be sent to the preview requester."
         },
@@ -423,9 +443,23 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 1,
             "description": "A widget for a preview."
+        },
+        "Registry": {
+            "name": "Registry",
+            "shortname": "Registry",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 1,
+            "description": "White pages service for available scopes"
         },
         "Result": {
             "name": "Result",
@@ -437,9 +471,23 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 1,
             "description": "The attributes of a result returned by a Scope\nThe Result API provides convenience methods for some typical attributes (title, art), but scopes are free to add and use any custom attributes with set/get methods. The only required attribute is 'uri' and it must not be empty before calling Reply.push()."
+        },
+        "ScopeMetadata": {
+            "name": "ScopeMetadata",
+            "shortname": "ScopeMetadata",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ScopeJS",
+            "namespace": "",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 1,
+            "description": "Holds scope attributes such as name, description, icon etc"
         },
         "SearchMetadata": {
             "name": "SearchMetadata",
@@ -451,7 +499,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 1,
             "description": "Metadata passed with search requests.\nTwo forms of construction are allowed depending on the number\n and types of the parameters:\n  - with locale and form factor\n  or\n  - with cardinality, locale, and form factor."
         },
@@ -465,7 +513,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js",
             "line": 1,
             "description": "Represents a particular query\n\n A scope must return an instance of this class from its implementation of Scope.search()."
         },
@@ -479,7 +527,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "line": 1,
             "description": "Allows the results of a preview to be sent to the preview requester."
         },
@@ -493,7 +541,7 @@
             "extension_for": [],
             "module": "ScopeJS",
             "namespace": "",
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 25,
             "description": "Scope corresponds to the bridge between the ubuntu scope runtime\nand the actual scope.\n\nA Scope object is not directly constructible but it is automatically created\nwhen the scope module is imported and is accessible through the 'self' exported\nmember.\n\nAfter the scopes runtime has obtained initialization runtime configurations from\nthe scope, it calls start(), which allows the scope to intialize itself. This is\nfollowed by a call to run().\n\nWhen the scope should complete its activities, the runtime calls stop().",
             "example": [
@@ -503,7 +551,7 @@
     },
     "classitems": [
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/action-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/action-metadata.js",
             "line": 12,
             "description": "Check if this ActionMetadata has a hint",
             "itemtype": "method",
@@ -522,7 +570,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/action-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/action-metadata.js",
             "line": 20,
             "description": "Set the value of an attribute",
             "itemtype": "method",
@@ -543,7 +591,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/action-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/action-metadata.js",
             "line": 28,
             "description": "Get the value of an attribute",
             "itemtype": "method",
@@ -563,7 +611,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 11,
             "description": "Return response to the activation request",
             "itemtype": "method",
@@ -575,7 +623,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 18,
             "description": "Get the result for this activation request handler",
             "itemtype": "method",
@@ -587,7 +635,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 25,
             "description": "Get the metadata for this activation request handler",
             "itemtype": "method",
@@ -599,7 +647,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 32,
             "description": "Get the widget identifier for this activation request handler",
             "itemtype": "method",
@@ -611,7 +659,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 39,
             "description": "Get the action identifier for this activation request handler",
             "itemtype": "method",
@@ -623,7 +671,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 46,
             "description": "Check whether this query is still valid",
             "itemtype": "method",
@@ -635,7 +683,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/activation-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/activation-query.js",
             "line": 53,
             "description": "Returns a dictionary with the scope's current settings",
             "itemtype": "method",
@@ -647,7 +695,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 13,
             "description": "Updates the category of this result.",
             "itemtype": "method",
@@ -662,7 +710,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 20,
             "description": "Get the category instance this result belongs to.",
             "itemtype": "method",
@@ -675,7 +723,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 27,
             "description": "This method is meant to be used by aggregator scopes which want to modify\nresults they receive, but want to keep a copy of the original result so\nthat they can be correctly handled by the original scopes\nwho created them when it comes to activation or previews.\nScopes middleware will automatically pass the correct inner stored result\nto the activation or preview request handler",
             "itemtype": "method",
@@ -696,7 +744,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 41,
             "description": "Check if this Result instance has a stored result.",
             "itemtype": "method",
@@ -709,7 +757,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 48,
             "description": "Get a stored result.",
             "itemtype": "method",
@@ -722,7 +770,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 55,
             "description": "Set the \"uri\" attribute of this result.",
             "itemtype": "method",
@@ -738,7 +786,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 62,
             "description": "Set the \"title\" attribute of this result.",
             "itemtype": "method",
@@ -754,7 +802,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 69,
             "description": "Set the \"art\" attribute of this result.",
             "itemtype": "method",
@@ -770,7 +818,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 76,
             "description": "Set the \"dnd_uri\" attribute of this result.",
             "itemtype": "method",
@@ -786,7 +834,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 83,
             "description": "Indicates to the receiver that this scope should intercept\nactivation requests for this result.\nBy default, a scope receives preview requests for the results it\ncreates, but does not receive activation requests (they are handled\ndirectly by the shell). Intercepting activation implies intercepting\npreview requests as well; this is important for scopes that forward\nresults from other scopes and call set_intercept_activation() on these scopes.\nA scope that sets intercept activation flag for a result should re-implement\nScope.activate() and provide an implementation of ActivationQuery that\nhandles the actual activation. If not called, the result will be activated\ndirectly by the Unity shell whithout involving the scope, assuming an appropriate\nURI schema handler is present on the system.",
             "itemtype": "method",
@@ -795,7 +843,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 101,
             "description": "Check if this result should be activated directly by the shell\nbecause the scope doesn't handle activation of this result.",
             "itemtype": "method",
@@ -808,7 +856,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 109,
             "description": "Get the \"uri\" property of this Result.\nThis method returns an empty string if this attribute is not of type String.",
             "itemtype": "method",
@@ -821,7 +869,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 117,
             "description": "Get the \"title\" property of this Result.\nThis method returns an empty string if this attribute is not of type String.",
             "itemtype": "method",
@@ -834,7 +882,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 125,
             "description": "Get the \"art\" property of this Result.\nThis method returns an empty string if this attribute is not of type String.",
             "itemtype": "method",
@@ -847,7 +895,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 133,
             "description": "Get the \"dnd_uri\" property of this Result.\nThis method returns an empty string if this attribute is not of type String.",
             "itemtype": "method",
@@ -860,7 +908,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 141,
             "description": "Check if this Result has an attribute.",
             "itemtype": "method",
@@ -879,7 +927,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 149,
             "description": "Check if this result is an online account login result.",
             "itemtype": "method",
@@ -892,7 +940,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 156,
             "description": "Gets the value of a custom metadata attribute.",
             "itemtype": "method",
@@ -911,7 +959,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/categorised-result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/categorised-result.js",
             "line": 164,
             "description": "Sets the value of a custom metadata attribute.",
             "itemtype": "method",
@@ -931,7 +979,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category-renderer.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category-renderer.js",
             "line": 13,
             "description": "Returns complete renderer template definition in JSON format.",
             "itemtype": "method",
@@ -943,7 +991,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js",
             "line": 14,
             "description": "Get identifier of this Category",
             "itemtype": "method",
@@ -955,7 +1003,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js",
             "line": 21,
             "description": "Get title of this Category",
             "itemtype": "method",
@@ -967,7 +1015,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js",
             "line": 28,
             "description": "Get icon of this Category",
             "itemtype": "method",
@@ -979,7 +1027,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/category.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/category.js",
             "line": 35,
             "description": "Query to perform when this category is expanded",
             "itemtype": "method",
@@ -991,7 +1039,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js",
             "line": 13,
             "description": "Adds a new column and assigns widgets to it.",
             "itemtype": "method",
@@ -1006,7 +1054,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js",
             "line": 20,
             "description": "Get the current number of columns in this layout.",
             "itemtype": "method",
@@ -1018,7 +1066,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js",
             "line": 27,
             "description": "Get the number of columns expected by this layout as specified in the constructor.",
             "itemtype": "method",
@@ -1030,7 +1078,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/column-layout.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/column-layout.js",
             "line": 34,
             "description": "Retrieve the list of widgets for given column.",
             "itemtype": "method",
@@ -1048,7 +1096,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 14,
             "description": "Add sub-department to this department",
             "itemtype": "method",
@@ -1064,7 +1112,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 21,
             "description": "Get the alternate label of this department\nReturn the alternate label of this department. The alternate label expresses the plural \"all\" form of the normal label. For example, if the normal label is \"Books\", then the alternate label is \"All Books\". Note that alternate label and can be empty - in that case the normal label should be displayed instead",
             "itemtype": "method",
@@ -1077,7 +1125,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 29,
             "description": "Set sub-departments of this department",
             "params": [
@@ -1093,7 +1141,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 36,
             "description": "Sets has_subdepartments flag of this department",
             "itemtype": "method",
@@ -1109,7 +1157,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 43,
             "description": "Get the identifier of this department",
             "itemtype": "method",
@@ -1122,7 +1170,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 50,
             "description": "Get the label of this department",
             "itemtype": "method",
@@ -1135,7 +1183,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 57,
             "description": "Get the alternate label of this department",
             "itemtype": "method",
@@ -1148,7 +1196,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 64,
             "description": "Get the canned query associated with this department",
             "itemtype": "method",
@@ -1161,7 +1209,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 71,
             "description": "Get list of sub-departments of this department",
             "itemtype": "method",
@@ -1174,7 +1222,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/department.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/department.js",
             "line": 78,
             "description": "Check if this department has subdepartments or has_subdepartments flag is set",
             "itemtype": "method",
@@ -1187,7 +1235,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-option.js",
             "line": 11,
             "description": "Get the identifier of this filter option",
             "itemtype": "method",
@@ -1199,7 +1247,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-option.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-option.js",
             "line": 18,
             "description": "Get the label of this filter option",
             "itemtype": "method",
@@ -1211,7 +1259,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-state.js",
             "line": 12,
             "description": "Check if state for the given filter has been stored",
             "itemtype": "method",
@@ -1229,7 +1277,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/filter-state.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/filter-state.js",
             "line": 20,
             "description": "Removes the state for a specific filter",
             "itemtype": "method",
@@ -1244,7 +1292,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 11,
             "description": "Check if state for the given filter has been stored",
             "itemtype": "property",
@@ -1254,7 +1302,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 16,
             "description": "True if this service is enabled",
             "itemtype": "property",
@@ -1264,7 +1312,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 21,
             "description": "True if this service is authenticated",
             "itemtype": "property",
@@ -1274,7 +1322,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 26,
             "description": "\"ConsumerKey\" / \"ClientId\" OAuth (1 / 2) parameter.",
             "itemtype": "property",
@@ -1284,7 +1332,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 31,
             "description": "\"ClientSecret\" / \"ConsumerSecret\" OAuth (1 / 2) parameter.",
             "itemtype": "property",
@@ -1294,7 +1342,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 36,
             "description": "\"AccessToken\" OAuth parameter.",
             "itemtype": "property",
@@ -1304,7 +1352,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 41,
             "description": "\"TokenSecret\" OAuth parameter.",
             "itemtype": "property",
@@ -1314,7 +1362,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client-service-status.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client-service-status.js",
             "line": 46,
             "description": "Error message (empty if no error occurred).",
             "itemtype": "property",
@@ -1324,7 +1372,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "line": 15,
             "description": "Get statuses for all services matching the name, type and provider specified on construction",
             "itemtype": "method",
@@ -1337,7 +1385,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "line": 22,
             "description": "Refresh all service statuses\nWARNING: If a service update callback is set, this method will invoke that callback for each service monitored. Therefore, DO NOT call this method from within your callback function!",
             "itemtype": "method",
@@ -1346,7 +1394,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "line": 29,
             "description": "Register a result item that requires the user to be logged in.",
             "params": [
@@ -1377,7 +1425,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "line": 39,
             "description": "Refresh all service statuses",
             "itemtype": "method",
@@ -1403,7 +1451,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/online-account-client.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/online-account-client.js",
             "line": 48,
             "description": "Set the callback function to be invoked when a service status changes",
             "itemtype": "method",
@@ -1419,7 +1467,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 15,
             "description": "Get the label of this filter",
             "itemtype": "method",
@@ -1432,7 +1480,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 22,
             "description": "Check if this filter supports multiple options to be selected",
             "itemtype": "method",
@@ -1445,7 +1493,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 29,
             "description": "Add a new option to this filter",
             "itemtype": "method",
@@ -1457,7 +1505,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 36,
             "description": "Get all options of this filter, in the order they were added",
             "itemtype": "method",
@@ -1470,7 +1518,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 43,
             "description": "Check if an option is active for this filter",
             "itemtype": "method",
@@ -1489,7 +1537,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 51,
             "description": "Get active options from an instance of FilterState for this filter",
             "itemtype": "method",
@@ -1508,7 +1556,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 59,
             "description": "Marks given FilterOption of this filter instance as active (or not active) in a FilterState object.\nRecords the given FilterOption as \"selected\" in the FilterState. This is meant to be used to modify a FilterState received with a search request before sending it back to the client (UI shell).",
             "itemtype": "method",
@@ -1534,7 +1582,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 69,
             "description": "Sets display hints for the Shell UI",
             "itemtype": "method",
@@ -1550,7 +1598,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 76,
             "description": "Get the identifier of this filter",
             "itemtype": "method",
@@ -1563,7 +1611,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/option-selector-filter.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/option-selector-filter.js",
             "line": 83,
             "description": "Get the type name of this filter",
             "itemtype": "method",
@@ -1576,7 +1624,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js",
             "line": 47,
             "description": "Get result for this preview request",
             "itemtype": "method",
@@ -1588,7 +1636,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js",
             "line": 54,
             "description": "Get metadata for this preview request",
             "itemtype": "method",
@@ -1600,7 +1648,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js",
             "line": 61,
             "description": "Check whether this query is still valid",
             "itemtype": "method",
@@ -1612,7 +1660,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-query.js",
             "line": 68,
             "description": "Returns a dictionary with the scope's current settings",
             "itemtype": "method",
@@ -1624,7 +1672,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js",
             "line": 12,
             "description": "Registers a list of column layouts for the current preview",
             "itemtype": "method",
@@ -1640,7 +1688,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js",
             "line": 19,
             "description": "Sends widget definitions to the sender of the preview query",
             "itemtype": "method",
@@ -1656,7 +1704,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js",
             "line": 26,
             "description": "Informs the source of a query that the query results are complete",
             "itemtype": "method",
@@ -1668,7 +1716,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-reply.js",
             "line": 33,
             "description": "Informs the source of a query that the query was terminated due to an error",
             "itemtype": "method",
@@ -1680,7 +1728,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 12,
             "description": "Adds an attribute definition and its value",
             "itemtype": "method",
@@ -1701,7 +1749,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 20,
             "description": "Adds an attribute definition using a component mapping",
             "itemtype": "method",
@@ -1722,7 +1770,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 28,
             "description": "Adds a widget into expandable widget",
             "itemtype": "method",
@@ -1738,7 +1786,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 35,
             "description": "Get the identifier of this widget",
             "itemtype": "method",
@@ -1751,7 +1799,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 42,
             "description": "Get type name of this widget",
             "itemtype": "method",
@@ -1764,7 +1812,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 49,
             "description": "Get the components of this widget",
             "itemtype": "method",
@@ -1776,7 +1824,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 56,
             "description": "Get the attributes of this widget",
             "itemtype": "method",
@@ -1788,7 +1836,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 63,
             "description": "Get widgets of 'expandable' widget",
             "itemtype": "method",
@@ -1800,7 +1848,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/preview-widget.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/preview-widget.js",
             "line": 70,
             "description": "Get a JSON representation of this widget",
             "itemtype": "method",
@@ -1812,7 +1860,117 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 12,
+            "description": "Returns the metadata for the scope with the given ID",
+            "itemtype": "method",
+            "name": "get_metadata",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Attribute definition",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ScopeMetadata"
+            },
+            "class": "Registry",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 20,
+            "description": "Returns a map containing the metadata for all scopes",
+            "itemtype": "method",
+            "name": "list",
+            "return": {
+                "description": "",
+                "type": "Dictionary of String -> ScopeMetadata"
+            },
+            "class": "Registry",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 27,
+            "description": "Returns a map containing only those scopes for which predicate returns true",
+            "itemtype": "method",
+            "name": "list_if",
+            "params": [
+                {
+                    "name": "predicate",
+                    "description": "a function that must return true for each metadata item to be included in the map.",
+                    "type": "Function(ScopeMetadata)"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Dictionary of String -> ScopeMetadata"
+            },
+            "class": "Registry",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 35,
+            "description": "Returns whether a scope is currently running or not",
+            "itemtype": "method",
+            "name": "is_scope_running",
+            "params": [
+                {
+                    "name": "scope_id",
+                    "description": "The ID of the scope from which we wish to retrieve state",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "True if the scope is running, and False if it is not running",
+                "type": "Boolean"
+            },
+            "class": "Registry",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 43,
+            "description": "Assigns a callback method to be executed when a scope's running state (started / stopped) changes",
+            "itemtype": "method",
+            "name": "set_scope_state_callback",
+            "params": [
+                {
+                    "name": "scope_id",
+                    "description": "The ID of the scope from which we wish to retrieve state changes",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "The function that is invoked when a scope changes running state",
+                    "type": "Function(is_running: Boolean)"
+                }
+            ],
+            "class": "Registry",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/registry.js",
+            "line": 51,
+            "description": "Assigns a callback method to be executed when the registry's scope list changes\n\nNote: Upon receiving this callback, you should retrieve the updated scopes list via the list() method if you wish to retain synchronisation between client and server",
+            "itemtype": "method",
+            "name": "set_list_update_callback",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "The function that is invoked when an update occurs",
+                    "type": "Function()"
+                }
+            ],
+            "class": "Registry",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 13,
             "description": "Check if this Result instance has a stored result",
             "itemtype": "method",
@@ -1825,7 +1983,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 20,
             "description": "Get a stored result",
             "itemtype": "method",
@@ -1838,7 +1996,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 27,
             "description": "Set the \"uri\" attribute of this result.",
             "itemtype": "method",
@@ -1854,7 +2012,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 34,
             "description": "Set the \"title\" attribute of this result.",
             "itemtype": "method",
@@ -1870,7 +2028,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 41,
             "description": "Set the \"art\" attribute of this result.",
             "itemtype": "method",
@@ -1886,7 +2044,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 48,
             "description": "Set the \"dnd_uri\" attribute of this result.",
             "itemtype": "method",
@@ -1902,7 +2060,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 55,
             "description": "Indicates to the receiver that this scope should intercept activation requests for this result",
             "itemtype": "method",
@@ -1911,7 +2069,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 61,
             "description": "Check if this result should be activated directly by the shell because the scope doesn't handle activation of this result",
             "itemtype": "method",
@@ -1924,7 +2082,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 68,
             "description": "Get the \"uri\" property of this Result",
             "itemtype": "method",
@@ -1937,7 +2095,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 75,
             "description": "Get the \"title\" property of this Result",
             "itemtype": "method",
@@ -1950,7 +2108,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 82,
             "description": "Get the \"art\" property of this Result",
             "itemtype": "method",
@@ -1963,7 +2121,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 89,
             "description": "Get the \"dnd_uri\" property of this Result",
             "itemtype": "method",
@@ -1976,7 +2134,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 96,
             "description": "Check if this Result has an attribute",
             "itemtype": "method",
@@ -1989,7 +2147,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 103,
             "description": "Get the value of an attribute",
             "itemtype": "method",
@@ -2009,7 +2167,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 111,
             "description": "Set the value of an attribute",
             "itemtype": "method",
@@ -2030,7 +2188,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/result.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/result.js",
             "line": 119,
             "description": "Get the value of an attribute",
             "itemtype": "method",
@@ -2050,7 +2208,150 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 12,
+            "description": "Get the scope identifier",
+            "itemtype": "method",
+            "name": "scope_id",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 19,
+            "description": "Get the scope display name",
+            "itemtype": "method",
+            "name": "display_name",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 26,
+            "description": "Get the scope description",
+            "itemtype": "method",
+            "name": "description",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 33,
+            "description": "Get the scope author",
+            "itemtype": "method",
+            "name": "author",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 40,
+            "description": "Get the scope art",
+            "itemtype": "method",
+            "name": "art",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 47,
+            "description": "Get the scope icon",
+            "itemtype": "method",
+            "name": "icon",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 54,
+            "description": "Get the scope search_hint",
+            "itemtype": "method",
+            "name": "search_hint",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 61,
+            "description": "Get the scope hot key",
+            "itemtype": "method",
+            "name": "hot_key",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 68,
+            "description": "Checks if the scope is invisible",
+            "itemtype": "method",
+            "name": "invisible",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 75,
+            "description": "Gets the scope directory",
+            "itemtype": "method",
+            "name": "scope_directory",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/scope-metadata.js",
+            "line": 82,
+            "description": "Checks if the scope needs location data",
+            "itemtype": "method",
+            "name": "location_data_needed",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "ScopeMetadata",
+            "module": "ScopeJS"
+        },
+        {
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 22,
             "description": "Set cardinality.",
             "itemtype": "method",
@@ -2066,7 +2367,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 29,
             "description": "Get cardinality.",
             "itemtype": "method",
@@ -2079,7 +2380,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 36,
             "description": "Set location.",
             "itemtype": "method",
@@ -2095,7 +2396,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 43,
             "description": "Get location.",
             "itemtype": "method",
@@ -2108,7 +2409,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 50,
             "description": "Does the SearchMetadata have a location.",
             "itemtype": "method",
@@ -2121,7 +2422,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 57,
             "description": "Remove location data entirely.\nThis method does nothing if no location data is present.",
             "itemtype": "method",
@@ -2130,7 +2431,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 64,
             "description": "Set the list of scope keywords used to initiate this search request.",
             "itemtype": "method",
@@ -2146,7 +2447,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 71,
             "description": "Get the list of scope keywords used to initiate this search request.",
             "itemtype": "method",
@@ -2159,7 +2460,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 78,
             "description": "Check if this search request originated from an aggregator scope.",
             "itemtype": "method",
@@ -2172,7 +2473,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 85,
             "description": "Sets a hint.",
             "itemtype": "method",
@@ -2192,7 +2493,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 93,
             "description": "Get all hints.",
             "itemtype": "method",
@@ -2205,7 +2506,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 100,
             "description": "Check if this SearchMetadata has a hint.",
             "itemtype": "method",
@@ -2225,7 +2526,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 108,
             "description": "Set the value of an attribute",
             "itemtype": "method",
@@ -2246,7 +2547,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 116,
             "description": "Get the value of an attribute",
             "itemtype": "method",
@@ -2266,7 +2567,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 124,
             "description": "Get the form factor string.",
             "itemtype": "method",
@@ -2278,7 +2579,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 131,
             "description": "Get the locale string.",
             "itemtype": "method",
@@ -2290,7 +2591,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 138,
             "description": "Get internet connectivity status.",
             "itemtype": "method",
@@ -2303,7 +2604,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-metadata.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-metadata.js",
             "line": 145,
             "description": "Set internet connectivity status.",
             "itemtype": "method",
@@ -2319,7 +2620,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js",
             "line": 50,
             "description": "Get a canned query for this search request",
             "itemtype": "method",
@@ -2331,7 +2632,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js",
             "line": 57,
             "description": "Get metadata for this search request",
             "itemtype": "method",
@@ -2343,7 +2644,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js",
             "line": 64,
             "description": "Check whether this query is still valid",
             "itemtype": "method",
@@ -2355,7 +2656,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-query.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-query.js",
             "line": 71,
             "description": "Returns a dictionary with the scope's current settings",
             "itemtype": "method",
@@ -2367,7 +2668,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "line": 11,
             "description": "Register new category and send it to the source of the query",
             "itemtype": "method",
@@ -2394,7 +2695,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "line": 21,
             "description": "Returns a previously registered category",
             "itemtype": "method",
@@ -2409,7 +2710,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "line": 28,
             "description": "Sends a single result to the source of a query",
             "itemtype": "method",
@@ -2424,7 +2725,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "line": 35,
             "description": "Informs the source of a query that the query was terminated due to an error",
             "itemtype": "method",
@@ -2436,7 +2737,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/src/search-reply.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/src/search-reply.js",
             "line": 42,
             "description": "Informs the source of a query that the query results are complete",
             "itemtype": "method",
@@ -2445,7 +2746,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 51,
             "description": "This member function is the entry point to setting up a scope's behavior\nand configuring it to the runtime scope.",
             "itemtype": "method",
@@ -2469,7 +2770,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 127,
             "description": "Returns the directory that stores the scope's configuration files and shared library",
             "itemtype": "property",
@@ -2478,7 +2779,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 135,
             "description": "Returns a directory that is (exclusively) writable for the scope",
             "itemtype": "property",
@@ -2487,7 +2788,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 143,
             "description": "Returns a tmp directory that is (exclusively) writable for the scope",
             "itemtype": "property",
@@ -2496,7 +2797,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 151,
             "description": "Returns the scope registry",
             "itemtype": "property",
@@ -2505,7 +2806,7 @@
             "module": "ScopeJS"
         },
         {
-            "file": "/home/alex/dev/work/webapps/branches/scopes/doc/src/bindings/index.js",
+            "file": "/home/alex/dev/work/webapps/branches/scopes/registry/src/bindings/index.js",
             "line": 159,
             "description": "Returns a dictionary with the scope's current settings",
             "itemtype": "property",
