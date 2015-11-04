@@ -59,7 +59,7 @@ scopes.self.initialize(
                     console.log('Starting scope id: '
                                 + scope_id
                                 + ', '
-                                + scopes.self.scope_config)
+                                + scopes.self.scope_directory)
                 },
                 search: function(canned_query, metadata) {
                     return new scopes.lib.SearchQuery(
