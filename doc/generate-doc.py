@@ -108,7 +108,7 @@ def generate_js_files(source_folder):
 
 generate_js_files(source_directory)
 
-yuidoc_command_line = 'yuidoc -o {} -c {} {}'.format(target_doc_directory, yuidoc_config, os.path.join(source_directory, ".."))
+yuidoc_command_line = 'yuidoc --no-code -o {} -c {} {}'.format(target_doc_directory, yuidoc_config, os.path.join(source_directory, ".."))
 print(yuidoc_command_line)
 result = subprocess.check_call(yuidoc_command_line.split(' '))
 
@@ -161,4 +161,9 @@ api.js
         with open(fp, "w+") as o:
             o.write(header + content)
 
+def patch_yui_files_local_refs(doc_root_folder):
+    data_file = os.path.join(doc_root_folder, "data.json")
+    os.remove(data_file)
+
 patch_yui_files_docs(target_doc_directory)
+patch_yui_files_local_refs(target_doc_directory)
