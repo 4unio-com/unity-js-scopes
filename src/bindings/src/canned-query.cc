@@ -20,7 +20,7 @@
 
 CannedQuery::CannedQuery(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 3) {
-    throw std::runtime_error("Invalid number of arguments");
+    throw std::runtime_error("Invalid number of arguments for query");
   }
 
   if (!args[0]->IsString()) {

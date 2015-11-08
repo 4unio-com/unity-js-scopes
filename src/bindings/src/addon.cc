@@ -339,6 +339,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     search_reply
       // SearchReply
       .add_method("register_category", &SearchReply::register_category)
+      .add_method("register_departments", &SearchReply::register_departments)
       .add_method("info", &SearchReply::info)
       .add_method("push", &SearchReply::push)
       .add_method("lookup_category", &SearchReply::lookup_category)

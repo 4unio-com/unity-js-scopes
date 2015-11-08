@@ -61,7 +61,7 @@ unity::scopes::Category::SCPtr SearchReply::lookup_category(
 
 bool SearchReply::push(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 1 && args.Length() != 2) {
-    throw std::runtime_error("Invalid number of arguments");
+    throw std::runtime_error("Invalid number of arguments for search reply");
   }
 
   if (args.Length() == 1) {

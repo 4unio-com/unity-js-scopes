@@ -30,7 +30,7 @@ CategorisedResult::CategorisedResult(unity::scopes::Category::SCPtr category)
 
 void CategorisedResult::set(v8::FunctionCallbackInfo<v8::Value> const& args) {
   if (args.Length() != 2) {
-    throw std::runtime_error("Invalid number of arguments");
+    throw std::runtime_error("Invalid number of arguments for categorised result");
   }
 
   if (!args[0]->IsString()) {

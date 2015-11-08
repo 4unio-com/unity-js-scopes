@@ -19,9 +19,9 @@
 #ifndef _UNITY_JS_ONLINE_ACCOUNT_CLIENT_H_
 #define _UNITY_JS_ONLINE_ACCOUNT_CLIENT_H_
 
-#include <unity/scopes/CannedQuery.h>
 #include <unity/scopes/OnlineAccountClient.h>
 
+#include "canned-query.h"
 #include "result.h"
 #include "preview-widget.h"
 #include "event_queue.h"
@@ -113,7 +113,7 @@ class OnlineAccountClient : public std::enable_shared_from_this<OnlineAccountCli
   void set_service_update_callback(v8::FunctionCallbackInfo<v8::Value> const& args);
   std::vector<unity::scopes::OnlineAccountClient::ServiceStatus> get_service_statuses();
   void register_account_login_item(std::shared_ptr<Result> result,
-                                   std::shared_ptr<unity::scopes::CannedQuery> canned_query,
+                                   std::shared_ptr<CannedQuery> canned_query,
                                    const std::string& login_passed_action,
                                    const std::string& login_failed_action);
   void register_account_login_widget(std::shared_ptr<PreviewWidget> preview_widget,

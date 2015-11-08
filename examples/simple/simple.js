@@ -121,6 +121,20 @@ scopes.self.initialize(
                             "",
                             null);
 
+                    // Create a simple department
+                    var root_department =
+                        new scopes.lib.Department("", canned_query, "Simple Department")
+                    
+                    console.log('Department\'s associated query string : '
+                                + root_department.query().query_string())
+                    
+                    var child_department =
+                        new scopes.lib.Department("child", canned_query, "Simple Child Department")
+
+                    root_department.set_subdepartments([child_department])
+                    
+                    search_reply.register_departments(root_department)
+                    
                     var categorised_result =
                         new scopes.lib.CategorisedResult(category);
                     categorised_result.set_uri("http://www.ubuntu.com");

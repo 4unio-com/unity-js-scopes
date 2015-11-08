@@ -53,7 +53,7 @@ string_from_connectivity_status(unity::scopes::QueryMetadata::ConnectivityStatus
 
 
 SearchMetadata::SearchMetadata(v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if (args.Length() != 2 || args.Length() != 3) {
+  if (args.Length() != 2 && args.Length() != 3) {
     throw std::runtime_error("Invalid number of arguments");
   }
 
