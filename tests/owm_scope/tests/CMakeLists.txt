@@ -1,13 +1,3 @@
-# Google Mock unfortunately has to be compiled from source
-include(FindGMock)
-
-# Include our test library headers
-include_directories(
-  ${GTEST_INCLUDE_DIRS}
-  ${GMOCK_INCLUDE_DIRS}
-  ${TEST_INCLUDE_DIRS}
-)
-
 # Where to find the scope ini file and .so
 set(TEST_SCOPE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../scope")
 
