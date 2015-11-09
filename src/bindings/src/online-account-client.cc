@@ -84,12 +84,12 @@ post_login_action_from_string(const std::string& post_login_action) {
 
 void OnlineAccountClient::register_account_login_item(
       std::shared_ptr<Result> result,
-      std::shared_ptr<unity::scopes::CannedQuery> canned_query,
+      std::shared_ptr<CannedQuery> canned_query,
       const std::string& login_passed_action,
       const std::string& login_failed_action) {
   oa_client_->register_account_login_item(
       *result,
-      *canned_query,
+      canned_query->canned_query(),
       post_login_action_from_string(login_passed_action),
       post_login_action_from_string(login_failed_action));
 }

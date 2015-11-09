@@ -24,28 +24,29 @@ Department::Department(const unity::scopes::Department& d)
 }
 
 Department::Department(v8::FunctionCallbackInfo<v8::Value> const & args) {
-  if (args.Length() != 2 || args.Length() != 3) {
-    throw std::runtime_error("Invalid number of arguments");
+  if (args.Length() != 2 && args.Length() != 3) {
+    throw std::runtime_error("Invalid number of arguments for department");
   }
 
   if (args[0]->IsString()) {
     auto department_id =
       v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
     auto cq =
-      v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
+      v8cpp::from_v8<std::shared_ptr<CannedQuery>>(
           v8::Isolate::GetCurrent(), args[1]);
     auto label =
       v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[2]);
 
-    department_ = unity::scopes::Department::create(department_id, *cq, label);
+    department_ =
+      unity::scopes::Department::create(department_id, cq->canned_query(), label);
   } else {
     auto cq =
-      v8cpp::from_v8<std::shared_ptr<unity::scopes::CannedQuery>>(
+      v8cpp::from_v8<std::shared_ptr<CannedQuery>>(
           v8::Isolate::GetCurrent(), args[0]);
     auto label =
       v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[1]);
 
-    department_ = unity::scopes::Department::create(*cq, label);
+    department_ = unity::scopes::Department::create(cq->canned_query(), label);
   }
 }
 
@@ -81,9 +82,9 @@ std::string Department::alternate_label() const {
   return department_->alternate_label();
 }
 
-unity::scopes::CannedQuery
+std::shared_ptr<CannedQuery>
 Department::query () const {
-  return department_->query();
+  return std::make_shared<CannedQuery>(department_->query());
 }
 
 std::vector<std::shared_ptr<Department>>

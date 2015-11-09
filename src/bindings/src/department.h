@@ -20,7 +20,8 @@
 #define _UNITY_JS_DEPARTMENT_H_
 
 #include <unity/scopes/Department.h>
-#include <unity/scopes/CannedQuery.h>
+
+#include "canned-query.h"
 
 #include <v8-cpp.h>
 
@@ -152,7 +153,7 @@ class Department
   std::string id() const;
   std::string label() const;
   std::string alternate_label() const;
-  unity::scopes::CannedQuery query () const;
+  std::shared_ptr<CannedQuery> query () const;
   std::vector<std::shared_ptr<Department>> subdepartments() const;
   bool has_subdepartments() const;
 
