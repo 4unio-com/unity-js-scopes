@@ -87,6 +87,22 @@ set(ADDON_BINARY_FILES
   ${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_NODEJS_ADDON_BIN_NAME}.node
   )
 
+add_custom_command(
+  TARGET ${SCOPE_NODEJS_ADDON_BIN_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/lib"
+
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_CURRENT_BINARY_DIR}/unity_js_scopes_bindings.node"
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes"
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_CURRENT_SOURCE_DIR}/index.js"
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes"
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_CURRENT_SOURCE_DIR}/lib/scope-core.js"
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/lib"
+)
+
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/deps/io.js/deps/npm
   DESTINATION /node_modules
   USE_SOURCE_PERMISSIONS

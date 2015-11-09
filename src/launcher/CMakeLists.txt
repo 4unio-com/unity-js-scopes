@@ -68,5 +68,15 @@ target_link_libraries(
   ${Boost_LIBRARIES}
   )
 
+add_custom_command(
+  TARGET ${LAUNCHER_EXECUTABLE_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/bin"
+
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_CURRENT_BINARY_DIR}/unity-js-scopes-launcher"
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/bin"
+)
+
 install(TARGETS ${LAUNCHER_EXECUTABLE_NAME}
         RUNTIME DESTINATION /usr/bin)

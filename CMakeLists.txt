@@ -69,3 +69,12 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
         DESTINATION /usr/share/qtcreator/templates/wizards/ubuntu)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
         DESTINATION /usr/ubuntu-sdk-ide/share/qtcreator/templates/wizards/ubuntu)
+
+# Set up the tests
+enable_testing()
+add_subdirectory(tests)
+
+add_custom_target(
+  check
+  ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
+)
