@@ -5,9 +5,10 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Build-Depends: bzr,
                cmake (>= 2.8.9),
                debhelper (>= 9),
+               g++,
+               google-mock,
                pkg-config,
                python3,
-               g++,
                libboost-filesystem-dev,
                libunity-scopes-dev,
 Standards-Version: 3.9.5
