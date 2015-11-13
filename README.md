@@ -1,4 +1,4 @@
-IoJs addon for Ubuntu unity-scopes-api bindings
+Node.js addon for Ubuntu unity-scopes-api bindings
 -----------------------------------------------
 
 

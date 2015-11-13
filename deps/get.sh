@@ -3,12 +3,12 @@
 DIR=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 cd $DIR
 
-# io.js
+# node.js
 
-if [ -d "io.js" ]; then
-    cd io.js; cd ..
+if [ -d "node.js" ]; then
+    cd node.js; cd ..
 else
-    bzr branch http://bazaar.launchpad.net/~webapps/unity-js-scopes/io.js io.js
+    bzr branch http://bazaar.launchpad.net/~webapps/unity-js-scopes/node.js node.js
 fi
 
 # v8cpp

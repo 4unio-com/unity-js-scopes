@@ -17,19 +17,19 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 add_library(
-  iojs-static
+  nodejs-static
   config.h
 )
 
 set_target_properties(
-  iojs-static PROPERTIES
+  nodejs-static PROPERTIES
   LINKER_LANGUAGE CXX
 )
 
 target_link_libraries(
-  iojs-static
+  nodejs-static
 
-  -Wl,--whole-archive iojs -Wl,--no-whole-archive
+  -Wl,--whole-archive node -Wl,--no-whole-archive
   uv
   cares
   openssl
@@ -47,12 +47,12 @@ target_link_libraries(
 
 if(cmake_build_type_tolower STREQUAL "debug")
   add_custom_command(
-    TARGET iojs-static PRE_LINK
+    TARGET nodejs-static PRE_LINK
     COMMAND ${CMAKE_SOURCE_DIR}/deps/build-debug.sh
   )
 else()
   add_custom_command(
-    TARGET iojs-static PRE_LINK
+    TARGET nodejs-static PRE_LINK
     COMMAND ${CMAKE_SOURCE_DIR}/deps/build.sh
   )
 endif()

@@ -64,7 +64,7 @@ include_directories(
 
 target_link_libraries(
   ${LAUNCHER_EXECUTABLE_NAME}
-  iojs-static
+  nodejs-static
   ${Boost_LIBRARIES}
   )
 

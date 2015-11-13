@@ -2,10 +2,10 @@
 
 DIR=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
-# io.js
+# node.js
 
 cd $DIR
 
-cd io.js
+cd node.js
 ./configure --enable-static
 make -j3

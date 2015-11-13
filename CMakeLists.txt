@@ -41,9 +41,9 @@ if(NOT _DEPS_RESULT EQUAL 0)
 endif()
 
 include_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/deps/uv/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/deps/v8/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/node.js/deps/uv/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/node.js/deps/v8/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/node.js/src
   ${CMAKE_CURRENT_SOURCE_DIR}/deps/v8-cpp/src
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   )
@@ -51,11 +51,11 @@ include_directories(
 string(TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_tolower)
 if(cmake_build_type_tolower STREQUAL "debug")
   link_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/out/Debug
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/node.js/out/Debug
   )
 else()
   link_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/deps/io.js/out/Release
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/node.js/out/Release
   )
 endif()
 

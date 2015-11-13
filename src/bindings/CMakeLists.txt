@@ -103,7 +103,7 @@ add_custom_command(
     "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/lib"
 )
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/deps/io.js/deps/npm
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/deps/node.js/deps/npm
   DESTINATION /node_modules
   USE_SOURCE_PERMISSIONS
   )
