@@ -3,957 +3,298 @@
 <head>
     <meta charset="utf-8">
     <title>Result - Javascript Scopes API</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="icon" href="../assets/favicon.ico">
-    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Javascript Scopes API" width="117" height="52"></h1>
+            <h1><a href="../index.html"><img src="../assets/css/logo.png">Javascript Scopes API: Result</a></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1</em>
         </div>
     </div>
-    <div id="bd" class="yui3-g">
+    <div class="yui3-g">
 
-        <div class="yui3-u-1-4">
-            <div id="docs-sidebar" class="sidebar apidocs">
-                <div id="api-list">
-                    <h2 class="off-left">APIs</h2>
-                    <div id="api-tabview" class="tabview">
-                        <ul class="tabs">
-                            <li><a href="#api-classes">Classes</a></li>
-                            <li><a href="#api-modules">Modules</a></li>
-                        </ul>
-                
-                        <div id="api-tabview-filter">
-                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-                        </div>
-                
-                        <div id="api-tabview-panel">
-                            <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/ActionMetadata.html">ActionMetadata</a></li>
-                                <li><a href="../classes/ActivationQuery.html">ActivationQuery</a></li>
-                                <li><a href="../classes/CategorisedResult.html">CategorisedResult</a></li>
-                                <li><a href="../classes/Category.html">Category</a></li>
-                                <li><a href="../classes/CategoryRenderer.html">CategoryRenderer</a></li>
-                                <li><a href="../classes/ColumnLayout.html">ColumnLayout</a></li>
-                                <li><a href="../classes/Department.html">Department</a></li>
-                                <li><a href="../classes/FilterOption.html">FilterOption</a></li>
-                                <li><a href="../classes/OnlineAccountClient.html">OnlineAccountClient</a></li>
-                                <li><a href="../classes/OnlineAccountClientServiceStatus.html">OnlineAccountClientServiceStatus</a></li>
-                                <li><a href="../classes/OptionSelectorFilter.html">OptionSelectorFilter</a></li>
-                                <li><a href="../classes/PreviewQuery.html">PreviewQuery</a></li>
-                                <li><a href="../classes/PreviewReply.html">PreviewReply</a></li>
-                                <li><a href="../classes/PreviewWidget.html">PreviewWidget</a></li>
-                                <li><a href="../classes/Registry.html">Registry</a></li>
-                                <li><a href="../classes/Result.html">Result</a></li>
-                                <li><a href="../classes/Scope.html">Scope</a></li>
-                                <li><a href="../classes/ScopeMetadata.html">ScopeMetadata</a></li>
-                                <li><a href="../classes/SearchMetadata.html">SearchMetadata</a></li>
-                                <li><a href="../classes/SearchQuery.html">SearchQuery</a></li>
-                                <li><a href="../classes/SearchReply.html">SearchReply</a></li>
-                            </ul>
-                
-                            <ul id="api-modules" class="apis modules">
-                                <li><a href="../modules/ScopeJS.html">ScopeJS</a></li>
-                            </ul>
-                        </div>
-                    </div>
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
                 </div>
-            </div>
-        </div>
-        <div class="yui3-u-3-4">
-                <div id="api-options">
-                    Show:
-                    <label for="api-show-inherited">
-                        <input type="checkbox" id="api-show-inherited" checked>
-                        Inherited
-                    </label>
-            
-                    <label for="api-show-protected">
-                        <input type="checkbox" id="api-show-protected">
-                        Protected
-                    </label>
-            
-                    <label for="api-show-private">
-                        <input type="checkbox" id="api-show-private">
-                        Private
-                    </label>
-                    <label for="api-show-deprecated">
-                        <input type="checkbox" id="api-show-deprecated">
-                        Deprecated
-                    </label>
-            
-                </div>
-            
-            <div class="apidocs">
-                <div id="docs-main">
-                    <div class="content">
-<h1>Result Class</h1>
-<div class="box meta">
-
-
-
-            Module: <a href="../modules/ScopeJS.html">ScopeJS</a>
-
-</div>
-
-
-<div class="box intro">
-    <p>The attributes of a result returned by a Scope
-The Result API provides convenience methods for some typical attributes (title, art), but scopes are free to add and use any custom attributes with set/get methods. The only required attribute is 'uri' and it must not be empty before calling Reply.push().</p>
-
-</div>
-
-
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
-
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods">
-                            <li class="index-item method">
-                                <a href="#method_art">art</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_contains">contains</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_direct_activation">direct_activation</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_dnd_uri">dnd_uri</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_get">get</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_has_stored_result">has_stored_result</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_retrieve">retrieve</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set">set</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set_art">set_art</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set_dnd_uri">set_dnd_uri</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set_intercept_activation">set_intercept_activation</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set_title">set_title</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set_uri">set_uri</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_title">title</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_uri">uri</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_value">value</a>
-
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ScopeJS.html">ScopeJS</a>
                             </li>
                     </ul>
                 </div>
-
-
-
-        </div>
-
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-<div id="method_art" class="method item">
-    <h3 class="name"><code>art</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the &quot;art&quot; property of this Result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
             </div>
-        </div>
-
-
-</div>
-<div id="method_contains" class="method item">
-    <h3 class="name"><code>contains</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Check if this Result has an attribute</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Boolean</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_direct_activation" class="method item">
-    <h3 class="name"><code>direct_activation</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Check if this result should be activated directly by the shell because the scope doesn't handle activation of this result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Boolean</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_dnd_uri" class="method item">
-    <h3 class="name"><code>dnd_uri</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the &quot;dnd_uri&quot; property of this Result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_get" class="method item">
-    <h3 class="name"><code>get</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>key</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the value of an attribute</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">key</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-                    <p>, {Number} or {Object}</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_has_stored_result" class="method item">
-    <h3 class="name"><code>has_stored_result</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Check if this Result instance has a stored result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Boolean</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_retrieve" class="method item">
-    <h3 class="name"><code>retrieve</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Result.html" class="crosslink">Result</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get a stored result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/Result.html" class="crosslink">Result</a></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_set" class="method item">
-    <h3 class="name"><code>set</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>key</code>
-                </li>
-                <li class="arg">
-                        <code>value</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Set the value of an attribute</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">key</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">value</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_set_art" class="method item">
-    <h3 class="name"><code>set_art</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>art</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Set the &quot;art&quot; attribute of this result.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">art</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_set_dnd_uri" class="method item">
-    <h3 class="name"><code>set_dnd_uri</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>dnd_uri</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Set the &quot;dnd_uri&quot; attribute of this result.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">dnd_uri</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_set_intercept_activation" class="method item">
-    <h3 class="name"><code>set_intercept_activation</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Indicates to the receiver that this scope should intercept activation requests for this result</p>
-
-    </div>
-
-
-
-
-</div>
-<div id="method_set_title" class="method item">
-    <h3 class="name"><code>set_title</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>title</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Set the &quot;title&quot; attribute of this result.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">title</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_set_uri" class="method item">
-    <h3 class="name"><code>set_uri</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>uri</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Set the &quot;uri&quot; attribute of this result.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">uri</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_title" class="method item">
-    <h3 class="name"><code>title</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the &quot;title&quot; property of this Result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_uri" class="method item">
-    <h3 class="name"><code>uri</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the &quot;uri&quot; property of this Result</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_value" class="method item">
-    <h3 class="name"><code>value</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>value</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">Dictonary</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the value of an attribute</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">value</code>
-                        <span class="type">String</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Dictonary</span>:
-            </div>
-        </div>
-
-
-</div>
-            </div>
-
-
-
-    </div>
-</div>
-                    </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/ActionMetadata.html">ActionMetadata</a></li>
+                            <li><a href="../classes/ActivationQuery.html">ActivationQuery</a></li>
+                            <li><a href="../classes/CategorisedResult.html">CategorisedResult</a></li>
+                            <li><a href="../classes/Category.html">Category</a></li>
+                            <li><a href="../classes/CategoryRenderer.html">CategoryRenderer</a></li>
+                            <li><a href="../classes/ColumnLayout.html">ColumnLayout</a></li>
+                            <li><a href="../classes/Department.html">Department</a></li>
+                            <li><a href="../classes/FilterOption.html">FilterOption</a></li>
+                            <li><a href="../classes/OnlineAccountClient.html">OnlineAccountClient</a></li>
+                            <li><a href="../classes/OnlineAccountClientServiceStatus.html">OnlineAccountClientServiceStatus</a></li>
+                            <li><a href="../classes/OptionSelectorFilter.html">OptionSelectorFilter</a></li>
+                            <li><a href="../classes/PreviewQuery.html">PreviewQuery</a></li>
+                            <li><a href="../classes/PreviewReply.html">PreviewReply</a></li>
+                            <li><a href="../classes/PreviewWidget.html">PreviewWidget</a></li>
+                            <li><a href="../classes/Registry.html">Registry</a></li>
+                            <li><a href="../classes/Result.html">Result</a></li>
+                            <li><a href="../classes/Scope.html">Scope</a></li>
+                            <li><a href="../classes/ScopeMetadata.html">ScopeMetadata</a></li>
+                            <li><a href="../classes/SearchMetadata.html">SearchMetadata</a></li>
+                            <li><a href="../classes/SearchQuery.html">SearchQuery</a></li>
+                            <li><a href="../classes/SearchReply.html">SearchReply</a></li>
+                    </ul>
                 </div>
             </div>
+            
+            <div id="methods-on-page" class="sidebox on-page">
+                <div class="hd">
+                    <h2 class="no-toc">Methods On Page</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="#methods_art">art</a></li>
+                            <li><a href="#methods_contains">contains</a></li>
+                            <li><a href="#methods_direct_activation">direct_activation</a></li>
+                            <li><a href="#methods_dnd_uri">dnd_uri</a></li>
+                            <li><a href="#methods_get">get</a></li>
+                            <li><a href="#methods_has_stored_result">has_stored_result</a></li>
+                            <li><a href="#methods_retrieve">retrieve</a></li>
+                            <li><a href="#methods_set">set</a></li>
+                            <li><a href="#methods_set_art">set_art</a></li>
+                            <li><a href="#methods_set_dnd_uri">set_dnd_uri</a></li>
+                            <li><a href="#methods_set_intercept_activation">set_intercept_activation</a></li>
+                            <li><a href="#methods_set_title">set_title</a></li>
+                            <li><a href="#methods_set_uri">set_uri</a></li>
+                            <li><a href="#methods_title">title</a></li>
+                            <li><a href="#methods_uri">uri</a></li>
+                            <li><a href="#methods_value">value</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>Class Result</h4>
+<div class="intro"><p>The attributes of a result returned by a Scope
+The Result API provides convenience methods for some typical attributes (title, art), but scopes are free to add and use any custom attributes with set/get methods. The only required attribute is 'uri' and it must not be empty before calling Reply.push().</p>
+</div>
+
+
+<div id="classdocs">
+    <ul>
+        <li><a href="#methods">Methods</a></li>
+    </ul>
+    <div>
+            <div id="methods">
+                <a name="methods_art"></a>
+                <div class="method item">
+                    String <strong class="name"><code>art</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the &quot;art&quot; property of this Result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; </div>
+                </div>
+                <a name="methods_contains"></a>
+                <div class="method item">
+                    Boolean <strong class="name"><code>contains</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Check if this Result has an attribute</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Boolean&gt; </div>
+                </div>
+                <a name="methods_direct_activation"></a>
+                <div class="method item">
+                    Boolean <strong class="name"><code>direct_activation</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Check if this result should be activated directly by the shell because the scope doesn't handle activation of this result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Boolean&gt; </div>
+                </div>
+                <a name="methods_dnd_uri"></a>
+                <div class="method item">
+                    String <strong class="name"><code>dnd_uri</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the &quot;dnd_uri&quot; property of this Result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; </div>
+                </div>
+                <a name="methods_get"></a>
+                <div class="method item">
+                    String <strong class="name"><code>get</code></strong>( <code>key </code> ) 
+                    <br>
+                    <p>Get the value of an attribute</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>key</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; <p>, {Number} or {Object}</p>
+                </div>
+                </div>
+                <a name="methods_has_stored_result"></a>
+                <div class="method item">
+                    Boolean <strong class="name"><code>has_stored_result</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Check if this Result instance has a stored result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Boolean&gt; </div>
+                </div>
+                <a name="methods_retrieve"></a>
+                <div class="method item">
+                    <a href="../classes/Result.html" class="crosslink">Result</a> <strong class="name"><code>retrieve</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get a stored result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;<a href="../classes/Result.html" class="crosslink">Result</a>&gt; </div>
+                </div>
+                <a name="methods_set"></a>
+                <div class="method item">
+                     <strong class="name"><code>set</code></strong>( <code>key, value </code> ) 
+                    <br>
+                    <p>Set the value of an attribute</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>key</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                        <li>
+                            <code>value</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                </div>
+                <a name="methods_set_art"></a>
+                <div class="method item">
+                     <strong class="name"><code>set_art</code></strong>( <code>art </code> ) 
+                    <br>
+                    <p>Set the &quot;art&quot; attribute of this result.</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>art</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                </div>
+                <a name="methods_set_dnd_uri"></a>
+                <div class="method item">
+                     <strong class="name"><code>set_dnd_uri</code></strong>( <code>dnd_uri </code> ) 
+                    <br>
+                    <p>Set the &quot;dnd_uri&quot; attribute of this result.</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>dnd_uri</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                </div>
+                <a name="methods_set_intercept_activation"></a>
+                <div class="method item">
+                     <strong class="name"><code>set_intercept_activation</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Indicates to the receiver that this scope should intercept activation requests for this result</p>
+                
+                </div>
+                <a name="methods_set_title"></a>
+                <div class="method item">
+                     <strong class="name"><code>set_title</code></strong>( <code>title </code> ) 
+                    <br>
+                    <p>Set the &quot;title&quot; attribute of this result.</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>title</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                </div>
+                <a name="methods_set_uri"></a>
+                <div class="method item">
+                     <strong class="name"><code>set_uri</code></strong>( <code>uri </code> ) 
+                    <br>
+                    <p>Set the &quot;uri&quot; attribute of this result.</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>uri</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                </div>
+                <a name="methods_title"></a>
+                <div class="method item">
+                    String <strong class="name"><code>title</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the &quot;title&quot; property of this Result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; </div>
+                </div>
+                <a name="methods_uri"></a>
+                <div class="method item">
+                    String <strong class="name"><code>uri</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the &quot;uri&quot; property of this Result</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; </div>
+                </div>
+                <a name="methods_value"></a>
+                <div class="method item">
+                    Dictonary <strong class="name"><code>value</code></strong>( <code>value </code> ) 
+                    <br>
+                    <p>Get the value of an attribute</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>value</code> <strong>&lt;String&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Dictonary&gt; </div>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
         </div>
     </div>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
 <script src="../assets/js/yui-prettify.js"></script>
-<script src="../assets/../api.js"></script>
-<script src="../assets/js/api-filter.js"></script>
-<script src="../assets/js/api-list.js"></script>
-<script src="../assets/js/api-search.js"></script>
-<script src="../assets/js/apidocs.js"></script>
+<script src="../assets/js/tabs.js"></script>
 </body>
 </html>

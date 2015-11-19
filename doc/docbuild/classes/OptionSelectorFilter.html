@@ -3,700 +3,240 @@
 <head>
     <meta charset="utf-8">
     <title>OptionSelectorFilter - Javascript Scopes API</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="icon" href="../assets/favicon.ico">
-    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Javascript Scopes API" width="117" height="52"></h1>
+            <h1><a href="../index.html"><img src="../assets/css/logo.png">Javascript Scopes API: OptionSelectorFilter</a></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1</em>
         </div>
     </div>
-    <div id="bd" class="yui3-g">
+    <div class="yui3-g">
 
-        <div class="yui3-u-1-4">
-            <div id="docs-sidebar" class="sidebar apidocs">
-                <div id="api-list">
-                    <h2 class="off-left">APIs</h2>
-                    <div id="api-tabview" class="tabview">
-                        <ul class="tabs">
-                            <li><a href="#api-classes">Classes</a></li>
-                            <li><a href="#api-modules">Modules</a></li>
-                        </ul>
-                
-                        <div id="api-tabview-filter">
-                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-                        </div>
-                
-                        <div id="api-tabview-panel">
-                            <ul id="api-classes" class="apis classes">
-                                <li><a href="../classes/ActionMetadata.html">ActionMetadata</a></li>
-                                <li><a href="../classes/ActivationQuery.html">ActivationQuery</a></li>
-                                <li><a href="../classes/CategorisedResult.html">CategorisedResult</a></li>
-                                <li><a href="../classes/Category.html">Category</a></li>
-                                <li><a href="../classes/CategoryRenderer.html">CategoryRenderer</a></li>
-                                <li><a href="../classes/ColumnLayout.html">ColumnLayout</a></li>
-                                <li><a href="../classes/Department.html">Department</a></li>
-                                <li><a href="../classes/FilterOption.html">FilterOption</a></li>
-                                <li><a href="../classes/OnlineAccountClient.html">OnlineAccountClient</a></li>
-                                <li><a href="../classes/OnlineAccountClientServiceStatus.html">OnlineAccountClientServiceStatus</a></li>
-                                <li><a href="../classes/OptionSelectorFilter.html">OptionSelectorFilter</a></li>
-                                <li><a href="../classes/PreviewQuery.html">PreviewQuery</a></li>
-                                <li><a href="../classes/PreviewReply.html">PreviewReply</a></li>
-                                <li><a href="../classes/PreviewWidget.html">PreviewWidget</a></li>
-                                <li><a href="../classes/Registry.html">Registry</a></li>
-                                <li><a href="../classes/Result.html">Result</a></li>
-                                <li><a href="../classes/Scope.html">Scope</a></li>
-                                <li><a href="../classes/ScopeMetadata.html">ScopeMetadata</a></li>
-                                <li><a href="../classes/SearchMetadata.html">SearchMetadata</a></li>
-                                <li><a href="../classes/SearchQuery.html">SearchQuery</a></li>
-                                <li><a href="../classes/SearchReply.html">SearchReply</a></li>
-                            </ul>
-                
-                            <ul id="api-modules" class="apis modules">
-                                <li><a href="../modules/ScopeJS.html">ScopeJS</a></li>
-                            </ul>
-                        </div>
-                    </div>
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
                 </div>
-            </div>
-        </div>
-        <div class="yui3-u-3-4">
-                <div id="api-options">
-                    Show:
-                    <label for="api-show-inherited">
-                        <input type="checkbox" id="api-show-inherited" checked>
-                        Inherited
-                    </label>
-            
-                    <label for="api-show-protected">
-                        <input type="checkbox" id="api-show-protected">
-                        Protected
-                    </label>
-            
-                    <label for="api-show-private">
-                        <input type="checkbox" id="api-show-private">
-                        Private
-                    </label>
-                    <label for="api-show-deprecated">
-                        <input type="checkbox" id="api-show-deprecated">
-                        Deprecated
-                    </label>
-            
-                </div>
-            
-            <div class="apidocs">
-                <div id="docs-main">
-                    <div class="content">
-<h1>OptionSelectorFilter Class</h1>
-<div class="box meta">
-
-
-
-            Module: <a href="../modules/ScopeJS.html">ScopeJS</a>
-
-</div>
-
-
-<div class="box intro">
-    <p>A selection filter that displays a list of choices and allows one or more of them to be selected</p>
-
-</div>
-
-
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
-
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods">
-                            <li class="index-item method">
-                                <a href="#method_active_options">active_options</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_add_option">add_option</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_filter_type">filter_type</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_has_active_option">has_active_option</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_id">id</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_label">label</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_multi_select">multi_select</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_options">options</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_set_display_hints">set_display_hints</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_update_state">update_state</a>
-
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ScopeJS.html">ScopeJS</a>
                             </li>
                     </ul>
                 </div>
-
-
-
-        </div>
-
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-<div id="method_active_options" class="method item">
-    <h3 class="name"><code>active_options</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>filter_state</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">Array of FilterOption</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get active options from an instance of FilterState for this filter</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">filter_state</code>
-                        <span class="type">Object</span>
-
-
-                    <div class="param-description">
-                        <p>FilterState</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Array of FilterOption</span>:
-                    <p>LIst of active FilterOption</p>
-
             </div>
-        </div>
-
-
-</div>
-<div id="method_add_option" class="method item">
-    <h3 class="name"><code>add_option</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Add a new option to this filter</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                    <p>FilterOption The added filter option</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_filter_type" class="method item">
-    <h3 class="name"><code>filter_type</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the type name of this filter</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-                    <p>type name of this filter</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_has_active_option" class="method item">
-    <h3 class="name"><code>has_active_option</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>filter_state</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Check if an option is active for this filter</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">filter_state</code>
-                        <span class="type">Object</span>
-
-
-                    <div class="param-description">
-                        <p>FilterState</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Boolean</span>:
-                    <p>True if an option is active for this filter</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_id" class="method item">
-    <h3 class="name"><code>id</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the identifier of this filter</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-                    <p>identifier of this filter</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_label" class="method item">
-    <h3 class="name"><code>label</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get the label of this filter</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">String</span>:
-                    <p>label of this filter</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_multi_select" class="method item">
-    <h3 class="name"><code>multi_select</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Check if this filter supports multiple options to be selected</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Boolean</span>:
-                    <p>True if this filter multiple options to be selected</p>
-
-            </div>
-        </div>
-
-
-</div>
-<div id="method_options" class="method item">
-    <h3 class="name"><code>options</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type">Array of FilterOption</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get all options of this filter, in the order they were added</p>
-
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Array of FilterOption</span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_set_display_hints" class="method item">
-    <h3 class="name"><code>set_display_hints</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>hints</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Sets display hints for the Shell UI</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">hints</code>
-                        <span class="type">Int</span>
-
-
-                    <div class="param-description">
-                        <p>0 is Default filter hint, 1 is Primary filter hint</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_update_state" class="method item">
-    <h3 class="name"><code>update_state</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>filter_state</code>
-                </li>
-                <li class="arg">
-                        <code>option</code>
-                </li>
-                <li class="arg">
-                        <code>active</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Marks given FilterOption of this filter instance as active (or not active) in a FilterState object.
-Records the given FilterOption as &quot;selected&quot; in the FilterState. This is meant to be used to modify a FilterState received with a search request before sending it back to the client (UI shell).</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">filter_state</code>
-                        <span class="type">FilterState</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">option</code>
-                        <span class="type"><a href="../classes/FilterOption.html" class="crosslink">FilterOption</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">active</code>
-                        <span class="type">Boolean</span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-            </div>
-
-
-
-    </div>
-</div>
-                    </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/ActionMetadata.html">ActionMetadata</a></li>
+                            <li><a href="../classes/ActivationQuery.html">ActivationQuery</a></li>
+                            <li><a href="../classes/CategorisedResult.html">CategorisedResult</a></li>
+                            <li><a href="../classes/Category.html">Category</a></li>
+                            <li><a href="../classes/CategoryRenderer.html">CategoryRenderer</a></li>
+                            <li><a href="../classes/ColumnLayout.html">ColumnLayout</a></li>
+                            <li><a href="../classes/Department.html">Department</a></li>
+                            <li><a href="../classes/FilterOption.html">FilterOption</a></li>
+                            <li><a href="../classes/OnlineAccountClient.html">OnlineAccountClient</a></li>
+                            <li><a href="../classes/OnlineAccountClientServiceStatus.html">OnlineAccountClientServiceStatus</a></li>
+                            <li><a href="../classes/OptionSelectorFilter.html">OptionSelectorFilter</a></li>
+                            <li><a href="../classes/PreviewQuery.html">PreviewQuery</a></li>
+                            <li><a href="../classes/PreviewReply.html">PreviewReply</a></li>
+                            <li><a href="../classes/PreviewWidget.html">PreviewWidget</a></li>
+                            <li><a href="../classes/Registry.html">Registry</a></li>
+                            <li><a href="../classes/Result.html">Result</a></li>
+                            <li><a href="../classes/Scope.html">Scope</a></li>
+                            <li><a href="../classes/ScopeMetadata.html">ScopeMetadata</a></li>
+                            <li><a href="../classes/SearchMetadata.html">SearchMetadata</a></li>
+                            <li><a href="../classes/SearchQuery.html">SearchQuery</a></li>
+                            <li><a href="../classes/SearchReply.html">SearchReply</a></li>
+                    </ul>
                 </div>
             </div>
+            
+            <div id="methods-on-page" class="sidebox on-page">
+                <div class="hd">
+                    <h2 class="no-toc">Methods On Page</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="#methods_active_options">active_options</a></li>
+                            <li><a href="#methods_add_option">add_option</a></li>
+                            <li><a href="#methods_filter_type">filter_type</a></li>
+                            <li><a href="#methods_has_active_option">has_active_option</a></li>
+                            <li><a href="#methods_id">id</a></li>
+                            <li><a href="#methods_label">label</a></li>
+                            <li><a href="#methods_multi_select">multi_select</a></li>
+                            <li><a href="#methods_options">options</a></li>
+                            <li><a href="#methods_set_display_hints">set_display_hints</a></li>
+                            <li><a href="#methods_update_state">update_state</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>Class OptionSelectorFilter</h4>
+<div class="intro"><p>A selection filter that displays a list of choices and allows one or more of them to be selected</p>
+</div>
+
+
+<div id="classdocs">
+    <ul>
+        <li><a href="#methods">Methods</a></li>
+    </ul>
+    <div>
+            <div id="methods">
+                <a name="methods_active_options"></a>
+                <div class="method item">
+                    Array of FilterOption <strong class="name"><code>active_options</code></strong>( <code>filter_state </code> ) 
+                    <br>
+                    <p>Get active options from an instance of FilterState for this filter</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>filter_state</code> <strong>&lt;Object&gt;</strong>
+                        <p>FilterState</p>
+                
+                        </li>
+                    </ul>
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Array of FilterOption&gt; <p>LIst of active FilterOption</p>
+                </div>
+                </div>
+                <a name="methods_add_option"></a>
+                <div class="method item">
+                    <strong class="name"><code>add_option</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Add a new option to this filter</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> <p>FilterOption The added filter option</p>
+                </div>
+                </div>
+                <a name="methods_filter_type"></a>
+                <div class="method item">
+                    String <strong class="name"><code>filter_type</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the type name of this filter</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; <p>type name of this filter</p>
+                </div>
+                </div>
+                <a name="methods_has_active_option"></a>
+                <div class="method item">
+                    Boolean <strong class="name"><code>has_active_option</code></strong>( <code>filter_state </code> ) 
+                    <br>
+                    <p>Check if an option is active for this filter</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>filter_state</code> <strong>&lt;Object&gt;</strong>
+                        <p>FilterState</p>
+                
+                        </li>
+                    </ul>
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Boolean&gt; <p>True if an option is active for this filter</p>
+                </div>
+                </div>
+                <a name="methods_id"></a>
+                <div class="method item">
+                    String <strong class="name"><code>id</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the identifier of this filter</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; <p>identifier of this filter</p>
+                </div>
+                </div>
+                <a name="methods_label"></a>
+                <div class="method item">
+                    String <strong class="name"><code>label</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get the label of this filter</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;String&gt; <p>label of this filter</p>
+                </div>
+                </div>
+                <a name="methods_multi_select"></a>
+                <div class="method item">
+                    Boolean <strong class="name"><code>multi_select</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Check if this filter supports multiple options to be selected</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Boolean&gt; <p>True if this filter multiple options to be selected</p>
+                </div>
+                </div>
+                <a name="methods_options"></a>
+                <div class="method item">
+                    Array of FilterOption <strong class="name"><code>options</code></strong>( <code>  </code> ) 
+                    <br>
+                    <p>Get all options of this filter, in the order they were added</p>
+                
+                    <br><div class="returns"><strong>Returns:</strong> &lt;Array of FilterOption&gt; </div>
+                </div>
+                <a name="methods_set_display_hints"></a>
+                <div class="method item">
+                     <strong class="name"><code>set_display_hints</code></strong>( <code>hints </code> ) 
+                    <br>
+                    <p>Sets display hints for the Shell UI</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>hints</code> <strong>&lt;Int&gt;</strong>
+                        <p>0 is Default filter hint, 1 is Primary filter hint</p>
+                
+                        </li>
+                    </ul>
+                </div>
+                <a name="methods_update_state"></a>
+                <div class="method item">
+                     <strong class="name"><code>update_state</code></strong>( <code>filter_state, option, active </code> ) 
+                    <br>
+                    <p>Marks given FilterOption of this filter instance as active (or not active) in a FilterState object.
+                Records the given FilterOption as &quot;selected&quot; in the FilterState. This is meant to be used to modify a FilterState received with a search request before sending it back to the client (UI shell).</p>
+                
+                    <strong>Parameters:</strong>
+                    <ul class="params">
+                        <li>
+                            <code>filter_state</code> <strong>&lt;FilterState&gt;</strong>
+                         
+                        </li>
+                        <li>
+                            <code>option</code> <strong>&lt;<a href="../classes/FilterOption.html" class="crosslink">FilterOption</a>&gt;</strong>
+                         
+                        </li>
+                        <li>
+                            <code>active</code> <strong>&lt;Boolean&gt;</strong>
+                         
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
         </div>
     </div>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
 <script src="../assets/js/yui-prettify.js"></script>
-<script src="../assets/../api.js"></script>
-<script src="../assets/js/api-filter.js"></script>
-<script src="../assets/js/api-list.js"></script>
-<script src="../assets/js/api-search.js"></script>
-<script src="../assets/js/apidocs.js"></script>
+<script src="../assets/js/tabs.js"></script>
 </body>
 </html>
