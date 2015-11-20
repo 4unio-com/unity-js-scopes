@@ -434,7 +434,6 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("Category", category);
     module.add_class("CategorisedResult", categorised_result);
     module.add_class("CannedQuery", canned_query);
-    module.add_class("CategorisedResult", categorised_result);
     module.add_class("CategoryRenderer", category_renderer);
     module.add_class("ColumnLayout", column_layout);
     module.add_class("Department", department);
