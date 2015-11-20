@@ -199,6 +199,7 @@ function on_preview(result, action_metadata) {
                 }
             );
             preview_reply.push([header_widget, art_widget, actions_widget])
+            preview_reply.finished()
         },
         // cancelled
         function() {
