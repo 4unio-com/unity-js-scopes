@@ -166,4 +166,3 @@ def patch_yui_files_local_refs(doc_root_folder):
     os.remove(data_file)
 
 patch_yui_files_docs(target_doc_directory)
-patch_yui_files_local_refs(target_doc_directory)
