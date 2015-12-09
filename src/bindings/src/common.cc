@@ -71,6 +71,13 @@ v8::Local<v8::Value> unity::scopesjs::from_variant(
 
 unity::scopes::Variant unity::scopesjs::to_variant(
       v8::Local<v8::Value> value) {
+  try
+  {
+    // Check first that the value recieved is not already a unity::scopes::Variant
+    return v8cpp::from_v8<unity::scopes::Variant>(v8::Isolate::GetCurrent(), value);
+  }
+  catch (std::exception const&) {}
+
   using unity::scopes::Variant;
   using unity::scopes::VariantArray;
   using unity::scopes::VariantMap;

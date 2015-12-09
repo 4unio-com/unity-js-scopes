@@ -1,7 +1,7 @@
 @if "%ContentType%" != "empty"
-# Below are some example settings. You can access your scope's
-# settings by calling settings() from the Query::run() method.
-# E.g. auto location = settings().at("location").get_string();
+# Below are some example settings. You can access your scope's settings by
+# calling scopes.self.settings from anywhere in your scope implementation.
+# E.g. var location = scopes.self.settings["location"].get_string();
 
 #[location]
 #type = string

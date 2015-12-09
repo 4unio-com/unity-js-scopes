@@ -89,6 +89,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     variant
       .set_constructor<v8::Local<v8::Value>>()
       .add_method("get_int", &Variant::get_int)
+      .add_method("get_int64_t", &Variant::get_int64_t)
       .add_method("get_double", &Variant::get_double)
       .add_method("get_bool", &Variant::get_bool)
       .add_method("get_string", &Variant::get_string)
@@ -97,6 +98,22 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("is_null", &Variant::is_null)
       .add_method("which", &Variant::which)
       .add_method("serialize_json", &Variant::serialize_json);
+
+    // Also bind the original Variant class for direct access (E.g. via settings)
+    v8cpp::Class<unity::scopes::Variant> variant_base(isolate);
+    variant_base
+      .add_method("get_int", &unity::scopes::Variant::get_int)
+      .add_method("get_int64_t", &unity::scopes::Variant::get_int64_t)
+      .add_method("get_double", &unity::scopes::Variant::get_double)
+      .add_method("get_bool", &unity::scopes::Variant::get_bool)
+      .add_method("get_string", &unity::scopes::Variant::get_string)
+      .add_method("get_dict", &unity::scopes::Variant::get_dict)
+      .add_method("get_array", &unity::scopes::Variant::get_array)
+      .add_method("is_null", &unity::scopes::Variant::is_null)
+      //.add_method("which", &unity::scopes::Variant::which)
+      .add_method("serialize_json", &unity::scopes::Variant::serialize_json)
+      .add_method("deserialize_json", &unity::scopes::Variant::deserialize_json);
+
 
     v8cpp::Class<JavascriptScopeRuntime> js_scope(isolate);
     js_scope
@@ -454,6 +471,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("SearchQuery", search_query);
     module.add_class("SearchMetadata", search_metadata);
     module.add_class("Variant", variant);
+    module.add_class("VariantBase", variant_base);
 
     // Factory functions
     module.add_function("new_scope", &new_scope);
