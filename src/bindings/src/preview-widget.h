@@ -131,7 +131,7 @@ class PreviewWidget
 
   // v8 binding
   void add_attribute_value(v8::FunctionCallbackInfo<v8::Value> const& args);
-  void add_widget(std::shared_ptr<unity::scopes::PreviewWidget> preview_widget);
+  void add_widget(std::shared_ptr<PreviewWidget> preview_widget);
   std::string id() const;
   void add_attribute_mapping(const std::string& k, const std::string& field_name);
   std::string widget_type() const;

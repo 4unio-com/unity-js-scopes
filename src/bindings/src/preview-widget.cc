@@ -101,8 +101,8 @@ void PreviewWidget::add_attribute_value(
 }
 
 void PreviewWidget::add_widget(
-      std::shared_ptr<unity::scopes::PreviewWidget> preview_widget) {
-  preview_widget_->add_widget(*preview_widget.get());
+      std::shared_ptr<PreviewWidget> preview_widget) {
+  preview_widget_->add_widget(preview_widget->preview_widget());
 }
 
 std::string PreviewWidget::id() const {
