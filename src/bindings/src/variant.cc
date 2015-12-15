@@ -64,6 +64,10 @@ int Variant::get_int() const {
   return variant_->get_int();
 }
 
+int64_t Variant::get_int64_t() const {
+  return variant_->get_int64_t();
+}
+
 double Variant::get_double() const {
   return variant_->get_double();
 }

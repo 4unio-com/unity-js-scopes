@@ -37,6 +37,7 @@ class Variant
   // v8 bindings
   std::string serialize_json() const;
   int get_int() const;
+  int64_t get_int64_t() const;
   double get_double() const;
   bool get_bool() const;
   std::string get_string() const;
