@@ -73,9 +73,9 @@ add_custom_command(
   COMMAND ${CMAKE_COMMAND} -E make_directory
     "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/bin"
 
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  COMMAND ${CMAKE_COMMAND} -E create_symlink
     "${CMAKE_CURRENT_BINARY_DIR}/unity-js-scopes-launcher"
-    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/bin"
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/bin/unity-js-scopes-launcher"
 )
 
 install(TARGETS ${LAUNCHER_EXECUTABLE_NAME}
