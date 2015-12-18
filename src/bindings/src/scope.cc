@@ -99,6 +99,11 @@ void JavascriptScopeRuntime::run(const std::string& scope_config) {
   }, nullptr);
 }
 
+void JavascriptScopeRuntime::stop()
+{
+  runtime_->destroy();
+}
+
 std::string JavascriptScopeRuntime::scope_config() const {
   return scope_config_;
 }
