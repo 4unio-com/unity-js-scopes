@@ -40,19 +40,19 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_lower)
 
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE CACHE INTERNAL "")
 
-if(cmake_build_type_lower MATCHES coverage)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -g")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -g")
-    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} --coverage -g")
-    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} --coverage -g")
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} --coverage -g")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage -g")
-endif()
-
 include(CheckCXXCompilerFlag)
 include(CheckIncludeFileCXX)
 include(EnableCoverageReport)
 include(GNUInstallDirs)
+
+# Enable testing
+
+enable_testing()
+
+add_custom_target(
+  check
+  ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
+)
 
 # Add includes
 
@@ -76,8 +76,6 @@ endif()
 
 # Add sources
 
-enable_testing()
-
 add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(tests)
@@ -89,12 +87,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
         DESTINATION /usr/share/qtcreator/templates/wizards/ubuntu)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/scope-js
         DESTINATION /usr/ubuntu-sdk-ide/share/qtcreator/templates/wizards/ubuntu)
-
-
-add_custom_target(
-  check
-  ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
-)
 
 # Enable coverage report
 
