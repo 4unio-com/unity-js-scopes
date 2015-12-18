@@ -39,6 +39,7 @@ endif()
 string(TOLOWER "${CMAKE_BUILD_TYPE}" cmake_build_type_lower)
 
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE CACHE INTERNAL "")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(CheckCXXCompilerFlag)
 include(CheckIncludeFileCXX)
