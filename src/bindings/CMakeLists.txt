@@ -24,6 +24,7 @@ file(
     ./src/*.h
     ./src/*.cc
     ./lib/*.js
+    ./*.js
     )
 
 add_definitions(

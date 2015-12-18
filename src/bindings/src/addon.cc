@@ -119,7 +119,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     js_scope
       .add_method("scope_base", &JavascriptScopeRuntime::scope_base)
       .add_method("scope_config", &JavascriptScopeRuntime::scope_config)
-      .add_method("run", &JavascriptScopeRuntime::run);
+      .add_method("run", &JavascriptScopeRuntime::run)
+      .add_method("stop", &JavascriptScopeRuntime::stop);
 
     v8cpp::Class<ScopeBase> scope_base(isolate);
     scope_base
