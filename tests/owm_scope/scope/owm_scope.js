@@ -103,8 +103,17 @@ scopes.self.initialize(
 
                             search_reply.push(categorised_result);
 
-                            // Now call back into the API for a 7 day forecast
-                            http.request({host: query_host, port: query_host_port, path: forecast_weather_path + qs}, forecase_weather_cb).end();
+                            var forcast_enabled = scopes.self.settings["forecast"].get_bool();
+                            if (forcast_enabled)
+                            {
+                                // Now call back into the API for a 7 day forecast
+                                http.request({host: query_host, port: query_host_port, path: forecast_weather_path + qs}, forecase_weather_cb).end();
+                            }
+                            else
+                            {
+                                // We are done, call finished() on our search_reply
+                                search_reply.finished();
+                            }
                         });
                     }
 

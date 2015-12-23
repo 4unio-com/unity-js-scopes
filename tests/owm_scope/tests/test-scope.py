@@ -20,7 +20,8 @@
 from scope_harness import (
     CategoryListMatcher, CategoryListMatcherMode, CategoryMatcher,
     Parameters, PreviewColumnMatcher, PreviewMatcher, PreviewView,
-    PreviewWidgetMatcher, ResultMatcher, ScopeHarness
+    PreviewWidgetMatcher, ResultMatcher, SettingsMatcher,
+    SettingsMatcherMode, SettingsOptionMatcher, ScopeHarness
 )
 from scope_harness.testing import *
 import unittest, sys, os
@@ -139,6 +140,52 @@ class AppsTest (ScopeHarnessTestCase):
                     .title("13.37°C to 15.52°C") \
                     .art("http://openweathermap.org/img/w/10d.png") \
                     .subtitle("moderate rain") ) ) \
+            .match(self.view.categories)
+        self.assertMatchResult(match)
+
+    def test_settings_change(self):
+        self.start_harness()
+        settings = self.view.settings
+
+        self.assertMatchResult(
+            SettingsMatcher()
+                .mode(SettingsMatcherMode.BY_ID)
+                .option(
+                    SettingsOptionMatcher("forecast")
+                        .value(True)
+                    )
+                .match(settings)
+            )
+
+        settings.set("forecast", False)
+
+        self.assertMatchResult(
+                SettingsMatcher()
+                    .mode(SettingsMatcherMode.BY_ID)
+                    .option(
+                        SettingsOptionMatcher("forecast")
+                            .value(False)
+                        )
+                    .match(settings)
+                )
+
+    def test_search_results_with_settings(self):
+        self.start_harness()
+        self.view.search_query = 'Manchester,uk'
+
+        settings = self.view.settings
+        settings.set("forecast", False)
+
+        match = CategoryListMatcher() \
+            .has_exactly(1) \
+            .mode(CategoryListMatcherMode.BY_ID) \
+            .category(CategoryMatcher("current") \
+                .title("Manchester, GB") \
+                .has_at_least(1) \
+                .result(ResultMatcher("2643123") \
+                    .title("17.35°C") \
+                    .art("http://openweathermap.org/img/w/03d.png") \
+                    .subtitle("scattered clouds") ) ) \
             .match(self.view.categories)
         self.assertMatchResult(match)
 
