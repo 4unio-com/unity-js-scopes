@@ -97,6 +97,7 @@ if (cmake_build_type_lower MATCHES coverage)
                                 ${CMAKE_CURRENT_SOURCE_DIR}/deps/*
                                 ${CMAKE_CURRENT_SOURCE_DIR}/examples/*
                                 ${CMAKE_CURRENT_SOURCE_DIR}/qtc-templates/*
+                                ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
                                 ${CMAKE_CURRENT_SOURCE_DIR}/tests/*
                                 ${CMAKE_BINARY_DIR}/*)
 endif()
