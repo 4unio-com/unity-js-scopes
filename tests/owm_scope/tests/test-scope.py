@@ -19,7 +19,8 @@
 
 from scope_harness import (
     CategoryListMatcher, CategoryListMatcherMode, CategoryMatcher,
-    Parameters, ResultMatcher, ScopeHarness
+    Parameters, PreviewColumnMatcher, PreviewMatcher, PreviewView,
+    PreviewWidgetMatcher, ResultMatcher, ScopeHarness
 )
 from scope_harness.testing import *
 import unittest, sys, os
@@ -140,6 +141,43 @@ class AppsTest (ScopeHarnessTestCase):
                     .subtitle("moderate rain") ) ) \
             .match(self.view.categories)
         self.assertMatchResult(match)
+
+    def test_preview_layouts(self):
+        self.start_harness()
+        self.view.search_query = ''
+
+        pview = self.view.category(0).result(0).tap()
+        self.assertIsInstance(pview, PreviewView)
+
+        pview.column_count = 1
+        self.assertMatchResult(
+            PreviewColumnMatcher()
+                .column(PreviewMatcher()
+                    .widget(PreviewWidgetMatcher("image"))
+                    .widget(PreviewWidgetMatcher("header"))
+                    .widget(PreviewWidgetMatcher("summary"))
+            ).match(pview.widgets))
+
+        pview.column_count = 2
+        self.assertMatchResult(
+            PreviewColumnMatcher()
+                 .column(PreviewMatcher()
+                         .widget(PreviewWidgetMatcher("image")))
+                 .column(PreviewMatcher()
+                         .widget(PreviewWidgetMatcher("header"))
+                         .widget(PreviewWidgetMatcher("summary"))
+            ).match(pview.widgets))
+
+        pview.column_count = 3
+        self.assertMatchResult(
+            PreviewColumnMatcher()
+                .column(PreviewMatcher()
+                        .widget(PreviewWidgetMatcher("image")))
+                .column(PreviewMatcher()
+                        .widget(PreviewWidgetMatcher("header"))
+                        .widget(PreviewWidgetMatcher("summary")))
+                .column(PreviewMatcher()
+            ).match(pview.widgets))
 
 
 if __name__ == '__main__':
