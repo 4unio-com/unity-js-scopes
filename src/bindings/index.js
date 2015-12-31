@@ -25,24 +25,24 @@ var self;
 /**
  * Scope corresponds to the bridge between the ubuntu scope runtime
  * and the actual scope.
- * 
+ *
  * A Scope object is not directly constructible but it is automatically created
  * when the scope module is imported and is accessible through the 'self' exported
  * member.
- * 
+ *
  * After the scopes runtime has obtained initialization runtime configurations from
  * the scope, it calls start(), which allows the scope to intialize itself. This is
  * followed by a call to run().
- * 
+ *
  * When the scope should complete its activities, the runtime calls stop().
- * 
+ *
  * @example
       var scopes = require('unity-js-scopes')
       scopes.self
-  
+
  * @module ScopeJS
- * 
- * 
+ *
+ *
  * @class Scope
  */
 function Scope() {}
@@ -86,7 +86,7 @@ Scope.prototype = {
         if (! options || typeof(options) !== 'object') {
             throw "No or invalid options specified";
         }
-        
+
         if (! runtime_config || typeof(runtime_config) !== 'object') {
             throw "No or invalid runtime configuration specified";
         }
@@ -125,7 +125,7 @@ Scope.prototype = {
         }
     },
     /**
-     * Returns the directory that stores the scope's configuration files and shared library    
+     * Returns the directory that stores the scope's configuration files and shared library
      *
      * @property scope_directory
      */
@@ -142,7 +142,7 @@ Scope.prototype = {
     },
     /**
      * Returns a tmp directory that is (exclusively) writable for the scope
-     * 
+     *
      * @property tmp_directory
      */
     get tmp_directory() {
@@ -150,7 +150,7 @@ Scope.prototype = {
     },
     /**
      * Returns the scope registry
-     * 
+     *
      * @property registry
      */
     get registry() {
@@ -158,13 +158,21 @@ Scope.prototype = {
     },
     /**
      * Returns a dictionary with the scope's current settings
-     * 
+     *
      * @property settings
      */
     get settings() {
         return this._base.settings();
     },
 };
+
+// results_ttl_type enumeration type
+var results_ttl_type = {
+    None: "None",
+    Small: "Small",
+    Medium: "Medium",
+    Large: "Large"
+}
 
 ConnectivityStatus = {
     Unknown: "Unknown",

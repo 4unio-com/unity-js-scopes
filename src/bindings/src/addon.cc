@@ -378,6 +378,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_scope_state_callback", &Registry::set_scope_state_callback)
       .add_method("set_list_update_callback", &Registry::set_list_update_callback);
 
+
     v8cpp::Class<unity::scopes::ScopeMetadata> scope_metadata(isolate);
     scope_metadata
       // unity::scopes::ScopeMetadata
@@ -394,7 +395,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       // .add_method("appearance_attributes", &unity::scopes::ScopeMetadata::appearance_attributes)
       .add_method("scope_directory", &unity::scopes::ScopeMetadata::scope_directory)
       // .add_method("serialize", &unity::scopes::ScopeMetadata::serialize)
-      // .add_method("results_ttl_type", &unity::scopes::ScopeMetadata::results_ttl_type)
+      .add_method("results_ttl_type", &unity::scopes::ScopeMetadata::results_ttl_type)
       // .add_method("settings_definitions", &unity::scopes::ScopeMetadata::settings_definitions)
       .add_method("location_data_needed", &unity::scopes::ScopeMetadata::location_data_needed);
 
