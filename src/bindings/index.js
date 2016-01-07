@@ -168,10 +168,10 @@ Scope.prototype = {
 
 // results_ttl_type enumeration type
 var results_ttl_type = {
-    None: "None",
-    Small: "Small",
-    Medium: "Medium",
-    Large: "Large"
+    None: 0,
+    Small: 1,
+    Medium: 2,
+    Large: 3
 }
 
 ConnectivityStatus = {
