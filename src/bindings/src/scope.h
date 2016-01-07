@@ -38,6 +38,7 @@ class JavascriptScopeRuntime
 
   ScopeBase* scope_base();
   void run(const std::string& scope_config);
+  void stop();
   std::string scope_config() const;
 
  private:

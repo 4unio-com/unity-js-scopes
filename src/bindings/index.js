@@ -224,3 +224,7 @@ Object.defineProperty(
             return self;
         },
     });
+
+process.on('SIGTERM', function() {
+  self._scope_binding.stop();
+});
