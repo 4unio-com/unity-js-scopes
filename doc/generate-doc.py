@@ -21,6 +21,7 @@ import os
 import subprocess
 import sys
 import shutil
+import re
 
 def usage():
     print("generate-doc.py SOURCE_DIRECTORY TARGET_DOC_DIRECTORY")
@@ -163,6 +164,16 @@ api.js
 
 def patch_yui_files_local_refs(doc_root_folder):
     data_file = os.path.join(doc_root_folder, "data.json")
-    os.remove(data_file)
+    f = open(data_file,'r')
+    filedata = f.read()
+    f.close()
+
+    # Remove local files path, only leaving file names
+    newdata = re.sub(current_folder.replace('/doc', '')+'.*/', '', filedata)
+
+    f = open(data_file,'w')
+    f.write(newdata)
+    f.close()
 
 patch_yui_files_docs(target_doc_directory)
+patch_yui_files_local_refs(target_doc_directory)
