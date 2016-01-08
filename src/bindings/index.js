@@ -29,7 +29,7 @@ var self;
  * A Scope object is not directly constructible but it is automatically created
  * when the scope module is imported and is accessible through the 'self' exported
  * member.
- * 
+ *  
  * After the scopes runtime has obtained initialization runtime configurations from
  * the scope, it calls start(), which allows the scope to intialize itself. This is
  * followed by a call to run().
@@ -39,7 +39,7 @@ var self;
  * @example
       var scopes = require('unity-js-scopes')
       scopes.self
-  
+
  * @module ScopeJS
  * 
  * 
@@ -86,11 +86,11 @@ Scope.prototype = {
         if (! options || typeof(options) !== 'object') {
             throw "No or invalid options specified";
         }
-        
+	
         if (! runtime_config || typeof(runtime_config) !== 'object') {
             throw "No or invalid runtime configuration specified";
         }
-
+	
         if (runtime_config.run && typeof(runtime_config.run) === 'function') {
             this._base.onrun(runtime_config.run);
         }
@@ -125,7 +125,7 @@ Scope.prototype = {
         }
     },
     /**
-     * Returns the directory that stores the scope's configuration files and shared library    
+     * Returns the directory that stores the scope's configuration files and shared library
      *
      * @property scope_directory
      */
@@ -142,7 +142,7 @@ Scope.prototype = {
     },
     /**
      * Returns a tmp directory that is (exclusively) writable for the scope
-     * 
+     *
      * @property tmp_directory
      */
     get tmp_directory() {
@@ -165,6 +165,14 @@ Scope.prototype = {
         return this._base.settings();
     },
 };
+
+// results_ttl_type enumeration type
+var results_ttl_type = {
+    None: 0,
+    Small: 1,
+    Medium: 2,
+    Large: 3
+}
 
 ConnectivityStatus = {
     Unknown: "Unknown",

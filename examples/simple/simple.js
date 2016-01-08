@@ -32,6 +32,7 @@ function dump_scope_metadata(metadata) {
     console.log('  ' + metadata.hot_key());
     console.log('  ' + metadata.invisible());
     console.log('  ' + metadata.scope_directory());
+    console.log('  ' + metadata.results_ttl_type());
     console.log('  ' + metadata.location_data_needed());
 }
 
@@ -83,7 +84,7 @@ function dump_scope_registry_data() {
                 scopes_metadata[s].scope_id(),
                 function(is_running) {
                     console.log('I am possibly running '
-                                + (is_running ? '(yes) ' : '(no) ') 
+                                + (is_running ? '(yes) ' : '(no) ')
                                 + scopes_metadata[s].scope_id())
             })
         }
@@ -124,17 +125,17 @@ scopes.self.initialize(
                     // Create a simple department
                     var root_department =
                         new scopes.lib.Department("", canned_query, "Simple Department")
-                    
+
                     console.log('Department\'s associated query string : '
                                 + root_department.query().query_string())
-                    
+
                     var child_department =
                         new scopes.lib.Department("child", canned_query, "Simple Child Department")
 
                     root_department.set_subdepartments([child_department])
-                    
+
                     search_reply.register_departments(root_department)
-                    
+
                     var categorised_result =
                         new scopes.lib.CategorisedResult(category);
                     categorised_result.set_uri("http://www.ubuntu.com");
@@ -164,4 +165,3 @@ scopes.self.initialize(
         preview: function(result, action_metadata) {}
     }
 );
-
