@@ -166,6 +166,14 @@ Scope.prototype = {
     },
 };
 
+// results_ttl_type enumeration type
+var ResultsTtlType = {
+    None: 0,
+    Small: 1,
+    Medium: 2,
+    Large: 3
+}
+
 ConnectivityStatus = {
     Unknown: "Unknown",
     Connected: "Connected",

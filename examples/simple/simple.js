@@ -32,6 +32,7 @@ function dump_scope_metadata(metadata) {
     console.log('  ' + metadata.hot_key());
     console.log('  ' + metadata.invisible());
     console.log('  ' + metadata.scope_directory());
+    console.log('  ' + metadata.results_ttl_type());
     console.log('  ' + metadata.location_data_needed());
 }
 
@@ -164,4 +165,3 @@ scopes.self.initialize(
         preview: function(result, action_metadata) {}
     }
 );
-
