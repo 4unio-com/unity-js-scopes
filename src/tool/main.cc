@@ -61,9 +61,9 @@ int setup_chroot(std::string const& fw)
     setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint sh -c \"find /etc/apt/sources.list.d//*.list \
           -exec apt-get update -o Dir::Etc::sourcelist='{}' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0' \\;\" \n";
 
-    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-tool -y --force-yes \n";
     setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-bindings:armhf -y --force-yes \n";
     setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-launcher:armhf -y --force-yes \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install unity-js-scopes-tool -y --force-yes \n";
 
     std::cout << "Setting up " << fw << " chroot ..." << std::endl;
     return system(setup_script.c_str());
