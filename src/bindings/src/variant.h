@@ -46,6 +46,8 @@ class Variant
   bool is_null() const;
   std::string which();
 
+  unity::scopes::Variant variant() const;
+
  private:
   std::shared_ptr<unity::scopes::Variant> variant_;
 };
