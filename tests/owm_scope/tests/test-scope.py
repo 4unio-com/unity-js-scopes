@@ -18,9 +18,9 @@
 # MA  02110-1301  USA
 
 from scope_harness import (
-    CategoryListMatcher, CategoryListMatcherMode, CategoryMatcher,
-    Parameters, PreviewColumnMatcher, PreviewMatcher, PreviewView,
-    PreviewWidgetMatcher, ResultMatcher, SettingsMatcher,
+    CategoryListMatcher, CategoryListMatcherMode, CategoryMatcher, ChildDepartmentMatcher,
+    DepartmentMatcher, DepartmentMatcherMode, Parameters, PreviewColumnMatcher,
+    PreviewMatcher, PreviewView, PreviewWidgetMatcher, ResultMatcher, SettingsMatcher,
     SettingsMatcherMode, SettingsOptionMatcher, ScopeHarness
 )
 from scope_harness.testing import *
@@ -226,6 +226,85 @@ class AppsTest (ScopeHarnessTestCase):
                 .column(PreviewMatcher()
             ).match(pview.widgets))
 
+    def test_departments(self):
+        self.start_harness()
+        self.view.search_query = ''
+
+        assert(self.view.has_departments == True)
+
+        departments = self.view.browse_department('')
+        self.assertMatchResult(
+                DepartmentMatcher()
+                    .mode(DepartmentMatcherMode.STARTS_WITH)
+                        .id('')
+                        .label('Current + Forecast')
+                        .all_label('')
+                        .parent_id('')
+                        .parent_label('')
+                        .is_root(True)
+                        .is_hidden(False)
+                        .child(ChildDepartmentMatcher('current'))
+                        .child(ChildDepartmentMatcher('forecast'))
+                        .match(departments))
+
+    def test_departments_with_settings(self):
+        self.start_harness()
+        self.view.search_query = ''
+
+        settings = self.view.settings
+        settings.set("forecast", False)
+
+        assert(self.view.has_departments == False)
+
+    def test_department_browsing(self):
+        self.start_harness()
+        self.view.search_query = ''
+
+        # Test "Current" department
+
+        departments = self.view.browse_department('current')
+
+        self.assertMatchResult(DepartmentMatcher()
+            .has_exactly(0)
+            .mode(DepartmentMatcherMode.STARTS_WITH)
+            .label('Current')
+            .all_label('')
+            .parent_id('')
+            .parent_label('Current + Forecast')
+            .is_root(False)
+            .is_hidden(False)
+            .match(departments))
+
+        self.assertMatchResult(CategoryListMatcher()
+            .has_exactly(1)
+            .mode(CategoryListMatcherMode.BY_ID)
+            .category(CategoryMatcher("current")
+                      .has_at_least(1)
+            )
+            .match(self.view.categories))
+
+        # Test "Forecast" department
+
+        departments = self.view.browse_department('forecast')
+
+        self.assertMatchResult(DepartmentMatcher()
+            .has_exactly(0)
+            .mode(DepartmentMatcherMode.STARTS_WITH)
+            .label('Forecast')
+            .all_label('')
+            .parent_id('')
+            .parent_label('Current + Forecast')
+            .is_root(False)
+            .is_hidden(False)
+            .match(departments))
+
+        self.assertMatchResult(CategoryListMatcher()
+            .has_exactly(1)
+            .mode(CategoryListMatcherMode.BY_ID)
+            .category(CategoryMatcher("forecast")
+                      .has_at_least(1)
+            )
+            .match(self.view.categories))
 
 if __name__ == '__main__':
     SCOPE_NAME = sys.argv[1]
