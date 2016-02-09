@@ -17,6 +17,7 @@
  */
 
 #include "common.h"
+#include "variant.h"
 
 v8::Local<v8::Value> unity::scopesjs::from_variant(
       const unity::scopes::Variant& variant) {
@@ -73,6 +74,13 @@ unity::scopes::Variant unity::scopesjs::to_variant(
       v8::Local<v8::Value> value) {
   try
   {
+    // Check first that the value recieved is not already a Variant
+    auto variant = v8cpp::from_v8<::Variant>(v8::Isolate::GetCurrent(), value);
+    return variant.variant();
+  }
+  catch (std::exception const&) {}
+  try
+  {
     // Check first that the value recieved is not already a unity::scopes::Variant
     return v8cpp::from_v8<unity::scopes::Variant>(v8::Isolate::GetCurrent(), value);
   }
@@ -94,6 +102,19 @@ unity::scopes::Variant unity::scopesjs::to_variant(
     v = Variant(value->ToBoolean()->Value());
   } else if (value->IsNumber()) {
     v = Variant(value->NumberValue());
+  } else if (value->IsArray()) {
+    v8::Handle<v8::Object> o = v8::Handle<v8::Object>::Cast(value);
+
+    VariantArray va;
+
+    for (size_t i = 0;
+         i < o->Get(v8::String::NewFromUtf8(
+                      v8::Isolate::GetCurrent(), "length"))->ToObject()->Uint32Value();
+         ++i) {
+      va.push_back(to_variant(o->Get(i)));
+    }
+
+    v = va;
   } else if (value->IsObject()) {
     v8::Handle<v8::Object> o = v8::Handle<v8::Object>::Cast(value);
 
@@ -108,19 +129,6 @@ unity::scopes::Variant unity::scopesjs::to_variant(
     }
 
     v = vm;
-  } else if (value->IsArray()) {
-    v8::Handle<v8::Object> o = v8::Handle<v8::Object>::Cast(value);
-
-    VariantArray va;
-
-    for (size_t i = 0;
-         i < o->Get(v8::String::NewFromUtf8(
-                      v8::Isolate::GetCurrent(), "length"))->ToObject()->Uint32Value();
-         ++i) {
-      va.push_back(to_variant(o->Get(i)));
-    }
-
-    v = va;
   }
 
   return v;

@@ -58,6 +58,7 @@ YUI.add("yuidoc-meta", function(Y) {
             "name": "ScopeJS",
             "description": "Metadata passed to scopes for preview and activation"
         }
-    ]
+    ],
+    "elements": []
 } };
 });

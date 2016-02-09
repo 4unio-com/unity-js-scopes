@@ -35,6 +35,7 @@ install(FILES "%ClickHookName:l%.apparmor" DESTINATION "/")
 file(GLOB_RECURSE
   _PO_JS_FILES
   "po/*.po"
+  "po/*.pot"
   "*.js"
 )
 add_custom_target(hidden_files
@@ -45,7 +46,6 @@ add_custom_target(hidden_files
     src/data/%ClickHookName:l%.ini.in
     src/data/%ClickHookName:l%-settings.ini.in
     po/POTFILES.in.in
-    po/${GETTEXT_PACKAGE}.pot
     ${_PO_JS_FILES}
 )
 
