@@ -93,9 +93,9 @@ add_custom_command(
   COMMAND ${CMAKE_COMMAND} -E make_directory
     "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/lib"
 
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+  COMMAND ${CMAKE_COMMAND} -E create_symlink
     "${CMAKE_CURRENT_BINARY_DIR}/unity_js_scopes_bindings.node"
-    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes"
+    "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes/unity_js_scopes_bindings.node"
   COMMAND ${CMAKE_COMMAND} -E copy_if_different
     "${CMAKE_CURRENT_SOURCE_DIR}/index.js"
     "${CMAKE_BINARY_DIR}/tests/node_modules/unity-js-scopes"

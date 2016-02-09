@@ -45,7 +45,7 @@ target_link_libraries(
   dl
 )
 
-if(cmake_build_type_tolower STREQUAL "debug")
+if(cmake_build_type_lower MATCHES debug)
   add_custom_command(
     TARGET nodejs-static PRE_LINK
     COMMAND ${CMAKE_SOURCE_DIR}/deps/build-debug.sh
