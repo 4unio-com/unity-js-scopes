@@ -104,3 +104,7 @@ std::string Variant::which() {
   return variant_string_from_type(variant_->which());
 }
 
+unity::scopes::Variant Variant::variant() const
+{
+  return * variant_;
+}
