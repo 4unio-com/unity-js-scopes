@@ -89,19 +89,30 @@ void PreviewWidget::add_attribute_value(
     if (v.which() == unity::scopes::Variant::Array) {
       unity::scopes::VariantArray va = v.get_array();
 
-      for (auto &d : va) {
-        if (d.which() == unity::scopes::Variant::Dict) {
-          unity::scopes::VariantMap vm = d.get_dict();
-          std::vector<std::pair<std::string, unity::scopes::Variant>> t;
-
-          for (auto &c : vm) {
-            t.push_back({c.first, c.second});
-          }
-
-          vb.add_tuple(t);
-        }
+      if (va.empty())
+      {
+        return;
       }
-      preview_widget_->add_attribute_value(key, vb.end());
+      else if (va.front().which() == unity::scopes::Variant::Dict)
+      {
+        for (auto &d : va) {
+          if (d.which() == unity::scopes::Variant::Dict) {
+            unity::scopes::VariantMap vm = d.get_dict();
+            std::vector<std::pair<std::string, unity::scopes::Variant>> t;
+
+            for (auto &c : vm) {
+              t.push_back({c.first, c.second});
+            }
+
+            vb.add_tuple(t);
+          }
+        }
+        preview_widget_->add_attribute_value(key, vb.end());
+      }
+      else
+      {
+        preview_widget_->add_attribute_value(key, v);
+      }
     }
     else if (v.which() == unity::scopes::Variant::Dict) {
       unity::scopes::VariantMap vm = v.get_dict();
