@@ -34,18 +34,20 @@ ScopeBase::ScopeBase()
   : isolate_(v8::Isolate::GetCurrent()) {
 }
 ScopeBase::~ScopeBase() {
-  if ( ! start_callback_.IsEmpty()) {
-    start_callback_.Reset();
-  }
-  if ( ! stop_callback_.IsEmpty()) {
-    stop_callback_.Reset();
-  }
-  if ( ! run_callback_.IsEmpty()) {
-    run_callback_.Reset();
-  }
-  if ( ! search_callback_.IsEmpty()) {
-    search_callback_.Reset();
-  }
+#if defined(SCOPE_JS_DELETE_CALLBACK)
+#error "Duplicate SCOPE_JS_DELETE_CALLBACK definitions"
+#endif
+
+#define SCOPE_JS_DELETE_CALLBACK(cb) \
+  do { if ( ! cb.IsEmpty()) cb.Reset(); } while(0)
+
+  SCOPE_JS_DELETE_CALLBACK(start_callback_);
+  SCOPE_JS_DELETE_CALLBACK(stop_callback_);
+  SCOPE_JS_DELETE_CALLBACK(run_callback_);
+  SCOPE_JS_DELETE_CALLBACK(search_callback_);
+  SCOPE_JS_DELETE_CALLBACK(perform_action_callback_);
+
+#undef SCOPE_JS_DELETE_CALLBACK
 }
 
 void ScopeBase::start(std::string const& scope_id) {
@@ -130,6 +132,10 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
     std::shared_ptr<SearchQuery> sq =
       v8cpp::from_v8<std::shared_ptr<SearchQuery>>(isolate_, result);
 
+    if (!sq) {
+      return unity::scopes::SearchQueryBase::UPtr(nullptr);
+    }
+
     return unity::scopes::SearchQueryBase::UPtr(new SearchQueryProxy(sq));
   });
 }
@@ -177,6 +183,9 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
       v8cpp::from_v8<std::shared_ptr<ActivationQuery>>(
           isolate_,
           wrapped_activation_query);
+    if (!aq) {
+      return unity::scopes::ActivationQueryBase::UPtr(nullptr);
+    }
 
     return unity::scopes::ActivationQueryBase::UPtr(new ActivationQueryProxy(aq));
   });
@@ -215,6 +224,10 @@ unity::scopes::PreviewQueryBase::UPtr ScopeBase::preview(
       v8cpp::from_v8<std::shared_ptr<PreviewQuery>>(
           isolate_,
           wrapped_preview);
+
+    if (!sq) {
+      return unity::scopes::PreviewQueryBase::UPtr(nullptr);
+    }
 
     return unity::scopes::PreviewQueryBase::UPtr(new PreviewQueryProxy(sq));
   });
@@ -318,6 +331,26 @@ void ScopeBase::onpreview(
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   preview_callback_.Reset(args.GetIsolate(), cb);
+}
+
+void ScopeBase::onperform_action(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 1) {
+    // TODO fix
+    return;
+  }
+
+  if (!args[0]->IsFunction()) {
+    // TODO fix
+    return;
+  }
+
+  if (perform_action_callback_.IsEmpty()) {
+    perform_action_callback_.Reset();
+  }
+
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  perform_action_callback_.Reset(args.GetIsolate(), cb);
 }
 
 std::shared_ptr<Registry> ScopeBase::get_registry() const {

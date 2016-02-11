@@ -62,7 +62,7 @@ Scope.prototype = {
      *         - starting {Function(String: scope_id)}: Callback called by the scopes run time after the create function completes
      *         - stop {Function()}: Callback called by the scopes run time when the scope should shut down
      *         - search {Function(CannedQuery: canned_query, SearchMetaData: metadata)}: Callback called by the scopes run time when a scope needs to instantiate a query
-     *         - perform_action {Function(Result: result, ActionMetaData: metadata, String: widget_id, String: ation_id)}: Callback invoked when a scope is requested to handle a preview action
+     *         - perform_action {Function(Result: result, ActionMetaData: metadata, String: widget_id, String: action_id)}: Callback invoked when a scope is requested to handle a preview action
      *         - preview {Function(Result: result, ActionMetaData: metadata)}: Callback invoked when a scope is requested to create a preview for a particular result
      *
      * @example
@@ -109,6 +109,10 @@ Scope.prototype = {
 
         if (runtime_config.preview && typeof(runtime_config.preview) === 'function') {
             this._base.onpreview(runtime_config.preview);
+        }
+
+        if (runtime_config.perform_action && typeof(runtime_config.perform_action) === 'function') {
+            this._base.onperform_action(runtime_config.perform_action);
         }
 
         if (runtime_config.activate && typeof(runtime_config.activate) === 'function') {

@@ -61,7 +61,9 @@ SoundCloudClient.prototype = {
                     track_results.push({
                         id: results[i].id,
                         art: results[i].artwork_url ? results[i].artwork_url : "",
+                        streamable: results[i].streamable,
                         stream_url: results[i].stream_url,
+                        duration: results[i].duration,
                         uri: results[i].uri,
                         description: results[i].description,
                         genre: results[i].genre,
@@ -93,7 +95,12 @@ function scope_result_from_search_result(
     categorised_result.set_art(result.art);
 
     categorised_result.set("artist", result.artist.username);
-    categorised_result.set("stream", result.artist.stream_url);
+    categorised_result.set("stream", result.stream_url);
+    categorised_result.set("duration", result.duration);
+    categorised_result.set("audio-data", {
+        "uri": result.stream_url,
+        "duration": result.duration
+    });
 
     return categorised_result
 }
@@ -104,14 +111,19 @@ function on_search(canned_query, metadata) {
       \"template\": { \
         \"category-layout\": \"grid\", \
         \"card-layout\": \"horizontal\", \
-        \"card-size\": \"large\" \
+        \"card-size\": \"large\", \
+        \"quick-preview-type\" : \"audio\" \
       }, \
       \"components\": { \
         \"title\": \"title\", \
         \"art\" : { \
-          \"field\": \"art\" \
+          \"field\": \"art\", \
+          \"conciergeMode\": true \
         }, \
-        \"subtitle\": \"artist\" \
+        \"subtitle\": \"artist\", \
+        \"quick-preview-data\": { \
+          \"field\": \"audio-data\" \
+        } \
       } \
     }";
 
@@ -192,11 +204,21 @@ function on_preview(result, action_metadata) {
             var actions_widget = new scopes.lib.PreviewWidget("actionsId", "actions");
             actions_widget.add_attribute_value(
                 "actions",
-                {
-                    "id": "open",
-                    "label": "Open",
-                    "uri": r.get("uri")
-                }
+                [
+                    {
+                      "id": "open",
+                      "label": "Open",
+                      "uri": r.get("uri")
+                    },
+                    {
+                      "id": "download",
+                      "label": "Download"
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test"
+                    }
+                ]
             );
             preview_reply.push([header_widget, art_widget, actions_widget])
             preview_reply.finished()
@@ -222,5 +244,9 @@ scopes.self.initialize(
         },
         search: on_search,
         preview: on_preview,
+        perform_action: function(result, metadata, widget_id, action_id) {
+            console.log('Action performed', widget_id, action_id)
+            return null
+        }
     }
 );

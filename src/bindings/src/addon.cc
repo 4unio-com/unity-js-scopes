@@ -130,6 +130,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &ScopeBase::onrun)
       .add_method("onsearch", &ScopeBase::onsearch)
       .add_method("onpreview", &ScopeBase::onpreview)
+      .add_method("onperform_action", &ScopeBase::onperform_action)
       .add_method("registry", &ScopeBase::get_registry)
       // unity::scopes::ScopeBase
       .add_method("scope_directory", &unity::scopes::ScopeBase::scope_directory)
