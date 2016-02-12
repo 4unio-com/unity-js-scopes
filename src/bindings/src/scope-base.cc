@@ -245,10 +245,6 @@ void ScopeBase::onstart(
     return;
   }
 
-  if (start_callback_.IsEmpty()) {
-    start_callback_.Reset();
-  }
-
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   start_callback_.Reset(args.GetIsolate(), cb);
 }
@@ -263,10 +259,6 @@ void ScopeBase::onstop(
   if (!args[0]->IsFunction()) {
     // TODO fix
     return;
-  }
-
-  if (stop_callback_.IsEmpty()) {
-    stop_callback_.Reset();
   }
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
@@ -285,10 +277,6 @@ void ScopeBase::onrun(
     return;
   }
 
-  if (run_callback_.IsEmpty()) {
-    run_callback_.Reset();
-  }
-
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   run_callback_.Reset(args.GetIsolate(), cb);
 }
@@ -303,10 +291,6 @@ void ScopeBase::onsearch(
   if (!args[0]->IsFunction()) {
     // TODO fix
     return;
-  }
-
-  if (search_callback_.IsEmpty()) {
-    search_callback_.Reset();
   }
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
@@ -325,10 +309,6 @@ void ScopeBase::onpreview(
     return;
   }
 
-  if (preview_callback_.IsEmpty()) {
-    preview_callback_.Reset();
-  }
-
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   preview_callback_.Reset(args.GetIsolate(), cb);
 }
@@ -343,10 +323,6 @@ void ScopeBase::onperform_action(
   if (!args[0]->IsFunction()) {
     // TODO fix
     return;
-  }
-
-  if (perform_action_callback_.IsEmpty()) {
-    perform_action_callback_.Reset();
   }
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
