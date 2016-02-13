@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -38,6 +38,7 @@ class ScopeBase : public unity::scopes::ScopeBase
 
   void onsearch(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onpreview(v8::FunctionCallbackInfo<v8::Value> const& args);
+  void onactivate(v8::FunctionCallbackInfo<v8::Value> const& args);
   void onperform_action(v8::FunctionCallbackInfo<v8::Value> const& args);
 
   std::shared_ptr<Registry> get_registry() const;
@@ -75,6 +76,7 @@ class ScopeBase : public unity::scopes::ScopeBase
   v8::Persistent<v8::Function> search_callback_;
   v8::Persistent<v8::Function> preview_callback_;
   v8::Persistent<v8::Function> perform_action_callback_;
+  v8::Persistent<v8::Function> activate_callback_;
 };
 
 #endif // _UNITY_JS_SCOPES_BASE_H_

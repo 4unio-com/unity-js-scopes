@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -23,6 +23,8 @@
 
 #include <v8-cpp.h>
 
+#include "activation-query.h"
+
 
 class ActivationQueryProxy : public unity::scopes::ActivationQueryBase
 {
@@ -30,16 +32,8 @@ class ActivationQueryProxy : public unity::scopes::ActivationQueryBase
   ActivationQueryProxy(
       std::shared_ptr<unity::scopes::ActivationQueryBase> backend);
 
-  unity::scopes::ActivationResponse activate() override;
-  unity::scopes::Result result() const;
-  unity::scopes::ActionMetadata action_metadata() const;
-  std::string widget_id() const;
-  std::string action_id() const;
   void cancelled() override;
-  bool valid() const;
-  unity::scopes::VariantMap settings() const;
-
-  // TODO handle the subsearch override functions
+  unity::scopes::ActivationResponse activate () override;
 
  private:
   std::shared_ptr<unity::scopes::ActivationQueryBase> backend_;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -131,6 +131,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onsearch", &ScopeBase::onsearch)
       .add_method("onpreview", &ScopeBase::onpreview)
       .add_method("onperform_action", &ScopeBase::onperform_action)
+      .add_method("onactivate", &ScopeBase::onactivate)
       .add_method("registry", &ScopeBase::get_registry)
       // unity::scopes::ScopeBase
       .add_method("scope_directory", &unity::scopes::ScopeBase::scope_directory)
@@ -159,16 +160,24 @@ void InitAll(v8::Handle<v8::Object> exports)
     v8cpp::Class<ActivationQuery> activation_query(isolate);
     activation_query
       .add_inheritance<unity::scopes::ActivationQueryBase>()
-      // ActivationQuery
-      .add_method("activate", &ActivationQuery::activate)
-      .add_method("result", &ActivationQuery::result)
-      .add_method("action_metadata", &ActivationQuery::action_metadata)
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
       // unity::scopes::ActivationQueryBase
       .add_method("widget_id", &unity::scopes::ActivationQueryBase::widget_id)
       .add_method("action_id", &unity::scopes::ActivationQueryBase::action_id)
-      // QueryBase
       .add_method("valid", &unity::scopes::QueryBase::valid)
-      .add_method("settings", &unity::scopes::QueryBase::settings);
+      .add_method("settings", &unity::scopes::QueryBase::settings)
+      // ActivationQuery
+      .add_method("result", &ActivationQuery::result)
+      .add_method("action_metadata", &ActivationQuery::action_metadata);
+
+    v8cpp::Class<ActivationResponse> activation_response(isolate);
+    activation_response
+      .set_constructor<v8::Local<v8::Value>>()
+      // ActivationResponse
+      .add_method("status", &ActivationResponse::status)
+      .add_method("set_scope_data", &ActivationResponse::set_scope_data)
+      .add_method("scope_data", &ActivationResponse::scope_data)
+      .add_method("query", &ActivationResponse::query);
 
     v8cpp::Class<unity::scopes::Category> category(isolate);
     category
@@ -335,6 +344,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<Result> result(isolate);
     result
+      .add_inheritance<unity::scopes::Result>()
       // unity::scopes::Result
       .add_method("art", &unity::scopes::Result::art)
       .add_method("set_art", &unity::scopes::Result::set_art)
@@ -451,6 +461,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("scope_base", scope_base);
     module.add_class("ActionMetadata", action_metadata);
     module.add_class("ActivationQuery", activation_query);
+    module.add_class("ActivationResponse", activation_response);
     module.add_class("Category", category);
     module.add_class("CategorisedResult", categorised_result);
     module.add_class("CannedQuery", canned_query);

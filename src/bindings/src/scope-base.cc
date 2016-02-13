@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -46,6 +46,7 @@ ScopeBase::~ScopeBase() {
   SCOPE_JS_DELETE_CALLBACK(run_callback_);
   SCOPE_JS_DELETE_CALLBACK(search_callback_);
   SCOPE_JS_DELETE_CALLBACK(perform_action_callback_);
+  SCOPE_JS_DELETE_CALLBACK(activate_callback_);
 
 #undef SCOPE_JS_DELETE_CALLBACK
 }
@@ -143,9 +144,37 @@ unity::scopes::SearchQueryBase::UPtr ScopeBase::search(
 unity::scopes::ActivationQueryBase::UPtr ScopeBase::activate(
       unity::scopes::Result const &result,
       unity::scopes::ActionMetadata const &metadata) {
-  return EventQueue::instance().run<unity::scopes::ActivationQueryBase::UPtr>(isolate_, [this]
-  {
+  if (activate_callback_.IsEmpty()) {
     return nullptr;
+  }
+
+  return EventQueue::instance().run<unity::scopes::ActivationQueryBase::UPtr>(
+      isolate_,
+      [this, result, metadata] {
+
+    std::shared_ptr<Result> r(new Result(result));
+    std::shared_ptr<ActionMetaData> m(
+        new ActionMetaData(metadata));
+
+    v8::Local<v8::Function> activate_callback =
+        v8cpp::to_local<v8::Function>(isolate_, activate_callback_);
+
+    v8::Handle<v8::Value> wrapped_activation_query =
+        v8cpp::call_v8(
+          isolate_,
+          activate_callback,
+          v8cpp::to_v8(isolate_, r),
+          v8cpp::to_v8(isolate_, m));
+
+    std::shared_ptr<ActivationQuery> aq =
+      v8cpp::from_v8<std::shared_ptr<ActivationQuery>>(
+          isolate_,
+          wrapped_activation_query);
+    if (!aq) {
+      return unity::scopes::ActivationQueryBase::UPtr(nullptr);
+    }
+
+    return unity::scopes::ActivationQueryBase::UPtr(new ActivationQueryProxy(aq));
   });
 }
 
@@ -163,8 +192,7 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::perform_action(
       [this, result, metadata, widget_id, action_id] {
 
     std::shared_ptr<Result> r(new Result(result));
-    std::shared_ptr<ActionMetaData> m(
-        new ActionMetaData(metadata));
+    std::shared_ptr<ActionMetaData> m(new ActionMetaData(metadata));
 
     v8::Local<v8::Function> perform_action_callback =
         v8cpp::to_local<v8::Function>(isolate_, perform_action_callback_);
@@ -327,6 +355,22 @@ void ScopeBase::onperform_action(
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
   perform_action_callback_.Reset(args.GetIsolate(), cb);
+}
+
+void ScopeBase::onactivate(
+      v8::FunctionCallbackInfo<v8::Value> const& args) {
+  if (args.Length() != 1) {
+    // TODO fix
+    return;
+  }
+
+  if (!args[0]->IsFunction()) {
+    // TODO fix
+    return;
+  }
+
+  v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
+  activate_callback_.Reset(args.GetIsolate(), cb);
 }
 
 std::shared_ptr<Registry> ScopeBase::get_registry() const {

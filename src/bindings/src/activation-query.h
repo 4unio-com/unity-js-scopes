@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -23,6 +23,7 @@
 
 #include "action-metadata.h"
 #include "result.h"
+#include "activation-response.h"
 
 #include <v8-cpp.h>
 
@@ -105,26 +106,23 @@ settings: function() {
  */
 
 class ActivationQuery : public unity::scopes::ActivationQueryBase,
-  public std::enable_shared_from_this<ActivationQuery>
+    public std::enable_shared_from_this<ActivationQuery>
 {
  public:
-  ActivationQuery(unity::scopes::Result const& result,
-                  unity::scopes::ActionMetadata const& metadata,
-                  const v8::Local<v8::Function> &cancelled_callback);
-  ~ActivationQuery() override;
+  ActivationQuery(v8::FunctionCallbackInfo<v8::Value> const& args);
+  ~ActivationQuery();
 
-  // PreviewQueryBase implementation
   void cancelled() override;
+  unity::scopes::ActivationResponse activate() override;
 
-  // v8 bindings
   std::shared_ptr<ActionMetaData> action_metadata() const;
   std::shared_ptr<Result> result() const;
-  v8::Local<v8::Value> activate(v8::FunctionCallbackInfo<v8::Value> const& args);
 
  private:
   v8::Isolate* isolate_;
 
   v8::Persistent<v8::Function> cancelled_callback_;
+  v8::Persistent<v8::Function> activate_callback_;
 };
 
 #endif // _UNITY_JS_ACTIVATION_QUERY_H_

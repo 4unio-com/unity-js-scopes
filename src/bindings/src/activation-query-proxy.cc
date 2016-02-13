@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -21,40 +21,21 @@
 #include <unity/scopes/Result.h>
 #include <unity/scopes/ActionMetadata.h>
 
+
 ActivationQueryProxy::ActivationQueryProxy(
       std::shared_ptr<unity::scopes::ActivationQueryBase> backend)
-  : unity::scopes::ActivationQueryBase(backend->result(), backend->action_metadata()),
+  : unity::scopes::ActivationQueryBase(
+        backend->result(),
+        backend->action_metadata(),
+        backend->widget_id(),
+        backend->action_id()),
     backend_(backend) {
-}
-
-unity::scopes::ActivationResponse ActivationQueryProxy::activate() {
-  return backend_->activate();
-}
-
-unity::scopes::Result ActivationQueryProxy::result() const {
-  return backend_->result();
-}
-
-unity::scopes::ActionMetadata ActivationQueryProxy::action_metadata() const {
-  return backend_->action_metadata();
-}
-
-std::string ActivationQueryProxy::widget_id() const {
-  return backend_->widget_id();
-}
-
-std::string ActivationQueryProxy::action_id() const {
-  return backend_->action_id();
 }
 
 void ActivationQueryProxy::cancelled() {
   backend_->cancelled();
 }
 
-bool ActivationQueryProxy::valid() const {
-  return backend_->valid();
-}
-
-unity::scopes::VariantMap ActivationQueryProxy::settings() const {
-  return backend_->settings();
+unity::scopes::ActivationResponse ActivationQueryProxy::activate() {
+  return backend_->activate();
 }

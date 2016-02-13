@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -246,7 +246,23 @@ scopes.self.initialize(
         preview: on_preview,
         perform_action: function(result, metadata, widget_id, action_id) {
             console.log('Action performed', widget_id, action_id)
-            return null
+
+            return new scopes.lib.ActivationQuery(
+                result,
+                metadata,
+                widget_id,
+                action_id,
+                // activate
+                function() {
+                    console.log('activate called')
+                    
+                    return new scopes.lib.ActivationResponse(
+                        scopes.defs.ActivationResponseStatus.NotHandled);
+                },
+                // cancelled
+                function() {
+                }
+            );
         }
     }
 );

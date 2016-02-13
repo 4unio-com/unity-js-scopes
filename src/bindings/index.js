@@ -61,9 +61,10 @@ Scope.prototype = {
      *         - run {Function()}: Callback called by the scopes run time after it has called start() to hand a thread of control to the scope
      *         - starting {Function(String: scope_id)}: Callback called by the scopes run time after the create function completes
      *         - stop {Function()}: Callback called by the scopes run time when the scope should shut down
-     *         - search {Function(CannedQuery: canned_query, SearchMetaData: metadata)}: Callback called by the scopes run time when a scope needs to instantiate a query
-     *         - perform_action {Function(Result: result, ActionMetaData: metadata, String: widget_id, String: action_id)}: Callback invoked when a scope is requested to handle a preview action
-     *         - preview {Function(Result: result, ActionMetaData: metadata)}: Callback invoked when a scope is requested to create a preview for a particular result
+     *         - search {Function(CannedQuery: canned_query, SearchMetaData: metadata)}: Callback called by the scopes run time when a scope needs to instantiate a query. The runtime expects the function to return a newly created SearchQuery object or null
+     *         - perform_action {Function(Result: result, ActionMetaData: metadata, String: widget_id, String: action_id)}: Callback invoked when a scope is requested to handle a preview action. The runtime expects the function to return a newly created ActivationQuery object or null
+     *         - preview {Function(Result: result, ActionMetaData: metadata)}: Callback invoked when a scope is requested to create a preview for a particular result. The runtime expects the function to return a newly created PreviewQuery object or null
+     *         - activate {Function(Result: result, ActionMetaData: metadata)}: Callback invoked by the scopes run time when a scope needs to respond to a result activation request. The runtime expects the function to return a newly created ActivationQuery object or null
      *
      * @example
               var scopes = require('unity-js-scopes')
@@ -116,7 +117,7 @@ Scope.prototype = {
         }
 
         if (runtime_config.activate && typeof(runtime_config.activate) === 'function') {
-            // this._base.onactivate(runtime_config.activate);
+            this._base.onactivate(runtime_config.activate);
         }
 
         return this._scope_binding.run(
@@ -215,13 +216,22 @@ var OperationInfo = {
     }
 };
 
+var ActivationResponseStatus = {
+    NotHandled: 0,
+    ShowDash: 1,
+    HideDash: 2,
+    ShowPreview: 3,
+    PerformQuery: 4
+};
+
 module.exports = {
     lib: lib,
     defs: {
         PostLoginAction: PostLoginAction,
         VariantType: VariantType,
         ConnectivityStatus: ConnectivityStatus,
-        OperationInfo: OperationInfo
+        OperationInfo: OperationInfo,
+        ActivationResponseStatus: ActivationResponseStatus
     }
 }
 
