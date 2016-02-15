@@ -41,7 +41,7 @@
 --doc:constructor
  *
  * @constructor
- * @param status|query ActivationResponseStatus to create a response with given status or CannedQuery to create an ActivationResponse with status defs.ActivationResponseStatus.PerformQuery and a search query to be executed
+ * @param status|query|{Array of PreviewWidget} ActivationResponseStatus to create a response with given status OR CannedQuery to create an ActivationResponse with status defs.ActivationResponseStatus.PerformQuery and a search query to be executed OR an array of PreviewWidgets to create an ActivationResponse with status defs.ActivationResponseStatus.UpdatePreview to update the given widgets
 --/doc:constructor
 
 --doc:prototype ActivationResponse

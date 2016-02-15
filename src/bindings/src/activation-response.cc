@@ -17,6 +17,7 @@
  */
 
 #include "activation-response.h"
+#include "preview-widget.h"
 
 #include "event_queue.h"
 
@@ -34,6 +35,21 @@ ActivationResponse::ActivationResponse(
         new unity::scopes::ActivationResponse(
             static_cast<unity::scopes::ActivationResponse::Status>(
                 status)));
+  } else if (arg->IsArray()) {
+    // assume UpdatePreview
+    std::vector<std::shared_ptr<PreviewWidget>> const& widgets =
+            v8cpp::from_v8<std::vector<std::shared_ptr<PreviewWidget>>>(
+                v8::Isolate::GetCurrent(),
+                arg);
+
+    unity::scopes::PreviewWidgetList widgets_list;
+    for (auto const& widget : widgets)
+    {
+      widgets_list.push_back(widget->preview_widget());
+    }
+
+    activation_response_.reset(
+        new unity::scopes::ActivationResponse(widgets_list));
   } else {
     auto query =
         v8cpp::from_v8<std::shared_ptr<CannedQuery>>(

@@ -140,7 +140,7 @@ function on_search(canned_query, metadata) {
                     "",
                     "",
                     category_renderer);
-            
+
             var query_string =
                 canned_query.query_string().trim();
 
@@ -186,11 +186,15 @@ function on_preview(result, action_metadata) {
             var r = this.result();
 
             var layout1col = new scopes.lib.ColumnLayout(1)
-            layout1col.add_column(["imageId", "headerId", "actionsId"])
+            layout1col.add_column([
+                "imageId",
+                "headerId",
+                "actionsId",
+                "updatePreviewActionsId"])
 
             var layout2col = new scopes.lib.ColumnLayout(2)
             layout2col.add_column(["imageId"])
-            layout2col.add_column(["headerId", "actionsId"])
+            layout2col.add_column(["headerId", "actionsId", "updatePreviewActionsId"])
 
             preview_reply.register_layout([layout1col, layout2col]);
 
@@ -200,6 +204,9 @@ function on_preview(result, action_metadata) {
 
             var art_widget = new scopes.lib.PreviewWidget("imageId", "image");
             art_widget.add_attribute_mapping("source", "art");
+
+            var update_preview_button_widget = 
+                createUpdatePreviewActionsIdWidget("Update");
 
             var actions_widget = new scopes.lib.PreviewWidget("actionsId", "actions");
             actions_widget.add_attribute_value(
@@ -220,8 +227,15 @@ function on_preview(result, action_metadata) {
                     }
                 ]
             );
-            preview_reply.push([header_widget, art_widget, actions_widget])
-            preview_reply.finished()
+
+            preview_reply.push([
+                header_widget,
+                art_widget,
+                actions_widget,
+                update_preview_button_widget
+            ]);
+
+            preview_reply.finished();
         },
         // cancelled
         function() {
@@ -254,10 +268,20 @@ scopes.self.initialize(
                 action_id,
                 // activate
                 function() {
-                    console.log('activate called')
-                    
-                    return new scopes.lib.ActivationResponse(
-                        scopes.defs.ActivationResponseStatus.NotHandled);
+                    console.log('activate called');
+
+                    var result;
+                    switch (action_id) {
+                        case 'updateId':
+                            result = activateUpdatePreview();
+                            break;
+                        default:
+                            result = new scopes.lib.ActivationResponse(
+                                scopes.defs.ActivationResponseStatus.NotHandled);
+                            break;
+                    }
+
+                    return result;
                 },
                 // cancelled
                 function() {
@@ -266,3 +290,31 @@ scopes.self.initialize(
         }
     }
 );
+
+/**
+ * Updates the "updatePreviewActionsId" widget:
+ * Sets the widget's label to "Updated !".
+ */
+function activateUpdatePreview(result) {
+    var widgets = [];
+    var update_preview_button_widget =
+        createUpdatePreviewActionsIdWidget("Updated !");
+    widgets.push(update_preview_button_widget);
+    return new scopes.lib.ActivationResponse(widgets);
+}
+
+function createUpdatePreviewActionsIdWidget(label) {
+    var update_preview_button_widget =
+        new scopes.lib.PreviewWidget("updatePreviewActionsId", "actions");
+    update_preview_button_widget.add_attribute_value(
+        "actions",
+        [
+            {
+                id: "updateId",
+                label: label
+            }
+        ]
+    );
+    return update_preview_button_widget;
+}
+
