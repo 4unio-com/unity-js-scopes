@@ -268,20 +268,20 @@ scopes.self.initialize(
                 action_id,
                 // activate
                 function() {
-                    console.log('activate called');
+                    console.log('Activate called');
 
-                    var result;
+                    var activation_response;
                     switch (action_id) {
                         case 'updateId':
-                            result = activateUpdatePreview();
+                            activation_response = activateUpdatePreview();
                             break;
                         default:
-                            result = new scopes.lib.ActivationResponse(
+                            activation_response = new scopes.lib.ActivationResponse(
                                 scopes.defs.ActivationResponseStatus.NotHandled);
                             break;
                     }
 
-                    return result;
+                    return activation_response;
                 },
                 // cancelled
                 function() {

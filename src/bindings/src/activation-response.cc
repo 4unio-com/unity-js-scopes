@@ -51,13 +51,24 @@ ActivationResponse::ActivationResponse(
     activation_response_.reset(
         new unity::scopes::ActivationResponse(widgets_list));
   } else {
-    auto query =
-        v8cpp::from_v8<std::shared_ptr<CannedQuery>>(
-            v8::Isolate::GetCurrent(),
-            arg);
-    activation_response_.reset(
-        new unity::scopes::ActivationResponse(
-            query->canned_query()));
+    // TODO fix at the v8cpp level
+    try {
+      auto query =
+          v8cpp::from_v8<std::shared_ptr<CannedQuery>>(
+              v8::Isolate::GetCurrent(),
+              arg);
+      activation_response_.reset(
+          new unity::scopes::ActivationResponse(
+              query->canned_query()));
+    } catch (std::invalid_argument& e) {
+      auto result =
+          v8cpp::from_v8<std::shared_ptr<Result>>(
+              v8::Isolate::GetCurrent(),
+              arg);
+      activation_response_.reset(
+          new unity::scopes::ActivationResponse(
+              *result));
+    }
   }
 }
 
