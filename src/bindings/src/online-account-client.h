@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015, 2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -123,6 +123,8 @@ class OnlineAccountClient : public std::enable_shared_from_this<OnlineAccountCli
 
  private:
 
+  void setupServiceUpdateCallback();
+
   static void service_update_callback(std::shared_ptr<OnlineAccountClient> self,
                                       unity::scopes::OnlineAccountClient::ServiceStatus const&);
 
@@ -130,6 +132,7 @@ class OnlineAccountClient : public std::enable_shared_from_this<OnlineAccountCli
 
   std::unique_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 
+  bool service_update_callback_set_;
   v8::Isolate* isolate_;
 };
 
