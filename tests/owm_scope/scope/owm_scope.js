@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015, 2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -69,6 +69,14 @@ scopes.self.initialize(
                         + scopes.self.scope_directory)
         },
         search: function(canned_query, metadata) {
+            // this account object creation is very much a no-op
+            // but we keep it minimally tests:
+            // https://bugs.launchpad.net/unity-js-scopes/+bug/1549477
+            var account =
+               new scopes.lib.OnlineAccountClient(
+                   'com.ubuntu.developer.me.untitled_untitled',
+                   'sharing',
+                   'facebook')
             return new scopes.lib.SearchQuery(
                 canned_query,
                 metadata,

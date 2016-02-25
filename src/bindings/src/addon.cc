@@ -441,7 +441,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("set_service_update_callback", &OnlineAccountClient::set_service_update_callback)
       .add_method("get_service_statuses", &OnlineAccountClient::get_service_statuses)
       .add_method("register_account_login_item", &OnlineAccountClient::register_account_login_item)
-      .add_method("set_service_update_callback", &OnlineAccountClient::register_account_login_widget);
+      .add_method("register_account_login_widget", &OnlineAccountClient::register_account_login_widget);
 
     v8cpp::Class<unity::scopes::OnlineAccountClient::ServiceStatus> online_account_service_status(isolate);
     online_account_service_status

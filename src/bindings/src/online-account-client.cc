@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015, 2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -28,8 +28,19 @@ OnlineAccountClient::OnlineAccountClient(
         service_name,
         service_type,
         provider_name)),
+    service_update_callback_set_(false),
     isolate_(v8::Isolate::GetCurrent()) {
+}
 
+void OnlineAccountClient::refresh_service_statuses() {
+  oa_client_->refresh_service_statuses();
+}
+
+void OnlineAccountClient::setupServiceUpdateCallback() {
+  if (service_update_callback_set_) {
+    return;
+  }
+  service_update_callback_set_ = true;
   oa_client_->set_service_update_callback(
       std::bind(&OnlineAccountClient::service_update_callback,
                 shared_from_this(),
@@ -37,23 +48,12 @@ OnlineAccountClient::OnlineAccountClient(
   );
 }
 
-void OnlineAccountClient::refresh_service_statuses() {
-  oa_client_->refresh_service_statuses();
-}
-
 void OnlineAccountClient::set_service_update_callback(
       v8::FunctionCallbackInfo<v8::Value> const& args) {
-  if ( ! service_update_callback_.IsEmpty()) {
-    service_update_callback_.Reset();
-  }
+  setupServiceUpdateCallback();
 
   if (args.Length() != 1 || !args[0]->IsFunction()) {
-    // TODO fix
-    return;
-  }
-
-  if (service_update_callback_.IsEmpty()) {
-    service_update_callback_.Reset();
+    throw std::runtime_error("Invalid argument: expecting a callback function");
   }
 
   v8::Local<v8::Function> cb = v8::Handle<v8::Function>::Cast(args[0]);
