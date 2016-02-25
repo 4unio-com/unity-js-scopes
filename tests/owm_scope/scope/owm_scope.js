@@ -87,6 +87,14 @@ scopes.self.initialize(
                         qs = "London,uk"
                     }
 
+                    if (scopes.self.settings["forecast"].get_bool())
+                    {
+                        var root_department = new scopes.lib.Department("", canned_query, "Current + Forecast");
+                        root_department.add_subdepartment(new scopes.lib.Department("current", canned_query, "Current"));
+                        root_department.add_subdepartment(new scopes.lib.Department("forecast", canned_query, "Forecast"));
+                        search_reply.register_departments(root_department);
+                    }
+
                     var current_weather_cb = function(response) {
                         var res = '';
 
@@ -111,8 +119,21 @@ scopes.self.initialize(
 
                             search_reply.push(categorised_result);
 
-                            // Now call back into the API for a 7 day forecast
-                            http.request({host: query_host, port: query_host_port, path: forecast_weather_path + qs}, forecase_weather_cb).end();
+                            if (canned_query.department_id() === "current")
+                            {
+                                // We are done, call finished() on our search_reply
+                                search_reply.finished();
+                            }
+                            else if (scopes.self.settings["forecast"].get_bool())
+                            {
+                                // Now call back into the API for a 7 day forecast
+                                http.request({host: query_host, port: query_host_port, path: forecast_weather_path + qs}, forecase_weather_cb).end();
+                            }
+                            else
+                            {
+                                // We are done, call finished() on our search_reply
+                                search_reply.finished();
+                            }
                         });
                     }
 
@@ -157,7 +178,14 @@ scopes.self.initialize(
                         });
                     }
 
-                    http.request({host: query_host, port: query_host_port, path: current_weather_path + qs}, current_weather_cb).end();
+                    if (canned_query.department_id() === "forecast")
+                    {
+                        http.request({host: query_host, port: query_host_port, path: forecast_weather_path + qs}, forecase_weather_cb).end();
+                    }
+                    else
+                    {
+                        http.request({host: query_host, port: query_host_port, path: current_weather_path + qs}, current_weather_cb).end();
+                    }
                 },
                 // cancelled
                 function() {
