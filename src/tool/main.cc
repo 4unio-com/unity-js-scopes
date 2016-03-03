@@ -197,16 +197,12 @@ int main(int argc, char *argv[]) {
         && std::string(argv[3]) != "unity-js-scopes") // Install an npm module
     {
       std::string npm_module_raw = argv[3];
-      std::string npm_module;
+      std::string npm_module = npm_module_raw;
 
-      std::string::size_type pos = npm_module_raw.find('@');
+      auto pos = npm_module_raw.find('@');
       if (pos != std::string::npos)
       {
           npm_module = npm_module_raw.substr(0, pos);
-      }
-      else
-      {
-          npm_module = npm_module_raw;
       }
 
       // Don't reinstall an already installed module unless "reinstall" is called
