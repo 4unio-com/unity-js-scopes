@@ -199,6 +199,7 @@ int main(int argc, char *argv[]) {
       std::string npm_module_raw = argv[3];
       std::string npm_module = npm_module_raw;
 
+      // Extract npm_module from npm_module_raw by chopping off the "@<version>" postfix (if present)
       auto pos = npm_module_raw.find('@');
       if (pos != std::string::npos)
       {
