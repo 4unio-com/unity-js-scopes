@@ -196,7 +196,17 @@ int main(int argc, char *argv[]) {
     if (boost::algorithm::ends_with(std::string(argv[1]), "install") && argc > 3
         && std::string(argv[3]) != "unity-js-scopes") // Install an npm module
     {
-      std::string npm_module = argv[3];
+      std::string npm_module_raw = argv[3];
+      std::string npm_module = npm_module_raw;
+      std::string npm_module_full = npm_module_raw;
+
+      // Extract npm_module from npm_module_raw by chopping off the "@<version>" postfix (if present)
+      auto pos = npm_module_raw.find('@');
+      if (pos != std::string::npos)
+      {
+        npm_module = npm_module_raw.substr(0, pos);
+        npm_module_full = npm_module + " (" + npm_module_raw.substr(pos+1) + ")";
+      }
 
       // Don't reinstall an already installed module unless "reinstall" is called
       if (std::string(argv[1]) == "reinstall" || !boost::filesystem::exists(modules_dir + "/" + npm_module))
@@ -208,9 +218,9 @@ int main(int argc, char *argv[]) {
         }
 
         // Install the npm module
-        std::cout << "Installing npm module '" << npm_module << "' to '" << modules_dir << "' ..." << std::endl;
+        std::cout << "Installing npm module '" << npm_module_full << "' to '" << modules_dir << "' ..." << std::endl;
 
-        std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' --ignore-scripts install " + npm_module;
+        std::string node_cmd = "node /node_modules/npm/cli.js --prefix='" + modules_dir + "/../' --ignore-scripts install " + npm_module_raw;
         std::cout << "Running '" << node_cmd << "' ..." << std::endl;
         result = system(node_cmd.c_str());
       }
