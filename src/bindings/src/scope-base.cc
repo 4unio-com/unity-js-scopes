@@ -145,7 +145,7 @@ unity::scopes::ActivationQueryBase::UPtr ScopeBase::activate(
       unity::scopes::Result const &result,
       unity::scopes::ActionMetadata const &metadata) {
   if (activate_callback_.IsEmpty()) {
-    return nullptr;
+    return unity::scopes::ScopeBase::activate(result, metadata);
   }
 
   return EventQueue::instance().run<unity::scopes::ActivationQueryBase::UPtr>(
