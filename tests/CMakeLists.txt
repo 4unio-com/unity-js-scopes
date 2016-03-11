@@ -1,1 +1,1 @@
-add_subdirectory(owm_scope)
+#add_subdirectory(owm_scope)
