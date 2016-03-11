@@ -56,7 +56,7 @@ int setup_chroot(std::string const& fw)
   {
     std::string setup_script;
     setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint apt-get install software-properties-common -y --force-yes \n";
-    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint add-apt-repository ppa:ubuntu-sdk-team/ppa -y \n";
+    setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint add-apt-repository ppa:unity-api-team/dev-build-1 -y \n";
 
     setup_script += "click chroot -a armhf -f ubuntu-sdk-" + fw + " maint sh -c \"find /etc/apt/sources.list.d//*.list \
           -exec apt-get update -o Dir::Etc::sourcelist='{}' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0' \\;\" \n";
