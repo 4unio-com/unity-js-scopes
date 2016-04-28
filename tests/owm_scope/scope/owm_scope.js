@@ -72,11 +72,11 @@ scopes.self.initialize(
             // this account object creation is very much a no-op
             // but we keep it minimally tests:
             // https://bugs.launchpad.net/unity-js-scopes/+bug/1549477
-            var account =
-               new scopes.lib.OnlineAccountClient(
-                   'com.ubuntu.developer.me.untitled_untitled',
-                   'sharing',
-                   'facebook')
+//            var account =
+//               new scopes.lib.OnlineAccountClient(
+//                   'com.ubuntu.developer.me.untitled_untitled',
+//                   'sharing',
+//                   'facebook')
             return new scopes.lib.SearchQuery(
                 canned_query,
                 metadata,
