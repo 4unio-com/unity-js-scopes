@@ -23,6 +23,16 @@ FilterGroup::FilterGroup(std::string const& id, std::string const& label)
     : filter_group_(unity::scopes::FilterGroup::create(id, label)){
 }
 
+std::string FilterGroup::id() const
+{
+    return filter_group_->id();
+}
+
+std::string FilterGroup::label() const
+{
+    return filter_group_->label();
+}
+
 unity::scopes::FilterGroup::SCPtr FilterGroup::get_filter_group() const
 {
     return filter_group_;

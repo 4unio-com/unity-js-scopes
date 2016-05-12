@@ -26,6 +26,9 @@ class FilterGroup
 public:
     FilterGroup(std::string const& id, std::string const& label);
 
+    std::string id() const;
+    std::string label() const;
+
     unity::scopes::FilterGroup::SCPtr get_filter_group() const;
 
 private:

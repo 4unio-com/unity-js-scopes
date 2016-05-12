@@ -462,7 +462,9 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<FilterGroup> filter_group(isolate);
     filter_group
-      .set_constructor<std::string, std::string>();
+      .set_constructor<std::string, std::string>()
+      .add_method("id", &FilterGroup::id)
+      .add_method("label", &FilterGroup::label);
 
     v8cpp::Class<RangeInputFilter> range_input_filter(isolate);
     range_input_filter
