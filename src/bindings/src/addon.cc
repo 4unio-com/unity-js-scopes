@@ -468,16 +468,30 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<RangeInputFilter> range_input_filter(isolate);
     range_input_filter
-      .set_constructor<std::string, std::string, std::string, std::string, std::string, std::string , FilterGroup>()
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      .add_method("set_display_hints", &RangeInputFilter::set_display_hints)
+      .add_method("display_hints", &RangeInputFilter::display_hints)
+      .add_method("id", &RangeInputFilter::id)
+      .add_method("filter_type", &RangeInputFilter::filter_type)
       .add_method("set_title", &RangeInputFilter::set_title)
+      .add_method("title", &RangeInputFilter::title)
+      .add_method("filter_group", &RangeInputFilter::filter_group)
+      .add_method("start_prefix_label", &RangeInputFilter::start_prefix_label)
+      .add_method("start_postfix_label", &RangeInputFilter::start_postfix_label)
+      .add_method("end_prefix_label", &RangeInputFilter::end_prefix_label)
+      .add_method("end_postfix_label", &RangeInputFilter::end_postfix_label)
+      .add_method("central_label", &RangeInputFilter::central_label)
+      .add_method("default_start_value", &RangeInputFilter::default_start_value)
+      .add_method("default_end_value", &RangeInputFilter::default_end_value)
       .add_method("has_start_value", &RangeInputFilter::has_start_value)
       .add_method("has_end_value", &RangeInputFilter::has_end_value)
       .add_method("start_value", &RangeInputFilter::start_value)
-      .add_method("end_value", &RangeInputFilter::end_value);
+      .add_method("end_value", &RangeInputFilter::end_value)
+      .add_method("update_state", &RangeInputFilter::update_state);
 
     v8cpp::Class<ValueSliderFilter> value_slider_filter(isolate);
     value_slider_filter
-      .set_constructor<std::string, double, double, double, ValueSliderLabels, FilterGroup>()
+      .set_constructor<std::string, double, double, double, ValueSliderLabels, std::shared_ptr<FilterGroup>>()
       .add_method("set_title", &ValueSliderFilter::set_title)
       .add_method("has_value", &ValueSliderFilter::has_value)
       .add_method("value", &ValueSliderFilter::value);
@@ -487,8 +501,7 @@ void InitAll(v8::Handle<v8::Object> exports)
       .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
       .add_method("min_label", &ValueSliderLabels::min_label)
       .add_method("max_label", &ValueSliderLabels::max_label)
-      .add_method("extra_labels", &ValueSliderLabels::extra_labels)
-      .add_method("serialize", &ValueSliderLabels::serialize);
+      .add_method("extra_labels", &ValueSliderLabels::extra_labels);
 
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);

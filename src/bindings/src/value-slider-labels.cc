@@ -84,11 +84,6 @@ ValueLabelPairList ValueSliderLabels::extra_labels() const
     return labels_->extra_labels();
 }
 
-unity::scopes::VariantMap ValueSliderLabels::serialize() const
-{
-    return labels_->serialize();
-}
-
 unity::scopes::ValueSliderLabels ValueSliderLabels::get_labels() const
 {
     return *labels_;

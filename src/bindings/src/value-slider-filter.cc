@@ -19,9 +19,9 @@
 #include "value-slider-filter.h"
 
 ValueSliderFilter::ValueSliderFilter(std::string const& id, double min, double max, double default_value,
-                                     ValueSliderLabels const& value_labels, FilterGroup const& group)
+                                     ValueSliderLabels const& value_labels, std::shared_ptr<FilterGroup> const& group)
     : filter_(unity::scopes::ValueSliderFilter::create(id, min, max, default_value,
-                                                       value_labels.get_labels(), group.get_filter_group())){
+                                                       value_labels.get_labels(), group->get_filter_group())){
 }
 
 unity::scopes::ValueSliderFilter::SPtr ValueSliderFilter::get_filter()

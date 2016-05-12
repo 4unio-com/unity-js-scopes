@@ -28,7 +28,7 @@ class ValueSliderFilter
 {
 public:
     ValueSliderFilter(std::string const& id, double min, double max, double default_value,
-                      ValueSliderLabels const& value_labels, FilterGroup const& group);
+                      ValueSliderLabels const& value_labels, std::shared_ptr<FilterGroup> const& group);
 
     unity::scopes::ValueSliderFilter::SPtr get_filter();
 
