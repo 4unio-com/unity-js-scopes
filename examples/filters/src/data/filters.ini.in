@@ -1,0 +1,7 @@
+[ScopeConfig]
+ScopeRunner=./node_modules/unity-js-scopes/bin/unity-js-scopes-launcher %S %R
+_DisplayName=Books (JavaScript)
+_Description=This is a Books scope for testing purposes
+Art=screenshot.png
+Author = Canonical Ltd.
+Icon = icon.png

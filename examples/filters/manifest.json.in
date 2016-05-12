@@ -1,0 +1,15 @@
+{
+    "architecture": "@CLICK_ARCH@",
+    "description": "A simple Unity scope written in JavaScript",
+    "framework": "ubuntu-sdk-15.04.5",
+    "hooks": {
+        "filters": {
+            "apparmor": "filters.apparmor",
+            "scope": "filters"
+        }
+    },
+    "maintainer": "Marcus Tomlinson <marcus.tomlinson@canonical.com>",
+    "name": "filters.marcustomlinson",
+    "title": "filters",
+    "version": "0.1"
+}
