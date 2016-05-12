@@ -26,3 +26,33 @@ RangeInputFilter::RangeInputFilter(std::string const& id, std::string const& sta
                                                       central_label, end_prefix_label, end_postfix_label,
                                                       group.get_filter_group())){
 }
+
+void RangeInputFilter::set_title(std::string const& title)
+{
+    filter_->set_title(title);
+}
+
+bool RangeInputFilter::has_start_value(unity::scopes::FilterState const& filter_state) const
+{
+    return filter_->has_start_value(filter_state);
+}
+
+bool RangeInputFilter::has_end_value(unity::scopes::FilterState const& filter_state) const
+{
+    return filter_->has_end_value(filter_state);
+}
+
+double RangeInputFilter::start_value(unity::scopes::FilterState const& filter_state) const
+{
+    return filter_->start_value(filter_state);
+}
+
+double RangeInputFilter::end_value(unity::scopes::FilterState const& filter_state) const
+{
+    return filter_->end_value(filter_state);
+}
+
+unity::scopes::RangeInputFilter::SPtr RangeInputFilter::get_filter()
+{
+    return filter_;
+}

@@ -20,6 +20,8 @@
 
 #include "categorised-result.h"
 #include "option-selector-filter.h"
+#include "range-input-filter.h"
+#include "value-slider-filter.h"
 
 #include <stdexcept>
 
@@ -40,6 +42,14 @@ unity::scopes::Filters from_v8_to_filters(
     v8::Local<v8::Value> fv = o->Get(i);
     try {
       auto f = v8cpp::from_v8<std::shared_ptr<OptionSelectorFilter>>(isolate, fv);
+      filter_bases.push_back(f->get_filter());
+    } catch(...) { }
+    try {
+      auto f = v8cpp::from_v8<std::shared_ptr<RangeInputFilter>>(isolate, fv);
+      filter_bases.push_back(f->get_filter());
+    } catch(...) { }
+    try {
+      auto f = v8cpp::from_v8<std::shared_ptr<ValueSliderFilter>>(isolate, fv);
       filter_bases.push_back(f->get_filter());
     } catch(...) { }
   }

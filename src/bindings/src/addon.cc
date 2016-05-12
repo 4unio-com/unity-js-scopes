@@ -37,11 +37,13 @@
 #include "canned-query.h"
 #include "categorised-result.h"
 #include "department.h"
+#include "filter-group.h"
 #include "online-account-client.h"
 #include "option-selector-filter.h"
 #include "preview-query.h"
 #include "preview-reply.h"
 #include "preview-widget.h"
+#include "range-input-filter.h"
 #include "scope-base.h"
 #include "scope.h"
 #include "search-query.h"
@@ -49,6 +51,8 @@
 #include "search-metadata.h"
 #include "registry.h"
 #include "result.h"
+#include "value-slider-filter.h"
+#include "value-slider-labels.h"
 #include "variant.h"
 
 // TODO static
@@ -456,6 +460,27 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_member("token_secret", &unity::scopes::OnlineAccountClient::ServiceStatus::token_secret)
       .add_member("error", &unity::scopes::OnlineAccountClient::ServiceStatus::error);
 
+    v8cpp::Class<FilterGroup> filter_group(isolate);
+    filter_group
+      .set_constructor<std::string, std::string>();
+
+    v8cpp::Class<RangeInputFilter> range_input_filter(isolate);
+    range_input_filter
+      .set_constructor<std::string, std::string, std::string, std::string, std::string, std::string , FilterGroup>()
+      .add_method("set_title", &RangeInputFilter::set_title)
+      .add_method("has_start_value", &RangeInputFilter::has_start_value)
+      .add_method("has_end_value", &RangeInputFilter::has_end_value)
+      .add_method("start_value", &RangeInputFilter::start_value)
+      .add_method("end_value", &RangeInputFilter::end_value);
+
+    v8cpp::Class<ValueSliderFilter> value_slider_filter(isolate);
+    value_slider_filter
+      .set_constructor<std::string, double, double, double, ValueSliderLabels, FilterGroup>();
+
+    v8cpp::Class<ValueSliderLabels> value_slider_labels(isolate);
+    value_slider_labels
+      .set_constructor<std::string, std::string, ValueLabelPairList>();
+
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
@@ -468,6 +493,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("CategoryRenderer", category_renderer);
     module.add_class("ColumnLayout", column_layout);
     module.add_class("Department", department);
+    module.add_class("FilterGroup", filter_group);
     module.add_class("FilterOption", filter_option);
     module.add_class("FilterState", filter_state);
     module.add_class("Location", location);
@@ -478,12 +504,15 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("PreviewWidget", preview_widget);
     module.add_class("PreviewQuery", preview_query);
     module.add_class("PreviewReply", preview_reply);
+    module.add_class("RangeInputFilter", range_input_filter);
     module.add_class("Registry", registry);
     module.add_class("Result", result);
     module.add_class("ScopeMetadata", scope_metadata);
     module.add_class("SearchReply", search_reply);
     module.add_class("SearchQuery", search_query);
     module.add_class("SearchMetadata", search_metadata);
+    module.add_class("ValueSliderFilter", value_slider_filter);
+    module.add_class("ValueSliderLabels", value_slider_labels);
     module.add_class("Variant", variant);
     module.add_class("VariantBase", variant_base);
 

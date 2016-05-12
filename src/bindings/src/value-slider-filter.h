@@ -29,8 +29,11 @@ class ValueSliderFilter
 public:
     ValueSliderFilter(std::string const& id, double min, double max, double default_value,
                       ValueSliderLabels const& value_labels, FilterGroup const& group);
+
+    unity::scopes::ValueSliderFilter::SPtr get_filter();
+
 private:
-    unity::scopes::ValueSliderFilter::SCPtr filter_;
+    unity::scopes::ValueSliderFilter::SPtr filter_;
 };
 
 #endif // _UNITY_JS_VALUE_SLIDER_FILTER_H_

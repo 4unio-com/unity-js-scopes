@@ -30,8 +30,19 @@ public:
                      std::string const& start_postfix_label, std::string const& central_label,
                      std::string const& end_prefix_label, std::string const& end_postfix_label,
                      FilterGroup const& group);
+
+    void set_title(std::string const& title);
+
+    bool has_start_value(unity::scopes::FilterState const& filter_state) const;
+    bool has_end_value(unity::scopes::FilterState const& filter_state) const;
+
+    double start_value(unity::scopes::FilterState const& filter_state) const;
+    double end_value(unity::scopes::FilterState const& filter_state) const;
+
+    unity::scopes::RangeInputFilter::SPtr get_filter();
+
 private:
-    unity::scopes::RangeInputFilter::SCPtr filter_;
+    unity::scopes::RangeInputFilter::SPtr filter_;
 };
 
 #endif // _UNITY_JS_RANGE_INPUT_FILTER_H_

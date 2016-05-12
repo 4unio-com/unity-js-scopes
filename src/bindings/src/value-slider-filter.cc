@@ -23,3 +23,8 @@ ValueSliderFilter::ValueSliderFilter(std::string const& id, double min, double m
     : filter_(unity::scopes::ValueSliderFilter::create(id, min, max, default_value,
                                                        value_labels.get_labels(), group.get_filter_group())){
 }
+
+unity::scopes::ValueSliderFilter::SPtr ValueSliderFilter::get_filter()
+{
+    return filter_;
+}
