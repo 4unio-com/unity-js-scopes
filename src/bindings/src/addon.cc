@@ -475,7 +475,10 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<ValueSliderFilter> value_slider_filter(isolate);
     value_slider_filter
-      .set_constructor<std::string, double, double, double, ValueSliderLabels, FilterGroup>();
+      .set_constructor<std::string, double, double, double, ValueSliderLabels, FilterGroup>()
+      .add_method("set_title", &ValueSliderFilter::set_title)
+      .add_method("has_value", &ValueSliderFilter::has_value)
+      .add_method("value", &ValueSliderFilter::value);
 
     v8cpp::Class<ValueSliderLabels> value_slider_labels(isolate);
     value_slider_labels

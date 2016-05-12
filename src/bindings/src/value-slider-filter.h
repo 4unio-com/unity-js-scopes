@@ -32,6 +32,12 @@ public:
 
     unity::scopes::ValueSliderFilter::SPtr get_filter();
 
+    void set_title(std::string const& title);
+
+    bool has_value(unity::scopes::FilterState const& filter_state) const;
+
+    double value(unity::scopes::FilterState const& filter_state) const;
+
 private:
     unity::scopes::ValueSliderFilter::SPtr filter_;
 };

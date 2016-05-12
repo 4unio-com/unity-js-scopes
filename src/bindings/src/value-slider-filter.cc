@@ -28,3 +28,18 @@ unity::scopes::ValueSliderFilter::SPtr ValueSliderFilter::get_filter()
 {
     return filter_;
 }
+
+void ValueSliderFilter::set_title(std::string const& title)
+{
+    filter_->set_title(title);
+}
+
+bool ValueSliderFilter::has_value(unity::scopes::FilterState const& filter_state) const
+{
+    return filter_->has_value(filter_state);
+}
+
+double ValueSliderFilter::value(unity::scopes::FilterState const& filter_state) const
+{
+    return filter_->value(filter_state);
+}
