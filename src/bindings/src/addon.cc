@@ -491,10 +491,22 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<ValueSliderFilter> value_slider_filter(isolate);
     value_slider_filter
-      .set_constructor<std::string, double, double, double, ValueSliderLabels, std::shared_ptr<FilterGroup>>()
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      .add_method("set_display_hints", &ValueSliderFilter::set_display_hints)
+      .add_method("display_hints", &ValueSliderFilter::display_hints)
+      .add_method("id", &ValueSliderFilter::id)
+      .add_method("filter_type", &ValueSliderFilter::filter_type)
       .add_method("set_title", &ValueSliderFilter::set_title)
+      .add_method("title", &ValueSliderFilter::title)
+      .add_method("filter_group", &ValueSliderFilter::filter_group)
+      .add_method("set_default_value", &ValueSliderFilter::set_default_value)
+      .add_method("default_value", &ValueSliderFilter::default_value)
+      .add_method("min", &ValueSliderFilter::min)
+      .add_method("max", &ValueSliderFilter::max)
       .add_method("has_value", &ValueSliderFilter::has_value)
-      .add_method("value", &ValueSliderFilter::value);
+      .add_method("value", &ValueSliderFilter::value)
+      .add_method("labels", &ValueSliderFilter::labels)
+      .add_method("update_state", &ValueSliderFilter::update_state);
 
     v8cpp::Class<ValueSliderLabels> value_slider_labels(isolate);
     value_slider_labels

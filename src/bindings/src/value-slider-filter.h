@@ -27,19 +27,33 @@
 class ValueSliderFilter
 {
 public:
-    ValueSliderFilter(std::string const& id, double min, double max, double default_value,
-                      ValueSliderLabels const& value_labels, std::shared_ptr<FilterGroup> const& group);
+    ValueSliderFilter(v8::FunctionCallbackInfo<v8::Value> const& args);
+
+    // FilterBase
+    void set_display_hints(int hints);
+    int display_hints() const;
+    std::string id() const;
+    std::string filter_type() const;
+    void set_title(std::string const& title);
+    std::string title() const;
+    std::shared_ptr<FilterGroup> filter_group() const;
+
+    // ValueSliderFilter
+    void set_default_value(double val);
+    double default_value() const;
+    double min() const;
+    double max() const;
+    bool has_value(unity::scopes::FilterState const& filter_state) const;
+    double value(unity::scopes::FilterState const& filter_state) const;
+    std::shared_ptr<ValueSliderLabels> labels() const;
+    void update_state(unity::scopes::FilterState& filter_state, double value) const;
 
     unity::scopes::ValueSliderFilter::SPtr get_filter();
 
-    void set_title(std::string const& title);
-
-    bool has_value(unity::scopes::FilterState const& filter_state) const;
-
-    double value(unity::scopes::FilterState const& filter_state) const;
-
 private:
     unity::scopes::ValueSliderFilter::SPtr filter_;
+    std::shared_ptr<FilterGroup> filter_group_;
+    std::shared_ptr<ValueSliderLabels> labels_;
 };
 
 #endif // _UNITY_JS_VALUE_SLIDER_FILTER_H_

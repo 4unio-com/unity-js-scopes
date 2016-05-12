@@ -23,24 +23,23 @@ RangeInputFilter::RangeInputFilter(v8::FunctionCallbackInfo<v8::Value> const& ar
 {
     if (args.Length() == 6)
     {
-        std::string a = *(v8::String::Utf8Value(args[0]->ToString()));
-        std::string b = *(v8::String::Utf8Value(args[1]->ToString()));
-        std::string c = *(v8::String::Utf8Value(args[2]->ToString()));
-        std::string d = *(v8::String::Utf8Value(args[3]->ToString()));
-        std::string e = *(v8::String::Utf8Value(args[4]->ToString()));
-        std::string f = *(v8::String::Utf8Value(args[5]->ToString()));
+        auto a = v8cpp::from_v8<std::string>(args.GetIsolate(), args[0]);
+        auto b = v8cpp::from_v8<std::string>(args.GetIsolate(), args[1]);
+        auto c = v8cpp::from_v8<std::string>(args.GetIsolate(), args[2]);
+        auto d = v8cpp::from_v8<std::string>(args.GetIsolate(), args[3]);
+        auto e = v8cpp::from_v8<std::string>(args.GetIsolate(), args[4]);
+        auto f = v8cpp::from_v8<std::string>(args.GetIsolate(), args[5]);
 
         filter_ = unity::scopes::RangeInputFilter::create(a, b, c, d, e, f);
     }
     else if (args.Length() == 7)
     {
-        std::string a = *(v8::String::Utf8Value(args[0]->ToString()));
-        std::string b = *(v8::String::Utf8Value(args[1]->ToString()));
-        std::string c = *(v8::String::Utf8Value(args[2]->ToString()));
-        std::string d = *(v8::String::Utf8Value(args[3]->ToString()));
-        std::string e = *(v8::String::Utf8Value(args[4]->ToString()));
-        std::string f = *(v8::String::Utf8Value(args[5]->ToString()));
-
+        auto a = v8cpp::from_v8<std::string>(args.GetIsolate(), args[0]);
+        auto b = v8cpp::from_v8<std::string>(args.GetIsolate(), args[1]);
+        auto c = v8cpp::from_v8<std::string>(args.GetIsolate(), args[2]);
+        auto d = v8cpp::from_v8<std::string>(args.GetIsolate(), args[3]);
+        auto e = v8cpp::from_v8<std::string>(args.GetIsolate(), args[4]);
+        auto f = v8cpp::from_v8<std::string>(args.GetIsolate(), args[5]);
         auto g = v8cpp::from_v8<std::shared_ptr<FilterGroup>>(args.GetIsolate(), args[6]);
 
         filter_ = unity::scopes::RangeInputFilter::create(a, b, c, d, e, f, g->get_filter_group());
@@ -48,28 +47,27 @@ RangeInputFilter::RangeInputFilter(v8::FunctionCallbackInfo<v8::Value> const& ar
     }
     else if (args.Length() == 8)
     {
-        std::string a = *(v8::String::Utf8Value(args[0]->ToString()));
-        unity::scopes::Variant b = unity::scopesjs::to_variant(args[1]);
-        unity::scopes::Variant c = unity::scopesjs::to_variant(args[2]);
-        std::string d = *(v8::String::Utf8Value(args[3]->ToString()));
-        std::string e = *(v8::String::Utf8Value(args[4]->ToString()));
-        std::string f = *(v8::String::Utf8Value(args[5]->ToString()));
-        std::string g = *(v8::String::Utf8Value(args[6]->ToString()));
-        std::string h = *(v8::String::Utf8Value(args[7]->ToString()));
+        auto a = v8cpp::from_v8<std::string>(args.GetIsolate(), args[0]);
+        auto b = unity::scopesjs::to_variant(args[1]);
+        auto c = unity::scopesjs::to_variant(args[2]);
+        auto d = v8cpp::from_v8<std::string>(args.GetIsolate(), args[3]);
+        auto e = v8cpp::from_v8<std::string>(args.GetIsolate(), args[4]);
+        auto f = v8cpp::from_v8<std::string>(args.GetIsolate(), args[5]);
+        auto g = v8cpp::from_v8<std::string>(args.GetIsolate(), args[6]);
+        auto h = v8cpp::from_v8<std::string>(args.GetIsolate(), args[7]);
 
         filter_ = unity::scopes::RangeInputFilter::create(a, b, c, d, e, f, g, h);
     }
     else if (args.Length() == 9)
     {
-        std::string a = *(v8::String::Utf8Value(args[0]->ToString()));
-        unity::scopes::Variant b = unity::scopesjs::to_variant(args[1]);
-        unity::scopes::Variant c = unity::scopesjs::to_variant(args[2]);
-        std::string d = *(v8::String::Utf8Value(args[3]->ToString()));
-        std::string e = *(v8::String::Utf8Value(args[4]->ToString()));
-        std::string f = *(v8::String::Utf8Value(args[5]->ToString()));
-        std::string g = *(v8::String::Utf8Value(args[6]->ToString()));
-        std::string h = *(v8::String::Utf8Value(args[7]->ToString()));
-
+        auto a = v8cpp::from_v8<std::string>(args.GetIsolate(), args[0]);
+        auto b = unity::scopesjs::to_variant(args[1]);
+        auto c = unity::scopesjs::to_variant(args[2]);
+        auto d = v8cpp::from_v8<std::string>(args.GetIsolate(), args[3]);
+        auto e = v8cpp::from_v8<std::string>(args.GetIsolate(), args[4]);
+        auto f = v8cpp::from_v8<std::string>(args.GetIsolate(), args[5]);
+        auto g = v8cpp::from_v8<std::string>(args.GetIsolate(), args[6]);
+        auto h = v8cpp::from_v8<std::string>(args.GetIsolate(), args[7]);
         auto i = v8cpp::from_v8<std::shared_ptr<FilterGroup>>(args.GetIsolate(), args[8]);
 
         filter_ = unity::scopes::RangeInputFilter::create(a, b, c, d, e, f, g, h, i->get_filter_group());

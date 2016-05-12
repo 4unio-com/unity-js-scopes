@@ -18,20 +18,91 @@
 
 #include "value-slider-filter.h"
 
-ValueSliderFilter::ValueSliderFilter(std::string const& id, double min, double max, double default_value,
-                                     ValueSliderLabels const& value_labels, std::shared_ptr<FilterGroup> const& group)
-    : filter_(unity::scopes::ValueSliderFilter::create(id, min, max, default_value,
-                                                       value_labels.get_labels(), group->get_filter_group())){
+ValueSliderFilter::ValueSliderFilter(v8::FunctionCallbackInfo<v8::Value> const& args)
+{
+    if (args.Length() == 5)
+    {
+        auto a = v8cpp::from_v8<std::string>(args.GetIsolate(), args[0]);
+        auto b = v8cpp::from_v8<double>(args.GetIsolate(), args[1]);
+        auto c = v8cpp::from_v8<double>(args.GetIsolate(), args[2]);
+        auto d = v8cpp::from_v8<double>(args.GetIsolate(), args[3]);
+        auto e = v8cpp::from_v8<std::shared_ptr<ValueSliderLabels>>(args.GetIsolate(), args[4]);
+
+        filter_ = unity::scopes::ValueSliderFilter::create(a, b, c, d, e->get_labels());
+        labels_ = e;
+    }
+    else if (args.Length() == 6)
+    {
+        auto a = v8cpp::from_v8<std::string>(args.GetIsolate(), args[0]);
+        auto b = v8cpp::from_v8<double>(args.GetIsolate(), args[1]);
+        auto c = v8cpp::from_v8<double>(args.GetIsolate(), args[2]);
+        auto d = v8cpp::from_v8<double>(args.GetIsolate(), args[3]);
+        auto e = v8cpp::from_v8<std::shared_ptr<ValueSliderLabels>>(args.GetIsolate(), args[4]);
+        auto f = v8cpp::from_v8<std::shared_ptr<FilterGroup>>(args.GetIsolate(), args[5]);
+
+        filter_ = unity::scopes::ValueSliderFilter::create(a, b, c, d, e->get_labels(), f->get_filter_group());
+        labels_ = e;
+        filter_group_ = f;
+    }
+    else
+    {
+        throw std::runtime_error("Invalid number of arguments");
+    }
 }
 
-unity::scopes::ValueSliderFilter::SPtr ValueSliderFilter::get_filter()
+void ValueSliderFilter::set_display_hints(int hints)
 {
-    return filter_;
+    filter_->set_display_hints(hints);
+}
+
+int ValueSliderFilter::display_hints() const
+{
+    return filter_->display_hints();
+}
+
+std::string ValueSliderFilter::id() const
+{
+    return filter_->id();
+}
+
+std::string ValueSliderFilter::filter_type() const
+{
+    return filter_->filter_type();
 }
 
 void ValueSliderFilter::set_title(std::string const& title)
 {
-    filter_->set_title(title);
+    return filter_->set_title(title);
+}
+
+std::string ValueSliderFilter::title() const
+{
+    return filter_->title();
+}
+
+std::shared_ptr<FilterGroup> ValueSliderFilter::filter_group() const
+{
+    return filter_group_;
+}
+
+void ValueSliderFilter::set_default_value(double val)
+{
+    return filter_->set_default_value(val);
+}
+
+double ValueSliderFilter::default_value() const
+{
+    return filter_->default_value();
+}
+
+double ValueSliderFilter::min() const
+{
+    return filter_->min();
+}
+
+double ValueSliderFilter::max() const
+{
+    return filter_->max();
 }
 
 bool ValueSliderFilter::has_value(unity::scopes::FilterState const& filter_state) const
@@ -42,4 +113,19 @@ bool ValueSliderFilter::has_value(unity::scopes::FilterState const& filter_state
 double ValueSliderFilter::value(unity::scopes::FilterState const& filter_state) const
 {
     return filter_->value(filter_state);
+}
+
+std::shared_ptr<ValueSliderLabels> ValueSliderFilter::labels() const
+{
+    return labels_;
+}
+
+void ValueSliderFilter::update_state(unity::scopes::FilterState& filter_state, double value) const
+{
+    return filter_->update_state(filter_state, value);
+}
+
+unity::scopes::ValueSliderFilter::SPtr ValueSliderFilter::get_filter()
+{
+    return filter_;
 }
