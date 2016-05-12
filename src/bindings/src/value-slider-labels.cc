@@ -18,12 +18,58 @@
 
 #include "value-slider-labels.h"
 
-ValueSliderLabels::ValueSliderLabels(std::string const& min_label, std::string const& max_label,
-                                     ValueLabelPairList const& extra_labels)
-    : labels_(unity::scopes::ValueSliderLabels(min_label, max_label, extra_labels)){
+#include "common.h"
+
+//std::string const& min_label, std::string const& max_label, ValueLabelPairList const& extra_labels
+
+ValueSliderLabels::ValueSliderLabels(v8::FunctionCallbackInfo<v8::Value> const& args)
+{
+    if (args.Length() != 2 && args.Length() != 3) {
+      throw std::runtime_error("Invalid number of arguments");
+    }
+    if (!args[0]->IsString()) {
+      throw std::runtime_error("Invalid argument type");
+    }
+    if (!args[1]->IsString()) {
+      throw std::runtime_error("Invalid argument type");
+    }
+
+    std::string min_label =
+      *(v8::String::Utf8Value(args[0]->ToString()));
+
+    std::string max_label =
+      *(v8::String::Utf8Value(args[1]->ToString()));
+
+    if (args.Length() == 3)
+    {
+        ValueLabelPairList extra_labels;
+
+        try
+        {
+            auto extra_labels_a = unity::scopesjs::to_variant(args[2]).get_array();
+
+            for (auto const& label : extra_labels_a)
+            {
+                auto label_pair = label.get_array();
+                if (label_pair.size() == 2)
+                {
+                    extra_labels.push_back(ValueLabelPair(label_pair[0].get_double(), label_pair[1].get_string()));
+                }
+            }
+        } catch(...)
+        {
+            throw std::runtime_error("ValueSliderLabels::ValueSliderLabels: Malformed 'extra_labels' argument! Expected format: [[2, \"2\"], [4, \"4\"]]");
+        }
+
+        labels_ = std::make_shared<unity::scopes::ValueSliderLabels>(unity::scopes::ValueSliderLabels(min_label, max_label, extra_labels));
+    }
+    else
+    {
+        labels_ = std::make_shared<unity::scopes::ValueSliderLabels>(unity::scopes::ValueSliderLabels(min_label, max_label));
+    }
 }
 
 unity::scopes::ValueSliderLabels ValueSliderLabels::get_labels() const
 {
-    return labels_;
+    return *labels_;
 }

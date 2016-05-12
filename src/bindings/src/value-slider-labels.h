@@ -21,19 +21,20 @@
 
 #include <unity/scopes/ValueSliderLabels.h>
 
+#include <v8-cpp.h>
+
 typedef std::pair<double, std::string> ValueLabelPair;
 typedef std::vector<ValueLabelPair> ValueLabelPairList;
 
 class ValueSliderLabels
 {
 public:
-    ValueSliderLabels(std::string const& min_label, std::string const& max_label,
-                      ValueLabelPairList const& extra_labels);
+    ValueSliderLabels(v8::FunctionCallbackInfo<v8::Value> const& args);
 
     unity::scopes::ValueSliderLabels get_labels() const;
 
 private:
-    unity::scopes::ValueSliderLabels labels_;
+    std::shared_ptr<unity::scopes::ValueSliderLabels> labels_;
 };
 
 #endif // _UNITY_JS_VALUE_SLIDER_LABELS_H_
