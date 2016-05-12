@@ -482,7 +482,11 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<ValueSliderLabels> value_slider_labels(isolate);
     value_slider_labels
-      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>();
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
+      .add_method("min_label", &ValueSliderLabels::min_label)
+      .add_method("max_label", &ValueSliderLabels::max_label)
+      .add_method("extra_labels", &ValueSliderLabels::extra_labels)
+      .add_method("serialize", &ValueSliderLabels::serialize);
 
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);

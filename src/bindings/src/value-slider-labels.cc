@@ -69,6 +69,26 @@ ValueSliderLabels::ValueSliderLabels(v8::FunctionCallbackInfo<v8::Value> const& 
     }
 }
 
+std::string ValueSliderLabels::min_label() const
+{
+    return labels_->min_label();
+}
+
+std::string ValueSliderLabels::max_label() const
+{
+    return labels_->max_label();
+}
+
+ValueLabelPairList ValueSliderLabels::extra_labels() const
+{
+    return labels_->extra_labels();
+}
+
+unity::scopes::VariantMap ValueSliderLabels::serialize() const
+{
+    return labels_->serialize();
+}
+
 unity::scopes::ValueSliderLabels ValueSliderLabels::get_labels() const
 {
     return *labels_;

@@ -31,6 +31,11 @@ class ValueSliderLabels
 public:
     ValueSliderLabels(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+    std::string min_label() const;
+    std::string max_label() const;
+    ValueLabelPairList extra_labels() const;
+    unity::scopes::VariantMap serialize() const;
+
     unity::scopes::ValueSliderLabels get_labels() const;
 
 private:
