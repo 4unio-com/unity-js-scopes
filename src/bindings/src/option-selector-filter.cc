@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -83,4 +83,20 @@ std::string OptionSelectorFilter::filter_type() const {
 
 unity::scopes::OptionSelectorFilter::SPtr OptionSelectorFilter::get_filter() {
   return filter_;
+}
+
+void OptionSelectorFilter::set_title(const std::string& title) {
+  filter_->set_title(title);
+}
+
+std::string OptionSelectorFilter::title() const {
+  return filter_->title();
+}
+
+std::shared_ptr<FilterGroup> OptionSelectorFilter::filter_group() {
+  unity::scopes::FilterGroup::SCPtr fg = filter_->filter_group();
+  if (!fg) {
+    return std::shared_ptr<FilterGroup>();
+  }
+  return std::shared_ptr<FilterGroup>(new FilterGroup(fg));
 }

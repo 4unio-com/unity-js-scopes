@@ -226,6 +226,35 @@ var ActivationResponseStatus = {
     UpdatePreview: 6
 };
 
+/**
+ * Display hints for the Shell UI.
+ * 
+ * @example
+      var scopes = require('unity-js-scopes')
+      var f = new scope.lib.OptionSelectorFilter("1", "label", false)
+      f.set_display_hint(scopes.defs.DisplayHint.Primary)
+
+ * @module ScopeJS
+ * 
+ * 
+ * @class DisplayHint
+ */
+DisplayHint = {
+    /**
+     * Default value (no hint)
+     * @property Default
+     * @static
+     */
+    Default: 0,
+    /**
+     * Display this filter as a primary navigation, if possible.
+     * Currently only the OptionSelectorFilter can act as primary navigation.
+     * @property Primary
+     * @static
+     */
+    Primary: 1
+};
+
 module.exports = {
     lib: lib,
     defs: {
@@ -233,6 +262,7 @@ module.exports = {
         VariantType: VariantType,
         ConnectivityStatus: ConnectivityStatus,
         OperationInfo: OperationInfo,
+        DisplayHint: DisplayHint,
         ActivationResponseStatus: ActivationResponseStatus
     }
 }

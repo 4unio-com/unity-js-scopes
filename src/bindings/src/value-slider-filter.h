@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 Canonical Ltd.
+ * Copyright 2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -16,34 +16,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _UNITY_JS_OPTION_SELECTOR_FILTER_H_
-#define _UNITY_JS_OPTION_SELECTOR_FILTER_H_
+#ifndef _UNITY_JS_VALUE_SLIDER_FILTER_H_
+#define _UNITY_JS_VALUE_SLIDER_FILTER_H_
 
-#include <unity/scopes/OptionSelectorFilter.h>
+#include <unity/scopes/ValueSliderFilter.h>
 
 #include <v8-cpp.h>
 
 #include "filter-group.h"
+#include "filter-state.h"
+#include "value-slider-labels.h"
+
 
 /**
 
---doc:class OptionSelectorFilter
+--doc:class ValueSliderFilter
  * 
- * A selection filter that displays a list of choices and allows one or more of them to be selected
+ * A value slider filter that allows for selecting a value within a given range.
+ *
+ * The ValueSliderFilter allows for selecting a value within a range defined by minimum and maximum values.
+ * Both minimum and maximum values can have labels and, in addition, the scope may provide extra labels to mark other values from that range - these label will serve as a guidance to the user.
+ * 
  * 
  * @module ScopeJS
- * @class OptionSelectorFilter
+ * @class ValueSliderFilter
 --/doc:class
 
 --doc:constructor
  * 
  * @constructor
- * @param id {String} A unique identifier for the filter that can be used to identify it later among several filters
- * @param label {String} A display label for the filter
- * @param multi_select {Boolean} If true, the filter permits more than option to be selected; otherwise, only a single option can be selected
+ * @param {String} id A unique identifier for the filter that can be used to later identify it among several filters.
+ * @param {Number} min The minimum allowed value
+ * @param {Number} max The maximum allowed value
+ * @param {Number} default_value The default value of this filter, from the min..max range.
+ * @param {ValueSliderLabels} value_labels The labels for min and max values as well as optional extra labels.
+ * @param {FilterGroup} group [optional] A filter group this filter should be added to.
 --/doc:constructor
 
---doc:prototype OptionSelectorFilter
+--doc:prototype ValueSliderFilter
 
 --doc:member
  * Sets display hints for the Shell UI
@@ -181,19 +191,26 @@ update_state: function(filter_state, option, active) {
  */
 
 
-class OptionSelectorFilter
+class ValueSliderFilter
 {
  public:
-  OptionSelectorFilter(std::string const &id, std::string const &label, bool multi_select);
+  ValueSliderFilter(std::string const &id,
+                    double min,
+                    double max,
+                    double default_value,
+                    std::shared_ptr<ValueSliderLabels> value_labels,
+                    std::shared_ptr<FilterGroup> group);
 
-  std::string label() const;
-  bool multi_select() const;
-  unity::scopes::FilterOption::SCPtr add_option(std::string const& id, std::string const& label);
-  std::list<unity::scopes::FilterOption::SCPtr> options() const;
-  bool has_active_option(unity::scopes::FilterState const& filter_state) const;
-  std::set<unity::scopes::FilterOption::SCPtr> active_options(unity::scopes::FilterState const& filter_state) const;
-  void update_state(unity::scopes::FilterState& filter_state, unity::scopes::FilterOption::SCPtr option, bool active) const;
+  void set_default_value(double val);
+  double default_value() const;
+  double min() const;
+  double max() const;
+  bool has_value(std::shared_ptr<unity::scopes::FilterState> filter_state) const;
+  double value(std::shared_ptr<unity::scopes::FilterState> filter_state) const;
+  std::shared_ptr<ValueSliderLabels> labels() const;
 
+  void update_state(std::shared_ptr<unity::scopes::FilterState> filter_state
+                    , double value) const;
   void set_display_hints(int hints);
   int display_hints() const;
   void set_title(const std::string& title);
@@ -203,12 +220,10 @@ class OptionSelectorFilter
   std::string filter_type() const;
   std::shared_ptr<FilterGroup> filter_group();
 
-  unity::scopes::OptionSelectorFilter::SPtr get_filter();
-
  private:
-  unity::scopes::OptionSelectorFilter::SPtr filter_;
+  unity::scopes::ValueSliderFilter::UPtr filter_;
 };
 
-#endif // _UNITY_JS_OPTION_SELECTOR_FILTER_H_
+#endif // _UNITY_JS_VALUE_SLIDER_FILTER_H_
 
 

@@ -37,6 +37,7 @@
 #include "canned-query.h"
 #include "categorised-result.h"
 #include "department.h"
+#include "filter-group.h"
 #include "online-account-client.h"
 #include "option-selector-filter.h"
 #include "preview-query.h"
@@ -50,6 +51,9 @@
 #include "registry.h"
 #include "result.h"
 #include "variant.h"
+#include "value-slider-labels.h"
+#include "value-slider-filter.h"
+#include "range-input-filter.h"
 
 // TODO static
 JavascriptScopeRuntime* new_scope(const std::string& runtime_config) {
@@ -275,6 +279,12 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("region_name", &unity::scopes::Location::region_name)
       .add_method("has_vertical_accuracy", &unity::scopes::Location::has_vertical_accuracy);
 
+    v8cpp::Class<FilterGroup> filter_group(isolate);
+    filter_group
+      .set_constructor<std::string const&, std::string const&>()
+      .add_method("id", &FilterGroup::id)
+      .add_method("label", &FilterGroup::label);
+
     v8cpp::Class<unity::scopes::FilterState> filter_state(isolate);
     filter_state
       .set_constructor<>()
@@ -299,8 +309,11 @@ void InitAll(v8::Handle<v8::Object> exports)
       // FilterBase
       .add_method("set_display_hints", &OptionSelectorFilter::set_display_hints)
       .add_method("display_hints", &OptionSelectorFilter::display_hints)
+      .add_method("set_title", &OptionSelectorFilter::set_title)
+      .add_method("title", &OptionSelectorFilter::title)
       .add_method("id", &OptionSelectorFilter::id)
-      .add_method("filter_type", &OptionSelectorFilter::filter_type);
+      .add_method("filter_type", &OptionSelectorFilter::filter_type)
+      .add_method("filter_group", &OptionSelectorFilter::filter_group);
 
     v8cpp::Class<unity::scopes::OperationInfo> operation_info(isolate);
     operation_info
@@ -380,6 +393,28 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("onrun", &SearchQuery::onrun)
       .add_method("oncancelled", &SearchQuery::oncancelled);
 
+    v8cpp::Class<RangeInputFilter> range_input_filter(isolate);
+    range_input_filter
+      .add_method("start_prefix_label", &RangeInputFilter::start_prefix_label)
+      .add_method("start_postfix_label", &RangeInputFilter::start_postfix_label)
+      .add_method("end_prefix_label", &RangeInputFilter::end_prefix_label)
+      .add_method("end_postfix_label", &RangeInputFilter::end_postfix_label)
+      .add_method("central_label", &RangeInputFilter::central_label)
+      .add_method("default_start_value", &RangeInputFilter::default_start_value)
+      .add_method("default_end_value", &RangeInputFilter::default_end_value)
+      .add_method("has_start_value", &RangeInputFilter::has_start_value)
+      .add_method("has_end_value", &RangeInputFilter::has_end_value)
+      .add_method("start_value", &RangeInputFilter::start_value)
+      .add_method("end_value", &RangeInputFilter::end_value)
+      .add_method("update_state", &RangeInputFilter::update_state)
+      .add_method("set_display_hints", &RangeInputFilter::set_display_hints)
+      .add_method("display_hints", &RangeInputFilter::display_hints)
+      .add_method("set_title", &RangeInputFilter::set_title)
+      .add_method("title", &RangeInputFilter::title)
+      .add_method("id", &RangeInputFilter::id)
+      .add_method("filter_type", &RangeInputFilter::filter_type)
+      .add_method("filter_group", &RangeInputFilter::filter_group);
+
     v8cpp::Class<Registry> registry(isolate);
     registry
       // Registry
@@ -389,7 +424,6 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_method("is_scope_running", &Registry::is_scope_running)
       .add_method("set_scope_state_callback", &Registry::set_scope_state_callback)
       .add_method("set_list_update_callback", &Registry::set_list_update_callback);
-
 
     v8cpp::Class<unity::scopes::ScopeMetadata> scope_metadata(isolate);
     scope_metadata
@@ -456,6 +490,30 @@ void InitAll(v8::Handle<v8::Object> exports)
       .add_member("token_secret", &unity::scopes::OnlineAccountClient::ServiceStatus::token_secret)
       .add_member("error", &unity::scopes::OnlineAccountClient::ServiceStatus::error);
 
+    v8cpp::Class<ValueSliderFilter> value_slider_filter(isolate);
+    value_slider_filter
+      .add_method("set_default_value", &ValueSliderFilter::set_default_value)
+      .add_method("min", &ValueSliderFilter::min)
+      .add_method("max", &ValueSliderFilter::max)
+      .add_method("has_value", &ValueSliderFilter::has_value)
+      .add_method("value", &ValueSliderFilter::value)
+      .add_method("labels", &ValueSliderFilter::labels)
+      .add_method("update_state", &ValueSliderFilter::update_state)
+      .add_method("set_display_hints", &ValueSliderFilter::set_display_hints)
+      .add_method("display_hints", &ValueSliderFilter::display_hints)
+      .add_method("set_title", &ValueSliderFilter::set_title)
+      .add_method("title", &ValueSliderFilter::title)
+      .add_method("id", &ValueSliderFilter::id)
+      .add_method("filter_group", &ValueSliderFilter::filter_group)
+      .add_method("filter_type", &ValueSliderFilter::filter_type)
+      .add_method("default_value", &ValueSliderFilter::default_value);
+
+    v8cpp::Class<ValueSliderLabels> value_slider_labels(isolate);
+    value_slider_labels
+      .add_method("min_label", &ValueSliderLabels::min_label)
+      .add_method("max_label", &ValueSliderLabels::max_label)
+      .add_method("extra_labels", &ValueSliderLabels::extra_labels);
+
     v8cpp::Module module(isolate);
     module.add_class("js_scope", js_scope);
     module.add_class("scope_base", scope_base);
@@ -468,6 +526,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("CategoryRenderer", category_renderer);
     module.add_class("ColumnLayout", column_layout);
     module.add_class("Department", department);
+    module.add_class("FilterGroup", filter_group);
     module.add_class("FilterOption", filter_option);
     module.add_class("FilterState", filter_state);
     module.add_class("Location", location);
@@ -478,6 +537,7 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("PreviewWidget", preview_widget);
     module.add_class("PreviewQuery", preview_query);
     module.add_class("PreviewReply", preview_reply);
+    module.add_class("RangeInputFilter", range_input_filter);
     module.add_class("Registry", registry);
     module.add_class("Result", result);
     module.add_class("ScopeMetadata", scope_metadata);
@@ -486,6 +546,8 @@ void InitAll(v8::Handle<v8::Object> exports)
     module.add_class("SearchMetadata", search_metadata);
     module.add_class("Variant", variant);
     module.add_class("VariantBase", variant_base);
+    module.add_class("ValueSliderFilter", value_slider_filter);
+    module.add_class("ValueSliderLabels", value_slider_labels);
 
     // Factory functions
     module.add_function("new_scope", &new_scope);
