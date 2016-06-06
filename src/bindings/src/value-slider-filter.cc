@@ -20,22 +20,52 @@
 
 #include <unity/scopes/FilterState.h>
 
-ValueSliderFilter::ValueSliderFilter(
-      std::string const &id,
-      double min,
-      double max,
-      double default_value,
-      std::shared_ptr<ValueSliderLabels> value_labels,
-      std::shared_ptr<FilterGroup> group) {
-  unity::scopes::ValueSliderLabels labels =
-    value_labels->get_labels();
-  unity::scopes::FilterGroup::SCPtr filter_group;
-  if (group) {
-    filter_group = group->get_filter_group();
+ValueSliderFilter::ValueSliderFilter(v8::FunctionCallbackInfo<v8::Value> args) {
+  if (args.Length() != 5 && args.Length() != 6) {
+    throw std::runtime_error("Invalid number of arguments");
   }
-  filter_ =
-    unity::scopes::ValueSliderFilter::create(
-      id, min, max, default_value, labels, filter_group);
+
+  if (args.Length() == 5) {
+    auto id =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
+    auto min =
+      v8cpp::from_v8<double>(v8::Isolate::GetCurrent(), args[1]);
+    auto max =
+      v8cpp::from_v8<double>(v8::Isolate::GetCurrent(), args[2]);
+    auto default_value =
+      v8cpp::from_v8<double>(v8::Isolate::GetCurrent(), args[3]);
+    auto value_slider_labels =
+      v8cpp::from_v8<std::shared_ptr<ValueSliderLabels>>(v8::Isolate::GetCurrent(), args[4]);
+
+    unity::scopes::ValueSliderLabels labels =
+      value_slider_labels->get_labels();
+    filter_ =
+      unity::scopes::ValueSliderFilter::create(
+        id, min, max, default_value, labels);
+  } else {
+    auto id =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
+    auto min =
+      v8cpp::from_v8<double>(v8::Isolate::GetCurrent(), args[1]);
+    auto max =
+      v8cpp::from_v8<double>(v8::Isolate::GetCurrent(), args[2]);
+    auto default_value =
+      v8cpp::from_v8<double>(v8::Isolate::GetCurrent(), args[3]);
+    auto value_slider_labels =
+      v8cpp::from_v8<std::shared_ptr<ValueSliderLabels>>(v8::Isolate::GetCurrent(), args[4]);
+    auto group =
+      v8cpp::from_v8<std::shared_ptr<FilterGroup>>(v8::Isolate::GetCurrent(), args[5]);
+
+    unity::scopes::ValueSliderLabels labels =
+      value_slider_labels->get_labels();
+    unity::scopes::FilterGroup::SCPtr filter_group;
+    if (group) {
+      filter_group = group->get_filter_group();
+    }
+    filter_ =
+      unity::scopes::ValueSliderFilter::create(
+        id, min, max, default_value, labels, filter_group);
+  }
 }
 
 void ValueSliderFilter::set_default_value(double val) {

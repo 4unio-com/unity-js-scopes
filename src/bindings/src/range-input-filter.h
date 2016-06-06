@@ -44,19 +44,58 @@
 --/doc:class
 
 --doc:constructor
- * Creates a RangeInputFilter with specific default values for start and end,
- * inside an optional FilterGroup
+ * Creates a RangeInputFilter
  *
  * @constructor
  * @param {String} id A unique identifier for the filter that can be used to later identify it among several filters.
- * @param {Number} default_start_value [optional] The default start value.
- * @param {Number} default_end_value [optional] The default end value.
  * @param {String} start_prefix_label A display label for the input box for the start value, displayed to the left (can be empty).
  * @param {String} start_postfix_label A display label for the input box for the start value, displayed to the right (can be empty).
  * @param {String} central_label A display label displayed between the two input boxes (can be empty).
  * @param {String} end_prefix_label A display label for the input box for the end value, displayed to the left (can be empty).
  * @param {String} end_postfix_label A display label for the input box for the end value, displayed to the right (can be empty).
- * @param {FilterGroup} group [optional] A filter group this filter should be added to.
+--/doc:constructor
+
+--doc:constructor
+ * Creates a RangeInputFilter with specific default values for start and end
+ *
+ * @constructor
+ * @param {String} id A unique identifier for the filter that can be used to later identify it among several filters.
+ * @param {Number} default_start_value The default start value or null.
+ * @param {Number} default_end_value The default end value or null.
+ * @param {String} start_prefix_label A display label for the input box for the start value, displayed to the left (can be empty).
+ * @param {String} start_postfix_label A display label for the input box for the start value, displayed to the right (can be empty).
+ * @param {String} central_label A display label displayed between the two input boxes (can be empty).
+ * @param {String} end_prefix_label A display label for the input box for the end value, displayed to the left (can be empty).
+ * @param {String} end_postfix_label A display label for the input box for the end value, displayed to the right (can be empty).
+--/doc:constructor
+
+--doc:constructor
+ * Creates a RangeInputFilter inside a FilterGroup
+ *
+ * @constructor
+ * @param {String} id A unique identifier for the filter that can be used to later identify it among several filters.
+ * @param {String} start_prefix_label A display label for the input box for the start value, displayed to the left (can be empty).
+ * @param {String} start_postfix_label A display label for the input box for the start value, displayed to the right (can be empty).
+ * @param {String} central_label A display label displayed between the two input boxes (can be empty).
+ * @param {String} end_prefix_label A display label for the input box for the end value, displayed to the left (can be empty).
+ * @param {String} end_postfix_label A display label for the input box for the end value, displayed to the right (can be empty).
+ * @param {FilterGroup} filter_group The filter group associated with this filter.
+--/doc:constructor
+
+--doc:constructor
+ * Creates a RangeInputFilter with specific default values for start and end,
+ * inside a FilterGroup
+ *
+ * @constructor
+ * @param {String} id A unique identifier for the filter that can be used to later identify it among several filters.
+ * @param {Number} default_start_value The default start value or null.
+ * @param {Number} default_end_value The default end value or null.
+ * @param {String} start_prefix_label A display label for the input box for the start value, displayed to the left (can be empty).
+ * @param {String} start_postfix_label A display label for the input box for the start value, displayed to the right (can be empty).
+ * @param {String} central_label A display label displayed between the two input boxes (can be empty).
+ * @param {String} end_prefix_label A display label for the input box for the end value, displayed to the left (can be empty).
+ * @param {String} end_postfix_label A display label for the input box for the end value, displayed to the right (can be empty).
+ * @param {FilterGroup} filter_group The filter group associated with this filter.
 --/doc:constructor
 
 --doc:prototype RangeInputFilter
@@ -235,13 +274,7 @@ update_state: function(filter_state, start_value, end_value) {
 class RangeInputFilter
 {
  public:
-  RangeInputFilter(std::string const& id,
-                   v8::Local<v8::Value> default_start_value,
-                   v8::Local<v8::Value> default_end_value,
-                   std::string const& start_prefix_label, std::string const& start_postfix_label,
-                   std::string const& central_label,
-                   std::string const& end_prefix_label, std::string const& end_postfix_label,
-                   std::shared_ptr<FilterGroup> group);
+  RangeInputFilter(v8::FunctionCallbackInfo<v8::Value> args);
 
   std::string start_prefix_label() const;
   std::string start_postfix_label() const;

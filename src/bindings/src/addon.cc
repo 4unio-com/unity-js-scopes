@@ -395,15 +395,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<RangeInputFilter> range_input_filter(isolate);
     range_input_filter
-      .set_constructor<std::string,
-                       v8::Local<v8::Value>,
-                       v8::Local<v8::Value>,
-                       std::string,
-                       std::string,
-                       std::string,
-                       std::string,
-                       std::string,
-                       std::shared_ptr<FilterGroup>>()
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
       .add_method("start_prefix_label", &RangeInputFilter::start_prefix_label)
       .add_method("start_postfix_label", &RangeInputFilter::start_postfix_label)
       .add_method("end_prefix_label", &RangeInputFilter::end_prefix_label)
@@ -501,12 +493,7 @@ void InitAll(v8::Handle<v8::Object> exports)
 
     v8cpp::Class<ValueSliderFilter> value_slider_filter(isolate);
     value_slider_filter
-      .set_constructor<std::string,
-                       double,
-                       double,
-                       double,
-                       std::shared_ptr<ValueSliderLabels>,
-                       std::shared_ptr<FilterGroup>>()
+      .set_constructor<v8::FunctionCallbackInfo<v8::Value>>()
       .add_method("set_default_value", &ValueSliderFilter::set_default_value)
       .add_method("min", &ValueSliderFilter::min)
       .add_method("max", &ValueSliderFilter::max)

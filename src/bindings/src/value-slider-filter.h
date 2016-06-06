@@ -50,6 +50,16 @@
  * @param {Number} max The maximum allowed value
  * @param {Number} default_value The default value of this filter, from the min..max range.
  * @param {ValueSliderLabels} value_labels The labels for min and max values as well as optional extra labels.
+--/doc:constructor
+
+--doc:constructor
+ * 
+ * @constructor
+ * @param {String} id A unique identifier for the filter that can be used to later identify it among several filters.
+ * @param {Number} min The minimum allowed value
+ * @param {Number} max The maximum allowed value
+ * @param {Number} default_value The default value of this filter, from the min..max range.
+ * @param {ValueSliderLabels} value_labels The labels for min and max values as well as optional extra labels.
  * @param {FilterGroup} group [optional] A filter group this filter should be added to.
 --/doc:constructor
 
@@ -194,12 +204,7 @@ update_state: function(filter_state, option, active) {
 class ValueSliderFilter
 {
  public:
-  ValueSliderFilter(std::string const &id,
-                    double min,
-                    double max,
-                    double default_value,
-                    std::shared_ptr<ValueSliderLabels> value_labels,
-                    std::shared_ptr<FilterGroup> group);
+  ValueSliderFilter(v8::FunctionCallbackInfo<v8::Value> args);
 
   void set_default_value(double val);
   double default_value() const;

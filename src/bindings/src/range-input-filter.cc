@@ -20,31 +20,131 @@
 
 #include "common.h"
 
-RangeInputFilter::RangeInputFilter(std::string const& id,
-                                   v8::Local<v8::Value> default_start_value,
-                                   v8::Local<v8::Value> default_end_value,
-                                   std::string const& start_prefix_label,
-                                   std::string const& start_postfix_label,
-                                   std::string const& central_label,
-                                   std::string const& end_prefix_label,
-                                   std::string const& end_postfix_label,
-                                   std::shared_ptr<FilterGroup> group) {
-  unity::scopes::FilterGroup::SCPtr filter_group;
-  if (group) {
-    filter_group = group->get_filter_group();
+RangeInputFilter::RangeInputFilter(
+    v8::FunctionCallbackInfo<v8::Value> args) {
+  if (args.Length() < 6 || args.Length() > 9) {
+    throw std::runtime_error("Invalid number of arguments");
   }
 
-  filter_ = 
-    unity::scopes::RangeInputFilter::create(
+  if (args.Length() == 6) {
+    auto id =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
+    auto start_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[1]);
+    auto start_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[2]);
+    auto central_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[3]);
+    auto end_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[4]);
+    auto end_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[5]);
+
+    filter_ = 
+      unity::scopes::RangeInputFilter::create(
           id,
-          unity::scopesjs::to_variant(default_start_value),
-          unity::scopesjs::to_variant(default_end_value),
+          start_prefix_label,
+          start_postfix_label,
+          central_label,
+          end_prefix_label,
+          end_postfix_label);
+  } else if (args.Length() == 8) {
+    auto id =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
+    unity::scopes::Variant default_start_value =
+      unity::scopesjs::to_variant(args[1]);
+    unity::scopes::Variant default_end_value =
+      unity::scopesjs::to_variant(args[2]);
+    auto start_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[3]);
+    auto start_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[4]);
+    auto central_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[5]);
+    auto end_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[6]);
+    auto end_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[7]);
+
+    filter_ = 
+      unity::scopes::RangeInputFilter::create(
+          id,
+          default_start_value,
+          default_end_value,
+          start_prefix_label,
+          start_postfix_label,
+          central_label,
+          end_prefix_label,
+          end_postfix_label);
+  } else if (args.Length() == 7) {
+    auto id =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
+    auto start_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[1]);
+    auto start_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[2]);
+    auto central_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[3]);
+    auto end_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[4]);
+    auto end_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[5]);
+    auto fg =
+      v8cpp::from_v8<std::shared_ptr<FilterGroup>>(
+        v8::Isolate::GetCurrent(), args[6]);
+
+    unity::scopes::FilterGroup::SCPtr filter_group;
+    if (fg) {
+      filter_group = fg->get_filter_group();
+    }
+
+    filter_ = 
+      unity::scopes::RangeInputFilter::create(
+          id,
           start_prefix_label,
           start_postfix_label,
           central_label,
           end_prefix_label,
           end_postfix_label,
           filter_group);
+  } else {
+    auto id =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[0]);
+    unity::scopes::Variant default_start_value =
+      unity::scopesjs::to_variant(args[1]);
+    unity::scopes::Variant default_end_value =
+      unity::scopesjs::to_variant(args[2]);
+    auto start_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[3]);
+    auto start_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[4]);
+    auto central_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[5]);
+    auto end_prefix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[6]);
+    auto end_postfix_label =
+      v8cpp::from_v8<std::string>(v8::Isolate::GetCurrent(), args[7]);
+    auto fg =
+      v8cpp::from_v8<std::shared_ptr<FilterGroup>>(
+        v8::Isolate::GetCurrent(), args[8]);
+
+    unity::scopes::FilterGroup::SCPtr filter_group;
+    if (fg) {
+      filter_group = fg->get_filter_group();
+    }
+
+    filter_ = 
+      unity::scopes::RangeInputFilter::create(
+          id,
+          default_start_value,
+          default_end_value,
+          start_prefix_label,
+          start_postfix_label,
+          central_label,
+          end_prefix_label,
+          end_postfix_label,
+          filter_group);
+  }
 }
 
 std::string RangeInputFilter::start_prefix_label() const {
