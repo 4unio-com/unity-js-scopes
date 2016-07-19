@@ -5,10 +5,9 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Build-Depends: bzr,
                cmake (>= 2.8.9),
                debhelper (>= 9),
-               g++,
                pkg-config,
-               python3,
-               python3-scope-harness,
+               python3:any,
+               python3-scope-harness <!cross>,
                libboost-filesystem-dev,
                libunity-scopes-dev,
 Standards-Version: 3.9.5
