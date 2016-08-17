@@ -24,34 +24,28 @@ ValueSliderLabels::ValueSliderLabels(std::string const &min_label,
   if (extra_labels->IsNull() || extra_labels->IsUndefined()) {
     vsl_.reset(new unity::scopes::ValueSliderLabels(min_label, max_label));
   } else if (extra_labels->IsArray()) {
-    std::vector<v8::Local<v8::Value>> labels =
-      v8cpp::from_v8<std::vector<v8::Local<v8::Value>>>(
+    std::vector<std::vector<v8::Local<v8::Value>>> labels =
+      v8cpp::from_v8<std::vector<std::vector<v8::Local<v8::Value>>>>(
                 v8::Isolate::GetCurrent(),
                 extra_labels);
+
     unity::scopes::ValueLabelPairList vlp_list;
-    
+
     for (auto label : labels) {
-      if (label->IsObject()) {
-          v8::Handle<v8::Object> o =
-            v8::Handle<v8::Object>::Cast(label);
-          v8::Local<v8::Value> value_string =
-            v8::String::NewFromUtf8(
-                v8::Isolate::GetCurrent(),
-                "value");
-          v8::Local<v8::Value> label_string =
-            v8::String::NewFromUtf8(
-                v8::Isolate::GetCurrent(),
-                "label");
+      if (label.size() == 2 &&
+            label[0]->IsNumber() &&
+            label[1]->IsString()) {
+        double v = v8cpp::from_v8<double>(
+            v8::Isolate::GetCurrent(),
+            label[0]);
+        std::string l = v8cpp::from_v8<std::string>(
+            v8::Isolate::GetCurrent(),
+            label[1]);
 
-          if (o->Has(value_string) && o->Has(label_string)) {
-            double v = o->Get(value_string)->ToObject()->NumberValue();
-            std::string l =
-              *(v8::String::Utf8Value(o->Get(value_string)->ToObject()->ToString()));
-
-            vlp_list.push_back(unity::scopes::ValueLabelPair(v, l));
-          }
+        vlp_list.push_back(unity::scopes::ValueLabelPair(v, l));
       }
     }
+
     vsl_.reset(
         new unity::scopes::ValueSliderLabels(
             min_label, max_label, vlp_list));
@@ -80,26 +74,13 @@ v8::Local<v8::Value> ValueSliderLabels::extra_labels() const {
     v8::Array::New(v8::Isolate::GetCurrent(), labels.size());
 
   for (size_t i = 0; i < labels.size(); ++i) {
-      v8::Handle<v8::Object> o =
-        v8::Object::New(v8::Isolate::GetCurrent());
+      v8::Handle<v8::Array> label_pair =
+        v8::Array::New(v8::Isolate::GetCurrent(), 2);
 
-      v8::Local<v8::Value> value_string =
-        v8::String::NewFromUtf8(
-                v8::Isolate::GetCurrent(),
-                "value");
-      v8::Local<v8::Value> label_string =
-        v8::String::NewFromUtf8(
-                v8::Isolate::GetCurrent(),
-                "label");
+      label_pair->Set(0, v8::Number::New(v8::Isolate::GetCurrent(), labels[i].first));
+      label_pair->Set(1, v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), labels[i].second.c_str()));
 
-      o->Set(value_string,
-             v8::Number::New(v8::Isolate::GetCurrent(),
-                             labels[i].first));
-      o->Set(label_string,
-             v8::String::NewFromUtf8(v8::Isolate::GetCurrent(),
-                                     labels[i].second.c_str()));
-
-      a->Set(i, o);
+      a->Set(i, label_pair);
   }
   return a;
 }
