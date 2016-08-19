@@ -39,6 +39,25 @@
 
 --doc:prototype ActivationQuery
 
+--doc:constructor
+ * Constructs an ActivationQuery.
+ * 
+ * To create an ActivationQuery in response to an activate() callback
+ * called from scopes.self.initialize, pass down the result and metadata
+ * received in the activate() callback and empty strings for the other
+ * parameters.
+ * 
+ * To create an ActivationQuery in response to an perform_action() callback
+ * called from scopes.self.initialize, pass down the result, metadata, widget_id
+ * and action_id received in the perform_action() callback.
+ * 
+ * @constructor
+ * @param result Result for the associated result
+ * @param metadata ActionMetadata associated with the result
+ * @param widget_id The widget identifier receiver received by the activation callback (if any)
+ * @param action_id The action identifier receiver received by the activation callback (if any)
+--/doc:constructor
+
 --doc:member
  * Return response to the activation request
  * @method activate

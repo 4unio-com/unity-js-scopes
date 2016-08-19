@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Canonical Ltd.
+ * Copyright 2015-2016 Canonical Ltd.
  *
  * This file is part of unity-js-scopes.
  *
@@ -140,6 +140,7 @@ scopes.self.initialize(
                         new scopes.lib.CategorisedResult(category);
                     categorised_result.set_uri("http://www.ubuntu.com");
                     categorised_result.set_title("'" + qs + "'");
+                    categorised_result.set_intercept_activation();
 
                     var filter_state =
                         new scopes.lib.FilterState();
@@ -162,6 +163,26 @@ scopes.self.initialize(
                 function() {
                 });
         },
-        preview: function(result, action_metadata) {}
+        preview: function(result, action_metadata) {},
+        activate: function(result, metadata) {
+            return new scopes.lib.ActivationQuery(
+                result,
+                metadata,
+                "",
+                "",
+                // activate
+                function() {
+                    console.log('Activate called');
+
+                    var activation_response = new scopes.lib.ActivationResponse(
+                        scopes.defs.ActivationResponseStatus.NotHandled);
+
+                    return activation_response;
+                },
+                // cancelled
+                function() {
+                }
+            );
+        },
     }
 );
